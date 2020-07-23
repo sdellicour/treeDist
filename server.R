@@ -13,17 +13,17 @@ source("readT.R")
 
 output$plot = renderPlot({
 							
-# tree_file = "PDCV_discrete_MCC.tree"
-# distances_file = "Pig_farms_distances.csv"
+#tree_file = "example/PDCV_discrete_MCC.tree"
+#distances_file = "example/Pig_farms_distances.csv"
 
-tree = readT(tree_file)
+tree = readT(tree_file)#created with app
 distances = read.csv(distances_file, head=T)
 
 print(tree); print(distances)
 
 locations = colnames(distances)
-transitions = matrix(0, nrow=dim(distances)[1], ncol=dim(distances)[1])
-row.names(transitions) = row.names(distances)
+transitions = matrix(0, nrow=dim(distances)[1], ncol=dim(distances)[1])#0 matrix in size of distance matrix 
+row.names(transitions) = row.names(distances) #TODO are colnames always equal rownames? perhaps simplify
 colnames(transitions) = colnames(distances)
 for (i in 1:dim(tree$edge)[1])
 	{
