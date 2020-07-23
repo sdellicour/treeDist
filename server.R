@@ -16,7 +16,7 @@ output$plot = renderPlot({
 #tree_file = "example/PDCV_discrete_MCC.tree"
 #distances_file = "example/Pig_farms_distances.csv"
 
-tree = readT(tree_file)#created with app
+tree = readT(tree_file)#created with ape package
 distances = read.csv(distances_file, head=T)
 
 print(tree); print(distances)
@@ -25,10 +25,10 @@ locations = colnames(distances)
 transitions = matrix(0, nrow=dim(distances)[1], ncol=dim(distances)[1])#0 matrix in size of distance matrix 
 row.names(transitions) = row.names(distances) #TODO are colnames always equal rownames? perhaps simplify
 colnames(transitions) = colnames(distances)
-for (i in 1:dim(tree$edge)[1])
+for (i in 1:dim(tree$edge)[1])#the edge table should be read as: rows are the edge numbers and first col is parent node and 2nd is child node
 	{
-		if (tree$edge[i,1]%in%tree$edge[,2])
-			{
+		if (tree$edge[i,1]%in%tree$edge[,2])#if parent is also child then assign city of child as location1
+		  {
 				index = which(tree$edge[,2]==tree$edge[i,1])
 				location1 = tree$annotations[[index]]$city
 			}	else	{
@@ -38,7 +38,7 @@ for (i in 1:dim(tree$edge)[1])
 		transitions[location1,location2] = transitions[location1,location2]+1
 	}
 distances = distances[lower.tri(distances)]
-transitions = transitions[lower.tri(transitions)]
+transitions = transitions[lower.tri(transitions)]#assign true to lower triangle values
 distances = distances[which(transitions!=0)]
 transitions = transitions[which(transitions!=0)]
 if (logTransformation == TRUE) distances = log(distances)
@@ -52,6 +52,9 @@ axis(side=2, lwd.tick=0.2, cex.axis=0.9, mgp=c(0,0.6,0), lwd=0.2, tck=-0.02, col
 title(ylab="transitions", cex.lab=1.1, mgp=c(2.0,0,0), col.lab="gray30")
 if (logTransformation == TRUE) title(xlab="distance (log)", cex.lab=1.1, mgp=c(1.4,0,0), col.lab="gray30")
 if (logTransformation != TRUE) title(xlab="distance", cex.lab=1.1, mgp=c(1.4,0,0), col.lab="gray30")
+
+#extend functionality with the possibility to upload a tree that does not yet contain the information of transitions between locations
+#create function that computes the transition frequencies using maximum likelihood or parsimony and then output enhanced tree file
 
 }) # output$plot = renderPlot({
 }) # observeEvent(input$start, {
