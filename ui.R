@@ -11,8 +11,13 @@ shinyUI(fluidPage(
 			p(""),
 			br(),
 			fluidRow(
+			  column(12,
+			         fileInput("tree_file_wo_transitions", label=("Tree file: No transitions"))
+			  )
+			),
+			fluidRow(
 				column(12,
-					fileInput("tree_file", label=("Tree file"))
+					fileInput("tree_file_w_transitions", label=("Tree file:  Including transitions"))
 				)
 			),
 			fluidRow(
