@@ -13,7 +13,7 @@ observeEvent(input$start, {
   
   output$plot = renderPlot({
     
-    #tree_file = "example/PDCV_discrete_MCC.tree"
+    tree_file = "example/PDCV_discrete_MCC.tree"
     #distances_file = "example/Pig_farms_distances.csv"
     tree = readT(tree_file)#created with ape package
     plot(tree)
@@ -57,7 +57,7 @@ observeEvent(input$start, {
 
 #extend functionality with the possibility to upload a tree that does not yet contain the information of transitions between locations
 #create function that computes the transition frequencies using maximum likelihood or parsimony and then output enhanced tree file
-    source("transitions.R")
+    source("transitions.R")#maybe better to keep everyhtin in server
 
 }) # output$plot = renderPlot({
 }) # observeEvent(input$start, {
