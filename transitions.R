@@ -28,7 +28,22 @@ for(i in 1:tree$Nnode){
 }
 ancestral_states_ER
 
-tree$ann
+ancestral_states_Bayesian<-rep("",1387)
+for(i in 1:tree$Nnode){
+  ancestral_states_Bayesian[i]<-tree$annotations[[i]]$states
+}
+ancestral_states_Bayesian
+ancestral_states_ER
+
+comparison=rep(NA,1387)
+for(i in 1:tree$Nnode){
+  comparison[i]=ancestral_states_Bayesian[i]==ancestral_states_ER[[i]]
+}
+sum(comparison)
+sum(comparison)/length(comparison)
+sum(comparison[1:floor(length(comparison)/2)])
+sum(comparison[1:floor(length(comparison)/2)])/(length(comparison)/2)
+
 
 SYMreconstruction <- ape::ace(country, tree, type="discrete", model="SYM", marginal = F) # all rates different model
 ARDreconstruction <- ace(country, tree, type="discrete", model="ARD") # symmetrical model
