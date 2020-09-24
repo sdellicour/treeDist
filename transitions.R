@@ -45,12 +45,33 @@ sum(comparison[1:floor(length(comparison)/2)])
 sum(comparison[1:floor(length(comparison)/2)])/(length(comparison)/2)
 
 
-SYMreconstruction <- ape::ace(country, tree, type="discrete", model="SYM", marginal = F) # all rates different model
+SYMreconstruction <- ape::ace(country, tree, type="discrete", model="SYM") # all rates different model
 ARDreconstruction <- ace(country, tree, type="discrete", model="ARD") # symmetrical model
 
+
+install.packages("diversitree")
+install.packages("phytools")
+library(phytools)
+library(diversitree)
+?diversitree
+
+?diversitree::rerootingMethod
+
+
+
+cl <- makeCluster(detectCores() - 1)
+registerDoParallel(cl, cores = detectCores() - 1)
+
+fitER <- rerootingMethod(tree, country, model = "ER")
+
+
+install.packages("treedater")
+library(treedater)
+?treedater
 #check the model and let the user choose if they want to use ML (maybe even different models within ML but to start with just one), Maximum Parsimony 
 #setting marginal to TRUE? but this might lead to only local optima?
 #guy baele current opinion in virology to understand the discrete state inference   
 #no need to have several ML 
-
+# load packages
+  
           
