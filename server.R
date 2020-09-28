@@ -14,7 +14,7 @@ observeEvent(input$start, {
   output$plot = renderPlot({
     
     tree_file = "example/PDCV_discrete_MCC.tree"
-    #distances_file = "example/Pig_farms_distances.csv"
+    distances_file = "example/Pig_farms_distances.csv"
     tree = readT(tree_file)#created with ape package
     plot(tree)
     distances = read.csv(distances_file, head=T)
