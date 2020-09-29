@@ -7,7 +7,7 @@ logTransformation = TRUE
 source("readT.R")
 
 
-tree1<-read.nexus("bedford/h3_small_sample.MCC.tre")
+tree<-read.nexus("bedford/h3_small_sample.MCC.tre")
 tree2<-readT("bedford/h3_small_sample.MCC.tre")
 taxaCountries<-read.table("Sampling_locations.txt")
 country<-taxaCountries[,2]
@@ -15,12 +15,12 @@ country<-taxaCountries[,2]
 #the Equal rates model assumes that the transition rates from one state to the other and that is just plainly wrong
 #I need to take the distance of the cities into account probably. So here the transition rates would probably depend on
 #the distance of the 2 locations?
-ERreconstruction <- ape::ace(country, tree1, type="discrete")# equal rates model #at the root the US has highest likelhood with 0.05
+ERreconstruction <- ape::ace(country, tree, type="discrete")# equal rates model #at the root the US has highest likelhood with 0.05
 lik.anc_ER<-ERreconstruction$lik.anc
 
 #taking the most likely state at each node
 ancestral_states_ER<-rep("",1388)
-for(i in 1:tree1$Nnode){
+for(i in 1:tree$Nnode){
   ancestral_states_ER[i]<-colnames(lik.anc_ER)[which(lik.anc_ER[i,]==max(lik.anc_ER[i,]))]
 }
 
@@ -35,7 +35,7 @@ for(i in 1:tree2$Nnode){
   }
 }
 comparison=rep(NA,1388)
-for(i in 1:tree1$Nnode){
+for(i in 1:tree$Nnode){
   comparison[i]=ancestral_states_Bayesian[i]==ancestral_states_ER[[i]]
 }
 
@@ -45,37 +45,42 @@ sum(comparison[1:floor(length(comparison)/2)])
 sum(comparison[1:floor(length(comparison)/2)])/(length(comparison)/2)
 
 all_states_ER=c(as.vector(country), ancestral_states_ER)
-all_states_ER_sorted<-all_states_ER[tree1$edge[,2]]
-tree1_annotated<-tree1
-tree2$tip.label
-country
 
+###not needed because using function from tree.io
+  
+#sort according to 2nd column of edge table (child node of branch)
+#all_states_ER_sorted<-all_states_ER[tree$edge[,2]]
+#tree_annotated<-tree
 
-###TODO
-for(i in 1:2776){
- # if(i==1){
-  #  tree1_annotated$root.annotation<-list("city"=all_states_ER_sorted[[i]])
-  #}else{
-  tree1_annotated$annotation[[i]]<- list("city"=all_states_ER_sorted[[i]])
-  }
+#for(i in 1:2776){
+#  tree_annotated$root.annotation<-list("city"=all_states_ER[[1390]])
+#  tree_annotated$annotations<- list("city"=all_states_ER_sorted[[i]])
 #}
+
+
+library(treeio)
+N <- Nnode2(tree)
+library(dplyr)
+annotations <- tibble(node = 1:N, city = all_states_ER)
+annotated_tree <- full_join(tree, annotations, by = "node")
+write.beast(annotated_tree, file= "annotated_tree.tree")
+tree = readT("annotated_tree.tree")
 
 transitions = matrix(0, nrow=length(unique(country)), ncol=length(unique(country)))#0 matrix in size of distance matrix 
 colnames(transitions)=unique(country)
 rownames(transitions)=unique(country)
-for (i in 1:dim(tree1_annotated$edge)[1])#the edge table should be read as: rows are the edge numbers and first col is start node  and 2nd is end node of the branch or edge
+for (i in 1:dim(tree_annotated$edge)[1])#the edge table should be read as: rows are the edge numbers and first col is start node  and 2nd is end node of the branch or edge
 {
-  if (tree1_annotated$edge[i,1]%in%tree1_annotated$edge[,2])#if a start node is also a end node, then we are going from somewhere to that city. We want to assign the start city as location 1
+  if (tree_annotated$edge[i,1]%in%tree_annotated$edge[,2])#if a start node is also a end node, then we are going from somewhere to that city. We want to assign the start city as location 1
   {
-    index = which(tree1_annotated$edge[,2]==tree1_annotated$edge[i,1])#get branch that has node of interest as end node
-    location1 = tree1_annotated$annotation[[index]]$city #assign start node of branch as location1
+    index = which(tree_annotated$edge[,2]==tree_annotated$edge[i,1])#get branch that has node of interest as end node
+    location1 = tree_annotated$annotations[[index]]$city #assign start node of branch as location1
   }	else	{
-    location1 = tree1_annotated$root.annotation$city#tip nodes are not in column 1 so if it is not an internal node it is then the root node
+    location1 = tree_annotated$root.annotation$city#tip nodes are not in column 1 so if it is not an internal node it is then the root node
   }
-  location2 = tree1_annotated$annotation[[i]]$city#location 2 is the start of the branch we are at atm
+  location2 = tree_annotated$annotations[[i]]$city#l
   transitions[location1,location2] = transitions[location1,location2]+1
 }
-
 
 SYMreconstruction <- ape::ace(country, tree, type="discrete", model="SYM", marginal=T) #symmetrical model 
 ARDreconstruction <- ace(country, tree, type="discrete", model="ARD") # all rates different model 

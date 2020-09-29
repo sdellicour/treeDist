@@ -118,7 +118,7 @@ readT = function(file, tree.names=NULL) {
 				edge.length[j] <<- as.numeric(X[index])
 				if (length(annotations) > 0)
 					{
-						permute[[j]] <<- annotations[[as.numeric(X[2])]]# permute traits
+			  		permute[[j]] <<- annotations[[as.numeric(X[2])]]# permute traits
 					}
 				k <<- k + 1L
 				tip <<- tip + 1L
@@ -132,7 +132,7 @@ readT = function(file, tree.names=NULL) {
 				edge.length[l] <<- as.numeric(X[index])
 				if (length(annotations) >  0)
 					{
-						permute[[l]] <<- annotations[[as.numeric(X[2])]]# permute traits
+					permute[[l]] <<- annotations[[as.numeric(X[2])]]# permute traits
 					}
 				k <<- k + 1L
 				current.node <<- edge[l, 1]

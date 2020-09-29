@@ -13,18 +13,20 @@ observeEvent(input$start, {
   
   output$plot = renderPlot({
     
-    tree_file = "example/PDCV_discrete_MCC.tree"
-    distances_file = "example/Pig_farms_distances.csv"
-    tree = readT(tree_file)#created with ape package
-    plot(tree)
-    distances = read.csv(distances_file, head=T)
+    tree_file = "annotated_tree.tree"
+    #distances_file = "bedford/subsetDeff.txt"
+    distances_file = "bedford/subsetDgeo.txt"
     
+    countries<-unique(read.table("Sampling_locations.txt")[,2])
+    
+    tree = readT(tree_file)
+    distances = read.csv(distances_file, head=T, sep="\t")
     head(print(tree)); print(distances)
     
     locations = colnames(distances)
     transitions = matrix(0, nrow=dim(distances)[1], ncol=dim(distances)[1])#0 matrix in size of distance matrix 
-    row.names(transitions) = row.names(distances) #TODO are colnames always equal rownames? perhaps simplify
-    colnames(transitions) = colnames(distances)
+    row.names(transitions) = countries 
+    colnames(transitions) = countries
     for (i in 1:dim(tree$edge)[1])#the edge table should be read as: rows are the edge numbers and first col is start node  and 2nd is end node of the branch or edge
     {
       if (tree$edge[i,1]%in%tree$edge[,2])#if a start node is also a end node, then we are going from somewhere to that city. We want to assign the start city as location 1
