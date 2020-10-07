@@ -13,11 +13,11 @@ observeEvent(input$start, {
   
   output$plot = renderPlot({
     
-    tree_file = "annotated_tree.tree"
+    tree_file = "input/h3_small_sample.MCC.tre"
     #distances_file = "bedford/subsetDeff.txt"
-    distances_file = "bedford/subsetDgeo.txt"
+    distances_file = "input/subsetDeff.txt"
     
-    countries<-unique(read.table("Sampling_locations.txt")[,2])
+    countries<-unique(read.table("input/Sampling_locations.txt")[,2])
     
     tree = readT(tree_file)
     distances = read.csv(distances_file, head=T, sep="\t")
@@ -33,14 +33,27 @@ observeEvent(input$start, {
       {
         index = which(tree$edge[,2]==tree$edge[i,1])#get branch that has node of interest as end node
         location1 = tree$annotations[[index]]$city #assign start node of branch as location1
+        if(is.list(location1))
+          {
+          location1 = tree$annotations[[index]]$city[[1]]#take arbritarily the first MP ancestral state
+        }
       }	else	{
         location1 = tree$root.annotation$city#tip nodes are not in column 1 so if it is not an internal node it is then the root node
+        if(is.list(location1))
+          {
+          location1 = tree$root.annotation$city[[1]]
+        }
       }
       location2 = tree$annotations[[i]]$city#location 2 is the start of the branch we are at atm
+      if(is.list(location2))
+      {
+        location2 = tree$annotations[[i]]$city[[1]]
+      }
       transitions[location1,location2] = transitions[location1,location2]+1
     }
-    
-    
+
+    full_transitions=transitions
+    transitions[which(transitions!=0)]
     distances = distances[lower.tri(distances)]
     transitions = transitions[lower.tri(transitions)]#assign true to lower triangle values
     distances = distances[which(transitions!=0)]
@@ -56,10 +69,36 @@ observeEvent(input$start, {
     title(ylab="transitions", cex.lab=1.1, mgp=c(2.0,0,0), col.lab="gray30")
     if (logTransformation == TRUE) title(xlab="distance (log)", cex.lab=1.1, mgp=c(1.4,0,0), col.lab="gray30")
     if (logTransformation != TRUE) title(xlab="distance", cex.lab=1.1, mgp=c(1.4,0,0), col.lab="gray30")
+    
+    
+    #LINEAR REGRESSION
+    abline(lm(transitions ~ distances))
+    lm=lm(transitions~distances)
+    plot(lm$residuals)
+    which(lm$residuals>10) 
+    
+    #86 can I now trace this back to which transition this is?
+    
+    transitions[86]
+    possible_outliers=which(y==13)
+    
+    rows=rep(0,4)
+    columns=rep(0,4)
+    rc=matrix(as.character(c(rows,columns)),4)
+    for (i in 1:length(possible_outliers))
+    {
+      rows[i]=ceiling(possible_outliers[i]/dim(y)[1])
+      columns[i]=possible_outliers[i]%%dim(y)[1]
+      rc[i,]=c(colnames(y)[rows[i]],colnames(y)[columns[i]])
+    }
+    rc
+    title("ML - Geographical distance")
+    summary(lm)
 
-#extend functionality with the possibility to upload a tree that does not yet contain the information of transitions between locations
+    
+      #extend functionality with the possibility to upload a tree that does not yet contain the information of transitions between locations
 #create function that computes the transition frequencies using maximum likelihood or parsimony and then output enhanced tree file
-    source("transitions.R")#maybe better to keep everyhtin in server
+    source("AncestralReconstruction.R")#maybe better to keep everyhtin in server
 
 }) # output$plot = renderPlot({
 }) # observeEvent(input$start, {
