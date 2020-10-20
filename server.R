@@ -1,5 +1,6 @@
 library(raster)
 library(shiny)
+library(dplyr)
 library(shinyIncubator)
 
 shinyServer(function(input, output) {
@@ -7,12 +8,12 @@ shinyServer(function(input, output) {
 observeEvent(input$start, {
 
   output$plot = renderPlot({
+
     
-
-
-transitions_raw_fun = function(distances_raw_file="input/subsetDeff.txt", city = "states") {
+#### Defining functions ##
+    
+transitions_raw_fun = function(distances_raw_file="input/subsetDgeo", city = "states") {
   distances_raw <- read.csv(distances_raw_file, head=T, sep="\t")
-  
   locations = colnames(distances_raw)
   transitions_raw= matrix(0, nrow=dim(distances_raw)[1], ncol=dim(distances_raw)[1])#0 matrix in size of distance matrix 
   row.names(transitions_raw) = countries 
@@ -63,8 +64,14 @@ plotting_prep <- function(makeSymmetric = TRUE, transitions_raw, distances_raw) 
     }
     transitions <- transitions_added
   }
+  names<-outer(X = colnames(transitions_raw),
+               Y = rownames(transitions_raw),
+               FUN = function(X,Y) paste(X,Y,sep="<->"))
+  names = names[lower.tri(transitions)]#assign true to lower triangle values
   transitions = transitions[lower.tri(transitions)]#assign true to lower triangle values
+  names=names[which(transitions!=0)]
   transitions = transitions[which(transitions != 0)]
+  names(transitions)=names
   distances = distances_raw[lower.tri(distances_raw)]
   distances = distances[which(transitions != 0)]
   list<-list(transitions=transitions, distances=distances, transitions_added= transitions_added)
@@ -72,6 +79,7 @@ plotting_prep <- function(makeSymmetric = TRUE, transitions_raw, distances_raw) 
 }
 
 plotting_fun<-function(logTransformation=TRUE, distances, transitions){
+  pdf(file=paste("output/Transitions",plotname, sep="-"))
   if (logTransformation == TRUE) distances = log(distances)
   par(mgp=c(0,0,0), oma=c(0,0,0,0), mar=c(3,3.5,1.5,2))
   cols1 = c("#FAA521","#4676BB"); 
@@ -85,41 +93,68 @@ plotting_fun<-function(logTransformation=TRUE, distances, transitions){
   if (logTransformation != TRUE) title(xlab="distance", cex.lab=1.1, mgp=c(1.4,0,0), col.lab="gray30")
 }
 
-linear_regression<-function(x=30){
+linear_regression<-function(cut_off_residual=NULL, percentile=95){
     abline(lm(transitions ~ distances))
+    dev.off()
     lm=lm(transitions~distances)
+    pdf(file=paste("output/Residuals",plotname, sep="-"))
     plot(lm$residuals)
+    dev.off()
     #TODO make this also applicable when there are more than one posible outlier.
     df_transitions_added<-data.frame(transitions_added)
-    transitions[which(lm$residuals>x)[[1]]]
-    possible_outliers=which(df_transitions_added==69)
-    print("Possible Outlier:" )
-    print(colnames(df_transitions_added[ceiling(possible_outliers/dim(df_transitions_added)[1])]))
-    colnames(df_transitions_added[possible_outliers%%dim(df_transitions_added)[1]])
-    summary(lm)
-}   
+    if(is.null(cut_off_residual)){ cut_off_residual=quantile((lm$residuals), percentile/100)}
+    index=transitions[which(lm$residuals>cut_off_residual)]
+    print(paste(length(index), "Possible Outlier(s):" , sep = " "))
+    print(paste("cut_off_residual: ",cut_off_residual))
+    output<-as.matrix(index%>%sort(decreasing =T))
+    colnames(output)<-"Transitions"
+    print(output)
+    print(summary(lm))
+    list(output=output,lm=lm)
+    }   
 
 
-source("readT.R")
+#### Setting variables ##
+
 tree_file="input/h3_small_sample.MCC.tre"
-tree <-readT(tree_file)
-
 sampling.locations="input/Sampling_locations.txt"
 countries<-levels(read.table(sampling.locations)[,2])
+distances_raw_file="input/origin.txt"
+city = "states"
+makeSymmetric=T
+logTransformation = FALSE
+plotname=gsub("\\.|/","_",paste("Log",logTransformation,"Sym",makeSymmetric,"Treeannotation",city,distances_raw_file,tree_file,sep="-"))
 #source("AncestralReconstruction.R")
 
-distances_raw=transitions_raw_fun(distances_raw_file="input/subsetDeff.txt", city = "states")$distances_raw
-transitions_raw=transitions_raw_fun(distances_raw_file="input/subsetDeff.txt", city = "states")$transitions_raw
 
-transitions<-plotting_prep(makeSymmetric=TRUE, distances_raw = distances_raw, transitions_raw = transitions_raw)$transitions
-distances<-plotting_prep(makeSymmetric=TRUE, distances_raw = distances_raw, transitions_raw = transitions_raw)$distances
-transitions_added<-plotting_prep(makeSymmetric=TRUE, distances_raw = distances_raw, transitions_raw = transitions_raw)$transitions_added
+#### Calling functions ##
 
-plotting_fun(logTransformation = FALSE, distances = distances, transitions=transitions)
+source("readT.R")
+tree <-readT(tree_file)
+distances_raw=transitions_raw_fun(distances_raw_file=distances_raw_file, city = city)$distances_raw
+transitions_raw=transitions_raw_fun(distances_raw_file=distances_raw_file, city =city)$transitions_raw
 
-linear_regression(x=40)
+transitions<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw, transitions_raw = transitions_raw)$transitions
+distances<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw, transitions_raw = transitions_raw)$distances
+transitions_added<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw, transitions_raw = transitions_raw)$transitions_added
+
+plotting_fun(logTransformation = logTransformation, distances = distances, transitions=transitions)
+
+linear_regression()
 
 
+
+###trials
+
+popsize<-read.table("input/PopSize.txt")
+popsize
+
+origin<-matrix(rep(popsize[,2],57),ncol=57)
+colnames(origin)<-popsize[,1]
+rownames(origin)<-popsize[,1]
+destination<-t(origin)
+write.csv(x=destination,file = "input/destination.txt")
+write.csv(x=origin,file = "input/origin.txt")
 
 }) # output$plot = renderPlot({
 }) # observeEvent(input$start, {

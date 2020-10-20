@@ -1,0 +1,2791 @@
+#NEXUS
+[R-package treeio, Mon Oct 12 16:03:12 2020]
+
+BEGIN TAXA;
+	DIMENSIONS NTAX = 1389;
+	TAXLABELS
+		A/ARGENTINA/10/2001
+		A/ARGENTINA/13/2001
+		A/ARGENTINA/25/2001
+		A/ARGENTINA/3758/2001
+		A/ARGENTINA/3759/2001
+		A/ARGENTINA/44/2001
+		A/ARGENTINA/5/2001
+		A/ARGENTINA/5995/2000
+		A/ARGENTINA/mc5/2001
+		A/Alabama/WRAIR1242P/2009
+		A/Alaska/02/2010
+		A/Albania/250/2009
+		A/Alexandroupolis/118/2005
+		A/Alexandroupolis/16/2005
+		A/Alexandroupolis/99/2007
+		A/Andaman/071559/021107
+		A/Aragon/RR-3438/2008
+		A/Argentina/01/2010
+		A/Argentina/117/2007
+		A/Argentina/146/2007
+		A/Argentina/27724/2010
+		A/Argentina/27891/2010
+		A/Argentina/28342/2010
+		A/Argentina/28367/2010
+		A/Argentina/28370/2010
+		A/Argentina/28378/2010
+		A/Argentina/28379/2010
+		A/Argentina/3689/2007
+		A/Argentina/3726/2007
+		A/Argentina/3743/2007
+		A/Argentina/3888/2007
+		A/Argentina/389/2007
+		A/Argentina/405/2007
+		A/Argentina/445/2007
+		A/Argentina/449/2007
+		A/Argentina/7646/2009
+		A/Argentina/8409/2010
+		A/Ashburton/280/2004
+		A/Auckland/17/2008
+		A/Auckland/599/2000
+		A/Auckland/602/2001
+		A/Auckland/603/2001
+		A/Auckland/611/2002
+		A/Australia/2/2009
+		A/Australia/22/2009
+		A/Australia/30/2009
+		A/Australia/34/2009
+		A/Australia/NHRC0012/2005
+		A/Austria/134855/2004
+		A/Austria/138112/2004
+		A/Austria/138263/2004
+		A/Austria/138808/2004
+		A/Austria/141367/2004
+		A/Austria/211557/2005
+		A/Austria/76036/2003
+		A/Austria/76165/2003
+		A/Austria/76359/2003
+		A/Austria/79477/2003
+		A/Austria/79798/2003
+		A/BANGKOK/109/2002
+		A/BANGKOK/115/2001
+		A/BANGKOK/178/2000
+		A/BANGKOK/190/2002
+		A/BANGKOK/202/2000
+		A/BANGKOK/224/2001
+		A/BANGKOK/226/2001
+		A/BANGKOK/27/2000
+		A/BANGKOK/28/2001
+		A/BANGKOK/328/2001
+		A/BANGKOK/480/2001
+		A/BANGKOK/504/2001
+		A/BANGKOK/62/2000
+		A/BANGKOK/86/2001
+		A/BEIJING/114/2001
+		A/BEIJING/144/2001
+		A/BEIJING/157/2001
+		A/BEIJING/159/2001
+		A/BEIJING/161/2001
+		A/BEIJING/188/2001
+		A/BRAZIL/10/2000
+		A/BRAZIL/18a/2000
+		A/BRAZIL/2030/2002
+		A/BRAZIL/2c/2000
+		A/BRAZIL/4b/2000
+		A/BRAZIL/5/2002
+		A/BRAZIL/694/2000
+		A/BRAZIL/718/2000
+		A/BRAZIL/822/2001
+		A/BRAZIL/991/2000
+		A/BRISBANE/100/2009
+		A/BRISBANE/122/2010
+		A/BRISBANE/219/2010
+		A/BRISBANE/258/2010
+		A/BRISBANE/262/2010
+		A/BRISBANE/3/2000
+		A/BULGARIA/113/2000
+		A/BULGARIA/28/2001
+		A/BULGARIA/874/2000
+		A/Bahia/100/2011
+		A/Bahia/44/2011
+		A/Bahia/45/2011
+		A/Bahia/65/2011
+		A/Bahia/97/2011
+		A/Bahia/98/2011
+		A/Baleares/RR6848/2010
+		A/Bangladesh/1695/2007
+		A/Bangladesh/2009/2008
+		A/Bangladesh/2012/2010
+		A/Bangladesh/2363/2009
+		A/Bangladesh/2425/2009
+		A/Bangladesh/3017/2008
+		A/Bangladesh/30376/2007
+		A/Bangladesh/3161/2010
+		A/Bangladesh/4699/2007
+		A/Bangladesh/483/2009
+		A/Bangladesh/5004/2010
+		A/Bangladesh/5014/2009
+		A/Bangladesh/7772/2009
+		A/Bangladesh/8004/2010
+		A/Bangladesh/9745/2007
+		A/Bangladesh/9890/2008
+		A/Bangladesh/C5_12/2003
+		A/Bangladesh/C5_15/2003
+		A/Bangladesh/C5_16/2003
+		A/Bangladesh/C5_17/2003
+		A/Bangladesh/C5_18/2003
+		A/Bangladesh/C5_19/2003
+		A/Bangladesh/C5_21/2003
+		A/Bangladesh/C5_24/2003
+		A/Bangladesh/C5_25/2003
+		A/Bay_of_Plenty/279/2004
+		A/Beijing-Xicheng/12611/2010
+		A/Beijing/20/2002
+		A/Beijing/35/2002
+		A/Beijing/4/2000
+		A/Beijing/44/2002
+		A/Beijing/51/2002
+		A/Beijing/68/2003
+		A/Beijing/Xicheng51/2007
+		A/Belgrade/WRAIR2379N/2010
+		A/Bolivia/317/2010
+		A/Boston/56/2008
+		A/Boston/60/2008
+		A/Boston/61/2008
+		A/Boston/81/2008
+		A/Boston/DOA01/2011
+		A/Boston/DOA07/2011
+		A/Boston/DOA15/2011
+		A/Boston/DOA61/2011
+		A/Boston/DOA75/2011
+		A/Boston/DOA85/2011
+		A/Brazil/0610/2010
+		A/Brazil/1619/2008
+		A/Brazil/1623/2008
+		A/Brazil/1727/2002
+		A/Brazil/1732/2002
+		A/Brazil/1814/2009
+		A/Brazil/2458/2002
+		A/Brazil/884/2009
+		A/Brazil/933/2009
+		A/Brazil/BR_1898_ORIGINAL/2006
+		A/Brazil/BR_IAL_2314/2005
+		A/Bretagne/2248/2010
+		A/Brisbane/04/2007
+		A/Brisbane/10/2007
+		A/Brisbane/11/2006
+		A/Brisbane/233/2006
+		A/Brisbane/24/2008
+		A/Brisbane/602/2007
+		A/Brisbane/9/2006
+		A/British-Columbia/RV3075/2009
+		A/Busan/11/2001
+		A/Busan/16/2001
+		A/Busan/4297/2008
+		A/Busan/44/2001
+		A/Busan/71/2001
+		A/CAMBODIA/1/2010
+		A/CHILE/5109/2001
+		A/CHILE/5299/2000
+		A/CHILE/5823/2001
+		A/CHRISTCHURCH/49/2010
+		A/COLOMBIA/3026/2001
+		A/California/19/2010
+		A/California/25/2010
+		A/California/27/2010
+		A/California/3000/2012
+		A/California/3006/2012
+		A/California/3022/2012
+		A/California/NHRC0001/2006
+		A/California/NHRC0001/2011
+		A/California/NHRC0002/2005
+		A/California/NHRC0006/2003
+		A/California/NHRC0010/2005
+		A/California/UR06_0588/2007
+		A/California/VRDL143/2009
+		A/California/VRDL184/2009
+		A/California/VRDL216/2009
+		A/California/VRDL274/2009
+		A/Cambodia/NHRCC00001/2009
+		A/Cambodia/Q210/2006
+		A/Cambodia/Q342/2006
+		A/Cambodia/R068/2007
+		A/Cambodia/S272/2008
+		A/Canberra/18/2009
+		A/Canterbury/01/2002
+		A/Canterbury/06/2001
+		A/Canterbury/07/2001
+		A/Canterbury/102/2002
+		A/Canterbury/103/2004
+		A/Canterbury/127/2005
+		A/Canterbury/140/2001
+		A/Canterbury/149/2001
+		A/Canterbury/18/2004
+		A/Canterbury/20/2005
+		A/Canterbury/21/2004
+		A/Canterbury/212/2005
+		A/Canterbury/248/2005
+		A/Canterbury/313/2004
+		A/Canterbury/395/2003
+		A/Canterbury/435/2003
+		A/Canterbury/47/2002
+		A/Canterbury/58/2002
+		A/Canterbury/60/2002
+		A/Canterbury/75/2000
+		A/Canterbury/81/2000
+		A/Ceara/177/2002
+		A/Chanchamayo/FSJ1176/2006
+		A/Chennai/0634985/141106
+		A/Cheongju/H380/2007
+		A/Cheongju/H393/2007
+		A/Cheongju/H397/2008
+		A/Cheongju/H412/2008
+		A/Cheongju/H471/2008
+		A/Chile/5845/2010
+		A/Chile/6278/2010
+		A/Chile/6380/2010
+		A/Chongqing-Banan/1286/2010
+		A/Chongqing/257/2003
+		A/Chongqing/Yuzhong169/2007
+		A/Christchurch/05/2008
+		A/Christchurch/1/2007
+		A/Christchurch/14/2004
+		A/Christchurch/19/2006
+		A/Christchurch/19/2008
+		A/Chungbuk/4137/2008
+		A/Chungnam/1463/2007
+		A/Chungnam/1929/2007
+		A/Colombia/227/2009
+		A/Colombia/6123/2009
+		A/Colombia/7158/2009
+		A/Colorado/2971/2012
+		A/Colorado/3005/2012
+		A/Colorado/3010/2012
+		A/Colorado/AF2822/2012
+		A/Colorado/UR06_0023/2007
+		A/Cordoba/1007333/01
+		A/DaNang/DN453/2008
+		A/Daegu/277/2004
+		A/Daegu/4165/2008
+		A/Daegu/418/2004
+		A/Daegu/626/2004
+		A/Darwin/20/2007
+		A/Darwin/3/2007
+		A/Darwin/4/2007
+		A/Deajeon/2943/2010
+		A/Delhi/0635427/100506
+		A/Delhi/0635431/190706
+		A/Denmark/08/2002
+		A/Denmark/105/2010
+		A/Denmark/200/2000
+		A/Denmark/203/2000
+		A/Denmark/204/2000
+		A/Denmark/206/2000
+		A/Denmark/207/2000
+		A/Denmark/21/2011
+		A/Denmark/22/2011
+		A/Denmark/24/2002
+		A/District-of-Columbia/01/2010
+		A/District_of_Columbia/AF2775/2012
+		A/Dnipropetrovsk/324/2007
+		A/Dnipropetrovsk/429/2007
+		A/Donetsk/248/2009
+		A/Dunedin/14/2002
+		A/ECUADOR/2635/2001
+		A/England/293/2008
+		A/England/359/2007
+		A/England/3940462/2010
+		A/England/4414681/2004
+		A/England/446040/2004
+		A/England/455/2002
+		A/England/46/2004
+		A/England/47/2004
+		A/England/470/2007
+		A/England/472/2005
+		A/England/49/2004
+		A/England/5014715/2004
+		A/England/502689/2005
+		A/England/5070214/2005
+		A/England/51/2004
+		A/England/512060/2005
+		A/England/5134761/2005
+		A/England/53/2004
+		A/England/534/2003
+		A/England/55243/2005
+		A/England/55281/2005
+		A/England/556/2006
+		A/England/557/2006
+		A/England/558/2003
+		A/England/558/2006
+		A/England/560/2006
+		A/England/567/2003
+		A/England/568/2003
+		A/England/585/2003
+		A/England/60384/2006
+		A/England/60385/2006
+		A/England/61007/2006
+		A/England/613446/2006
+		A/England/61762/2006
+		A/England/642/2003
+		A/England/646836/2006
+		A/England/687/2008
+		A/England/691/2010
+		A/England/695/2008
+		A/England/699/2008
+		A/England/749411/2007
+		A/England/79/2007
+		A/EspiritoSanto/128/00
+		A/EspiritoSanto/88/02
+		A/FIJI/52/2010
+		A/FUKUOKA/15/2002
+		A/FUKUSHIMA/127/2001
+		A/Finland/9/2008
+		A/Firenze/24/08
+		A/Florida/07/2007
+		A/Florida/10/2008
+		A/Florida/19/2010
+		A/Florida/UR07_0150/2008
+		A/Fujian-Siming/1242/2008
+		A/Fujian-Tongan/196/2009
+		A/Fukuoka/F19/2006
+		A/Fukuoka/F484/2005
+		A/Fukuoka/F488/2005
+		A/Fukuoka/F489/2005
+		A/Fukuoka/F52/2006
+		A/Galati/47519/2011
+		A/Gansu/271/2003
+		A/Gansu/Baiyin39/2007
+		A/Gansu/Chengguan11/2007
+		A/Geneva/1491091/2009
+		A/Geneva/1570509/2009
+		A/Geneva/4149722/2010
+		A/Genoa/1/2002
+		A/Georgia/NHRC0001/2006
+		A/Guangdong/04/2007
+		A/Guangdong/17/2007
+		A/Guangdong/30/2007
+		A/Guangdong/322/2010
+		A/Guangdong/429/2010
+		A/Guangdong/441/2010
+		A/Guangdong/472/2009
+		A/Guangdong/548/2008
+		A/Guangdong/578/2008
+		A/Guangdong/692/2003
+		A/Guangdong/94/2011
+		A/Guyane/25/2007
+		A/Gwangju/554/2004
+		A/Gyeongnam/4506/2007
+		A/HIROSHIMA-C/1/2001
+		A/HIROSHIMA/182/2000
+		A/HIROSHIMA/253/2000
+		A/HIROSHIMA/56/2010
+		A/HUBEI/61/2002
+		A/HaNoi/BM238/2007
+		A/HaNoi/GS0738/2007
+		A/HaNoi/HN30136/2004
+		A/HaNoi/ISBM16/2005
+		A/HaNoi/N080/2007
+		A/HaNoi/Q071/2007
+		A/HaNoi/Q163/2007
+		A/HaNoi/Q372/2005
+		A/HaNoi/Q464/2007
+		A/HaNoi/TX058/2007
+		A/Hanoi/209/2002
+		A/Hanoi/BM767/2003
+		A/Hanoi/HN30135/2004
+		A/Hanoi/HN30240/2004
+		A/Hebei/22/2002
+		A/Hebei/Qiaodong51/2007
+		A/Hebei/Yunhe33/2007
+		A/Heilongjiang-Nangang/134/2009
+		A/Henan/7/2002
+		A/Hokkaido/10H039/2011
+		A/Hokkaido/10H060/2011
+		A/Hokkaido/10H079/2011
+		A/Hong-Kong/105/2008
+		A/Hong-Kong/1775/2010
+		A/Hong-Kong/1837/2010
+		A/Hong-Kong/184/2008
+		A/Hong-Kong/1868/2008
+		A/Hong-Kong/2000/2009
+		A/Hong-Kong/2007/2009
+		A/Hong-Kong/2008/2009
+		A/Hong-Kong/2097/2010
+		A/Hong-Kong/2146/2010
+		A/Hong-Kong/23/2008
+		A/Hong-Kong/2571/2007
+		A/Hong-Kong/26233/2009
+		A/Hong-Kong/3577/2010
+		A/Hong-Kong/3615/2010
+		A/Hong-Kong/3716/2010
+		A/Hong-Kong/39/2008
+		A/Hong-Kong/4758/2007
+		A/Hong-Kong/6881/2010
+		A/Hong-Kong/71/2008
+		A/Hong-Kong/97/2008
+		A/Hong-Kong2180//2010
+		A/Hong_Kong/CUHK11949/2005
+		A/Hong_Kong/CUHK12316/2005
+		A/Hong_Kong/CUHK12425/2005
+		A/Hong_Kong/CUHK13172/2001
+		A/Hong_Kong/CUHK13278/2002
+		A/Hong_Kong/CUHK13299/2003
+		A/Hong_Kong/CUHK13339/2003
+		A/Hong_Kong/CUHK13483/2003
+		A/Hong_Kong/CUHK13510/2001
+		A/Hong_Kong/CUHK13658/2001
+		A/Hong_Kong/CUHK20169/2000
+		A/Hong_Kong/CUHK20173/2000
+		A/Hong_Kong/CUHK21128/2000
+		A/Hong_Kong/CUHK21259/2004
+		A/Hong_Kong/CUHK21421/2001
+		A/Hong_Kong/CUHK21582/2002
+		A/Hong_Kong/CUHK21733/2001
+		A/Hong_Kong/CUHK21742/2002
+		A/Hong_Kong/CUHK21932/2001
+		A/Hong_Kong/CUHK22078/2000
+		A/Hong_Kong/CUHK22087/2000
+		A/Hong_Kong/CUHK22162/2000
+		A/Hong_Kong/CUHK22644/2001
+		A/Hong_Kong/CUHK22888/2001
+		A/Hong_Kong/CUHK23111/2002
+		A/Hong_Kong/CUHK23113/2002
+		A/Hong_Kong/CUHK23162/2002
+		A/Hong_Kong/CUHK24167/2002
+		A/Hong_Kong/CUHK24289/2004
+		A/Hong_Kong/CUHK24510/2001
+		A/Hong_Kong/CUHK24882/2001
+		A/Hong_Kong/CUHK24985/2001
+		A/Hong_Kong/CUHK26907/2000
+		A/Hong_Kong/CUHK26969/2000
+		A/Hong_Kong/CUHK26980/2000
+		A/Hong_Kong/CUHK27157/2000
+		A/Hong_Kong/CUHK27374/2000
+		A/Hong_Kong/CUHK28038/2000
+		A/Hong_Kong/CUHK28040/2000
+		A/Hong_Kong/CUHK33047/2002
+		A/Hong_Kong/CUHK34175/2002
+		A/Hong_Kong/CUHK34193/2002
+		A/Hong_Kong/CUHK35011/2004
+		A/Hong_Kong/CUHK35117/2004
+		A/Hong_Kong/CUHK40022/2005
+		A/Hong_Kong/CUHK45130/2006
+		A/Hong_Kong/CUHK50080/2001
+		A/Hong_Kong/CUHK50200/2002
+		A/Hong_Kong/CUHK50895/2003
+		A/Hong_Kong/CUHK50952/2003
+		A/Hong_Kong/CUHK5111/2003
+		A/Hong_Kong/CUHK51380/2003
+		A/Hong_Kong/CUHK51424/2001
+		A/Hong_Kong/CUHK51490/2001
+		A/Hong_Kong/CUHK52011/2003
+		A/Hong_Kong/CUHK52247/2000
+		A/Hong_Kong/CUHK5250/2002
+		A/Hong_Kong/CUHK53004/2006
+		A/Hong_Kong/CUHK53005/2006
+		A/Hong_Kong/CUHK5316/2003
+		A/Hong_Kong/CUHK53732/2004
+		A/Hong_Kong/CUHK53798/2006
+		A/Hong_Kong/CUHK53907/2006
+		A/Hong_Kong/CUHK60052/2006
+		A/Hong_Kong/CUHK6206/2002
+		A/Hong_Kong/CUHK6383/2003
+		A/Hong_Kong/CUHK63957/2006
+		A/Hong_Kong/CUHK64082/2006
+		A/Hong_Kong/CUHK65241/2006
+		A/Hong_Kong/CUHK66001/2006
+		A/Hong_Kong/CUHK68792/2006
+		A/Hong_Kong/CUHK69904/2006
+		A/Hong_Kong/CUHK7047/2005
+		A/Hong_Kong/CUHK7221/2005
+		A/Hong_Kong/CUHK74438/2003
+		A/Hong_Kong/H090_674_V10/2009
+		A/Hong_Kong/H090_689_V22/2009
+		A/Hong_Kong/H090_709_V1
+		A/Hong_Kong/H090_714_V10/2009
+		A/Hong_Kong/H090_724_V10/2009
+		A/Hong_Kong/H090_733_V10/2009
+		A/Hong_Kong/H090_747_V22/2009
+		A/Hong_Kong/H090_763_V10/2009
+		A/Hong_Kong/HKU100/2005
+		A/Hong_Kong/HKU104/2005
+		A/Hong_Kong/HKU107/2005
+		A/Hong_Kong/HKU111/2005
+		A/Hong_Kong/HKU22/2004
+		A/Hong_Kong/HKU3/2004
+		A/Hong_Kong/HKU38/2004
+		A/Hong_Kong/HKU4/2004
+		A/Hong_Kong/HKU55/2005
+		A/Hong_Kong/HKU6/2004
+		A/Hong_Kong/HKU65/2005
+		A/Hong_Kong/HKU8/2004
+		A/Hong_Kong/HKU89/2004
+		A/Hong_Kong/HKU91/2004
+		A/Hong_Kong/NHRC0001/2005
+		A/Hubei/62/2002
+		A/Hue/H05/2008
+		A/Hunan-Yuhua/11209/2010
+		A/Hunan/195/2003
+		A/Hunan/422/2002
+		A/Hunan/Furong13/2007
+		A/Hutt/82/2000
+		A/Hyogo/10K300/2011
+		A/Hyogo/10K311/2011
+		A/INDIA/2701/2000
+		A/INDIA/3783/2000
+		A/INDONESIA/3277/2002
+		A/Idaho/18/2008
+		A/Illinois/09/2008
+		A/Illinois/NHRC0001/2006
+		A/Illinois/NHRC0002/2006
+		A/Illinois/UR06_0436/2007
+		A/Illinois/UR06_0555/2007
+		A/Incheon/4274/2008
+		A/India/0483/2009
+		A/India/0484/2009
+		A/India/25502/2002
+		A/India/2710/2009
+		A/India/2751/2009
+		A/India/3041/2010
+		A/India/3254/2010
+		A/India/3260/2010
+		A/India/3489/2010
+		A/India/7881/2008
+		A/India/7882/2008
+		A/India/7886/2008
+		A/India/AF1082/2007
+		A/India/C0511132/2005
+		A/India/C053375/2004
+		A/India/C058665/2004
+		A/India/C058666/2004
+		A/India/C058668/2005
+		A/India/C3_45/2002
+		A/India/C3_58/2002
+		A/India/D0512591/2005
+		A/India/D057066/2004
+		A/India/D0612410/2004
+		A/India/D0635419/2005
+		A/India/D0635426/2006
+		A/India/Dib0622568/2006
+		A/India/K0615330/2005
+		A/India/K0713778/2007
+		A/India/P05142/2005
+		A/India/P055208/2005
+		A/India/P057475/2005
+		A/Ivacevichi/115/2007
+		A/Japan/26/2009
+		A/Japan/2981/2012
+		A/Japan/3003/2012
+		A/Japan/3004/2012
+		A/Japan/3018/2012
+		A/Japan/51/2009
+		A/Japan/688/2007
+		A/Japan/7626/2007
+		A/Japan/765/2008
+		A/Japan/7743/2007
+		A/Japan/7814/2007
+		A/Japan/AF2158/2009
+		A/Japan/AF2772/2011
+		A/Japan/AF2777/2012
+		A/Japan/AF2779/2012
+		A/Japan/AF2826/2012
+		A/Japan/AF2847/2012
+		A/Japan/AF2849/2012
+		A/Japan/WRAIR1037P/2009
+		A/Japan/WRAIR1059P/2008
+		A/Japan/WRAIR1140P/2009
+		A/Jeonbuk/1117/2004
+		A/Jeonbuk/1144/2004
+		A/Jeonbuk/1713/2004
+		A/Jiangsu/Beitang18/2008
+		A/Jiangsu/Xuzhougulou149/2007
+		A/Jiangxi/1123/2006
+		A/Jilin/55/2000
+		A/Jilin/Chaoyang1124/2007
+		A/Jilin/Chaoyang1125/2007
+		A/Jilin/Chuanying164/2008
+		A/Jilin/Nanguan112/2007
+		A/Jochiwon/04/2001
+		A/KIEV/633/2000
+		A/KOCHI/499/2001
+		A/KOREA/2623/2000
+		A/KOREA/320/2000
+		A/KUMAMOTO/40/2010
+		A/Kansas/UR07_0135/2008
+		A/Kastoria/45/2005
+		A/Kentucky/UR07_0107/2008
+		A/KhanhHoa/KH494/2008
+		A/Kolkutta/0713780/240707
+		A/Kolkutta/072142/070706
+		A/Kolkutta/076499/040706
+		A/Kolkutta/0810433/020708
+		A/Kolkutta/0810434/020708
+		A/Kolkutta/0810436/020708
+		A/Kolkutta/089060/300608
+		A/Kolkutta/089062/010708
+		A/Kolkutta/089064/030708
+		A/Korea/122/2007
+		A/Korea/5991/2009
+		A/Korea/770/2002
+		A/Korea/7719/2008
+		A/Korea/7723/2008
+		A/Korea/7858/2008
+		A/Korea/AF2686/2010
+		A/Korea/AF2706/2010
+		A/Korea/AF2707/2011
+		A/Korea/AF2708/2011
+		A/Korea/AF2709/2011
+		A/Korea/AF2782/2012
+		A/Korea/AF2784/2012
+		A/Korea/AF2808/2012
+		A/Korea/AF2827/2012
+		A/Korea/AF2856/2012
+		A/Korea/WRAIR1038P/2009
+		A/Kyoto/10K207/2011
+		A/LIAONING/34/2001
+		A/LYON/1407/2001
+		A/Laos/82/2010
+		A/Laos/900/2010
+		A/Latur/1020759/090810
+		A/Liaoning-Tiedong/14/2008
+		A/Liaoning/32/2003
+		A/Lisboa/34/2008
+		A/Lyon/22/2007
+		A/Lyon/27/2007
+		A/MALAYSIA/542/2009
+		A/Malaysia/1657167/2006
+		A/Malaysia/1665090/2006
+		A/Malaysia/1666666/2006
+		A/Malaysia/1674395/2006
+		A/Malaysia/1676558/2006
+		A/Malaysia/1681079/2006
+		A/Malaysia/1755590/2007
+		A/Malaysia/1770921/2007
+		A/Malaysia/1777545/2007
+		A/Malaysia/1959864/2008
+		A/Malaysia/1997829/2008
+		A/Malaysia/1997831/2008
+		A/Malaysia/2205714/2009
+		A/Malaysia/23606/2002
+		A/Malaysia/25920/2003
+		A/Malaysia/25957/2003
+		A/Malaysia/26227/2003
+		A/Malaysia/26430/2003
+		A/Malaysia/26571/2003
+		A/Malaysia/26822/2004
+		A/Malaysia/28114/2004
+		A/Malaysia/28991/2004
+		A/Malaysia/29197/2004
+		A/Malaysia/29711/2004
+		A/Malaysia/306/2008
+		A/Malaysia/31944/2005
+		A/Malaysia/31998/2005
+		A/Malaysia/32133/2005
+		A/Malaysia/32171/2005
+		A/Malaysia/32226/2005
+		A/Malaysia/33464/2006
+		A/Malaysia/34015/2006
+		A/Malaysia/NHRC0001/2004
+		A/Malaysia/NHRC0003/2004
+		A/Maryland/07/2010
+		A/Michigan/07/2007
+		A/Minas_Gerais/10995/2009
+		A/Minas_Gerais/10998/2009
+		A/Minas_Gerais/11401/2009
+		A/Minas_Gerais/11404/2009
+		A/Minas_Gerais/11405/2009
+		A/Minas_Gerais/239/2011
+		A/Minnesota/08/2007
+		A/Minsk/137/2007
+		A/Mississippi/AF2159/2009
+		A/Missouri/NHRC0001/2000
+		A/Missouri/NHRC0001/2005
+		A/Missouri/NHRC0001/2006
+		A/Miyagi/N1220/2005
+		A/Miyagi/N1269/2005
+		A/Miyagi/N1289/2005
+		A/Miyagi/S707/2006
+		A/Miyagi/S709/2006
+		A/Moldova/167/2009
+		A/Moldova/169/2009
+		A/Morioka/17/2006
+		A/Morioka/18/2006
+		A/Morioka/22/2006
+		A/Morioka/34/2002
+		A/Morioka/35/2005
+		A/Morioka/52/2002
+		A/Murcia/RR6923/2010
+		A/Myanmar/M106/2008
+		A/Myanmar/M156/2008
+		A/NARA/3/2001
+		A/NEPAL/g-2079/2001
+		A/NIIGATA/2743/2000
+		A/NOTHABURI/488/2010
+		A/Nagasaki/10N053/2011
+		A/Nagasaki/10N090/2011
+		A/Nagasaki/N01/2005
+		A/Nagasaki/N07/2005
+		A/Nagasaki/N44/2006
+		A/NamDinh/HN30119/2004
+		A/Nanded/190809/040810
+		A/Nanjing/1/2009
+		A/Nebraska/21/2009
+		A/Nebraska/AF2854/2012
+		A/Nepal/1664/2004
+		A/Nepal/398/2009
+		A/Nepal/439/2009
+		A/Nepal/AF1106/2007
+		A/Netherlands/009/2010
+		A/Netherlands/034/2010
+		A/Netherlands/063/2011
+		A/Netherlands/1/2002
+		A/Netherlands/118/2001
+		A/Netherlands/120/2002
+		A/Netherlands/124/2001
+		A/Netherlands/126/2001
+		A/Netherlands/3/2000
+		A/Netherlands/34/2010
+		A/Netherlands/348/2007
+		A/Netherlands/363/2006
+		A/Netherlands/377/2008
+		A/Netherlands/42/2006
+		A/Netherlands/69/2007
+		A/Netherlands/761/2009
+		A/New-York/05/2010
+		A/New_York/1/2003
+		A/New_York/101/2002
+		A/New_York/103/2002
+		A/New_York/105/2002
+		A/New_York/108/2002
+		A/New_York/120/2002
+		A/New_York/123/2004
+		A/New_York/124/2001
+		A/New_York/125/2002
+		A/New_York/127/2001
+		A/New_York/156/2000
+		A/New_York/168/2000
+		A/New_York/173/2000
+		A/New_York/176/2000
+		A/New_York/178/2000
+		A/New_York/19/2003
+		A/New_York/192/2003
+		A/New_York/196/2003
+		A/New_York/200/2004
+		A/New_York/20342/2010
+		A/New_York/204/2003
+		A/New_York/207/2004
+		A/New_York/210/2005
+		A/New_York/232/2004
+		A/New_York/24/2003
+		A/New_York/273/2001
+		A/New_York/29/2003
+		A/New_York/3/2003
+		A/New_York/3011/2009
+		A/New_York/3272/2009
+		A/New_York/34/2003
+		A/New_York/359/2005
+		A/New_York/364/2004
+		A/New_York/366/2004
+		A/New_York/369/2005
+		A/New_York/37/2003
+		A/New_York/371/2004
+		A/New_York/379/2004
+		A/New_York/380/2004
+		A/New_York/382/2005
+		A/New_York/384/2005
+		A/New_York/386/2004
+		A/New_York/388/2005
+		A/New_York/390/2005
+		A/New_York/401/2001
+		A/New_York/402/2001
+		A/New_York/409/2002
+		A/New_York/416/2002
+		A/New_York/418/2002
+		A/New_York/429/2000
+		A/New_York/432/2000
+		A/New_York/433/2000
+		A/New_York/434/2000
+		A/New_York/436/2000
+		A/New_York/438/2000
+		A/New_York/439/2000
+		A/New_York/462/2005
+		A/New_York/471/2004
+		A/New_York/50/2003
+		A/New_York/64/2003
+		A/New_York/69/2004
+		A/New_York/7/2006
+		A/New_York/71/2001
+		A/New_York/77/2001
+		A/New_York/80/2001
+		A/New_York/82/2001
+		A/New_York/83/2001
+		A/New_York/84/2001
+		A/New_York/85/2001
+		A/New_York/87/2002
+		A/New_York/88/2002
+		A/New_York/905/2004
+		A/New_York/913/2005
+		A/New_York/923/2006
+		A/New_York/928/2006
+		A/New_York/94/2001
+		A/New_York/96/2002
+		A/Niigata/10F271/2011
+		A/Niigata/1143/2010
+		A/Niigata/1144/2010
+		A/Niigata/1147/2010
+		A/Niigata/1148/2010
+		A/Niigata/1150/2010
+		A/Niigata/403/2009
+		A/Niigata/F5/2006
+		A/Niigata/F90/2006
+		A/Ningbo/192/2003
+		A/Ningbo/995/2004
+		A/Ningxia/2/2000
+		A/Ningxia/6/2000
+		A/Nong-Khai/560/2009
+		A/North-Carolina/08/2008
+		A/Norway/1141/2009
+		A/Norway/1330/2010
+		A/Norway/2314/2008
+		A/Norway/4916/2009
+		A/Norway/88/2003
+		A/OSAKA/1803/2001
+		A/Ohio/07/2006
+		A/Ohio/2987/2012
+		A/Ohio/2990/2012
+		A/Okinawa/10/2003
+		A/Okinawa/102/2007
+		A/Okinawa/11/2007
+		A/Okinawa/12/2005
+		A/Okinawa/12/2007
+		A/Okinawa/13/2005
+		A/Okinawa/13/2006
+		A/Okinawa/14/2004
+		A/Okinawa/16/2002
+		A/Okinawa/22/2004
+		A/Okinawa/31/2002
+		A/Okinawa/40/2002
+		A/Okinawa/45/2002
+		A/Okinawa/47/2002
+		A/Okinawa/49/2003
+		A/Okinawa/7/2007
+		A/Oklahoma/309/2006
+		A/Ontario/011/2011
+		A/Ontario/013/2011
+		A/Ontario/018/2011
+		A/Ontario/019/2011
+		A/Ontario/023/2011
+		A/Oregon/08/2009
+		A/Oregon/14/2009
+		A/Oregon/UR06_0289/2007
+		A/Osaka/10K361/2011
+		A/Osaka/72/2010
+		A/Oslo/398/2002
+		A/Oslo/5381/2000
+		A/Oslo/6391/2000
+		A/Oslo/669/2002
+		A/PERTH/160/2009
+		A/PERTH/56/2010
+		A/PERU/5937/2000
+		A/PERU/G194/2001
+		A/PHILIPPINES/16105/2002
+		A/PHILIPPINES/3322/2009
+		A/PHILIPPINES/472/2002
+		A/PHILIPPINES/78890/2001
+		A/PUSAN/66/2001
+		A/Pandharpur/20055172/2005
+		A/Pandharpur/20055208/2005
+		A/Paraguay/52/2009
+		A/Parana/192/2011
+		A/Parana/199/2011
+		A/Parana/313/04
+		A/Paris/1751/2009
+		A/Paris/1753/2009
+		A/Paris/817/2008
+		A/Perth/142/2007
+		A/Perth/15/2009
+		A/Perth/673/2009
+		A/Peru/3029/2002
+		A/Peru/8307/2007
+		A/Philippines/160283/2002
+		A/Philippines/1646/2007
+		A/Philippines/2191/2009
+		A/Philippinese/3967/2008
+		A/Poitiers/1341/2008
+		A/Pune/025502/160802
+		A/Pune/025506/160802
+		A/Pune/031741/030303
+		A/Pune/032699/110403
+		A/Pune/038072/220803
+		A/Pune/038254/220803
+		A/Pune/0622622/190906
+		A/Pune/063078/040306
+		A/Pune/0713435/051007
+		A/Pune/0715485/021107
+		A/Pune/076064/110607
+		A/Pune/1019858/060810
+		A/Qingdao/1045/2009
+		A/Qingdao/1046/2009
+		A/Qingdao/1115/2009
+		A/Qingdao/1116/2009
+		A/Qingdao/1157/2009
+		A/Qingdao/1231/2009
+		A/Qingdao/2200/2009
+		A/Qingdao/505/2009
+		A/Quebec/RV2804/2010
+		A/Queensland/1/2000
+		A/Queensland/15/2001
+		A/Queensland/16/2001
+		A/Queensland/18/2001
+		A/Queensland/19/2001
+		A/Queensland/23/2002
+		A/Queensland/31/2003
+		A/Queensland/40/2003
+		A/Queensland/44/2004
+		A/Queensland/60/2005
+		A/Queensland/9/2000
+		A/ROMANIA/175/2000
+		A/ROMANIA/387/2000
+		A/ROMANIA/427/2000
+		A/RioGdoSul/205/02
+		A/RioGdoSul/212/04
+		A/RioGdoSul/406/04
+		A/Rio_de_Janeiro/1621/2009
+		A/Rio_de_Janeiro/27/2011
+		A/RiodeJaneiro/26/04
+		A/RiodeJaneiro/28/00
+		A/SANTIAGO/5628/2000
+		A/SANTIAGO/6774/2000
+		A/SENDAI/161/2001
+		A/SHANDONG/27/2001
+		A/SHIMANE/133/2001
+		A/SHIZUOKA/29/2010
+		A/SINGAPORE/16/2002
+		A/SINGAPORE/2/2000
+		A/SINGAPORE/2/2002
+		A/SINGAPORE/526/2010
+		A/SINGAPORE/54/2001
+		A/SINGAPORE/60/2001
+		A/SINGAPORE/617/2010
+		A/SINGAPORE/94/2000
+		A/SONGKHLA/107/2002
+		A/SOUTH-AUSTRALIA/1/2000
+		A/SRI-LANKA/3/2010
+		A/SRI-LANKA/7/2010
+		A/SRI-LANKA/9/2009
+		A/SRI-LANKA/9/2010
+		A/SURAT-THANI/116/2010
+		A/SYDNEY/213/2000
+		A/SYDNEY/25/2009
+		A/SYDNEY/306/2002
+		A/Santiago/10086/2007
+		A/Scotland/60380634/2006
+		A/Seoul/323/2004
+		A/Seoul/4295/2008
+		A/Sergipe/146/2011
+		A/Sergipe/152/2011
+		A/Sergipe/155/2011
+		A/Sergipe/176/2011
+		A/Shandong/28/2000
+		A/Shanghai-Luwan/1541/2010
+		A/Shanghai-Luwan/1573/2010
+		A/Shanghai-Nanhui/190/2009
+		A/Shanghai/159/2001
+		A/Shanghai/370/2003
+		A/Shanghai/N03/2007
+		A/Shanghai/N04/2007
+		A/Shanghai/N18/2008
+		A/Shanghai/N38/2008
+		A/Shanghai/Pudongxin237/2008
+		A/Shanxi/Yingze511/2007
+		A/Shizuoka/736/2009
+		A/Sichuan-Qingyang/1396/2008
+		A/Singapore/215/2008
+		A/Singapore/GP1231/2011
+		A/Singapore/GP1446/2011
+		A/Singapore/GP1635/2011
+		A/Singapore/GP1776/2011
+		A/Singapore/GP3680/2010
+		A/Singapore/GP3961/2010
+		A/Singapore/GP4180/2010
+		A/Singapore/KK325/2011
+		A/Singapore/KK398/2011
+		A/Singapore/KK413/2011
+		A/Singapore/KK535/2011
+		A/Singapore/KK7/2011
+		A/Singapore/N1604/2009
+		A/Singapore/NHRC0001/2003
+		A/Singapore/NHRC0002/2003
+		A/Singapore/NHRC0003/2003
+		A/Singapore/NHRC0004/2003
+		A/Singapore/NHRC0005/2003
+		A/Singapore/NHRC0010/2003
+		A/Singapore/SGH04/2011
+		A/Singapore/TT603/2011
+		A/Singapore/TT609/2011
+		A/Singapore/TT638/2011
+		A/Singapore/TT728/2011
+		A/South-Carolina/03/2010
+		A/South-Dakota/02/2010
+		A/South_Australia/355/2007
+		A/South_Carolina/NHRC0001/2005
+		A/South_Carolina/NHRC0001/2006
+		A/South_Carolina/NHRC0001/2011
+		A/South_Korea/WRAIR1171P/2009
+		A/Spain/C2_1/2001
+		A/Sri-Lanka/14/2008
+		A/Sri-Lanka/22/2008
+		A/Sri_Lanka/146/2005
+		A/Sri_Lanka/23/2007
+		A/StaCatarina/311/02
+		A/StaCatarina/327/02
+		A/StaCatarina/339/02
+		A/Stockholm/2/2010
+		A/Stockholm/25/2008
+		A/Stockholm/26/2002
+		A/Stockholm/27/2002
+		A/Switzerland/1397477/2008
+		A/Sydney/1/2009
+		A/Sydney/17/2008
+		A/Sydney/18/2008
+		A/Sydney/3/2009
+		A/Sydney/52/2005
+		A/Sydney/6/2008
+		A/Sydney/DD2_02/2010
+		A/TAK/214/2001
+		A/THAILAND/80891/2001
+		A/TIANJING/13/2002
+		A/TOWNSVILLE/117/2010
+		A/TOWNSVILLE/92/2010
+		A/TOYAMA/123/2008
+		A/Taiwan/1452/2007
+		A/Taiwan/2361/2007
+		A/Taiwan/315/2006
+		A/Taiwan/471/2008
+		A/Taiwan/611/2008
+		A/Taiwan/612/2008
+		A/Taiwan/70002/2007
+		A/Taiwan/70120/2008
+		A/Taiwan/70307/2007
+		A/Taiwan/72106/2007
+		A/Taiwan/760/2007
+		A/Taiwan/821/2007
+		A/Taiwan/825/2007
+		A/Taiwan/851/2010
+		A/Tak/527/2009
+		A/Tasmania/1/2008
+		A/Tasmania/4/2008
+		A/TayNguyen/HCM52/2006
+		A/TayNguyen/TN335/2005
+		A/TayNguyen/TN348/2005
+		A/TayNguyen/TN360/2005
+		A/TayNguyen/TN368/2005
+		A/TayNguyen/TN381/2005
+		A/TayNguyen/TN388/2005
+		A/TayNguyen/TN405/2005
+		A/Tennessee/11/2007
+		A/Texas/01/2008
+		A/Texas/NHRC0001/2002
+		A/Texas/UR06_0603/2007
+		A/Thailand/128400/2002
+		A/Thailand/162496/2002
+		A/Thailand/271/2007
+		A/Thailand/284/2007
+		A/Thailand/508/2008
+		A/Thailand/911/2010
+		A/Thailand/CU_B110/2009
+		A/Thailand/CU_B4/2009
+		A/Thailand/CU_B590/2009
+		A/Thailand/CU_B657/2009
+		A/Thailand/Siriraj_03/2004
+		A/Thailand/Siriraj_06/2002
+		A/Thessaloniki/16/2009
+		A/Thessaloniki/40/2007
+		A/Thessaloniki/43/2005
+		A/Thessaloniki/90/2006
+		A/Tianjin-Hongqiao/141/2009
+		A/Tianjin-Nankai/1211/2008
+		A/Tianjin-Nankai/1687/2010
+		A/Tianjin-Ninghe/312/2009
+		A/Tianjin-Ninghe/39/2009
+		A/Tianjin/245/2001
+		A/Tianjin/Hedong112/2008
+		A/Tianjin/Hongqiao148/2008
+		A/Tianjin/Jinnan15/2007
+		A/Tianjin/Jinnan166/2008
+		A/Tianjin/Jinnan173/2008
+		A/Tianjin/Nankai110/2008
+		A/Ukraine/110/2009
+		A/Ukraine/96/2009
+		A/Utah/09/2010
+		A/VICTORIA/1035/2010
+		A/VICTORIA/4/2010
+		A/VICTORIA/650/2010
+		A/VICTORIA/8/2010
+		A/VN/1293/2001
+		A/Vellore/0713793/140607
+		A/Venezuela/9602/2007
+		A/Vermont/UR06_0448/2007
+		A/Victoria/210/2009
+		A/Victoria/248/2007
+		A/Victoria/303/2006
+		A/Victoria/500/2007
+		A/Victoria/500/2008
+		A/Victoria/502/2009
+		A/Victoria/503/2006
+		A/Victoria/519/2006
+		A/Victoria/520/2006
+		A/Vietnam/167/2010
+		A/Vietnam/1770/2009
+		A/Vietnam/214/2008
+		A/Vietnam/225/2010
+		A/Vietnam/838/2010
+		A/Vietnam/936/2009
+		A/Virginia/01/2007
+		A/Virginia/02/2009
+		A/WUHAN/374/2001
+		A/WUHAN/396/2001
+		A/WUHAN/401/2001
+		A/Waikato/102/2003
+		A/Waikato/105/2001
+		A/Waikato/139/2003
+		A/Waikato/15/2003
+		A/Waikato/15/2005
+		A/Waikato/16/2008
+		A/Waikato/18/2005
+		A/Waikato/21/2002
+		A/Waikato/35/2004
+		A/Waikato/40/2004
+		A/Waikato/5/2001
+		A/Waikato/51/2004
+		A/Waikato/58/2006
+		A/Waikato/91/2003
+		A/Washington/2997/2012
+		A/Washington/2998/2012
+		A/Wellington/13/2008
+		A/Wellington/2/2008
+		A/Wellington/21/2000
+		A/Wellington/30/2000
+		A/Wellington/31/2008
+		A/Wellington/33/2006
+		A/Wellington/34/2001
+		A/Wellington/34/2003
+		A/Wellington/38/2002
+		A/Wellington/38/2006
+		A/Wellington/4/2005
+		A/Wellington/49/2003
+		A/Wellington/55/2004
+		A/Wellington/8/2004
+		A/Wellington/8/2005
+		A/Wellington/9/2003
+		A/West_Coast/32/2001
+		A/Western_Australia/1/2000
+		A/Western_Australia/11/2000
+		A/Western_Australia/23/2002
+		A/Western_Australia/32/2002
+		A/Western_Australia/34/2002
+		A/Western_Australia/42/2003
+		A/Western_Australia/44/2003
+		A/Western_Australia/49/2003
+		A/Western_Australia/5/2000
+		A/Western_Australia/69/2005
+		A/Western_Australia/71/2005
+		A/Western_Australia/76/2005
+		A/Whanganui/417/2004
+		A/Wisconsin/08/2008
+		A/Wisconsin/45/2006
+		A/Wuhan/12/2002
+		A/Wuhan/144/2003
+		A/Wuhan/16/2002
+		A/Wuhan/388/2001
+		A/Wuhan/9/2002
+		A/Wyoming/02/2006
+		A/Wyoming/04/2007
+		A/Xinjing/Tulufan540/2008
+		A/YAMAGATA/592/2001
+		A/YOKOHAMA/111/2000
+		A/YOKOHAMA/97/2010
+		A/Yamagata/K16/2006
+		A/Yamagata/K22/2006
+		A/Yamagata/K32/2006
+		A/Yokohama/96/2010
+		A/Zhuhai/358/2005
+		AG-2289
+		AG-3065
+		AG-3509
+		AG-R1-06
+		AG-R113-05
+		AG-R26-04
+		AG-R55-05
+		AG-R56-05
+		AG-R570-05
+		AG-R624-06
+		AG-R631-06
+		AG-R809-03
+		ANHUI/1179/2005
+		ANHUI/1239/2005
+		ANHUI/1247/2005
+		ANHUI/563/2005
+		AOMORI/43/2004
+		ARGENTINA/126/2004
+		BA-1164729
+		BA-141817-ORIGINAL
+		BA-167113
+		BANGLADESH/1999/2006
+		BAYERN/1/2003
+		BEIJING-CHAOYANG/158/2010
+		BEIJING-HUAIROU/1155/2011
+		BEIJING-XICHENG/1293/2011
+		BEIJING-XICHENG/1409/2011
+		BEIJING/170/2003
+		BEIJING/178-NEW-AGN/2002
+		BEIJING/209/2006
+		BEIJING/27/2006
+		BEIJING/301/2002
+		BEIJING/37/2006
+		BEIJING/47/2006
+		BEIJING/58/2006
+		BEIJING/XICHENG1272/2006
+		BEIJINGXICHENG/313/2006
+		BEIJINGXICHENG/315/2006
+		BEIJINGXICHENG/318/2006
+		BL-324-02
+		BR-1609
+		BR-1945
+		BR-IAL-1499
+		BR-IAL-266
+		BR-IAL-445
+		BR-IAL-615
+		BR-IAL1544
+		BRAZIL/1742/2005
+		BRAZIL/1759/2004
+		BRISBANE/203/2006
+		CHEJU/274/2002
+		CHIBA/113/2003
+		CHONGQING-WANZHOU/182/2011
+		CHONGQING-YUZHONG/334/2010
+		CHONGQING-YUZHONG/335/2010
+		CHONGQING/1096/2005
+		CHONGQING/1167/2005
+		CHONGQING/618/2005
+		CHONGQING/628/2005
+		CHONGQING/650/2005
+		CHONGQING/652/2005
+		CI-03-6267
+		CI-03-6421
+		CI-03-7379
+		CI-03-7985
+		CI-03-8266-ORIGINAL
+		CI-03-8299
+		CI-03-8806
+		CI-05-6898
+		CI-05-7099
+		CL-4145
+		CL-6928
+		DARWIN/1/2006
+		ECUADOR/1968/2004
+		FG-00220012
+		FUKUOKA/16/2005
+		FUKUSHIMA/173/2003
+		GANSU/30/2004
+		GANSUCHENGGUAN/97/2006
+		GE-838
+		GUNMA/1489/2004
+		GUYANE/28/2006
+		HEBEI-BAODING-ANGUO/51/2010
+		HEBEI-SHIJIAZHUANG-YUHUA/133/2011
+		HEBEI/196/2003
+		HEILONGJIANG-HARBIN-NANGANG/124/2011
+		HEILONGJIANG-HARBIN-XIANGFANG/129/2010
+		HEILONGJIANG-HEGANG-XIANGYANG/1125/2011
+		HEILONGJIANG-QIQIHAR-JIANHUA/172/2010
+		HEILONGJIANG-QITAIHE-TAOSHAN/147/2011
+		HUBEI-ENSHI-TUJIA-AND-MIAO-ENSHI/1250/2010
+		HUBEI/276/2004
+		HUBEI/412/2004
+		HUBEIWUCHANG/1258/2006
+		HUBEIWUJIAGANG/1121/2006
+		HUNAN-CHENZHOU-BEIHU/1143/2011
+		HUNAN-HENGYANG-YANFENG/165/2011
+		HUNAN-LOUDI-LOUXING/16/2011
+		HYOGO/113/2003
+		ICELAND/6/2005
+		II-511132
+		INCHEON/243/2005
+		JA-RSP-02-910
+		JAPAN/727/2003
+		JIANGSU/DY3/2004
+		JIANGSU/FU137/2004
+		JIANGSU/FU81/2004
+		JILIN-JILIN-CHUANYING/1156/2011
+		JILIN/16/2003
+		JILIN/18/2003
+		JILINCHAOYANG/1178/2006
+		JILINNANGUAN/1165/2006
+		KANAGAWA/88/2003
+		KO-RSP-02-770
+		KOREA/124/2003
+		KUMAMOTO/102/2002
+		KWANGJU/219/2002
+		LATVIA/13794/2002
+		LIAONING-FUXIN-HAIZHOU/1118/2011
+		LYON/19989/2002
+		LYON/21/2004
+		NAKHONRATCHASIMA/635/2004
+		NARA/64/2003
+		NEPAL/1646/2004
+		NEPAL/1659/2004
+		NEPAL/1660/2004
+		NEPAL/1670/2004
+		NEPAL/1675/2004
+		NEPAL/1678/2004
+		NEPAL/1680/2004
+		NEPAL/1702/2004
+		NEPAL/921/2006
+		NETHERLANDS/368/2002
+		NIIGATA/95/2004
+		NP-HC90997-ORIGINAL
+		NP-HC91440-ORIGINAL
+		NP-HC91445-ORIGINAL
+		OKINAWA/41/2004
+		OSAKA/25/2003
+		PARIS/207/2002
+		PE-5102-ORIGINAL
+		PE-5107-ORIGINAL
+		PE-FLU-3355
+		PERU/1296/2004
+		PHILIPPINES/621/2003
+		PHILIPPINES/629/2003
+		PY-697
+		ROMANIA/810/2005
+		SAITAMA/41/2005
+		SANTIAGO/8248/2006
+		SANTIAGO/9491/2006
+		SAPPORO/193/2003
+		SENDAI/126/2003
+		SHAANXI/90/2005
+		SHANGHAI-JINSHAN/13/2011
+		SHANGHAI-LUWAN/188/2011
+		SHIZUOKA/383/2003
+		SICHUAN/1017/2004
+		SICHUAN/1025/2004
+		SINGAPORE/38/2004
+		THAILAND/692/2006
+		THAILAND/697/2006
+		THAILAND/715/2006
+		TIANJIN-HEXI/1266/2010
+		TIANJIN-HEXI/15/2011
+		TIANJIN-JINNAN/144/2011
+		TIANJIN-NANKAI/1912/2010
+		TIANJIN/143/2003
+		TIANJIN/199/2003
+		TIANJIN/263/2004
+		TIANJIN/273/2004
+		TIANJIN/275/2005
+		TIANJIN/32/2004
+		TOCHIGI/55/2003
+		UY-05-39082
+		UY-CA04-3173
+		UY-PA03-4
+		VE-246971-ORIGINAL
+		VE-254155
+		WELLINGTON/43/2006
+		WUHAN/101/2004
+		WUHAN/158/2005
+		WUHAN/211/2003
+		WUHAN/214/2003
+		WUHAN/269/2004
+		WUHAN/271/2004
+		WUHAN/283/2005
+	;
+END;
+BEGIN TREES;
+	TRANSLATE
+		1	A/ARGENTINA/10/2001,
+		2	A/ARGENTINA/13/2001,
+		3	A/ARGENTINA/25/2001,
+		4	A/ARGENTINA/3758/2001,
+		5	A/ARGENTINA/3759/2001,
+		6	A/ARGENTINA/44/2001,
+		7	A/ARGENTINA/5/2001,
+		8	A/ARGENTINA/5995/2000,
+		9	A/ARGENTINA/mc5/2001,
+		10	A/Alabama/WRAIR1242P/2009,
+		11	A/Alaska/02/2010,
+		12	A/Albania/250/2009,
+		13	A/Alexandroupolis/118/2005,
+		14	A/Alexandroupolis/16/2005,
+		15	A/Alexandroupolis/99/2007,
+		16	A/Andaman/071559/021107,
+		17	A/Aragon/RR-3438/2008,
+		18	A/Argentina/01/2010,
+		19	A/Argentina/117/2007,
+		20	A/Argentina/146/2007,
+		21	A/Argentina/27724/2010,
+		22	A/Argentina/27891/2010,
+		23	A/Argentina/28342/2010,
+		24	A/Argentina/28367/2010,
+		25	A/Argentina/28370/2010,
+		26	A/Argentina/28378/2010,
+		27	A/Argentina/28379/2010,
+		28	A/Argentina/3689/2007,
+		29	A/Argentina/3726/2007,
+		30	A/Argentina/3743/2007,
+		31	A/Argentina/3888/2007,
+		32	A/Argentina/389/2007,
+		33	A/Argentina/405/2007,
+		34	A/Argentina/445/2007,
+		35	A/Argentina/449/2007,
+		36	A/Argentina/7646/2009,
+		37	A/Argentina/8409/2010,
+		38	A/Ashburton/280/2004,
+		39	A/Auckland/17/2008,
+		40	A/Auckland/599/2000,
+		41	A/Auckland/602/2001,
+		42	A/Auckland/603/2001,
+		43	A/Auckland/611/2002,
+		44	A/Australia/2/2009,
+		45	A/Australia/22/2009,
+		46	A/Australia/30/2009,
+		47	A/Australia/34/2009,
+		48	A/Australia/NHRC0012/2005,
+		49	A/Austria/134855/2004,
+		50	A/Austria/138112/2004,
+		51	A/Austria/138263/2004,
+		52	A/Austria/138808/2004,
+		53	A/Austria/141367/2004,
+		54	A/Austria/211557/2005,
+		55	A/Austria/76036/2003,
+		56	A/Austria/76165/2003,
+		57	A/Austria/76359/2003,
+		58	A/Austria/79477/2003,
+		59	A/Austria/79798/2003,
+		60	A/BANGKOK/109/2002,
+		61	A/BANGKOK/115/2001,
+		62	A/BANGKOK/178/2000,
+		63	A/BANGKOK/190/2002,
+		64	A/BANGKOK/202/2000,
+		65	A/BANGKOK/224/2001,
+		66	A/BANGKOK/226/2001,
+		67	A/BANGKOK/27/2000,
+		68	A/BANGKOK/28/2001,
+		69	A/BANGKOK/328/2001,
+		70	A/BANGKOK/480/2001,
+		71	A/BANGKOK/504/2001,
+		72	A/BANGKOK/62/2000,
+		73	A/BANGKOK/86/2001,
+		74	A/BEIJING/114/2001,
+		75	A/BEIJING/144/2001,
+		76	A/BEIJING/157/2001,
+		77	A/BEIJING/159/2001,
+		78	A/BEIJING/161/2001,
+		79	A/BEIJING/188/2001,
+		80	A/BRAZIL/10/2000,
+		81	A/BRAZIL/18a/2000,
+		82	A/BRAZIL/2030/2002,
+		83	A/BRAZIL/2c/2000,
+		84	A/BRAZIL/4b/2000,
+		85	A/BRAZIL/5/2002,
+		86	A/BRAZIL/694/2000,
+		87	A/BRAZIL/718/2000,
+		88	A/BRAZIL/822/2001,
+		89	A/BRAZIL/991/2000,
+		90	A/BRISBANE/100/2009,
+		91	A/BRISBANE/122/2010,
+		92	A/BRISBANE/219/2010,
+		93	A/BRISBANE/258/2010,
+		94	A/BRISBANE/262/2010,
+		95	A/BRISBANE/3/2000,
+		96	A/BULGARIA/113/2000,
+		97	A/BULGARIA/28/2001,
+		98	A/BULGARIA/874/2000,
+		99	A/Bahia/100/2011,
+		100	A/Bahia/44/2011,
+		101	A/Bahia/45/2011,
+		102	A/Bahia/65/2011,
+		103	A/Bahia/97/2011,
+		104	A/Bahia/98/2011,
+		105	A/Baleares/RR6848/2010,
+		106	A/Bangladesh/1695/2007,
+		107	A/Bangladesh/2009/2008,
+		108	A/Bangladesh/2012/2010,
+		109	A/Bangladesh/2363/2009,
+		110	A/Bangladesh/2425/2009,
+		111	A/Bangladesh/3017/2008,
+		112	A/Bangladesh/30376/2007,
+		113	A/Bangladesh/3161/2010,
+		114	A/Bangladesh/4699/2007,
+		115	A/Bangladesh/483/2009,
+		116	A/Bangladesh/5004/2010,
+		117	A/Bangladesh/5014/2009,
+		118	A/Bangladesh/7772/2009,
+		119	A/Bangladesh/8004/2010,
+		120	A/Bangladesh/9745/2007,
+		121	A/Bangladesh/9890/2008,
+		122	A/Bangladesh/C5_12/2003,
+		123	A/Bangladesh/C5_15/2003,
+		124	A/Bangladesh/C5_16/2003,
+		125	A/Bangladesh/C5_17/2003,
+		126	A/Bangladesh/C5_18/2003,
+		127	A/Bangladesh/C5_19/2003,
+		128	A/Bangladesh/C5_21/2003,
+		129	A/Bangladesh/C5_24/2003,
+		130	A/Bangladesh/C5_25/2003,
+		131	A/Bay_of_Plenty/279/2004,
+		132	A/Beijing-Xicheng/12611/2010,
+		133	A/Beijing/20/2002,
+		134	A/Beijing/35/2002,
+		135	A/Beijing/4/2000,
+		136	A/Beijing/44/2002,
+		137	A/Beijing/51/2002,
+		138	A/Beijing/68/2003,
+		139	A/Beijing/Xicheng51/2007,
+		140	A/Belgrade/WRAIR2379N/2010,
+		141	A/Bolivia/317/2010,
+		142	A/Boston/56/2008,
+		143	A/Boston/60/2008,
+		144	A/Boston/61/2008,
+		145	A/Boston/81/2008,
+		146	A/Boston/DOA01/2011,
+		147	A/Boston/DOA07/2011,
+		148	A/Boston/DOA15/2011,
+		149	A/Boston/DOA61/2011,
+		150	A/Boston/DOA75/2011,
+		151	A/Boston/DOA85/2011,
+		152	A/Brazil/0610/2010,
+		153	A/Brazil/1619/2008,
+		154	A/Brazil/1623/2008,
+		155	A/Brazil/1727/2002,
+		156	A/Brazil/1732/2002,
+		157	A/Brazil/1814/2009,
+		158	A/Brazil/2458/2002,
+		159	A/Brazil/884/2009,
+		160	A/Brazil/933/2009,
+		161	A/Brazil/BR_1898_ORIGINAL/2006,
+		162	A/Brazil/BR_IAL_2314/2005,
+		163	A/Bretagne/2248/2010,
+		164	A/Brisbane/04/2007,
+		165	A/Brisbane/10/2007,
+		166	A/Brisbane/11/2006,
+		167	A/Brisbane/233/2006,
+		168	A/Brisbane/24/2008,
+		169	A/Brisbane/602/2007,
+		170	A/Brisbane/9/2006,
+		171	A/British-Columbia/RV3075/2009,
+		172	A/Busan/11/2001,
+		173	A/Busan/16/2001,
+		174	A/Busan/4297/2008,
+		175	A/Busan/44/2001,
+		176	A/Busan/71/2001,
+		177	A/CAMBODIA/1/2010,
+		178	A/CHILE/5109/2001,
+		179	A/CHILE/5299/2000,
+		180	A/CHILE/5823/2001,
+		181	A/CHRISTCHURCH/49/2010,
+		182	A/COLOMBIA/3026/2001,
+		183	A/California/19/2010,
+		184	A/California/25/2010,
+		185	A/California/27/2010,
+		186	A/California/3000/2012,
+		187	A/California/3006/2012,
+		188	A/California/3022/2012,
+		189	A/California/NHRC0001/2006,
+		190	A/California/NHRC0001/2011,
+		191	A/California/NHRC0002/2005,
+		192	A/California/NHRC0006/2003,
+		193	A/California/NHRC0010/2005,
+		194	A/California/UR06_0588/2007,
+		195	A/California/VRDL143/2009,
+		196	A/California/VRDL184/2009,
+		197	A/California/VRDL216/2009,
+		198	A/California/VRDL274/2009,
+		199	A/Cambodia/NHRCC00001/2009,
+		200	A/Cambodia/Q210/2006,
+		201	A/Cambodia/Q342/2006,
+		202	A/Cambodia/R068/2007,
+		203	A/Cambodia/S272/2008,
+		204	A/Canberra/18/2009,
+		205	A/Canterbury/01/2002,
+		206	A/Canterbury/06/2001,
+		207	A/Canterbury/07/2001,
+		208	A/Canterbury/102/2002,
+		209	A/Canterbury/103/2004,
+		210	A/Canterbury/127/2005,
+		211	A/Canterbury/140/2001,
+		212	A/Canterbury/149/2001,
+		213	A/Canterbury/18/2004,
+		214	A/Canterbury/20/2005,
+		215	A/Canterbury/21/2004,
+		216	A/Canterbury/212/2005,
+		217	A/Canterbury/248/2005,
+		218	A/Canterbury/313/2004,
+		219	A/Canterbury/395/2003,
+		220	A/Canterbury/435/2003,
+		221	A/Canterbury/47/2002,
+		222	A/Canterbury/58/2002,
+		223	A/Canterbury/60/2002,
+		224	A/Canterbury/75/2000,
+		225	A/Canterbury/81/2000,
+		226	A/Ceara/177/2002,
+		227	A/Chanchamayo/FSJ1176/2006,
+		228	A/Chennai/0634985/141106,
+		229	A/Cheongju/H380/2007,
+		230	A/Cheongju/H393/2007,
+		231	A/Cheongju/H397/2008,
+		232	A/Cheongju/H412/2008,
+		233	A/Cheongju/H471/2008,
+		234	A/Chile/5845/2010,
+		235	A/Chile/6278/2010,
+		236	A/Chile/6380/2010,
+		237	A/Chongqing-Banan/1286/2010,
+		238	A/Chongqing/257/2003,
+		239	A/Chongqing/Yuzhong169/2007,
+		240	A/Christchurch/05/2008,
+		241	A/Christchurch/1/2007,
+		242	A/Christchurch/14/2004,
+		243	A/Christchurch/19/2006,
+		244	A/Christchurch/19/2008,
+		245	A/Chungbuk/4137/2008,
+		246	A/Chungnam/1463/2007,
+		247	A/Chungnam/1929/2007,
+		248	A/Colombia/227/2009,
+		249	A/Colombia/6123/2009,
+		250	A/Colombia/7158/2009,
+		251	A/Colorado/2971/2012,
+		252	A/Colorado/3005/2012,
+		253	A/Colorado/3010/2012,
+		254	A/Colorado/AF2822/2012,
+		255	A/Colorado/UR06_0023/2007,
+		256	A/Cordoba/1007333/01,
+		257	A/DaNang/DN453/2008,
+		258	A/Daegu/277/2004,
+		259	A/Daegu/4165/2008,
+		260	A/Daegu/418/2004,
+		261	A/Daegu/626/2004,
+		262	A/Darwin/20/2007,
+		263	A/Darwin/3/2007,
+		264	A/Darwin/4/2007,
+		265	A/Deajeon/2943/2010,
+		266	A/Delhi/0635427/100506,
+		267	A/Delhi/0635431/190706,
+		268	A/Denmark/08/2002,
+		269	A/Denmark/105/2010,
+		270	A/Denmark/200/2000,
+		271	A/Denmark/203/2000,
+		272	A/Denmark/204/2000,
+		273	A/Denmark/206/2000,
+		274	A/Denmark/207/2000,
+		275	A/Denmark/21/2011,
+		276	A/Denmark/22/2011,
+		277	A/Denmark/24/2002,
+		278	A/District-of-Columbia/01/2010,
+		279	A/District_of_Columbia/AF2775/2012,
+		280	A/Dnipropetrovsk/324/2007,
+		281	A/Dnipropetrovsk/429/2007,
+		282	A/Donetsk/248/2009,
+		283	A/Dunedin/14/2002,
+		284	A/ECUADOR/2635/2001,
+		285	A/England/293/2008,
+		286	A/England/359/2007,
+		287	A/England/3940462/2010,
+		288	A/England/4414681/2004,
+		289	A/England/446040/2004,
+		290	A/England/455/2002,
+		291	A/England/46/2004,
+		292	A/England/47/2004,
+		293	A/England/470/2007,
+		294	A/England/472/2005,
+		295	A/England/49/2004,
+		296	A/England/5014715/2004,
+		297	A/England/502689/2005,
+		298	A/England/5070214/2005,
+		299	A/England/51/2004,
+		300	A/England/512060/2005,
+		301	A/England/5134761/2005,
+		302	A/England/53/2004,
+		303	A/England/534/2003,
+		304	A/England/55243/2005,
+		305	A/England/55281/2005,
+		306	A/England/556/2006,
+		307	A/England/557/2006,
+		308	A/England/558/2003,
+		309	A/England/558/2006,
+		310	A/England/560/2006,
+		311	A/England/567/2003,
+		312	A/England/568/2003,
+		313	A/England/585/2003,
+		314	A/England/60384/2006,
+		315	A/England/60385/2006,
+		316	A/England/61007/2006,
+		317	A/England/613446/2006,
+		318	A/England/61762/2006,
+		319	A/England/642/2003,
+		320	A/England/646836/2006,
+		321	A/England/687/2008,
+		322	A/England/691/2010,
+		323	A/England/695/2008,
+		324	A/England/699/2008,
+		325	A/England/749411/2007,
+		326	A/England/79/2007,
+		327	A/EspiritoSanto/128/00,
+		328	A/EspiritoSanto/88/02,
+		329	A/FIJI/52/2010,
+		330	A/FUKUOKA/15/2002,
+		331	A/FUKUSHIMA/127/2001,
+		332	A/Finland/9/2008,
+		333	A/Firenze/24/08,
+		334	A/Florida/07/2007,
+		335	A/Florida/10/2008,
+		336	A/Florida/19/2010,
+		337	A/Florida/UR07_0150/2008,
+		338	A/Fujian-Siming/1242/2008,
+		339	A/Fujian-Tongan/196/2009,
+		340	A/Fukuoka/F19/2006,
+		341	A/Fukuoka/F484/2005,
+		342	A/Fukuoka/F488/2005,
+		343	A/Fukuoka/F489/2005,
+		344	A/Fukuoka/F52/2006,
+		345	A/Galati/47519/2011,
+		346	A/Gansu/271/2003,
+		347	A/Gansu/Baiyin39/2007,
+		348	A/Gansu/Chengguan11/2007,
+		349	A/Geneva/1491091/2009,
+		350	A/Geneva/1570509/2009,
+		351	A/Geneva/4149722/2010,
+		352	A/Genoa/1/2002,
+		353	A/Georgia/NHRC0001/2006,
+		354	A/Guangdong/04/2007,
+		355	A/Guangdong/17/2007,
+		356	A/Guangdong/30/2007,
+		357	A/Guangdong/322/2010,
+		358	A/Guangdong/429/2010,
+		359	A/Guangdong/441/2010,
+		360	A/Guangdong/472/2009,
+		361	A/Guangdong/548/2008,
+		362	A/Guangdong/578/2008,
+		363	A/Guangdong/692/2003,
+		364	A/Guangdong/94/2011,
+		365	A/Guyane/25/2007,
+		366	A/Gwangju/554/2004,
+		367	A/Gyeongnam/4506/2007,
+		368	A/HIROSHIMA-C/1/2001,
+		369	A/HIROSHIMA/182/2000,
+		370	A/HIROSHIMA/253/2000,
+		371	A/HIROSHIMA/56/2010,
+		372	A/HUBEI/61/2002,
+		373	A/HaNoi/BM238/2007,
+		374	A/HaNoi/GS0738/2007,
+		375	A/HaNoi/HN30136/2004,
+		376	A/HaNoi/ISBM16/2005,
+		377	A/HaNoi/N080/2007,
+		378	A/HaNoi/Q071/2007,
+		379	A/HaNoi/Q163/2007,
+		380	A/HaNoi/Q372/2005,
+		381	A/HaNoi/Q464/2007,
+		382	A/HaNoi/TX058/2007,
+		383	A/Hanoi/209/2002,
+		384	A/Hanoi/BM767/2003,
+		385	A/Hanoi/HN30135/2004,
+		386	A/Hanoi/HN30240/2004,
+		387	A/Hebei/22/2002,
+		388	A/Hebei/Qiaodong51/2007,
+		389	A/Hebei/Yunhe33/2007,
+		390	A/Heilongjiang-Nangang/134/2009,
+		391	A/Henan/7/2002,
+		392	A/Hokkaido/10H039/2011,
+		393	A/Hokkaido/10H060/2011,
+		394	A/Hokkaido/10H079/2011,
+		395	A/Hong-Kong/105/2008,
+		396	A/Hong-Kong/1775/2010,
+		397	A/Hong-Kong/1837/2010,
+		398	A/Hong-Kong/184/2008,
+		399	A/Hong-Kong/1868/2008,
+		400	A/Hong-Kong/2000/2009,
+		401	A/Hong-Kong/2007/2009,
+		402	A/Hong-Kong/2008/2009,
+		403	A/Hong-Kong/2097/2010,
+		404	A/Hong-Kong/2146/2010,
+		405	A/Hong-Kong/23/2008,
+		406	A/Hong-Kong/2571/2007,
+		407	A/Hong-Kong/26233/2009,
+		408	A/Hong-Kong/3577/2010,
+		409	A/Hong-Kong/3615/2010,
+		410	A/Hong-Kong/3716/2010,
+		411	A/Hong-Kong/39/2008,
+		412	A/Hong-Kong/4758/2007,
+		413	A/Hong-Kong/6881/2010,
+		414	A/Hong-Kong/71/2008,
+		415	A/Hong-Kong/97/2008,
+		416	A/Hong-Kong2180//2010,
+		417	A/Hong_Kong/CUHK11949/2005,
+		418	A/Hong_Kong/CUHK12316/2005,
+		419	A/Hong_Kong/CUHK12425/2005,
+		420	A/Hong_Kong/CUHK13172/2001,
+		421	A/Hong_Kong/CUHK13278/2002,
+		422	A/Hong_Kong/CUHK13299/2003,
+		423	A/Hong_Kong/CUHK13339/2003,
+		424	A/Hong_Kong/CUHK13483/2003,
+		425	A/Hong_Kong/CUHK13510/2001,
+		426	A/Hong_Kong/CUHK13658/2001,
+		427	A/Hong_Kong/CUHK20169/2000,
+		428	A/Hong_Kong/CUHK20173/2000,
+		429	A/Hong_Kong/CUHK21128/2000,
+		430	A/Hong_Kong/CUHK21259/2004,
+		431	A/Hong_Kong/CUHK21421/2001,
+		432	A/Hong_Kong/CUHK21582/2002,
+		433	A/Hong_Kong/CUHK21733/2001,
+		434	A/Hong_Kong/CUHK21742/2002,
+		435	A/Hong_Kong/CUHK21932/2001,
+		436	A/Hong_Kong/CUHK22078/2000,
+		437	A/Hong_Kong/CUHK22087/2000,
+		438	A/Hong_Kong/CUHK22162/2000,
+		439	A/Hong_Kong/CUHK22644/2001,
+		440	A/Hong_Kong/CUHK22888/2001,
+		441	A/Hong_Kong/CUHK23111/2002,
+		442	A/Hong_Kong/CUHK23113/2002,
+		443	A/Hong_Kong/CUHK23162/2002,
+		444	A/Hong_Kong/CUHK24167/2002,
+		445	A/Hong_Kong/CUHK24289/2004,
+		446	A/Hong_Kong/CUHK24510/2001,
+		447	A/Hong_Kong/CUHK24882/2001,
+		448	A/Hong_Kong/CUHK24985/2001,
+		449	A/Hong_Kong/CUHK26907/2000,
+		450	A/Hong_Kong/CUHK26969/2000,
+		451	A/Hong_Kong/CUHK26980/2000,
+		452	A/Hong_Kong/CUHK27157/2000,
+		453	A/Hong_Kong/CUHK27374/2000,
+		454	A/Hong_Kong/CUHK28038/2000,
+		455	A/Hong_Kong/CUHK28040/2000,
+		456	A/Hong_Kong/CUHK33047/2002,
+		457	A/Hong_Kong/CUHK34175/2002,
+		458	A/Hong_Kong/CUHK34193/2002,
+		459	A/Hong_Kong/CUHK35011/2004,
+		460	A/Hong_Kong/CUHK35117/2004,
+		461	A/Hong_Kong/CUHK40022/2005,
+		462	A/Hong_Kong/CUHK45130/2006,
+		463	A/Hong_Kong/CUHK50080/2001,
+		464	A/Hong_Kong/CUHK50200/2002,
+		465	A/Hong_Kong/CUHK50895/2003,
+		466	A/Hong_Kong/CUHK50952/2003,
+		467	A/Hong_Kong/CUHK5111/2003,
+		468	A/Hong_Kong/CUHK51380/2003,
+		469	A/Hong_Kong/CUHK51424/2001,
+		470	A/Hong_Kong/CUHK51490/2001,
+		471	A/Hong_Kong/CUHK52011/2003,
+		472	A/Hong_Kong/CUHK52247/2000,
+		473	A/Hong_Kong/CUHK5250/2002,
+		474	A/Hong_Kong/CUHK53004/2006,
+		475	A/Hong_Kong/CUHK53005/2006,
+		476	A/Hong_Kong/CUHK5316/2003,
+		477	A/Hong_Kong/CUHK53732/2004,
+		478	A/Hong_Kong/CUHK53798/2006,
+		479	A/Hong_Kong/CUHK53907/2006,
+		480	A/Hong_Kong/CUHK60052/2006,
+		481	A/Hong_Kong/CUHK6206/2002,
+		482	A/Hong_Kong/CUHK6383/2003,
+		483	A/Hong_Kong/CUHK63957/2006,
+		484	A/Hong_Kong/CUHK64082/2006,
+		485	A/Hong_Kong/CUHK65241/2006,
+		486	A/Hong_Kong/CUHK66001/2006,
+		487	A/Hong_Kong/CUHK68792/2006,
+		488	A/Hong_Kong/CUHK69904/2006,
+		489	A/Hong_Kong/CUHK7047/2005,
+		490	A/Hong_Kong/CUHK7221/2005,
+		491	A/Hong_Kong/CUHK74438/2003,
+		492	A/Hong_Kong/H090_674_V10/2009,
+		493	A/Hong_Kong/H090_689_V22/2009,
+		494	A/Hong_Kong/H090_709_V1,
+		495	A/Hong_Kong/H090_714_V10/2009,
+		496	A/Hong_Kong/H090_724_V10/2009,
+		497	A/Hong_Kong/H090_733_V10/2009,
+		498	A/Hong_Kong/H090_747_V22/2009,
+		499	A/Hong_Kong/H090_763_V10/2009,
+		500	A/Hong_Kong/HKU100/2005,
+		501	A/Hong_Kong/HKU104/2005,
+		502	A/Hong_Kong/HKU107/2005,
+		503	A/Hong_Kong/HKU111/2005,
+		504	A/Hong_Kong/HKU22/2004,
+		505	A/Hong_Kong/HKU3/2004,
+		506	A/Hong_Kong/HKU38/2004,
+		507	A/Hong_Kong/HKU4/2004,
+		508	A/Hong_Kong/HKU55/2005,
+		509	A/Hong_Kong/HKU6/2004,
+		510	A/Hong_Kong/HKU65/2005,
+		511	A/Hong_Kong/HKU8/2004,
+		512	A/Hong_Kong/HKU89/2004,
+		513	A/Hong_Kong/HKU91/2004,
+		514	A/Hong_Kong/NHRC0001/2005,
+		515	A/Hubei/62/2002,
+		516	A/Hue/H05/2008,
+		517	A/Hunan-Yuhua/11209/2010,
+		518	A/Hunan/195/2003,
+		519	A/Hunan/422/2002,
+		520	A/Hunan/Furong13/2007,
+		521	A/Hutt/82/2000,
+		522	A/Hyogo/10K300/2011,
+		523	A/Hyogo/10K311/2011,
+		524	A/INDIA/2701/2000,
+		525	A/INDIA/3783/2000,
+		526	A/INDONESIA/3277/2002,
+		527	A/Idaho/18/2008,
+		528	A/Illinois/09/2008,
+		529	A/Illinois/NHRC0001/2006,
+		530	A/Illinois/NHRC0002/2006,
+		531	A/Illinois/UR06_0436/2007,
+		532	A/Illinois/UR06_0555/2007,
+		533	A/Incheon/4274/2008,
+		534	A/India/0483/2009,
+		535	A/India/0484/2009,
+		536	A/India/25502/2002,
+		537	A/India/2710/2009,
+		538	A/India/2751/2009,
+		539	A/India/3041/2010,
+		540	A/India/3254/2010,
+		541	A/India/3260/2010,
+		542	A/India/3489/2010,
+		543	A/India/7881/2008,
+		544	A/India/7882/2008,
+		545	A/India/7886/2008,
+		546	A/India/AF1082/2007,
+		547	A/India/C0511132/2005,
+		548	A/India/C053375/2004,
+		549	A/India/C058665/2004,
+		550	A/India/C058666/2004,
+		551	A/India/C058668/2005,
+		552	A/India/C3_45/2002,
+		553	A/India/C3_58/2002,
+		554	A/India/D0512591/2005,
+		555	A/India/D057066/2004,
+		556	A/India/D0612410/2004,
+		557	A/India/D0635419/2005,
+		558	A/India/D0635426/2006,
+		559	A/India/Dib0622568/2006,
+		560	A/India/K0615330/2005,
+		561	A/India/K0713778/2007,
+		562	A/India/P05142/2005,
+		563	A/India/P055208/2005,
+		564	A/India/P057475/2005,
+		565	A/Ivacevichi/115/2007,
+		566	A/Japan/26/2009,
+		567	A/Japan/2981/2012,
+		568	A/Japan/3003/2012,
+		569	A/Japan/3004/2012,
+		570	A/Japan/3018/2012,
+		571	A/Japan/51/2009,
+		572	A/Japan/688/2007,
+		573	A/Japan/7626/2007,
+		574	A/Japan/765/2008,
+		575	A/Japan/7743/2007,
+		576	A/Japan/7814/2007,
+		577	A/Japan/AF2158/2009,
+		578	A/Japan/AF2772/2011,
+		579	A/Japan/AF2777/2012,
+		580	A/Japan/AF2779/2012,
+		581	A/Japan/AF2826/2012,
+		582	A/Japan/AF2847/2012,
+		583	A/Japan/AF2849/2012,
+		584	A/Japan/WRAIR1037P/2009,
+		585	A/Japan/WRAIR1059P/2008,
+		586	A/Japan/WRAIR1140P/2009,
+		587	A/Jeonbuk/1117/2004,
+		588	A/Jeonbuk/1144/2004,
+		589	A/Jeonbuk/1713/2004,
+		590	A/Jiangsu/Beitang18/2008,
+		591	A/Jiangsu/Xuzhougulou149/2007,
+		592	A/Jiangxi/1123/2006,
+		593	A/Jilin/55/2000,
+		594	A/Jilin/Chaoyang1124/2007,
+		595	A/Jilin/Chaoyang1125/2007,
+		596	A/Jilin/Chuanying164/2008,
+		597	A/Jilin/Nanguan112/2007,
+		598	A/Jochiwon/04/2001,
+		599	A/KIEV/633/2000,
+		600	A/KOCHI/499/2001,
+		601	A/KOREA/2623/2000,
+		602	A/KOREA/320/2000,
+		603	A/KUMAMOTO/40/2010,
+		604	A/Kansas/UR07_0135/2008,
+		605	A/Kastoria/45/2005,
+		606	A/Kentucky/UR07_0107/2008,
+		607	A/KhanhHoa/KH494/2008,
+		608	A/Kolkutta/0713780/240707,
+		609	A/Kolkutta/072142/070706,
+		610	A/Kolkutta/076499/040706,
+		611	A/Kolkutta/0810433/020708,
+		612	A/Kolkutta/0810434/020708,
+		613	A/Kolkutta/0810436/020708,
+		614	A/Kolkutta/089060/300608,
+		615	A/Kolkutta/089062/010708,
+		616	A/Kolkutta/089064/030708,
+		617	A/Korea/122/2007,
+		618	A/Korea/5991/2009,
+		619	A/Korea/770/2002,
+		620	A/Korea/7719/2008,
+		621	A/Korea/7723/2008,
+		622	A/Korea/7858/2008,
+		623	A/Korea/AF2686/2010,
+		624	A/Korea/AF2706/2010,
+		625	A/Korea/AF2707/2011,
+		626	A/Korea/AF2708/2011,
+		627	A/Korea/AF2709/2011,
+		628	A/Korea/AF2782/2012,
+		629	A/Korea/AF2784/2012,
+		630	A/Korea/AF2808/2012,
+		631	A/Korea/AF2827/2012,
+		632	A/Korea/AF2856/2012,
+		633	A/Korea/WRAIR1038P/2009,
+		634	A/Kyoto/10K207/2011,
+		635	A/LIAONING/34/2001,
+		636	A/LYON/1407/2001,
+		637	A/Laos/82/2010,
+		638	A/Laos/900/2010,
+		639	A/Latur/1020759/090810,
+		640	A/Liaoning-Tiedong/14/2008,
+		641	A/Liaoning/32/2003,
+		642	A/Lisboa/34/2008,
+		643	A/Lyon/22/2007,
+		644	A/Lyon/27/2007,
+		645	A/MALAYSIA/542/2009,
+		646	A/Malaysia/1657167/2006,
+		647	A/Malaysia/1665090/2006,
+		648	A/Malaysia/1666666/2006,
+		649	A/Malaysia/1674395/2006,
+		650	A/Malaysia/1676558/2006,
+		651	A/Malaysia/1681079/2006,
+		652	A/Malaysia/1755590/2007,
+		653	A/Malaysia/1770921/2007,
+		654	A/Malaysia/1777545/2007,
+		655	A/Malaysia/1959864/2008,
+		656	A/Malaysia/1997829/2008,
+		657	A/Malaysia/1997831/2008,
+		658	A/Malaysia/2205714/2009,
+		659	A/Malaysia/23606/2002,
+		660	A/Malaysia/25920/2003,
+		661	A/Malaysia/25957/2003,
+		662	A/Malaysia/26227/2003,
+		663	A/Malaysia/26430/2003,
+		664	A/Malaysia/26571/2003,
+		665	A/Malaysia/26822/2004,
+		666	A/Malaysia/28114/2004,
+		667	A/Malaysia/28991/2004,
+		668	A/Malaysia/29197/2004,
+		669	A/Malaysia/29711/2004,
+		670	A/Malaysia/306/2008,
+		671	A/Malaysia/31944/2005,
+		672	A/Malaysia/31998/2005,
+		673	A/Malaysia/32133/2005,
+		674	A/Malaysia/32171/2005,
+		675	A/Malaysia/32226/2005,
+		676	A/Malaysia/33464/2006,
+		677	A/Malaysia/34015/2006,
+		678	A/Malaysia/NHRC0001/2004,
+		679	A/Malaysia/NHRC0003/2004,
+		680	A/Maryland/07/2010,
+		681	A/Michigan/07/2007,
+		682	A/Minas_Gerais/10995/2009,
+		683	A/Minas_Gerais/10998/2009,
+		684	A/Minas_Gerais/11401/2009,
+		685	A/Minas_Gerais/11404/2009,
+		686	A/Minas_Gerais/11405/2009,
+		687	A/Minas_Gerais/239/2011,
+		688	A/Minnesota/08/2007,
+		689	A/Minsk/137/2007,
+		690	A/Mississippi/AF2159/2009,
+		691	A/Missouri/NHRC0001/2000,
+		692	A/Missouri/NHRC0001/2005,
+		693	A/Missouri/NHRC0001/2006,
+		694	A/Miyagi/N1220/2005,
+		695	A/Miyagi/N1269/2005,
+		696	A/Miyagi/N1289/2005,
+		697	A/Miyagi/S707/2006,
+		698	A/Miyagi/S709/2006,
+		699	A/Moldova/167/2009,
+		700	A/Moldova/169/2009,
+		701	A/Morioka/17/2006,
+		702	A/Morioka/18/2006,
+		703	A/Morioka/22/2006,
+		704	A/Morioka/34/2002,
+		705	A/Morioka/35/2005,
+		706	A/Morioka/52/2002,
+		707	A/Murcia/RR6923/2010,
+		708	A/Myanmar/M106/2008,
+		709	A/Myanmar/M156/2008,
+		710	A/NARA/3/2001,
+		711	A/NEPAL/g-2079/2001,
+		712	A/NIIGATA/2743/2000,
+		713	A/NOTHABURI/488/2010,
+		714	A/Nagasaki/10N053/2011,
+		715	A/Nagasaki/10N090/2011,
+		716	A/Nagasaki/N01/2005,
+		717	A/Nagasaki/N07/2005,
+		718	A/Nagasaki/N44/2006,
+		719	A/NamDinh/HN30119/2004,
+		720	A/Nanded/190809/040810,
+		721	A/Nanjing/1/2009,
+		722	A/Nebraska/21/2009,
+		723	A/Nebraska/AF2854/2012,
+		724	A/Nepal/1664/2004,
+		725	A/Nepal/398/2009,
+		726	A/Nepal/439/2009,
+		727	A/Nepal/AF1106/2007,
+		728	A/Netherlands/009/2010,
+		729	A/Netherlands/034/2010,
+		730	A/Netherlands/063/2011,
+		731	A/Netherlands/1/2002,
+		732	A/Netherlands/118/2001,
+		733	A/Netherlands/120/2002,
+		734	A/Netherlands/124/2001,
+		735	A/Netherlands/126/2001,
+		736	A/Netherlands/3/2000,
+		737	A/Netherlands/34/2010,
+		738	A/Netherlands/348/2007,
+		739	A/Netherlands/363/2006,
+		740	A/Netherlands/377/2008,
+		741	A/Netherlands/42/2006,
+		742	A/Netherlands/69/2007,
+		743	A/Netherlands/761/2009,
+		744	A/New-York/05/2010,
+		745	A/New_York/1/2003,
+		746	A/New_York/101/2002,
+		747	A/New_York/103/2002,
+		748	A/New_York/105/2002,
+		749	A/New_York/108/2002,
+		750	A/New_York/120/2002,
+		751	A/New_York/123/2004,
+		752	A/New_York/124/2001,
+		753	A/New_York/125/2002,
+		754	A/New_York/127/2001,
+		755	A/New_York/156/2000,
+		756	A/New_York/168/2000,
+		757	A/New_York/173/2000,
+		758	A/New_York/176/2000,
+		759	A/New_York/178/2000,
+		760	A/New_York/19/2003,
+		761	A/New_York/192/2003,
+		762	A/New_York/196/2003,
+		763	A/New_York/200/2004,
+		764	A/New_York/20342/2010,
+		765	A/New_York/204/2003,
+		766	A/New_York/207/2004,
+		767	A/New_York/210/2005,
+		768	A/New_York/232/2004,
+		769	A/New_York/24/2003,
+		770	A/New_York/273/2001,
+		771	A/New_York/29/2003,
+		772	A/New_York/3/2003,
+		773	A/New_York/3011/2009,
+		774	A/New_York/3272/2009,
+		775	A/New_York/34/2003,
+		776	A/New_York/359/2005,
+		777	A/New_York/364/2004,
+		778	A/New_York/366/2004,
+		779	A/New_York/369/2005,
+		780	A/New_York/37/2003,
+		781	A/New_York/371/2004,
+		782	A/New_York/379/2004,
+		783	A/New_York/380/2004,
+		784	A/New_York/382/2005,
+		785	A/New_York/384/2005,
+		786	A/New_York/386/2004,
+		787	A/New_York/388/2005,
+		788	A/New_York/390/2005,
+		789	A/New_York/401/2001,
+		790	A/New_York/402/2001,
+		791	A/New_York/409/2002,
+		792	A/New_York/416/2002,
+		793	A/New_York/418/2002,
+		794	A/New_York/429/2000,
+		795	A/New_York/432/2000,
+		796	A/New_York/433/2000,
+		797	A/New_York/434/2000,
+		798	A/New_York/436/2000,
+		799	A/New_York/438/2000,
+		800	A/New_York/439/2000,
+		801	A/New_York/462/2005,
+		802	A/New_York/471/2004,
+		803	A/New_York/50/2003,
+		804	A/New_York/64/2003,
+		805	A/New_York/69/2004,
+		806	A/New_York/7/2006,
+		807	A/New_York/71/2001,
+		808	A/New_York/77/2001,
+		809	A/New_York/80/2001,
+		810	A/New_York/82/2001,
+		811	A/New_York/83/2001,
+		812	A/New_York/84/2001,
+		813	A/New_York/85/2001,
+		814	A/New_York/87/2002,
+		815	A/New_York/88/2002,
+		816	A/New_York/905/2004,
+		817	A/New_York/913/2005,
+		818	A/New_York/923/2006,
+		819	A/New_York/928/2006,
+		820	A/New_York/94/2001,
+		821	A/New_York/96/2002,
+		822	A/Niigata/10F271/2011,
+		823	A/Niigata/1143/2010,
+		824	A/Niigata/1144/2010,
+		825	A/Niigata/1147/2010,
+		826	A/Niigata/1148/2010,
+		827	A/Niigata/1150/2010,
+		828	A/Niigata/403/2009,
+		829	A/Niigata/F5/2006,
+		830	A/Niigata/F90/2006,
+		831	A/Ningbo/192/2003,
+		832	A/Ningbo/995/2004,
+		833	A/Ningxia/2/2000,
+		834	A/Ningxia/6/2000,
+		835	A/Nong-Khai/560/2009,
+		836	A/North-Carolina/08/2008,
+		837	A/Norway/1141/2009,
+		838	A/Norway/1330/2010,
+		839	A/Norway/2314/2008,
+		840	A/Norway/4916/2009,
+		841	A/Norway/88/2003,
+		842	A/OSAKA/1803/2001,
+		843	A/Ohio/07/2006,
+		844	A/Ohio/2987/2012,
+		845	A/Ohio/2990/2012,
+		846	A/Okinawa/10/2003,
+		847	A/Okinawa/102/2007,
+		848	A/Okinawa/11/2007,
+		849	A/Okinawa/12/2005,
+		850	A/Okinawa/12/2007,
+		851	A/Okinawa/13/2005,
+		852	A/Okinawa/13/2006,
+		853	A/Okinawa/14/2004,
+		854	A/Okinawa/16/2002,
+		855	A/Okinawa/22/2004,
+		856	A/Okinawa/31/2002,
+		857	A/Okinawa/40/2002,
+		858	A/Okinawa/45/2002,
+		859	A/Okinawa/47/2002,
+		860	A/Okinawa/49/2003,
+		861	A/Okinawa/7/2007,
+		862	A/Oklahoma/309/2006,
+		863	A/Ontario/011/2011,
+		864	A/Ontario/013/2011,
+		865	A/Ontario/018/2011,
+		866	A/Ontario/019/2011,
+		867	A/Ontario/023/2011,
+		868	A/Oregon/08/2009,
+		869	A/Oregon/14/2009,
+		870	A/Oregon/UR06_0289/2007,
+		871	A/Osaka/10K361/2011,
+		872	A/Osaka/72/2010,
+		873	A/Oslo/398/2002,
+		874	A/Oslo/5381/2000,
+		875	A/Oslo/6391/2000,
+		876	A/Oslo/669/2002,
+		877	A/PERTH/160/2009,
+		878	A/PERTH/56/2010,
+		879	A/PERU/5937/2000,
+		880	A/PERU/G194/2001,
+		881	A/PHILIPPINES/16105/2002,
+		882	A/PHILIPPINES/3322/2009,
+		883	A/PHILIPPINES/472/2002,
+		884	A/PHILIPPINES/78890/2001,
+		885	A/PUSAN/66/2001,
+		886	A/Pandharpur/20055172/2005,
+		887	A/Pandharpur/20055208/2005,
+		888	A/Paraguay/52/2009,
+		889	A/Parana/192/2011,
+		890	A/Parana/199/2011,
+		891	A/Parana/313/04,
+		892	A/Paris/1751/2009,
+		893	A/Paris/1753/2009,
+		894	A/Paris/817/2008,
+		895	A/Perth/142/2007,
+		896	A/Perth/15/2009,
+		897	A/Perth/673/2009,
+		898	A/Peru/3029/2002,
+		899	A/Peru/8307/2007,
+		900	A/Philippines/160283/2002,
+		901	A/Philippines/1646/2007,
+		902	A/Philippines/2191/2009,
+		903	A/Philippinese/3967/2008,
+		904	A/Poitiers/1341/2008,
+		905	A/Pune/025502/160802,
+		906	A/Pune/025506/160802,
+		907	A/Pune/031741/030303,
+		908	A/Pune/032699/110403,
+		909	A/Pune/038072/220803,
+		910	A/Pune/038254/220803,
+		911	A/Pune/0622622/190906,
+		912	A/Pune/063078/040306,
+		913	A/Pune/0713435/051007,
+		914	A/Pune/0715485/021107,
+		915	A/Pune/076064/110607,
+		916	A/Pune/1019858/060810,
+		917	A/Qingdao/1045/2009,
+		918	A/Qingdao/1046/2009,
+		919	A/Qingdao/1115/2009,
+		920	A/Qingdao/1116/2009,
+		921	A/Qingdao/1157/2009,
+		922	A/Qingdao/1231/2009,
+		923	A/Qingdao/2200/2009,
+		924	A/Qingdao/505/2009,
+		925	A/Quebec/RV2804/2010,
+		926	A/Queensland/1/2000,
+		927	A/Queensland/15/2001,
+		928	A/Queensland/16/2001,
+		929	A/Queensland/18/2001,
+		930	A/Queensland/19/2001,
+		931	A/Queensland/23/2002,
+		932	A/Queensland/31/2003,
+		933	A/Queensland/40/2003,
+		934	A/Queensland/44/2004,
+		935	A/Queensland/60/2005,
+		936	A/Queensland/9/2000,
+		937	A/ROMANIA/175/2000,
+		938	A/ROMANIA/387/2000,
+		939	A/ROMANIA/427/2000,
+		940	A/RioGdoSul/205/02,
+		941	A/RioGdoSul/212/04,
+		942	A/RioGdoSul/406/04,
+		943	A/Rio_de_Janeiro/1621/2009,
+		944	A/Rio_de_Janeiro/27/2011,
+		945	A/RiodeJaneiro/26/04,
+		946	A/RiodeJaneiro/28/00,
+		947	A/SANTIAGO/5628/2000,
+		948	A/SANTIAGO/6774/2000,
+		949	A/SENDAI/161/2001,
+		950	A/SHANDONG/27/2001,
+		951	A/SHIMANE/133/2001,
+		952	A/SHIZUOKA/29/2010,
+		953	A/SINGAPORE/16/2002,
+		954	A/SINGAPORE/2/2000,
+		955	A/SINGAPORE/2/2002,
+		956	A/SINGAPORE/526/2010,
+		957	A/SINGAPORE/54/2001,
+		958	A/SINGAPORE/60/2001,
+		959	A/SINGAPORE/617/2010,
+		960	A/SINGAPORE/94/2000,
+		961	A/SONGKHLA/107/2002,
+		962	A/SOUTH-AUSTRALIA/1/2000,
+		963	A/SRI-LANKA/3/2010,
+		964	A/SRI-LANKA/7/2010,
+		965	A/SRI-LANKA/9/2009,
+		966	A/SRI-LANKA/9/2010,
+		967	A/SURAT-THANI/116/2010,
+		968	A/SYDNEY/213/2000,
+		969	A/SYDNEY/25/2009,
+		970	A/SYDNEY/306/2002,
+		971	A/Santiago/10086/2007,
+		972	A/Scotland/60380634/2006,
+		973	A/Seoul/323/2004,
+		974	A/Seoul/4295/2008,
+		975	A/Sergipe/146/2011,
+		976	A/Sergipe/152/2011,
+		977	A/Sergipe/155/2011,
+		978	A/Sergipe/176/2011,
+		979	A/Shandong/28/2000,
+		980	A/Shanghai-Luwan/1541/2010,
+		981	A/Shanghai-Luwan/1573/2010,
+		982	A/Shanghai-Nanhui/190/2009,
+		983	A/Shanghai/159/2001,
+		984	A/Shanghai/370/2003,
+		985	A/Shanghai/N03/2007,
+		986	A/Shanghai/N04/2007,
+		987	A/Shanghai/N18/2008,
+		988	A/Shanghai/N38/2008,
+		989	A/Shanghai/Pudongxin237/2008,
+		990	A/Shanxi/Yingze511/2007,
+		991	A/Shizuoka/736/2009,
+		992	A/Sichuan-Qingyang/1396/2008,
+		993	A/Singapore/215/2008,
+		994	A/Singapore/GP1231/2011,
+		995	A/Singapore/GP1446/2011,
+		996	A/Singapore/GP1635/2011,
+		997	A/Singapore/GP1776/2011,
+		998	A/Singapore/GP3680/2010,
+		999	A/Singapore/GP3961/2010,
+		1000	A/Singapore/GP4180/2010,
+		1001	A/Singapore/KK325/2011,
+		1002	A/Singapore/KK398/2011,
+		1003	A/Singapore/KK413/2011,
+		1004	A/Singapore/KK535/2011,
+		1005	A/Singapore/KK7/2011,
+		1006	A/Singapore/N1604/2009,
+		1007	A/Singapore/NHRC0001/2003,
+		1008	A/Singapore/NHRC0002/2003,
+		1009	A/Singapore/NHRC0003/2003,
+		1010	A/Singapore/NHRC0004/2003,
+		1011	A/Singapore/NHRC0005/2003,
+		1012	A/Singapore/NHRC0010/2003,
+		1013	A/Singapore/SGH04/2011,
+		1014	A/Singapore/TT603/2011,
+		1015	A/Singapore/TT609/2011,
+		1016	A/Singapore/TT638/2011,
+		1017	A/Singapore/TT728/2011,
+		1018	A/South-Carolina/03/2010,
+		1019	A/South-Dakota/02/2010,
+		1020	A/South_Australia/355/2007,
+		1021	A/South_Carolina/NHRC0001/2005,
+		1022	A/South_Carolina/NHRC0001/2006,
+		1023	A/South_Carolina/NHRC0001/2011,
+		1024	A/South_Korea/WRAIR1171P/2009,
+		1025	A/Spain/C2_1/2001,
+		1026	A/Sri-Lanka/14/2008,
+		1027	A/Sri-Lanka/22/2008,
+		1028	A/Sri_Lanka/146/2005,
+		1029	A/Sri_Lanka/23/2007,
+		1030	A/StaCatarina/311/02,
+		1031	A/StaCatarina/327/02,
+		1032	A/StaCatarina/339/02,
+		1033	A/Stockholm/2/2010,
+		1034	A/Stockholm/25/2008,
+		1035	A/Stockholm/26/2002,
+		1036	A/Stockholm/27/2002,
+		1037	A/Switzerland/1397477/2008,
+		1038	A/Sydney/1/2009,
+		1039	A/Sydney/17/2008,
+		1040	A/Sydney/18/2008,
+		1041	A/Sydney/3/2009,
+		1042	A/Sydney/52/2005,
+		1043	A/Sydney/6/2008,
+		1044	A/Sydney/DD2_02/2010,
+		1045	A/TAK/214/2001,
+		1046	A/THAILAND/80891/2001,
+		1047	A/TIANJING/13/2002,
+		1048	A/TOWNSVILLE/117/2010,
+		1049	A/TOWNSVILLE/92/2010,
+		1050	A/TOYAMA/123/2008,
+		1051	A/Taiwan/1452/2007,
+		1052	A/Taiwan/2361/2007,
+		1053	A/Taiwan/315/2006,
+		1054	A/Taiwan/471/2008,
+		1055	A/Taiwan/611/2008,
+		1056	A/Taiwan/612/2008,
+		1057	A/Taiwan/70002/2007,
+		1058	A/Taiwan/70120/2008,
+		1059	A/Taiwan/70307/2007,
+		1060	A/Taiwan/72106/2007,
+		1061	A/Taiwan/760/2007,
+		1062	A/Taiwan/821/2007,
+		1063	A/Taiwan/825/2007,
+		1064	A/Taiwan/851/2010,
+		1065	A/Tak/527/2009,
+		1066	A/Tasmania/1/2008,
+		1067	A/Tasmania/4/2008,
+		1068	A/TayNguyen/HCM52/2006,
+		1069	A/TayNguyen/TN335/2005,
+		1070	A/TayNguyen/TN348/2005,
+		1071	A/TayNguyen/TN360/2005,
+		1072	A/TayNguyen/TN368/2005,
+		1073	A/TayNguyen/TN381/2005,
+		1074	A/TayNguyen/TN388/2005,
+		1075	A/TayNguyen/TN405/2005,
+		1076	A/Tennessee/11/2007,
+		1077	A/Texas/01/2008,
+		1078	A/Texas/NHRC0001/2002,
+		1079	A/Texas/UR06_0603/2007,
+		1080	A/Thailand/128400/2002,
+		1081	A/Thailand/162496/2002,
+		1082	A/Thailand/271/2007,
+		1083	A/Thailand/284/2007,
+		1084	A/Thailand/508/2008,
+		1085	A/Thailand/911/2010,
+		1086	A/Thailand/CU_B110/2009,
+		1087	A/Thailand/CU_B4/2009,
+		1088	A/Thailand/CU_B590/2009,
+		1089	A/Thailand/CU_B657/2009,
+		1090	A/Thailand/Siriraj_03/2004,
+		1091	A/Thailand/Siriraj_06/2002,
+		1092	A/Thessaloniki/16/2009,
+		1093	A/Thessaloniki/40/2007,
+		1094	A/Thessaloniki/43/2005,
+		1095	A/Thessaloniki/90/2006,
+		1096	A/Tianjin-Hongqiao/141/2009,
+		1097	A/Tianjin-Nankai/1211/2008,
+		1098	A/Tianjin-Nankai/1687/2010,
+		1099	A/Tianjin-Ninghe/312/2009,
+		1100	A/Tianjin-Ninghe/39/2009,
+		1101	A/Tianjin/245/2001,
+		1102	A/Tianjin/Hedong112/2008,
+		1103	A/Tianjin/Hongqiao148/2008,
+		1104	A/Tianjin/Jinnan15/2007,
+		1105	A/Tianjin/Jinnan166/2008,
+		1106	A/Tianjin/Jinnan173/2008,
+		1107	A/Tianjin/Nankai110/2008,
+		1108	A/Ukraine/110/2009,
+		1109	A/Ukraine/96/2009,
+		1110	A/Utah/09/2010,
+		1111	A/VICTORIA/1035/2010,
+		1112	A/VICTORIA/4/2010,
+		1113	A/VICTORIA/650/2010,
+		1114	A/VICTORIA/8/2010,
+		1115	A/VN/1293/2001,
+		1116	A/Vellore/0713793/140607,
+		1117	A/Venezuela/9602/2007,
+		1118	A/Vermont/UR06_0448/2007,
+		1119	A/Victoria/210/2009,
+		1120	A/Victoria/248/2007,
+		1121	A/Victoria/303/2006,
+		1122	A/Victoria/500/2007,
+		1123	A/Victoria/500/2008,
+		1124	A/Victoria/502/2009,
+		1125	A/Victoria/503/2006,
+		1126	A/Victoria/519/2006,
+		1127	A/Victoria/520/2006,
+		1128	A/Vietnam/167/2010,
+		1129	A/Vietnam/1770/2009,
+		1130	A/Vietnam/214/2008,
+		1131	A/Vietnam/225/2010,
+		1132	A/Vietnam/838/2010,
+		1133	A/Vietnam/936/2009,
+		1134	A/Virginia/01/2007,
+		1135	A/Virginia/02/2009,
+		1136	A/WUHAN/374/2001,
+		1137	A/WUHAN/396/2001,
+		1138	A/WUHAN/401/2001,
+		1139	A/Waikato/102/2003,
+		1140	A/Waikato/105/2001,
+		1141	A/Waikato/139/2003,
+		1142	A/Waikato/15/2003,
+		1143	A/Waikato/15/2005,
+		1144	A/Waikato/16/2008,
+		1145	A/Waikato/18/2005,
+		1146	A/Waikato/21/2002,
+		1147	A/Waikato/35/2004,
+		1148	A/Waikato/40/2004,
+		1149	A/Waikato/5/2001,
+		1150	A/Waikato/51/2004,
+		1151	A/Waikato/58/2006,
+		1152	A/Waikato/91/2003,
+		1153	A/Washington/2997/2012,
+		1154	A/Washington/2998/2012,
+		1155	A/Wellington/13/2008,
+		1156	A/Wellington/2/2008,
+		1157	A/Wellington/21/2000,
+		1158	A/Wellington/30/2000,
+		1159	A/Wellington/31/2008,
+		1160	A/Wellington/33/2006,
+		1161	A/Wellington/34/2001,
+		1162	A/Wellington/34/2003,
+		1163	A/Wellington/38/2002,
+		1164	A/Wellington/38/2006,
+		1165	A/Wellington/4/2005,
+		1166	A/Wellington/49/2003,
+		1167	A/Wellington/55/2004,
+		1168	A/Wellington/8/2004,
+		1169	A/Wellington/8/2005,
+		1170	A/Wellington/9/2003,
+		1171	A/West_Coast/32/2001,
+		1172	A/Western_Australia/1/2000,
+		1173	A/Western_Australia/11/2000,
+		1174	A/Western_Australia/23/2002,
+		1175	A/Western_Australia/32/2002,
+		1176	A/Western_Australia/34/2002,
+		1177	A/Western_Australia/42/2003,
+		1178	A/Western_Australia/44/2003,
+		1179	A/Western_Australia/49/2003,
+		1180	A/Western_Australia/5/2000,
+		1181	A/Western_Australia/69/2005,
+		1182	A/Western_Australia/71/2005,
+		1183	A/Western_Australia/76/2005,
+		1184	A/Whanganui/417/2004,
+		1185	A/Wisconsin/08/2008,
+		1186	A/Wisconsin/45/2006,
+		1187	A/Wuhan/12/2002,
+		1188	A/Wuhan/144/2003,
+		1189	A/Wuhan/16/2002,
+		1190	A/Wuhan/388/2001,
+		1191	A/Wuhan/9/2002,
+		1192	A/Wyoming/02/2006,
+		1193	A/Wyoming/04/2007,
+		1194	A/Xinjing/Tulufan540/2008,
+		1195	A/YAMAGATA/592/2001,
+		1196	A/YOKOHAMA/111/2000,
+		1197	A/YOKOHAMA/97/2010,
+		1198	A/Yamagata/K16/2006,
+		1199	A/Yamagata/K22/2006,
+		1200	A/Yamagata/K32/2006,
+		1201	A/Yokohama/96/2010,
+		1202	A/Zhuhai/358/2005,
+		1203	AG-2289,
+		1204	AG-3065,
+		1205	AG-3509,
+		1206	AG-R1-06,
+		1207	AG-R113-05,
+		1208	AG-R26-04,
+		1209	AG-R55-05,
+		1210	AG-R56-05,
+		1211	AG-R570-05,
+		1212	AG-R624-06,
+		1213	AG-R631-06,
+		1214	AG-R809-03,
+		1215	ANHUI/1179/2005,
+		1216	ANHUI/1239/2005,
+		1217	ANHUI/1247/2005,
+		1218	ANHUI/563/2005,
+		1219	AOMORI/43/2004,
+		1220	ARGENTINA/126/2004,
+		1221	BA-1164729,
+		1222	BA-141817-ORIGINAL,
+		1223	BA-167113,
+		1224	BANGLADESH/1999/2006,
+		1225	BAYERN/1/2003,
+		1226	BEIJING-CHAOYANG/158/2010,
+		1227	BEIJING-HUAIROU/1155/2011,
+		1228	BEIJING-XICHENG/1293/2011,
+		1229	BEIJING-XICHENG/1409/2011,
+		1230	BEIJING/170/2003,
+		1231	BEIJING/178-NEW-AGN/2002,
+		1232	BEIJING/209/2006,
+		1233	BEIJING/27/2006,
+		1234	BEIJING/301/2002,
+		1235	BEIJING/37/2006,
+		1236	BEIJING/47/2006,
+		1237	BEIJING/58/2006,
+		1238	BEIJING/XICHENG1272/2006,
+		1239	BEIJINGXICHENG/313/2006,
+		1240	BEIJINGXICHENG/315/2006,
+		1241	BEIJINGXICHENG/318/2006,
+		1242	BL-324-02,
+		1243	BR-1609,
+		1244	BR-1945,
+		1245	BR-IAL-1499,
+		1246	BR-IAL-266,
+		1247	BR-IAL-445,
+		1248	BR-IAL-615,
+		1249	BR-IAL1544,
+		1250	BRAZIL/1742/2005,
+		1251	BRAZIL/1759/2004,
+		1252	BRISBANE/203/2006,
+		1253	CHEJU/274/2002,
+		1254	CHIBA/113/2003,
+		1255	CHONGQING-WANZHOU/182/2011,
+		1256	CHONGQING-YUZHONG/334/2010,
+		1257	CHONGQING-YUZHONG/335/2010,
+		1258	CHONGQING/1096/2005,
+		1259	CHONGQING/1167/2005,
+		1260	CHONGQING/618/2005,
+		1261	CHONGQING/628/2005,
+		1262	CHONGQING/650/2005,
+		1263	CHONGQING/652/2005,
+		1264	CI-03-6267,
+		1265	CI-03-6421,
+		1266	CI-03-7379,
+		1267	CI-03-7985,
+		1268	CI-03-8266-ORIGINAL,
+		1269	CI-03-8299,
+		1270	CI-03-8806,
+		1271	CI-05-6898,
+		1272	CI-05-7099,
+		1273	CL-4145,
+		1274	CL-6928,
+		1275	DARWIN/1/2006,
+		1276	ECUADOR/1968/2004,
+		1277	FG-00220012,
+		1278	FUKUOKA/16/2005,
+		1279	FUKUSHIMA/173/2003,
+		1280	GANSU/30/2004,
+		1281	GANSUCHENGGUAN/97/2006,
+		1282	GE-838,
+		1283	GUNMA/1489/2004,
+		1284	GUYANE/28/2006,
+		1285	HEBEI-BAODING-ANGUO/51/2010,
+		1286	HEBEI-SHIJIAZHUANG-YUHUA/133/2011,
+		1287	HEBEI/196/2003,
+		1288	HEILONGJIANG-HARBIN-NANGANG/124/2011,
+		1289	HEILONGJIANG-HARBIN-XIANGFANG/129/2010,
+		1290	HEILONGJIANG-HEGANG-XIANGYANG/1125/2011,
+		1291	HEILONGJIANG-QIQIHAR-JIANHUA/172/2010,
+		1292	HEILONGJIANG-QITAIHE-TAOSHAN/147/2011,
+		1293	HUBEI-ENSHI-TUJIA-AND-MIAO-ENSHI/1250/2010,
+		1294	HUBEI/276/2004,
+		1295	HUBEI/412/2004,
+		1296	HUBEIWUCHANG/1258/2006,
+		1297	HUBEIWUJIAGANG/1121/2006,
+		1298	HUNAN-CHENZHOU-BEIHU/1143/2011,
+		1299	HUNAN-HENGYANG-YANFENG/165/2011,
+		1300	HUNAN-LOUDI-LOUXING/16/2011,
+		1301	HYOGO/113/2003,
+		1302	ICELAND/6/2005,
+		1303	II-511132,
+		1304	INCHEON/243/2005,
+		1305	JA-RSP-02-910,
+		1306	JAPAN/727/2003,
+		1307	JIANGSU/DY3/2004,
+		1308	JIANGSU/FU137/2004,
+		1309	JIANGSU/FU81/2004,
+		1310	JILIN-JILIN-CHUANYING/1156/2011,
+		1311	JILIN/16/2003,
+		1312	JILIN/18/2003,
+		1313	JILINCHAOYANG/1178/2006,
+		1314	JILINNANGUAN/1165/2006,
+		1315	KANAGAWA/88/2003,
+		1316	KO-RSP-02-770,
+		1317	KOREA/124/2003,
+		1318	KUMAMOTO/102/2002,
+		1319	KWANGJU/219/2002,
+		1320	LATVIA/13794/2002,
+		1321	LIAONING-FUXIN-HAIZHOU/1118/2011,
+		1322	LYON/19989/2002,
+		1323	LYON/21/2004,
+		1324	NAKHONRATCHASIMA/635/2004,
+		1325	NARA/64/2003,
+		1326	NEPAL/1646/2004,
+		1327	NEPAL/1659/2004,
+		1328	NEPAL/1660/2004,
+		1329	NEPAL/1670/2004,
+		1330	NEPAL/1675/2004,
+		1331	NEPAL/1678/2004,
+		1332	NEPAL/1680/2004,
+		1333	NEPAL/1702/2004,
+		1334	NEPAL/921/2006,
+		1335	NETHERLANDS/368/2002,
+		1336	NIIGATA/95/2004,
+		1337	NP-HC90997-ORIGINAL,
+		1338	NP-HC91440-ORIGINAL,
+		1339	NP-HC91445-ORIGINAL,
+		1340	OKINAWA/41/2004,
+		1341	OSAKA/25/2003,
+		1342	PARIS/207/2002,
+		1343	PE-5102-ORIGINAL,
+		1344	PE-5107-ORIGINAL,
+		1345	PE-FLU-3355,
+		1346	PERU/1296/2004,
+		1347	PHILIPPINES/621/2003,
+		1348	PHILIPPINES/629/2003,
+		1349	PY-697,
+		1350	ROMANIA/810/2005,
+		1351	SAITAMA/41/2005,
+		1352	SANTIAGO/8248/2006,
+		1353	SANTIAGO/9491/2006,
+		1354	SAPPORO/193/2003,
+		1355	SENDAI/126/2003,
+		1356	SHAANXI/90/2005,
+		1357	SHANGHAI-JINSHAN/13/2011,
+		1358	SHANGHAI-LUWAN/188/2011,
+		1359	SHIZUOKA/383/2003,
+		1360	SICHUAN/1017/2004,
+		1361	SICHUAN/1025/2004,
+		1362	SINGAPORE/38/2004,
+		1363	THAILAND/692/2006,
+		1364	THAILAND/697/2006,
+		1365	THAILAND/715/2006,
+		1366	TIANJIN-HEXI/1266/2010,
+		1367	TIANJIN-HEXI/15/2011,
+		1368	TIANJIN-JINNAN/144/2011,
+		1369	TIANJIN-NANKAI/1912/2010,
+		1370	TIANJIN/143/2003,
+		1371	TIANJIN/199/2003,
+		1372	TIANJIN/263/2004,
+		1373	TIANJIN/273/2004,
+		1374	TIANJIN/275/2005,
+		1375	TIANJIN/32/2004,
+		1376	TOCHIGI/55/2003,
+		1377	UY-05-39082,
+		1378	UY-CA04-3173,
+		1379	UY-PA03-4,
+		1380	VE-246971-ORIGINAL,
+		1381	VE-254155,
+		1382	WELLINGTON/43/2006,
+		1383	WUHAN/101/2004,
+		1384	WUHAN/158/2005,
+		1385	WUHAN/211/2003,
+		1386	WUHAN/214/2003,
+		1387	WUHAN/269/2004,
+		1388	WUHAN/271/2004,
+		1389	WUHAN/283/2005
+	;
+	TREE * UNTITLED = [&R] ((98[&city={BG}]:1.785037818,(72[&city={TH}]:1.097052,(96[&city={BG}]:0.07209563538,97[&city={BG}]:1.028095635)[&city={BG}]:1.021956364)[&city={BG}]:0.690985818)[&city={BG}]:0.7086906295,(((469[&city={HK}]:0.6244031357,526[&city={ID}]:0.7914031357)[&city={HK}]:2.709055157,(((948[&city={CL}]:0.1806607326,(8[&city={AR}]:0.2620304628,879[&city={PE}]:0.2320304628)[&city={AR,PE}]:0.1486302698)[&city={AR,CL,HK,PE}]:0.1645079461,(454[&city={HK}]:0.06850479808,((((178[&city={CL}]:0.08701737597,(180[&city={CL}]:0.07159952377,226[&city={BR}]:0.9045995238)[&city={CL}]:0.0644178522)[&city={CL}]:0.3667984485,((((807[&city={US}]:0.1751527579,(330[&city={JP}]:0.3099306038,(815[&city={US}]:0.2909620591,(754[&city={US}]:0.08374918264,(749[&city={US}]:0.1513270594,(750[&city={US}]:0.1963736088,808[&city={US}]:0.04637360881)[&city={US}]:0.006953450568)[&city={US}]:0.01742212326)[&city={US}]:0.05121287642)[&city={US}]:0.02696854471)[&city={US}]:0.1202221541)[&city={US}]:0.1299457889,(((752[&city={US}]:0.1466641413,(753[&city={US}]:0.1142907786,811[&city={US}]:0.03129077858)[&city={US}]:0.1643733628)[&city={US}]:0.03787317898,(770[&city={US}]:0.1164934289,814[&city={US}]:0.1434934289)[&city={US}]:0.1560438914)[&city={US}]:0.06968719651,(810[&city={US}]:0.2655585756,820[&city={US}]:0.2625585756)[&city={US}]:0.06866594126)[&city={US}]:0.06487402996)[&city={US}]:0.2342530145,(328[&city={BR}]:0.5230626808,(842[&city={JP}]:0.1203664033,(600[&city={JP}]:0.1306016571,856[&city={JP}]:0.2896016571)[&city={JP}]:0.02276474619)[&city={JP}]:0.3250256266)[&city={BR,JP}]:0.1379595313)[&city={BR,JP,US}]:0.1029969599,(((1025[&city={ES}]:0.02161941316,(793[&city={US}]:0.1247112367,((704[&city={JP}]:0.03743010579,706[&city={JP}]:0.04843010579)[&city={JP}]:0.1241453565,(857[&city={JP}]:0.1996531463,((1320[&city={LV}]:0.2268134394,(56[&city={AT}]:0.2692590318,59[&city={AT}]:0.3212590318)[&city={AT}]:0.1035544076)[&city={AT,LV}]:0.4065189407,(352[&city={IT}]:0.4531423315,761[&city={US}]:0.6281423315)[&city={US}]:0.1231900485)[&city={US}]:0.3493207662)[&city={JP}]:0.002922315943)[&city={JP}]:0.07313577442)[&city={JP,US}]:0.07007963082)[&city={JP,US}]:0.06419392878,(1322[&city={FR}]:0.5672189546,(1175[&city={AU}]:0.1102917737,(268[&city={DK}]:0.3594752529,1225[&city={DE}]:0.4707467979)[&city={DE,DK}]:0.02654497578)[&city={AU}]:0.3199271809)[&city={AU}]:0.4367658417)[&city={AU}]:0.1992177435,(((290[&city={GB}]:0.04490620686,(931[&city={AU}]:0.4057236436,1174[&city={AU}]:0.2707236436)[&city={AU}]:0.2455128904)[&city={AU}]:0.1761727354,(873[&city={NO}]:0.2339585098,(283[&city={NZ}]:0.5731197295,(1163[&city={NZ}]:0.1711906335,(221[&city={NZ}]:0.1456775598,(208[&city={NZ}]:0.07884150227,(205[&city={NZ}]:0.00457802259,(222[&city={NZ}]:0.04084979265,(43[&city={NZ}]:0.2062905702,223[&city={NZ}]:0.01129057017)[&city={NZ}]:0.04355922248)[&city={NZ}]:0.1277282299)[&city={NZ}]:0.0002634796811)[&city={NZ}]:0.02283605749)[&city={NZ}]:0.0005130737572)[&city={NZ}]:0.278929096)[&city={NZ}]:0.1978387803)[&city={NO,NZ}]:0.02345075955)[&city={AU}]:0.08689196039,(733[&city={NL}]:0.4260101264,1080[&city={TH}]:0.4430101264)[&city={NL,TH}]:0.02729110329)[&city={AU}]:0.1169013101)[&city={AU}]:0.3351459813)[&city={AU,BR,JP,US}]:0.3284673034)[&city={AU,BR,CL,JP,US}]:0.09158730547,(((88[&city={BR}]:0.3266572703,((((927[&city={AU}]:0.02375018235,(791[&city={US}]:0.2578161048,((792[&city={US}]:0.1429240634,(747[&city={US}]:0.005156065943,(1030[&city={BR}]:0.1660862537,1032[&city={BR}]:0.09531914929)[&city={BR}]:0.5837504289)[&city={US}]:0.04476799746)[&city={US}]:0.1878351783,(790[&city={US}]:0.1316023855,876[&city={NO}]:0.2053988862)[&city={US}]:0.02615685626)[&city={US}]:0.05005686307)[&city={US}]:0.1029340775)[&city={US}]:0.07951056409,(60[&city={TH}]:0.0961590557,961[&city={TH}]:0.0501590557)[&city={TH}]:0.5351016907)[&city={US}]:0.2347044648,(42[&city={NZ}]:0.2533727929,((432[&city={HK}]:0.2186246156,(441[&city={HK}]:0.2940813422,481[&city={HK}]:0.03308134217)[&city={HK}]:0.02654327343)[&city={HK}]:0.1525047671,(748[&city={US}]:0.1146160102,813[&city={US}]:0.01561601019)[&city={US}]:0.1035133725)[&city={US}]:0.3802434101)[&city={US}]:0.1365924183)[&city={US}]:0.1270248505,(9[&city={AR}]:0.1455531629,(3[&city={AR}]:0.1297293863,(789[&city={US}]:0.09100767871,809[&city={US}]:0.1870076787)[&city={US}]:0.4367217076)[&city={AR}]:0.05682377664)[&city={AR}]:0.06943689879)[&city={AR}]:0.07866720861)[&city={AR}]:0.07490713983,((6[&city={AR}]:0.338361463,(41[&city={NZ}]:0.2204049478,(1140[&city={NZ}]:0.2801135668,1161[&city={NZ}]:0.2361135668)[&city={NZ}]:0.009291381035)[&city={NZ}]:0.2579565152)[&city={AR}]:0.01601185427,(2[&city={AR}]:0.3201457469,((930[&city={AU}]:0.06878815645,(((812[&city={US}]:0.2371763005,(1078[&city={US}]:0.1569665446,(1146[&city={NZ}]:0.5561783188,(1176[&city={AU}]:0.3187952463,((554[&city={IN}]:0.7909893732,556[&city={IN}]:0.1199893732)[&city={IN}]:2.500600164,(277[&city={DK}]:0.43736434,1249[&city={BR}]:0.9730841122)[&city={BR,DK}]:0.116505425)[&city={BR,DK,IN}]:0.04020570905)[&city={AU}]:0.3963830725)[&city={AU}]:0.03878822579)[&city={US}]:0.1462097559)[&city={US}]:0.09639932443,(746[&city={US}]:0.1785068116,970[&city={AU}]:0.7645068116)[&city={AU,US}]:0.2560688133)[&city={AU,US}]:0.1658829776,(928[&city={AU}]:0.03090827691,929[&city={AU}]:0.04990827691)[&city={AU}]:0.1015503256)[&city={AU}]:0.02932955394)[&city={AU}]:0.09806470748,(1[&city={AR}]:0.06699185207,(4[&city={AR}]:0.1437330603,5[&city={AR}]:0.1417330603)[&city={AR}]:0.1042587918)[&city={AR}]:0.04686101186)[&city={AR}]:0.214292883)[&city={AR}]:0.01522757032)[&city={AR}]:0.05519109295)[&city={AR}]:0.04847206473,(7[&city={AR}]:0.04045633976,(636[&city={FR}]:0.2691134208,((155[&city={BR}]:0.2655113942,158[&city={BR}]:0.4795113942)[&city={BR}]:0.1277565972,(156[&city={BR}]:0.4368345586,(940[&city={BR}]:0.254173622,(82[&city={BR}]:0.01300588209,1242[&city={BO}]:1.153005882)[&city={BR}]:0.3681619483)[&city={BR}]:0.1076667282)[&city={BR}]:0.05243343288)[&city={BR}]:0.2808454294)[&city={BR}]:0.3283429189)[&city={AR}]:0.3545801352)[&city={AR}]:0.204366655)[&city={AR,AU,BR,CL,HK,JP,US}]:0.1758982149,(426[&city={HK}]:0.2795573391,((732[&city={NL}]:0.08615580185,(821[&city={US}]:0.629257898,(731[&city={NL}]:0.1645007721,854[&city={JP}]:0.2275007721)[&city={NL}]:0.4337571259)[&city={NL}]:0.3068979039)[&city={NL}]:0.08508154477,(182[&city={CO}]:0.4944119482,(284[&city={EC}]:0.136392801,(880[&city={PE}]:0.1489137026,(898[&city={PE}]:0.03803105292,((85[&city={BR}]:0.2764183232,1268[&city={CL}]:0.8734183232)[&city={BR}]:0.2196002119,(1243[&city={BR}]:0.8817031435,(1031[&city={BR}]:0.08198540664,1203[&city={AR}]:0.7457921029)[&city={BR}]:0.1789110406)[&city={BR}]:0.2063153916)[&city={BR}]:0.04401251782)[&city={PE}]:0.5488826497)[&city={PE}]:0.5494790984)[&city={EC,PE}]:0.07001914725)[&city={CO,EC,PE}]:0.1318253984)[&city={CO,EC,HK,NL,PE}]:0.09131999247)[&city={HK}]:0.2827440058)[&city={HK}]:0.04620345323)[&city={HK}]:0.4246638806)[&city={HK}]:1.253669772,(((((452[&city={HK}]:0.4266788562,1157[&city={NZ}]:0.5496788562)[&city={HK}]:0.09355826618,((453[&city={HK}]:0.339202469,(1115[&city={VN}]:0.6331719853,1196[&city={JP}]:0.03617198528)[&city={HK,JP,VN}]:0.6730304837)[&city={HK}]:0.1290472116,(((133[&city={CN}]:0.442630735,372[&city={CN}]:0.456630735)[&city={CN}]:1.019442398,((((((134[&city={CN}]:0.2523081897,136[&city={CN}]:0.2503081897)[&city={CN}]:0.1874422462,((463[&city={HK}]:0.1964779677,(79[&city={CN}]:0.06266063289,(434[&city={HK}]:0.1330965791,443[&city={HK}]:0.2200965791)[&city={HK}]:0.2475640538)[&city={CN,HK}]:0.2298173348)[&city={CN,HK}]:0.05365559988,((1190[&city={CN}]:0.08043256612,(1138[&city={CN}]:0.05084233691,1187[&city={CN}]:0.1468423369)[&city={CN}]:0.07359022921)[&city={CN}]:0.0291242622,(1136[&city={CN}]:0.04005890109,(1191[&city={CN}]:0.1503138466,(641[&city={CN}]:0.9383406752,(383[&city={VN}]:0.3318928465,442[&city={HK}]:0.1808928465)[&city={CN,HK,VN}]:0.09644782867)[&city={CN}]:0.2039731714)[&city={CN}]:0.04074505444)[&city={CN}]:0.05549792724)[&city={CN}]:0.1735767392)[&city={CN}]:0.01461686827)[&city={CN}]:0.1141360852,(78[&city={CN}]:0.1959697413,955[&city={SG}]:0.2999697413)[&city={CN}]:0.2429167797)[&city={CN}]:0.03062096453,((((1189[&city={CN}]:0.2019706817,(74[&city={CN}]:0.07518238184,76[&city={CN}]:0.01218238184)[&city={CN}]:0.03078829988)[&city={CN}]:0.2566720701,(75[&city={CN}]:0.1670218153,77[&city={CN}]:0.1670218153)[&city={CN}]:0.1596209365)[&city={CN}]:0.04079984663,((552[&city={IN}]:0.1002948039,908[&city={IN}]:1.246309839)[&city={IN}]:0.2541823606,((883[&city={PH}]:0.3729702372,1036[&city={SE}]:0.1163155908)[&city={PH,SE}]:0.1222218529,(((((((1386[&city={CN}]:0.5919161097,((471[&city={HK}]:0.4001154091,765[&city={US}]:0.4301154091)[&city={CN,HK,US}]:0.2527164193,(518[&city={CN}]:0.3365454923,(465[&city={HK}]:0.351792045,(1267[&city={CL}]:0.03891511575,1385[&city={CN}]:0.08791511575)[&city={CN}]:0.2468769293)[&city={CN}]:0.1767534473)[&city={CN}]:0.0422863361)[&city={CN}]:0.03808428128)[&city={CN}]:0.1937066725,((((466[&city={HK}]:0.03920712605,831[&city={CN}]:0.151207126)[&city={CN}]:0.3914137902,((346[&city={CN}]:0.5975896047,363[&city={CN}]:0.1705896047)[&city={CN}]:0.1289505403,((1370[&city={CN}]:0.2766932832,(1371[&city={CN}]:0.2743363536,(588[&city={KR}]:0.6239298136,(1287[&city={CN}]:0.09978431011,(445[&city={HK}]:0.2578961473,507[&city={HK}]:0.1698961473)[&city={HK}]:0.1868881628)[&city={CN}]:0.1051455035)[&city={CN}]:0.17640654)[&city={CN}]:0.04635692959)[&city={CN}]:0.1286771142,(1301[&city={JP}]:0.405665029,(1280[&city={CN}]:0.4362352839,(1230[&city={CN}]:0.1288213902,1375[&city={CN}]:0.2498213902)[&city={CN}]:0.1954138937)[&city={CN}]:0.05442974513)[&city={CN}]:0.1967053684)[&city={CN}]:0.1181697477)[&city={CN}]:0.1480807712)[&city={CN}]:0.1053889726,((909[&city={IN}]:0.3172096008,(((855[&city={JP}]:0.3366808101,(1376[&city={JP}]:0.05229197072,(1325[&city={JP}]:0.01932684239,1340[&city={JP}]:0.2883268424)[&city={JP}]:0.02196512834)[&city={JP}]:0.1113888394)[&city={JP}]:0.019774284,(1254[&city={JP}]:0.09787703917,(1279[&city={JP}]:0.008690353939,1355[&city={JP}]:0.04369035394)[&city={JP}]:0.03518668523)[&city={JP}]:0.115578055)[&city={JP}]:0.3213270067,(((375[&city={VN}]:0.3542445825,(260[&city={KR}]:0.3704553383,(973[&city={KR}]:0.249821526,(853[&city={JP}]:0.02702182886,1219[&city={JP}]:0.07902182886)[&city={JP}]:0.1357996972)[&city={KR}]:0.09263381227)[&city={KR}]:0.1047892442)[&city={KR}]:0.1994332068,(261[&city={KR}]:0.5049097641,308[&city={GB}]:0.2089097641)[&city={KR}]:0.1777680253)[&city={KR}]:0.03092878872,((((1220[&city={AR}]:0.4609506556,(942[&city={BR}]:0.4006894635,1251[&city={BR}]:0.2937011697)[&city={BR}]:0.1882494859)[&city={AR,BR}]:0.1962791056,(1359[&city={JP}]:0.1397424698,(386[&city={VN}]:0.315076801,((((666[&city={MY}]:0.2540083905,((678[&city={MY}]:0.09636508253,679[&city={MY}]:0.1263650825)[&city={MY}]:0.4584011087,(291[&city={GB}]:0.524181291,1362[&city={SG}]:0.132181291)[&city={GB,MY,SG}]:0.1705849002)[&city={MY}]:0.01124219924)[&city={MY}]:0.05242715392,(((801[&city={US}]:0.8334369064,((550[&city={IN}]:0.07307882976,551[&city={IN}]:0.3660788298)[&city={IN}]:0.5820433297,(1308[&city={CN}]:0.3614143085,((296[&city={GB}]:0.4883684136,(1304[&city={KR}]:0.5483046114,(((489[&city={HK}]:0.3439530467,783[&city={US}]:0.2039530467)[&city={US}]:0.1900203599,(776[&city={US}]:0.3163156108,(766[&city={US}]:0.002401064317,777[&city={US}]:0.05440106432)[&city={US}]:0.2099145465)[&city={US}]:0.1356577958)[&city={US}]:0.03402471482,(267[&city={IN}]:1.931763675,((548[&city={IN}]:0.03738385077,((852[&city={JP}]:1.280931029,(13[&city={GR}]:0.261743735,(297[&city={GB}]:0.03070910686,(301[&city={GB}]:0.1903876702,(((1143[&city={NZ}]:0.4642086869,((48[&city={AU}]:0.01521667946,935[&city={AU}]:0.1952166795)[&city={AU}]:0.1533318897,(1145[&city={NZ}]:0.23228977,1165[&city={NZ}]:0.15528977)[&city={NZ}]:0.09225879917)[&city={NZ}]:0.1346601178)[&city={NZ}]:0.002421035665,(851[&city={JP}]:0.0992194814,(216[&city={NZ}]:0.04416325458,(217[&city={NZ}]:0.06385088431,1169[&city={NZ}]:0.1188508843)[&city={NZ}]:0.01831237027)[&city={NZ}]:0.3040562268)[&city={NZ}]:0.05841024116)[&city={NZ}]:0.05973899713,(1042[&city={AU}]:0.6477747515,(695[&city={JP}]:0.5883449389,(341[&city={JP}]:0.2541178866,((340[&city={JP}]:0.1121591723,343[&city={JP}]:0.02415917228)[&city={JP}]:0.1322301596,(342[&city={JP}]:0.02230895682,1278[&city={JP}]:0.04730895682)[&city={JP}]:0.137080375)[&city={JP}]:0.1117285547)[&city={JP}]:0.3312270523)[&city={JP}]:0.1604298127)[&city={JP}]:0.1255939681)[&city={JP}]:0.06401895053)[&city={GB}]:0.02332143664)[&city={GB}]:0.07503462817)[&city={GB,GR}]:0.1371872943)[&city={GB,GR,IN,JP}]:0.08540226686,(((314[&city={GB}]:0.3595303401,1095[&city={GR}]:0.4685303401)[&city={GB,GR,IN}]:0.8653554843,(886[&city={IN}]:0.0835595027,(563[&city={IN}]:0.0117272913,887[&city={IN}]:0.0117272913)[&city={IN}]:0.0718322114)[&city={IN}]:0.6393263217)[&city={IN}]:0.03519184111,(555[&city={IN}]:0.08453544687,(307[&city={GB}]:1.138657783,557[&city={IN}]:0.192657783)[&city={IN}]:0.8938776638)[&city={IN}]:0.09054221864)[&city={IN}]:0.09025563067)[&city={IN}]:0.00205055459)[&city={IN}]:0.01046304304,(191[&city={US}]:0.333701255,(549[&city={IN}]:0.0873815047,(564[&city={IN}]:0.1691199292,((294[&city={GB}]:0.200224757,741[&city={NL}]:0.384224757)[&city={GB,IN,NL}]:0.1112226834,(266[&city={IN}]:0.2340633033,912[&city={IN}]:0.05106330332)[&city={IN}]:0.463384137)[&city={IN}]:0.1666724889)[&city={IN}]:0.7182615755)[&city={IN}]:0.003319750347)[&city={IN}]:0.08314563876)[&city={IN}]:0.07091678083)[&city={IN}]:0.05523444682)[&city={US}]:0.005306489895)[&city={US}]:0.06306380222)[&city={US}]:0.07971977249,(802[&city={US}]:0.1949743428,(1372[&city={CN}]:0.001876809941,(781[&city={US}]:0.2027899517,1381[&city={VE}]:0.8927899517)[&city={US}]:0.05708685821)[&city={US}]:0.02009753288)[&city={US}]:0.2501138432)[&city={US}]:0.08132612245)[&city={US}]:0.002707850932)[&city={US}]:0.055314747)[&city={US}]:0.1386912751,((832[&city={CN}]:0.04291649565,((508[&city={HK}]:0.2470727731,(1263[&city={CN}]:0.2119007894,((501[&city={HK}]:0.1493418641,1261[&city={CN}]:0.03434186415)[&city={CN}]:0.01988081279,((417[&city={HK}]:0.09417440391,(1262[&city={CN}]:0.04211769959,(1211[&city={AR}]:0.07847870955,((1028[&city={LK}]:0.2109227489,((677[&city={MY}]:0.2600047009,717[&city={JP}]:0.04300470085)[&city={JP}]:0.1414918596,((1206[&city={AR}]:0.1678915153,((592[&city={CN}]:0.2144738228,(485[&city={HK}]:0.2979658519,1297[&city={CN}]:0.1439658519)[&city={CN}]:0.1085079709)[&city={CN}]:0.0493429787,((591[&city={CN}]:0.767696863,(1296[&city={CN}]:0.492040824,((388[&city={CN}]:0.4748844463,((246[&city={KR}]:0.2136589416,(1057[&city={TW}]:0.1525780357,(597[&city={CN}]:0.1507711958,1059[&city={TW}]:0.2217711958)[&city={TW}]:0.01780683985)[&city={TW}]:0.06108090592)[&city={KR,TW}]:0.1272549109,(848[&city={JP}]:0.2635178825,(990[&city={CN}]:0.01629278516,(573[&city={JP}]:0.04774934915,576[&city={JP}]:0.06674934915)[&city={JP}]:0.08954343601)[&city={JP}]:0.1732250974)[&city={JP}]:0.17839597)[&city={CN,JP,KR,TW}]:0.1119705938)[&city={CN}]:0.04024324577,(483[&city={HK}]:0.07343354055,484[&city={HK}]:0.08143354055)[&city={HK}]:0.09869415154)[&city={CN}]:0.01791313194)[&city={CN}]:0.1996560389)[&city={CN}]:0.004588198581,((1238[&city={CN}]:0.2511528456,(1313[&city={CN}]:0.2243962738,((488[&city={HK}]:0.05884423781,1314[&city={CN}]:0.008844237808)[&city={CN}]:0.1190343926,(239[&city={CN}]:0.2399393243,377[&city={VN}]:0.2699393243)[&city={CN}]:0.1019393061)[&city={CN}]:0.09651764345)[&city={CN}]:0.02675657178)[&city={CN}]:0.1269942226,((1104[&city={CN}]:0.3179618848,(164[&city={AU}]:0.1104629073,901[&city={PH}]:0.7374629073)[&city={AU,CN,PH}]:0.2494989774)[&city={CN}]:0.06026622476,(((572[&city={JP}]:0.1340076618,1020[&city={AU}]:0.5940076618)[&city={JP}]:0.08443152903,(575[&city={JP}]:0.2334004107,1051[&city={TW}]:0.5644004107)[&city={JP}]:0.004038780193)[&city={JP}]:0.2624249141,(486[&city={HK}]:0.008660224964,(1241[&city={CN}]:0.05917514697,(1239[&city={CN}]:0.01097485441,1240[&city={CN}]:0.01097485441)[&city={CN}]:0.05020029256)[&city={CN}]:0.100485078)[&city={CN}]:0.10220388)[&city={CN}]:0.04336400457)[&city={CN}]:0.06291895864)[&city={CN}]:0.2761379934)[&city={CN}]:0.003531739945)[&city={CN}]:0.3700747138)[&city={AR}]:0.09994828801,(478[&city={HK}]:0.1624039293,(474[&city={HK}]:0.03822463606,475[&city={HK}]:0.03822463606)[&city={HK}]:0.08917929319)[&city={HK}]:0.228435874)[&city={AR}]:0.01265675716)[&city={JP}]:0.1574261885)[&city={JP}]:0.122305211,((702[&city={JP}]:0.2478581919,(694[&city={JP}]:0.03566241534,696[&city={JP}]:0.07066241534)[&city={JP}]:0.04519577652)[&city={JP}]:0.06190082446,(698[&city={JP}]:0.1672494935,1198[&city={JP}]:0.02824949346)[&city={JP}]:0.2185095229)[&city={JP}]:0.2674689436)[&city={JP}]:0.0382507496)[&city={AR,JP}]:0.22163899)[&city={CN}]:0.03505670432)[&city={CN}]:0.003106127329,(228[&city={IN}]:1.240701257,(529[&city={US}]:0.1999084127,(304[&city={GB}]:0.01389003602,317[&city={GB}]:0.274890036)[&city={GB}]:0.03801837672)[&city={GB,US}]:0.2957928438)[&city={GB,IN,US}]:0.4035792747)[&city={CN}]:0.0119421457)[&city={CN}]:0.1116781124)[&city={CN}]:0.02117198376)[&city={HK}]:0.1941494371,(692[&city={US}]:0.1146416899,((671[&city={MY}]:0.1339433908,((214[&city={NZ}]:0.1275386333,((610[&city={IN}]:0.9526108092,675[&city={MY}]:0.05361080917)[&city={IN}]:0.1415549553,((609[&city={IN}]:0.9180972402,(559[&city={IN}]:0.8121238664,(558[&city={IN}]:0.3943557478,((1337[&city={NP}]:0.3439931345,((((((281[&city={UA}]:0.1742106193,1122[&city={AU}]:0.1818067546)[&city={AU,UA}]:0.1116111465,(617[&city={KR}]:0.03543982377,(247[&city={KR}]:0.01341514609,847[&city={JP}]:0.1234151461)[&city={KR}]:0.05802467768)[&city={KR}]:0.110381942)[&city={AU,KR,UA}]:0.0004565117213,(378[&city={VN}]:0.1427296207,((379[&city={VN}]:0.1222141168,861[&city={JP}]:0.02621411681)[&city={VN}]:0.1445359269,(382[&city={VN}]:0.09010558924,739[&city={NL}]:0.005105589239)[&city={VN}]:0.04764445444)[&city={VN}]:0.001979576973)[&city={VN}]:0.05354865688)[&city={AU,FR,KR,UA,VN}]:0.2817918904,(194[&city={US}]:0.5284507499,(487[&city={HK}]:0.1923228257,644[&city={FR}]:0.2143228257)[&city={FR}]:0.1301279241)[&city={FR}]:0.07561941808)[&city={FR}]:0.1463097674,(565[&city={BY}]:0.3916521054,643[&city={FR}]:0.2376521054)[&city={FR}]:0.32572783)[&city={FR}]:0.07591884941,(1334[&city={NP}]:0.1361516402,(1338[&city={NP}]:0.09561734436,1339[&city={NP}]:0.09561734436)[&city={NP}]:0.03853429587)[&city={NP}]:0.02114714459)[&city={NP}]:0.1886943497)[&city={NP}]:0.04236749089,(280[&city={UA}]:0.7422819598,(1365[&city={TH}]:0.2868137888,(1224[&city={BD}]:0.05721949158,(106[&city={BD}]:0.03082674199,608[&city={IN}]:0.162826742)[&city={BD}]:0.6503927496)[&city={BD}]:0.2375942972)[&city={BD,TH}]:0.08846817098)[&city={BD,TH,UA}]:0.2850786656)[&city={BD,IN,NP,TH,UA}]:0.3619951224)[&city={IN}]:0.0997681186)[&city={IN}]:0.07897337388)[&city={IN}]:0.0914168651,((((((20[&city={AR}]:0.2912586182,(19[&city={AR}]:0.1767232053,32[&city={AR}]:0.2017232053)[&city={AR}]:0.1095354129)[&city={AR}]:0.2916668928,(29[&city={AR}]:0.347626141,(381[&city={VN}]:0.2138886627,(1063[&city={TW}]:0.1192396873,(1052[&city={TW}]:0.1667461543,1061[&city={TW}]:0.05674615434)[&city={TW}]:0.01549353299)[&city={TW}]:0.4046489754)[&city={AR,TW,VN}]:0.2947374783)[&city={AR}]:0.1372993699)[&city={AR}]:0.06509617919,((((561[&city={IN}]:0.1909536291,1116[&city={IN}]:0.0839536291)[&city={IN}]:0.3094175337,(28[&city={AR}]:0.1200853383,165[&city={AU}]:0.003085338335)[&city={AR}]:0.04028582448)[&city={AR}]:0.1155793834,((1134[&city={US}]:0.002763066439,(30[&city={AR}]:0.07250895031,738[&city={NL}]:0.4755089503)[&city={AR}]:0.1772541161)[&city={AR}]:0.1987879783,(16[&city={IN}]:0.4591845798,915[&city={IN}]:0.06418457981)[&city={IN}]:0.3813664649)[&city={AR}]:0.05539950146)[&city={AR}]:0.1180311139,(531[&city={US}]:0.0529396781,1118[&city={US}]:0.0499396781)[&city={US}]:0.281041982)[&city={AR}]:0.04304003007)[&city={AR}]:0.04462710356,(((914[&city={IN}]:0.6359502994,986[&city={CN}]:0.3259502994)[&city={CN}]:0.2051499522,(356[&city={CN}]:0.2520522132,(355[&city={CN}]:0.1936368823,727[&city={NP}]:0.5526368823)[&city={CN}]:0.0524153309)[&city={CN}]:0.03004803838)[&city={CN}]:0.1384381188,(389[&city={CN}]:0.09603448876,((1026[&city={LK}]:1.287108769,1029[&city={LK}]:0.3501087688)[&city={LK}]:0.1151042976,(520[&city={CN}]:0.0622069435,(139[&city={CN}]:0.008429431158,(332[&city={FI}]:0.5018091819,913[&city={IN}]:0.2448091819)[&city={CN,FI,IN}]:0.4976202493)[&city={CN}]:0.07377751234)[&city={CN}]:6.122884638e-06)[&city={CN}]:0.005821422377)[&city={CN}]:0.08050388158)[&city={CN}]:0.1221104234)[&city={CN}]:0.1731770582,(((((985[&city={CN}]:0.3659847506,((992[&city={CN}]:1.579755692,(1058[&city={TW}]:0.724967707,1060[&city={TW}]:0.491967707)[&city={TW}]:0.04878798521)[&city={CN}]:0.01708152673,(594[&city={CN}]:0.06537608982,595[&city={CN}]:0.07937608982)[&city={CN}]:0.4514611291)[&city={CN}]:0.1641475317)[&city={CN}]:0.2394665415,((654[&city={MY}]:0.2248017345,((((412[&city={HK}]:0.04406249344,((1084[&city={TH}]:0.4788985366,(168[&city={AU}]:0.4796388445,1106[&city={CN}]:0.2876388445)[&city={AU}]:0.08725969209)[&city={AU}]:0.03725549051,((1043[&city={AU}]:0.4314136558,((240[&city={NZ}]:0.1426712121,((12[&city={AL}]:0.3283428016,1135[&city={US}]:0.1863428016)[&city={US}]:0.2241527522,((((198[&city={US}]:0.413504339,(36[&city={AR}]:0.5516810053,836[&city={US}]:0.06468100529)[&city={US}]:0.01782333373)[&city={US}]:0.0331553833,(839[&city={NO}]:0.08130529044,(10[&city={US}]:0.1169131417,321[&city={GB}]:0.02891314167)[&city={US}]:0.08539214877)[&city={US}]:0.003354431885)[&city={US}]:0.1174125338,(892[&city={FR}]:0.2714648914,(1038[&city={AU}]:0.07996953788,(324[&city={GB}]:0.01503929767,1124[&city={AU}]:0.1140392977)[&city={AU}]:0.00193024021)[&city={AU}]:0.1334953535)[&city={AU,FR,US}]:0.05460736473)[&city={US}]:0.06369828261,(((699[&city={MD}]:0.1443096969,700[&city={MD}]:0.1443096969)[&city={MD}]:0.1648402613,(323[&city={GB}]:0.0438918327,(195[&city={US}]:0.253442362,350[&city={CH}]:0.05644236201)[&city={US}]:0.1664494707)[&city={US}]:0.0372581255)[&city={US}]:0.1236638715,(197[&city={US}]:0.5030502898,(349[&city={CH}]:0.2108215586,1092[&city={GR}]:0.1888215586)[&city={CH,GR,US}]:0.03122873119)[&city={US}]:0.08076353984)[&city={US}]:0.03895670908)[&city={US}]:0.09772501507)[&city={US}]:0.1481756583)[&city={AU,NZ,US}]:0.3926887722,(1123[&city={AU}]:0.4250081841,((1096[&city={CN}]:0.9096345576,((1056[&city={TW}]:0.4750303181,(390[&city={CN}]:0.4032747161,(400[&city={HK}]:0.2778865681,(982[&city={CN}]:0.1935159983,(492[&city={HK}]:0.1147465301,1291[&city={CN}]:0.7647465301)[&city={CN}]:0.3987694683)[&city={CN}]:0.01337056976)[&city={CN}]:0.303388148)[&city={CN}]:0.301755602)[&city={CN}]:0.02428312646,(877[&city={AU}]:0.9999544178,988[&city={CN}]:0.1669544178)[&city={CN}]:0.1453590268)[&city={CN}]:0.09832111301)[&city={CN}]:0.1356071938,(360[&city={CN}]:0.9323497162,903[&city={PH}]:0.1403497162)[&city={CN}]:0.2908920351)[&city={CN}]:0.0367664328)[&city={AU}]:0.02535180017)[&city={AU}]:0.1020536715)[&city={AU}]:0.07298315184,(656[&city={MY}]:0.2525623025,657[&city={MY}]:0.2525623025)[&city={MY}]:0.2248345052)[&city={AU}]:0.01175721945)[&city={AU}]:0.01590846632)[&city={HK}]:0.02525281748,(398[&city={HK}]:0.07939822134,(740[&city={NL}]:0.4825086067,(203[&city={KH}]:0.2890711199,1034[&city={SE}]:0.3190711199)[&city={KH,SE}]:0.2374374868)[&city={HK,KH,NL,SE}]:0.2298896146)[&city={HK}]:0.1959170896)[&city={HK}]:0.2350916064,(((1130[&city={VN}]:0.008870494369,1133[&city={VN}]:0.9078704944)[&city={VN}]:0.05725893623,(607[&city={VN}]:0.2808071935,(571[&city={JP}]:0.05764821316,586[&city={JP}]:0.05764821316)[&city={JP}]:0.3551589803)[&city={VN}]:0.3193222371)[&city={VN}]:0.7469118366,(373[&city={VN}]:0.04036013489,(516[&city={VN}]:0.2982466755,(405[&city={HK}]:0.202908175,(367[&city={KR}]:0.03105843891,(245[&city={KR}]:0.4212080057,(231[&city={KR}]:0.1508846158,(230[&city={KR}]:0.002065071664,232[&city={KR}]:0.2480650717)[&city={KR}]:0.01181954414)[&city={KR}]:0.0163233899)[&city={KR}]:0.006850433203)[&city={KR}]:0.03184973605)[&city={HK,KR,VN}]:0.1093385006)[&city={VN}]:0.05411345935)[&city={VN}]:0.02768113234)[&city={VN}]:0.03136565011)[&city={HK,VN}]:0.08753419051,(142[&city={US}]:0.3010528191,(((604[&city={US}]:0.01138729655,(1027[&city={LK}]:0.1328730508,(((584[&city={JP}]:0.361179243,((118[&city={BD}]:0.2677882692,((721[&city={CN}]:0.1001398948,(117[&city={BD}]:0.1430782757,1087[&city={TH}]:0.2170782757)[&city={BD}]:0.05906161919)[&city={BD}]:0.08551803209,(110[&city={BD}]:0.3259102082,(((46[&city={AU}]:0.3664665799,(115[&city={BD}]:0.1139529107,(109[&city={BD}]:0.0492581817,160[&city={BR}]:0.0472581817)[&city={BD}]:0.07769472905)[&city={BD}]:0.02551366918)[&city={BD}]:0.02898779479,(991[&city={JP}]:0.1875230567,1089[&city={TH}]:0.3215230567)[&city={BD,JP,TH}]:0.04093131805)[&city={BD}]:0.03760174098,(((535[&city={IN}]:0.1346184081,537[&city={IN}]:0.3376184081)[&city={IN}]:0.06334126475,((1006[&city={SG}]:0.2340931616,((((715[&city={JP}]:0.7908326086,(184[&city={US}]:0.3922217962,(((1255[&city={CN}]:0.2244847522,(364[&city={CN}]:0.2632238216,1298[&city={CN}]:0.2682238216)[&city={CN}]:0.008260930639)[&city={CN}]:0.2662115313,(183[&city={US}]:0.06686335198,1300[&city={CN}]:0.332863352)[&city={CN}]:0.04583293156)[&city={CN}]:0.09293461934,(269[&city={DK}]:0.3866634949,(265[&city={KR}]:0.1101109643,(1367[&city={CN}]:0.154737323,(1228[&city={CN}]:0.04264792265,1229[&city={CN}]:0.08064792265)[&city={CN}]:0.1910894003)[&city={CN}]:0.02737364132)[&city={CN}]:0.2565525306)[&city={CN}]:0.03296740794)[&city={CN}]:0.07959089328)[&city={CN,JP,US}]:0.1136108124)[&city={JP}]:0.1240280601,((108[&city={BD}]:0.1105008925,113[&city={BD}]:0.1875008925)[&city={BD}]:0.18567019,((925[&city={CA}]:0.2341495868,(1201[&city={JP}]:0.2543947526,(1368[&city={CN}]:0.1841489538,(867[&city={CA}]:0.19918939,(345[&city={RO}]:0.0240587981,866[&city={CA}]:0.1090587981)[&city={CA}]:0.06313059195)[&city={CA}]:0.05895956376)[&city={CA}]:0.1712457988)[&city={CA}]:0.1877548342)[&city={CA}]:0.0964090712,(119[&city={BD}]:0.305444882,999[&city={SG}]:0.269444882)[&city={BD}]:0.01111377597)[&city={BD}]:0.05661242447)[&city={BD}]:0.0976895862)[&city={JP}]:0.008479334178,((403[&city={HK}]:0.1265624646,((235[&city={CL}]:0.08768557852,(116[&city={BD}]:0.04156619157,(234[&city={CL}]:0.0381699589,236[&city={CL}]:0.0491699589)[&city={CL}]:0.003396232668)[&city={CL}]:0.04611938695)[&city={CL}]:0.02076678615,(105[&city={ES}]:0.2585211036,((((275[&city={DK}]:0.2390881764,(190[&city={US}]:0.1631036797,1019[&city={US}]:0.08010367975)[&city={US}]:0.06798449664)[&city={US}]:0.01185464361,(150[&city={US}]:0.3669849872,680[&city={US}]:0.05198498719)[&city={US}]:0.02895783281)[&city={US}]:0.2159502141,(185[&city={US}]:0.01200574745,(863[&city={CA}]:0.1502887398,(148[&city={US}]:0.1139551382,(845[&city={US}]:1.06150259,(((253[&city={US}]:0.3164321619,(186[&city={US}]:0.06522976209,188[&city={US}]:0.008229762089)[&city={US}]:0.2762023998)[&city={US}]:0.1971680895,(187[&city={US}]:0.3915913833,1153[&city={US}]:0.3475913833)[&city={US}]:0.1770088681)[&city={US}]:0.3335939939,(254[&city={US}]:0.1619400435,844[&city={US}]:0.2769400435)[&city={US}]:0.5872542019)[&city={US}]:0.1973083448)[&city={US}]:0.2384525481)[&city={US}]:0.0783336016)[&city={US}]:0.06371700767)[&city={US}]:0.2138872866)[&city={US}]:0.01272246607,(22[&city={AR}]:0.001783087441,(287[&city={GB}]:0.03209507869,(37[&city={AR}]:0.1228674753,(26[&city={AR}]:0.0821893218,(25[&city={AR}]:0.0467479052,27[&city={AR}]:0.0657479052)[&city={AR}]:0.0164414166)[&city={AR}]:0.0406781535)[&city={AR}]:0.0842276034)[&city={AR}]:0.002688008746)[&city={AR}]:0.1378324127)[&city={AR,US}]:0.00690560345)[&city={AR,ES,US}]:0.1449312611)[&city={AR,CL,ES,HK,US}]:0.06011009997)[&city={HK}]:0.08092394994,((((163[&city={FR}]:0.06819605755,1048[&city={AU}]:0.04319605755)[&city={AU}]:0.09359029164,((104[&city={BR}]:0.3683534453,944[&city={BR}]:0.1193534453)[&city={BR}]:0.05776198531,((102[&city={BR}]:0.194312365,(976[&city={BR}]:0.02573074124,(975[&city={BR}]:0.03646559699,977[&city={BR}]:0.02846559699)[&city={BR}]:0.02226514425)[&city={BR}]:0.1815816237)[&city={BR}]:0.05786559416,(101[&city={BR}]:0.1389044032,(99[&city={BR}]:0.2063971285,(687[&city={BR}]:0.2149365305,(978[&city={BR}]:0.04808811774,(103[&city={BR}]:0.1234987819,(570[&city={JP}]:0.3422353368,578[&city={JP}]:0.01923533677)[&city={JP}]:0.5532634451)[&city={BR}]:0.2425893358)[&city={BR}]:0.1088484128)[&city={BR}]:0.02446059796)[&city={BR}]:0.1055072747)[&city={BR}]:0.05527355592)[&city={BR}]:0.001937471524)[&city={BR}]:0.03667091854)[&city={AU}]:0.4218314472,((522[&city={JP}]:0.257647793,1003[&city={SG}]:0.900647793)[&city={AU,JP,SG}]:0.4076416806,(91[&city={AU}]:0.1111096397,(181[&city={NZ}]:0.06168679473,(94[&city={AU}]:0.006530261226,1049[&city={AU}]:0.2175302612)[&city={AU}]:0.0711565335)[&city={AU}]:0.121422845)[&city={AU}]:0.08217983385)[&city={AU}]:0.04732832282)[&city={AU}]:0.08943883315,(((404[&city={HK}]:0.01530596155,409[&city={HK}]:0.1543059615)[&city={HK}]:0.1069602263,(357[&city={CN}]:0.1163087134,(517[&city={CN}]:0.05147825812,952[&city={JP}]:0.08447825812)[&city={CN}]:0.2368304552)[&city={CN}]:0.1099574745)[&city={HK}]:0.03511817684,(92[&city={AU}]:0.07034776123,(408[&city={HK}]:0.05189215171,(1110[&city={US}]:0.2033915729,(((18[&city={AR}]:0.1484498114,(871[&city={JP}]:0.1194832492,1290[&city={CN}]:0.1804832492)[&city={CN}]:0.1659665623)[&city={CN}]:0.005767977268,(1227[&city={CN}]:0.1855533291,(864[&city={CA}]:0.009351158435,(146[&city={US}]:0.001508805565,865[&city={CA}]:0.07050880557)[&city={CA}]:0.00184235287)[&city={CA}]:0.1082021706)[&city={CN}]:0.06166445965)[&city={CN}]:0.05991272703,(890[&city={BR}]:0.5315732185,1357[&city={CN}]:0.2045732185)[&city={CN}]:0.02855729723)[&city={CN}]:0.1042610572)[&city={CN,HK,US}]:0.07250057882)[&city={HK}]:0.005455609519)[&city={HK}]:0.2370366034)[&city={HK}]:0.04467226489)[&city={HK}]:0.03642978501)[&city={HK}]:0.04385358828)[&city={JP}]:0.3069865253,((392[&city={JP}]:0.12474183,393[&city={JP}]:0.14374183)[&city={JP}]:0.9414839723,(((359[&city={CN}]:0.4180004451,((638[&city={LA}]:0.3153153333,1113[&city={AU}]:0.3833153333)[&city={AU,LA,VN}]:0.0299204542,(1131[&city={VN}]:0.3172861056,(878[&city={AU}]:0.1569305389,(177[&city={KH}]:0.01736087475,1132[&city={VN}]:0.1193608748)[&city={VN}]:0.004569664191)[&city={VN}]:0.05935556669)[&city={VN}]:0.01394968184)[&city={VN}]:0.07276465766)[&city={VN}]:0.214720227,(728[&city={NL}]:0.09457141339,(998[&city={SG}]:0.2094215176,(358[&city={CN}]:0.4233099821,(959[&city={SG}]:0.132629043,1085[&city={TH}]:0.389629043)[&city={SG}]:0.01168093907)[&city={SG}]:0.002111535508)[&city={SG}]:0.1541498958)[&city={NL,SG,VN}]:0.1211492588)[&city={VN}]:0.05633679572,(623[&city={KR}]:0.7270646471,1128[&city={VN}]:0.06406464713)[&city={VN}]:0.01099282074)[&city={VN}]:0.01316833448)[&city={JP}]:0.09510072577)[&city={JP}]:0.2427666335)[&city={IN,JP,SG}]:0.3538044229,(965[&city={LK}]:0.0959668394,(534[&city={IN}]:0.08105164526,764[&city={US}]:1.026051645)[&city={IN}]:0.01291519414)[&city={IN}]:0.0919307451)[&city={IN}]:0.01006208831)[&city={IN}]:0.1517198513,(538[&city={IN}]:0.1294628509,((171[&city={CA}]:0.0423072209,((141[&city={BO}]:0.33175509,581[&city={JP}]:2.07775509)[&city={JP}]:0.05146917502,((11[&city={US}]:0.03137668228,(100[&city={BR}]:0.4428022923,889[&city={BR}]:0.6178022923)[&city={BR}]:0.08257439003)[&city={US}]:0.3254787171,((416[&city={HK}]:0.2397119247,1044[&city={AU}]:0.3957119247)[&city={AU,HK,US}]:0.01819059165,(351[&city={CH}]:0.1547493486,(278[&city={US}]:0.2248517426,707[&city={ES}]:0.1258517426)[&city={US}]:0.422897606)[&city={US}]:0.08415316779)[&city={US}]:0.06395288299)[&city={US}]:0.2263688656)[&city={JP}]:0.1490829559)[&city={JP}]:0.2382944748,(((1033[&city={SE}]:0.2443064866,(1005[&city={SG}]:0.8526230339,((((729[&city={NL}]:0.09427906594,737[&city={NL}]:0.09427906594)[&city={NL}]:0.08633726054,(1002[&city={SG}]:0.5530879205,(1004[&city={SG}]:0.6695263693,(629[&city={KR}]:0.7604419467,632[&city={KR}]:0.8514419467)[&city={KR}]:0.03208442255)[&city={SG}]:0.09456155125)[&city={SG}]:0.3675284059)[&city={SG}]:0.02588233919,((997[&city={SG}]:0.4377544552,(1001[&city={SG}]:0.005370750988,1015[&city={SG}]:0.123370751)[&city={SG}]:0.1443837042)[&city={SG}]:0.2915899623,(567[&city={JP}]:0.08669862131,(568[&city={JP}]:0.1293517127,569[&city={JP}]:0.1213517127)[&city={JP}]:0.01234690866)[&city={JP}]:0.9466457962)[&city={SG}]:0.3951542481)[&city={SG}]:0.1263872689,((996[&city={SG}]:0.5669534058,1013[&city={SG}]:0.3939534058)[&city={SG}]:0.0420786422,((((1014[&city={SG}]:0.07530228527,(1016[&city={SG}]:0.06202532083,((580[&city={JP}]:0.1067372316,582[&city={JP}]:0.1967372316)[&city={JP}]:0.2240199906,(279[&city={US}]:0.2781473059,(252[&city={US}]:0.3515132029,583[&city={JP}]:0.2305132029)[&city={US}]:0.118634103)[&city={US}]:0.08560991629)[&city={JP,SG,US}]:0.02226809865)[&city={SG}]:0.04827696444)[&city={SG}]:0.278203875,(1154[&city={US}]:0.8598447213,(994[&city={SG}]:0.1044437963,(995[&city={SG}]:0.1411778863,(630[&city={KR}]:0.4964429796,(579[&city={JP}]:0.209865917,1017[&city={SG}]:0.02286591695)[&city={SG}]:0.2785770626)[&city={SG}]:0.06373490668)[&city={SG}]:0.08126591002)[&city={SG}]:0.05140092499)[&city={SG}]:0.01666143897)[&city={SG}]:0.01943597507,(251[&city={US}]:0.4314942061,723[&city={US}]:0.4074942061)[&city={US}]:0.4204479292)[&city={SG}]:0.01429202709,(628[&city={KR}]:0.1713658609,631[&city={KR}]:0.2513658609)[&city={KR}]:0.5358683015)[&city={SG}]:0.1337978856)[&city={SG}]:0.5438538866)[&city={SG}]:0.4897370993)[&city={SG}]:0.07068345267)[&city={SG}]:0.3224047213,((713[&city={TH}]:0.3897274,956[&city={SG}]:0.04772740001)[&city={SG}]:0.4228151053,(397[&city={HK}]:0.01666519417,(276[&city={DK}]:0.4730435205,(23[&city={AR}]:0.02021024003,24[&city={AR}]:0.02021024003)[&city={AR}]:0.3188332805)[&city={AR,DK}]:0.3296216737)[&city={AR,DK,HK,SG}]:0.4068773111)[&city={SG}]:0.05816870253)[&city={SG}]:0.1078759966,(523[&city={JP}]:1.429172708,(840[&city={NO}]:0.2461012995,((((237[&city={CN}]:0.1357515481,1293[&city={CN}]:0.1887515481)[&city={CN}]:0.1705872687,((539[&city={IN}]:0.236259596,((639[&city={IN}]:0.05545761245,(1000[&city={SG}]:0.1913617139,(1197[&city={JP}]:0.2062249203,(394[&city={JP}]:0.3750884083,(322[&city={GB}]:0.1479821092,603[&city={JP}]:0.1479821092)[&city={JP}]:0.03510629916)[&city={JP}]:0.05013651197)[&city={JP}]:0.1661367936)[&city={IN,JP,SG}]:0.001095898509)[&city={IN}]:0.07989889515,(720[&city={IN}]:0.04434044395,916[&city={IN}]:0.05034044395)[&city={IN}]:0.07701606365)[&city={IN}]:0.02490308842)[&city={IN}]:0.1468222212,(541[&city={IN}]:0.4628375727,(((147[&city={US}]:0.09579205828,149[&city={US}]:0.2107920583)[&city={US}]:0.09249192195,(151[&city={US}]:0.2978778566,1023[&city={US}]:0.1498778566)[&city={US}]:0.07940612365)[&city={US}]:0.12985626,(540[&city={IN}]:0.05252573461,542[&city={IN}]:0.07152573461)[&city={IN}]:0.02761450564)[&city={IN}]:0.3826973324)[&city={IN}]:0.03624424456)[&city={IN}]:0.1232569996)[&city={CN}]:0.1030133088,(981[&city={CN}]:0.2774920628,1111[&city={AU}]:0.3264920628)[&city={CN}]:0.3628600628)[&city={CN}]:0.02720330271,(963[&city={LK}]:0.365702914,(966[&city={LK}]:0.1015457055,(964[&city={LK}]:0.115747828,(329[&city={FJ}]:0.5551400611,1114[&city={AU}]:0.2501400611)[&city={AU,FJ,LK}]:0.07560776692)[&city={LK}]:0.002797877485)[&city={LK}]:0.1021572085)[&city={LK}]:0.1318525143)[&city={CN,LK}]:0.3485458712)[&city={CN,JP,LK,NO}]:0.002071408568)[&city={JP}]:0.04041449647)[&city={JP}]:0.06901449118)[&city={JP}]:0.08486115519)[&city={IN}]:0.3352166732)[&city={IN}]:0.03937659161)[&city={BD}]:0.02185409256)[&city={BD}]:0.01574771869)[&city={BD}]:0.005130342242)[&city={BD}]:0.4014711979,((282[&city={UA}]:0.3939891733,1109[&city={UA}]:0.3659891733)[&city={UA}]:0.03832200166,(1108[&city={UA}]:0.213621965,(837[&city={NO}]:0.02862120827,(686[&city={BR}]:0.3658090223,868[&city={US}]:0.1498090223)[&city={BR}]:0.04881218597)[&city={BR}]:0.1610007568)[&city={UA}]:0.2126892099)[&city={UA}]:0.1439482921)[&city={BD}]:0.01791977597)[&city={BD}]:0.2824606001,(157[&city={BR}]:0.2949700025,159[&city={BR}]:0.4509700025)[&city={BR}]:0.6826698406)[&city={BD,BR}]:0.04746060654,((107[&city={BD}]:0.06252204754,121[&city={BD}]:0.02652204754)[&city={BD}]:0.0412515749,((743[&city={NL}]:0.00661868306,((684[&city={BR}]:0.01388735401,685[&city={BR}]:0.01388735401)[&city={BR}]:0.04909661395,(682[&city={BR}]:0.06148332723,683[&city={BR}]:0.06148332723)[&city={BR}]:0.001500640729)[&city={BR}]:0.0756347151)[&city={BR}]:0.8949619998,(17[&city={ES}]:0.1637376924,943[&city={BR}]:0.7847376924)[&city={BR}]:0.2538429905)[&city={BR}]:0.1441929396)[&city={BD,BR}]:0.1023268272)[&city={BD,BR}]:0.04177260122)[&city={BD,BR,LK,US}]:0.1255142457)[&city={US}]:0.1250861929,(1050[&city={JP}]:0.1430991326,(614[&city={IN}]:0.2896918516,((333[&city={IT}]:0.2583038505,642[&city={PT}]:0.2013038505)[&city={IT,PT}]:0.2181207536,(248[&city={CO}]:0.6164474171,250[&city={CO}]:0.8514474171)[&city={CO}]:0.213977187)[&city={CO,IT,PT}]:0.2922672475)[&city={CO,IN,IT,PT}]:0.09440728103)[&city={CO,IN,IT,JP,PT,US}]:0.07337435677)[&city={US}]:0.1602111435,(((1185[&city={US}]:0.08875865771,(145[&city={US}]:0.04186189261,(39[&city={NZ}]:0.08346350625,244[&city={NZ}]:0.2864635063)[&city={NZ}]:0.1993983864)[&city={US}]:0.1428967651)[&city={US}]:0.01156038249,((606[&city={US}]:0.04354762404,((527[&city={US}]:0.2092841223,(1024[&city={KR}]:0.420327936,(257[&city={VN}]:0.1607612656,1041[&city={AU}]:0.3087612656)[&city={AU,VN}]:0.06670621237)[&city={AU,KR,US,VN}]:0.09381664434)[&city={US}]:0.2229048685,(893[&city={FR}]:0.2787532493,(894[&city={FR}]:0.04176889205,1037[&city={CH}]:0.07176889205)[&city={FR}]:0.1049843573)[&city={FR}]:0.4494357415)[&city={US}]:0.2473586332)[&city={US}]:0.04077877881,(143[&city={US}]:0.003079293819,585[&city={JP}]:0.2110792938)[&city={US}]:0.07624710904)[&city={US}]:0.07099263734)[&city={US}]:0.008398145962,(337[&city={US}]:0.06491090692,((528[&city={US}]:0.08506917936,(1156[&city={NZ}]:0.03191290085,((1066[&city={AU}]:0.09089097307,(1067[&city={AU}]:0.05068030107,1159[&city={NZ}]:0.1086803011)[&city={AU,NZ}]:0.037210672)[&city={AU,NZ}]:0.00149763353,(1144[&city={NZ}]:0.03137477571,1155[&city={NZ}]:0.06637477571)[&city={NZ}]:0.03901383089)[&city={NZ}]:0.0005242942481)[&city={NZ}]:0.2391562785)[&city={US}]:0.006366980603,(((1129[&city={VN}]:0.6495927333,((196[&city={US}]:0.2985112771,((401[&city={HK}]:0.129509279,((204[&city={AU}]:0.1910251241,(199[&city={KH}]:0.3457715171,637[&city={LA}]:0.6357715171)[&city={KH,LA}]:0.136253607)[&city={AU}]:0.1119658118,(249[&city={CO}]:0.3448563816,725[&city={NP}]:0.3918563816)[&city={CO,NP}]:0.01813455433)[&city={AU}]:0.05951834312)[&city={AU}]:0.0733481391,(618[&city={KR}]:0.2624712496,(896[&city={AU}]:0.1478721316,(402[&city={HK}]:0.123045014,633[&city={KR}]:0.133045014)[&city={KR}]:0.01982711758)[&city={KR}]:0.02159911802)[&city={KR}]:0.03638616854)[&city={AU}]:0.03465385899)[&city={AU}]:0.1733629005,(566[&city={JP}]:0.2189582148,(645[&city={MY}]:0.3501534257,((828[&city={JP}]:0.4539891359,((658[&city={MY}]:0.1857187113,(882[&city={PH}]:0.152357599,(744[&city={US}]:0.1210603333,(21[&city={AR}]:0.5217238667,152[&city={BR}]:0.2727238667)[&city={AR,BR}]:0.01333646666)[&city={US}]:0.7622972657)[&city={US}]:0.05236111225)[&city={MY}]:0.1089720418,(726[&city={NP}]:0.1044054625,1112[&city={AU}]:0.8444054625)[&city={AU}]:0.3292852906)[&city={AU}]:0.05736644137)[&city={AU}]:0.1615182927,((1086[&city={TH}]:0.06869787949,(1088[&city={TH}]:0.05995002477,(967[&city={TH}]:0.3838076452,(577[&city={JP}]:0.129520285,1065[&city={TH}]:0.04152028503)[&city={TH}]:0.01328736016)[&city={TH}]:0.2601423796)[&city={TH}]:0.05774785471)[&city={TH}]:0.278800198,(1119[&city={AU}]:0.1737154696,((690[&city={US}]:0.01161147244,(634[&city={JP}]:1.245753952,((396[&city={HK}]:0.320652696,1289[&city={CN}]:0.09565269601)[&city={CN}]:0.03873065602,(413[&city={HK}]:0.9477822294,((((((1288[&city={CN}]:0.6599245978,(827[&city={JP}]:0.04781613174,1256[&city={CN}]:0.00981613174)[&city={CN}]:0.01710846609)[&city={CN}]:0.009773187676,(93[&city={AU}]:0.193895076,(823[&city={JP}]:0.0064930466,825[&city={JP}]:0.0064930466)[&city={JP}]:0.02540202936)[&city={AU,CN,JP}]:0.04280270955)[&city={CN}]:0.001186494976,(980[&city={CN}]:0.1501853515,(824[&city={JP}]:0.01366970163,826[&city={JP}]:0.01366970163)[&city={JP}]:0.03751564991)[&city={CN}]:0.02469892894)[&city={CN}]:0.03286446569,((624[&city={KR}]:0.2474901713,872[&city={JP}]:0.07249017129)[&city={CN,JP,KR}]:0.2374580185,(1257[&city={CN}]:0.05423983908,(730[&city={NL}]:0.2669561109,(371[&city={JP}]:0.1178521442,((1310[&city={CN}]:0.1504030919,1321[&city={CN}]:0.2024030919)[&city={CN}]:0.151765218,(714[&city={JP}]:0.2217976821,(1286[&city={CN}]:0.07356200905,1299[&city={CN}]:0.3255620091)[&city={CN}]:0.08523567302)[&city={CN}]:0.00637062779)[&city={CN}]:0.009683834296)[&city={CN}]:0.1111039668)[&city={CN}]:0.2502837282)[&city={CN}]:0.008708350707)[&city={CN}]:0.007800556386)[&city={CN}]:0.2524792649,(((132[&city={CN}]:0.09304755465,822[&city={JP}]:0.3500475546)[&city={CN}]:0.05687101221,(140[&city={RS}]:0.04356766216,1292[&city={CN}]:0.5145676622)[&city={CN}]:0.0873509047)[&city={CN}]:0.05535700784,(626[&city={KR}]:0.1459141768,(625[&city={KR}]:0.1162145102,627[&city={KR}]:0.1292145102)[&city={KR}]:0.01669966659)[&city={KR}]:0.2423613979)[&city={CN}]:0.4029524364)[&city={CN}]:0.2034304823,(1064[&city={TW}]:0.3721444023,1358[&city={CN}]:0.7891444023)[&city={CN}]:0.3105140911)[&city={CN}]:0.08112373598)[&city={CN}]:0.06360112264)[&city={CN}]:0.04037060033)[&city={CN}]:0.2208575201)[&city={CN}]:0.1285234401,(1098[&city={CN}]:0.4742429735,(1366[&city={CN}]:0.1585719467,1369[&city={CN}]:0.02457194667)[&city={CN}]:0.6476710268)[&city={CN}]:0.06589193906)[&city={CN}]:0.244580557)[&city={AU}]:0.1157826079)[&city={AU}]:0.1630774096)[&city={AU}]:0.07257793853)[&city={AU}]:0.01080478907)[&city={AU}]:0.03091596287)[&city={AU}]:0.07971855565)[&city={AU}]:0.06747247234,(((45[&city={AU}]:0.3682426609,90[&city={AU}]:0.3382426609)[&city={AU}]:0.1644669802,(496[&city={HK}]:0.5187803804,((902[&city={PH}]:0.2816393295,(((773[&city={US}]:0.1574814944,(774[&city={US}]:0.1379266811,(336[&city={US}]:0.3357178569,(838[&city={NO}]:0.1681415125,1018[&city={US}]:0.0001415125394)[&city={US}]:0.3655763443)[&city={US}]:1.202208824)[&city={US}]:0.02455481332)[&city={US}]:0.03588332007,(835[&city={TH}]:0.5942715383,(44[&city={AU}]:0.08868768271,969[&city={AU}]:0.04468768271)[&city={AU}]:0.2205838556)[&city={AU}]:0.1030932762)[&city={AU}]:0.007236674184,(47[&city={AU}]:0.07264648239,499[&city={HK}]:0.09164648239)[&city={AU}]:0.3689550063)[&city={AU}]:0.002037840813)[&city={AU}]:0.008212165027,((920[&city={CN}]:0.2962428196,(919[&city={CN}]:0.04743413882,924[&city={CN}]:0.01743413882)[&city={CN}]:0.2488086808)[&city={CN}]:0.2684601681,(339[&city={CN}]:0.1301211159,((494[&city={HK}]:0.274846751,(495[&city={HK}]:0.1845526767,(497[&city={HK}]:0.09395690794,(921[&city={CN}]:0.1300371057,(1100[&city={CN}]:0.1012748313,1226[&city={CN}]:0.2932748313)[&city={CN}]:0.1597622744)[&city={CN}]:0.09891980222)[&city={HK}]:0.1095957688)[&city={HK}]:0.09229407426)[&city={HK}]:0.03378739679,((410[&city={HK}]:1.337179687,(1099[&city={CN}]:0.4608333901,((722[&city={US}]:0.08708560734,897[&city={AU}]:0.1960856073)[&city={AU,CN,US}]:0.1536861394,(498[&city={HK}]:0.07707433576,922[&city={CN}]:0.2030743358)[&city={CN}]:0.006697410964)[&city={CN}]:0.1330616434)[&city={CN}]:0.04834629647)[&city={CN}]:0.0376903072,(923[&city={CN}]:0.3891449734,(1285[&city={CN}]:0.6275764573,(407[&city={HK}]:0.2032778117,493[&city={HK}]:0.0192778117)[&city={HK}]:0.1042986456)[&city={CN}]:0.06856851618)[&city={CN}]:0.06172502036)[&city={CN}]:0.04876415395)[&city={CN}]:0.008486968121)[&city={CN}]:0.1005818718)[&city={CN}]:0.007148506816)[&city={AU}]:0.0779288859)[&city={AU}]:0.01092926067)[&city={AU}]:0.2864404235,(869[&city={US}]:0.6467454598,(917[&city={CN}]:0.2017776979,918[&city={CN}]:0.2017776979)[&city={CN}]:0.6859677618)[&city={US}]:0.05140460479)[&city={AU}]:0.02991514106)[&city={AU}]:0.430485338,(111[&city={BD}]:0.1317149048,(888[&city={PY}]:0.6025529938,904[&city={FR}]:0.01955299383)[&city={FR,PY}]:0.4351619109)[&city={BD,FR,PY}]:0.1178356389)[&city={AU,BD,FR,PY,US}]:0.1438856163)[&city={US}]:0.00347474696)[&city={US}]:0.1318062792)[&city={US}]:0.1139674467)[&city={US}]:0.03136818625)[&city={US}]:0.3378882887)[&city={HK,MY,US,VN}]:0.3918606267)[&city={MY}]:0.02525535268,(655[&city={MY}]:0.3395409621,(544[&city={IN}]:0.04277558777,545[&city={IN}]:0.08677558777)[&city={IN}]:0.4337653743)[&city={MY}]:0.7575161251)[&city={MY}]:0.2483942049)[&city={CN}]:0.02380362809,(1083[&city={TH}]:0.8849178528,(347[&city={CN}]:0.1031534409,348[&city={CN}]:0.09215344087)[&city={CN}]:0.08876441191)[&city={CN}]:0.007337067382)[&city={CN}]:0.1042349316,(((354[&city={CN}]:0.1044495566,((338[&city={CN}]:0.6827630888,1055[&city={TW}]:0.5947630888)[&city={CN}]:0.4206208332,(361[&city={CN}]:0.8649122446,362[&city={CN}]:0.7969122446)[&city={CN}]:0.1424716775)[&city={CN}]:0.7240656345)[&city={CN}]:0.2353409807,((((1107[&city={CN}]:0.1071390658,(596[&city={CN}]:0.03028081926,1102[&city={CN}]:0.02228081926)[&city={CN}]:0.08285824658)[&city={CN}]:0.4377426174,(1062[&city={TW}]:0.05582914855,(1077[&city={US}]:0.1945191428,(335[&city={US}]:0.1546296269,574[&city={JP}]:0.1326296269)[&city={US}]:0.09188951588)[&city={US}]:0.1933100058)[&city={CN,TW,US}]:0.1850525347)[&city={CN}]:0.2644683302,(229[&city={KR}]:0.2273666462,(202[&city={KH}]:0.1368869571,((590[&city={CN}]:0.1771750797,987[&city={CN}]:0.3361750797)[&city={CN}]:0.009521710003,((1103[&city={CN}]:0.3182529333,(259[&city={KR}]:0.3111706224,(708[&city={MM}]:0.342016999,(709[&city={MM}]:0.2765577721,(620[&city={KR}]:0.07730429801,(621[&city={KR}]:0.06646703985,622[&city={KR}]:0.07746703985)[&city={KR}]:0.01383725816)[&city={KR}]:0.5502534741)[&city={MM}]:0.08745922688)[&city={MM}]:0.2591536234)[&city={CN,KR,MM}]:0.03208231088)[&city={CN}]:0.06172593625,(1194[&city={CN}]:0.1240477335,((974[&city={KR}]:0.243711012,1105[&city={CN}]:0.139711012)[&city={CN,KR}]:0.1698265064,(233[&city={KR}]:0.1047479824,(174[&city={KR}]:0.039733644,533[&city={KR}]:0.014733644)[&city={KR}]:0.2950143384)[&city={KR}]:0.111789536)[&city={CN,KR}]:0.03351021513)[&city={CN}]:0.03993113603)[&city={CN}]:0.01771792018)[&city={CN}]:0.3501901674)[&city={CN}]:0.01347968914)[&city={CN}]:0.2809833672)[&city={CN}]:0.221927367,(169[&city={AU}]:0.3884441066,1120[&city={AU}]:0.3554441066)[&city={AU}]:0.2348332739)[&city={CN}]:0.1435131568)[&city={CN}]:0.0005755698306,((742[&city={NL}]:0.0325682129,993[&city={SG}]:0.9945682129)[&city={CN,NL,SG}]:0.2281202013,(406[&city={HK}]:0.4802233525,(((989[&city={CN}]:0.09952144462,(1039[&city={AU}]:0.05737366102,1040[&city={AU}]:0.05737366102)[&city={AU}]:0.4001477836)[&city={CN}]:0.1165684721,(399[&city={HK}]:0.556534283,640[&city={CN}]:0.915534283)[&city={CN}]:0.03155563376)[&city={CN}]:0.1060866635,(285[&city={GB}]:0.1440041324,(1054[&city={TW}]:0.37251707,1097[&city={CN}]:0.73151707)[&city={CN}]:0.1324870624)[&city={CN}]:0.2601724478)[&city={CN}]:0.9500467723)[&city={CN}]:0.04946506169)[&city={CN}]:0.03267769294)[&city={CN}]:0.1251237446)[&city={CN}]:0.03483710294,((326[&city={GB}]:0.2919931862,((286[&city={GB}]:0.06609122577,((33[&city={AR}]:0.1145603023,(31[&city={AR}]:0.0300991015,144[&city={US}]:0.6620991015)[&city={AR}]:0.1234612008)[&city={AR}]:0.1492306384,(35[&city={AR}]:0.219006041,(971[&city={CL}]:0.1209287992,(334[&city={US}]:0.1352236559,(153[&city={BR}]:0.1115261447,154[&city={BR}]:0.1205261447)[&city={BR}]:0.4126975112)[&city={US}]:0.3167051433)[&city={US}]:0.1720772418)[&city={AR}]:0.006784899623)[&city={AR}]:0.1693002851)[&city={GB}]:0.2860881523,((((850[&city={JP}]:0.009739510856,(34[&city={AR}]:0.2342224447,(899[&city={PE}]:0.1263175083,(325[&city={GB}]:0.06459956534,1076[&city={US}]:0.1135995653)[&city={US}]:0.6317179429)[&city={US}]:0.01490493638)[&city={US}]:0.08251706619)[&city={US}]:0.09261202958,(293[&city={GB}]:0.06068420766,681[&city={US}]:0.1756842077)[&city={US}]:0.08266733278)[&city={US}]:0.1380155597,(((262[&city={AU}]:0.3126678814,895[&city={AU}]:0.2956678814)[&city={AU}]:0.2490835264,(112[&city={BD}]:0.207398832,1117[&city={VE}]:0.451398832)[&city={BD,VE}]:0.1263525758)[&city={AU,BD,VE}]:0.08564037949,(241[&city={NZ}]:0.2579173556,365[&city={GF}]:0.2249173556)[&city={GF,NZ}]:0.1204744317)[&city={AU,BD,GF,NZ,VE}]:0.1139753128)[&city={US}]:0.1113226718,(1193[&city={US}]:0.3132058289,(546[&city={IN}]:0.1529553248,(652[&city={MY}]:0.1553256621,(653[&city={MY}]:0.0559194304,(1082[&city={TH}]:0.1542335798,(670[&city={MY}]:0.3668096054,(415[&city={HK}]:0.164044372,(414[&city={HK}]:0.07554030798,(395[&city={HK}]:0.05643633361,411[&city={HK}]:0.02043633361)[&city={HK}]:0.03310397437)[&city={HK}]:0.08250406401)[&city={HK}]:0.1537652335)[&city={MY}]:0.1844239743)[&city={MY}]:0.3076858506)[&city={MY}]:0.1704062317)[&city={MY}]:0.1266296626)[&city={IN,MY}]:0.07525050418)[&city={US}]:0.09848394298)[&city={US}]:0.02248960616)[&city={GB}]:0.005813808111)[&city={GB}]:0.06881978839,((374[&city={VN}]:0.7295700317,(688[&city={US}]:0.155819236,(689[&city={BY}]:0.1403665254,1093[&city={GR}]:0.05336652543)[&city={BY,GR,US}]:0.07545271061)[&city={US}]:0.09975079569)[&city={US}]:0.07028191948,((114[&city={BD}]:0.1564681827,(120[&city={BD}]:0.1424194488,(((611[&city={IN}]:0.3032475574,612[&city={IN}]:0.3032475574)[&city={IN}]:0.1574718565,(543[&city={IN}]:0.1519847387,616[&city={IN}]:0.4089847387)[&city={IN}]:0.05473467516)[&city={IN}]:0.1714726241,(613[&city={IN}]:0.3717918149,615[&city={IN}]:0.3697918149)[&city={IN}]:0.2604002231)[&city={IN}]:0.6792274108)[&city={BD}]:0.03104873389)[&city={BD}]:0.2422319664,(532[&city={US}]:0.1961794071,(870[&city={US}]:0.09888569183,1079[&city={US}]:0.1778856918)[&city={US}]:0.03729371525)[&city={US}]:0.06552074201)[&city={US}]:0.1491518021)[&city={US}]:0.07896102338)[&city={GB}]:0.007513980103)[&city={CN}]:0.1194988972)[&city={CN}]:1.000799954,(316[&city={GB}]:0.4029015454,((201[&city={KH}]:0.3759331629,((649[&city={MY}]:0.4595472595,((263[&city={AU}]:0.009858320833,264[&city={AU}]:0.01285832083)[&city={AU}]:0.7086393009,((647[&city={MY}]:0.02902975344,648[&city={MY}]:0.05102975344)[&city={MY}]:0.1825776578,(462[&city={HK}]:0.2332575916,1364[&city={TH}]:0.07225759158)[&city={HK,MY,TH}]:0.1043498197)[&city={MY}]:0.05489021054)[&city={MY}]:0.1190496377)[&city={MY}]:0.03574806759,(480[&city={HK}]:0.04433271909,(650[&city={MY}]:0.3717690436,(646[&city={MY}]:0.1519082468,651[&city={MY}]:0.2699082468)[&city={MY}]:0.1208607968)[&city={MY}]:0.05956367553)[&city={MY}]:0.06996260797)[&city={MY}]:0.1846378358)[&city={KH}]:0.1356248472,(200[&city={KH}]:0.06955047536,((170[&city={AU}]:0.05252308698,(320[&city={GB}]:0.2243046759,1275[&city={AU}]:0.07130467592)[&city={AU}]:0.2062184111)[&city={AU}]:0.09750580938,((911[&city={IN}]:0.3545779807,1121[&city={AU}]:0.06657798074)[&city={AU}]:0.01819361596,(306[&city={GB}]:0.4320906411,(309[&city={GB}]:0.3684647364,(15[&city={GR}]:0.2947800693,310[&city={GB}]:0.06178006928)[&city={GB}]:0.2896846671)[&city={GB}]:0.1216259047)[&city={GB}]:0.0746809556)[&city={AU}]:0.02125729965)[&city={AU}]:0.03752157901)[&city={KH}]:0.2280075347)[&city={KH}]:0.2913435354)[&city={GB,KH}]:0.2037242608)[&city={CN}]:0.05788829909)[&city={IN}]:0.09265165908)[&city={IN}]:0.1453728689)[&city={IN,NZ}]:0.1382299618,(510[&city={HK}]:0.09573468182,(500[&city={HK}]:0.06376845226,1202[&city={CN}]:0.1377684523)[&city={HK}]:0.01196622956)[&city={HK}]:0.1510339133)[&city={HK}]:0.1421747956)[&city={HK}]:0.04778734262,((1389[&city={CN}]:0.5447595794,(1260[&city={CN}]:0.128252816,(((673[&city={MY}]:0.2140485118,1384[&city={CN}]:0.003048511827)[&city={CN}]:0.189257638,(1070[&city={VN}]:0.1547575842,(344[&city={JP}]:0.2581807527,(697[&city={JP}]:0.1507815274,703[&city={JP}]:0.09078152736)[&city={JP}]:0.1613992253)[&city={JP}]:0.4255768315)[&city={CN,JP,VN}]:0.2295485657)[&city={CN}]:0.03100261093,(419[&city={HK}]:0.1192556758,1259[&city={CN}]:0.07825567582)[&city={CN}]:0.05505308497)[&city={CN}]:0.02794405525)[&city={CN}]:0.06350676336)[&city={CN}]:0.1121858921,(514[&city={HK}]:0.4787626689,(((1258[&city={CN}]:0.09260530341,(461[&city={HK}]:0.1940625243,(1071[&city={VN}]:0.02604965055,1072[&city={VN}]:0.05104965055)[&city={VN}]:0.3600128737)[&city={HK,VN}]:0.06754277916)[&city={CN}]:0.03041498548,(((560[&city={IN}]:0.3503196561,1216[&city={CN}]:0.2293196561)[&city={CN}]:0.2336745787,(380[&city={VN}]:0.2615961165,1374[&city={CN}]:0.006596116473)[&city={CN}]:0.05339811836)[&city={CN}]:0.0483074424,(1069[&city={VN}]:0.1202230753,(1068[&city={VN}]:0.4345048916,1074[&city={VN}]:0.1435048916)[&city={VN}]:0.2617181837)[&city={VN}]:0.1990786019)[&city={CN}]:0.005718611663)[&city={CN}]:0.05199237684,(((((((161[&city={BR}]:0.07317002508,(1212[&city={AR}]:0.1771784072,1213[&city={AR}]:0.1851784072)[&city={AR}]:0.2646691906)[&city={BR}]:0.1065060673,(1244[&city={BR}]:0.2338098108,1353[&city={CL}]:0.2998098108)[&city={BR}]:0.02354385428)[&city={BR}]:0.5026805882,(255[&city={US}]:1.016830195,806[&city={US}]:0.255830195)[&city={US}]:0.2612040582)[&city={US}]:0.2036473659,(((829[&city={JP}]:0.1587761384,(1343[&city={PE}]:0.4035511517,1344[&city={PE}]:0.4055511517)[&city={PE}]:0.2072249867)[&city={JP}]:0.1753558216,(1351[&city={JP}]:0.1520805028,(701[&city={JP}]:0.2741683938,718[&city={JP}]:0.2001683938)[&city={JP}]:0.0009121090437)[&city={JP}]:0.1020514572)[&city={JP}]:0.144834698,(315[&city={GB}]:0.3914067431,1192[&city={US}]:0.4494067431)[&city={US}]:0.08955991489)[&city={US}]:0.03071496115)[&city={US}]:0.1873406126,(1053[&city={TW}]:0.7661056281,(819[&city={US}]:0.4320922266,1352[&city={CL}]:0.7740922266)[&city={US}]:0.2660134014)[&city={US}]:0.1109166037)[&city={US}]:0.02603041945,(210[&city={NZ}]:0.1561616477,((830[&city={JP}]:0.1374797959,1200[&city={JP}]:0.1264797959)[&city={JP}]:0.5980713039,(1205[&city={AR}]:0.8692566371,(1274[&city={CO}]:0.3353999387,(1345[&city={PE}]:0.3428931742,(((693[&city={US}]:0.1146377669,(167[&city={AU}]:0.3185671215,1186[&city={US}]:0.5835671215)[&city={US}]:0.2260706454)[&city={US}]:0.1968013901,(((318[&city={GB}]:0.1063650517,(1127[&city={AU}]:0.04981187837,1363[&city={TH}]:0.3018118784)[&city={AU,TH}]:0.2515531734)[&city={AU,GB,NZ,TH}]:0.06800328093,(1151[&city={NZ}]:0.2805468166,1160[&city={NZ}]:0.3025468166)[&city={NZ}]:0.06082151611)[&city={NZ}]:0.01358264454,(1164[&city={NZ}]:0.2183884018,(243[&city={NZ}]:0.1858449945,1382[&city={NZ}]:0.2028449945)[&city={NZ}]:0.0215434073)[&city={NZ}]:0.1585625754)[&city={NZ}]:0.1804881798)[&city={US}]:0.08114072551,(862[&city={US}]:0.06592262375,(1284[&city={GF}]:0.4929644879,(1252[&city={AU}]:0.6533307418,(530[&city={US}]:0.08546033345,1022[&city={US}]:0.06146033345)[&city={US}]:0.1538704084)[&city={US}]:0.04763374606)[&city={US}]:0.008958135868)[&city={US}]:0.09865725873)[&city={US}]:0.03031329176)[&city={US}]:0.1235067644)[&city={US}]:0.09285669847)[&city={US}]:0.2752944626)[&city={US}]:0.0006105479521)[&city={US}]:0.01889100354)[&city={US}]:0.2445506703,(((503[&city={HK}]:0.245199168,1181[&city={AU}]:0.273199168)[&city={HK}]:0.09207291438,(418[&city={HK}]:0.08519640519,(1075[&city={VN}]:0.3487663656,1215[&city={CN}]:0.1707663656)[&city={CN,HK,VN}]:0.1804300396)[&city={HK}]:0.1100756772)[&city={HK}]:0.001367547363,(502[&city={HK}]:0.1039877282,(674[&city={MY}]:0.2422050352,(1183[&city={AU}]:0.1221397823,((716[&city={JP}]:0.06364076257,((479[&city={HK}]:0.452929089,((189[&city={US}]:0.3310695724,353[&city={US}]:0.2130695724)[&city={US}]:0.04830233299,(676[&city={MY}]:0.235978092,(843[&city={US}]:0.4308749953,(305[&city={GB}]:0.09424688286,(972[&city={GB}]:0.1109559712,1235[&city={CN}]:0.09395597115)[&city={GB}]:0.03829091171)[&city={GB}]:0.07662811242)[&city={US}]:0.03010309668)[&city={US}]:0.03039381339)[&city={US}]:0.002557183657)[&city={HK,JP,US}]:0.05295176685,(1182[&city={AU}]:0.07510823253,(1199[&city={JP}]:0.2549668515,((1281[&city={CN}]:0.0170851591,(1125[&city={AU}]:0.07045758523,(166[&city={AU}]:0.05286847428,1126[&city={AU}]:0.08886847428)[&city={AU}]:0.03058911095)[&city={AU}]:0.3686275739)[&city={CN}]:0.04977864454,(1237[&city={CN}]:0.08924426409,(227[&city={PE}]:0.1213872583,1232[&city={CN}]:0.2136092663)[&city={CN}]:0.03163499778)[&city={CN}]:0.001619539556)[&city={CN}]:0.1611030479)[&city={JP}]:0.07214138101)[&city={JP}]:0.01977262333)[&city={JP}]:0.05875990672)[&city={JP}]:0.181062693,(818[&city={US}]:0.666531714,(672[&city={MY}]:0.003738603483,(1233[&city={CN}]:0.1364803116,1236[&city={CN}]:0.1584803116)[&city={CN}]:0.3632582919)[&city={MY}]:0.05179311048)[&city={MY}]:0.01317174162)[&city={MY}]:0.006436326686)[&city={MY}]:0.1120652529)[&city={MY}]:0.04778269301)[&city={HK}]:0.1586519015)[&city={HK}]:0.0609636918)[&city={HK}]:0.007409344185)[&city={HK}]:0.09875000319)[&city={HK}]:0.01118280254)[&city={HK}]:0.02578526197)[&city={HK}]:0.02091095643)[&city={HK}]:0.03058052034)[&city={HK}]:0.3656942855)[&city={CN}]:0.3382894135,(562[&city={IN}]:0.8056413609,(1331[&city={NP}]:0.1961391731,((((295[&city={GB}]:0.209795432,(1210[&city={AR}]:0.5697441322,1302[&city={IS}]:0.1887441322)[&city={AR,GB,IS}]:0.1410512998)[&city={GB}]:0.09080855531,(14[&city={GR}]:0.2899694591,(299[&city={GB}]:0.09073497692,(751[&city={US}]:0.06812860252,((768[&city={US}]:0.01088808009,788[&city={US}]:0.08188808009)[&city={US}]:0.003515398081,(767[&city={US}]:0.1830465594,(816[&city={US}]:0.04435542562,817[&city={US}]:0.08035542562)[&city={US}]:0.004691133797)[&city={US}]:0.01435691875)[&city={US}]:0.03472512435)[&city={US}]:0.1076063744)[&city={GB}]:0.002234482153)[&city={GB}]:0.1856345282)[&city={GB}]:0.1463827539,((1218[&city={CN}]:0.7492193212,1330[&city={NP}]:0.006219321202)[&city={CN}]:0.01905535611,(1356[&city={CN}]:0.6853728449,((778[&city={US}]:0.190954151,786[&city={US}]:0.195954151)[&city={US}]:0.02349175483,(((300[&city={GB}]:0.3204011353,1207[&city={AR}]:0.5694011353)[&city={AR}]:0.034249386,((1204[&city={AR}]:0.1112634861,1209[&city={AR}]:0.07226348607)[&city={AR}]:0.1336219833,(1272[&city={CL}]:0.06933495695,1377[&city={UY}]:0.269334957)[&city={AR,CL,UY}]:0.1205505124)[&city={AR}]:0.356765052)[&city={AR}]:0.05010755311,(763[&city={US}]:0.02626398176,(779[&city={US}]:0.03320565402,787[&city={US}]:0.102205654)[&city={US}]:0.1050583277)[&city={US}]:0.08249409266)[&city={US}]:0.02868783144)[&city={US}]:0.276926939)[&city={CN}]:0.00290183246)[&city={CN}]:0.02671206387)[&city={CN}]:0.03594792213,(1327[&city={NP}]:0.08473491153,1333[&city={NP}]:0.08773491153)[&city={NP}]:0.003199751785)[&city={NP}]:0.1082045098)[&city={NP}]:0.08550218778)[&city={NP}]:0.03856454827)[&city={NP}]:0.04892227245)[&city={NP}]:0.00313279702,((1326[&city={NP}]:0.209876271,(1168[&city={NZ}]:0.0232032713,(38[&city={NZ}]:0.0234961223,218[&city={NZ}]:0.0234961223)[&city={NZ}]:0.112707149)[&city={NZ}]:0.3556729997)[&city={NZ}]:0.07451158725,(((1167[&city={NZ}]:0.08309115933,(1148[&city={NZ}]:0.01719371133,(785[&city={US}]:0.2628932202,(131[&city={NZ}]:0.02141232447,782[&city={US}]:0.1584123245)[&city={NZ,US}]:0.005480895776)[&city={NZ,US}]:0.04530049109)[&city={NZ}]:0.048897448)[&city={NZ}]:0.01188533924,(1150[&city={NZ}]:0.0695761559,(289[&city={GB}]:0.1561692947,1147[&city={NZ}]:0.03016929468)[&city={NZ}]:0.01840686122)[&city={NZ}]:0.02740034267)[&city={NZ}]:0.2396643413,(209[&city={NZ}]:0.2688293917,((242[&city={NZ}]:0.1183354419,(292[&city={GB}]:0.09701273864,302[&city={GB}]:0.2040127386)[&city={GB}]:0.2623227033)[&city={NZ}]:0.05429276291,((215[&city={NZ}]:0.09171967595,((1350[&city={RO}]:0.3627283055,(54[&city={AT}]:0.1214037341,(1222[&city={BD}]:0.3550056634,(1021[&city={US}]:0.05058994814,1223[&city={BD}]:0.3435899481)[&city={BD}]:0.008415715234)[&city={BD}]:0.01239807078)[&city={AT,BD}]:0.1623245714)[&city={AT,BD,RO}]:0.162603833,(1073[&city={VN}]:0.5311518243,1271[&city={CL}]:0.2631518243)[&city={CL,VN}]:0.4131803143)[&city={AT,BD,CL,NZ,RO,VN}]:0.1773875374)[&city={NZ}]:0.1104719131,((213[&city={NZ}]:0.01540010847,288[&city={GB}]:0.1554001085)[&city={NZ}]:0.1003208229,(1184[&city={NZ}]:0.06956908082,(605[&city={GR}]:0.3179308039,1094[&city={GR}]:0.3179308039)[&city={GR}]:0.1516382769)[&city={NZ}]:0.1171518506)[&city={NZ}]:0.0784706577)[&city={NZ}]:0.0004366157304)[&city={NZ}]:0.006201186902)[&city={NZ}]:0.0158114482)[&city={NZ}]:0.1907470184)[&city={NZ}]:0.08587312035)[&city={NP}]:0.04017456577)[&city={NP}]:0.02177342389,((669[&city={MY}]:0.4553803086,(667[&city={MY}]:0.2273009389,1328[&city={NP}]:0.2513009389)[&city={MY}]:0.001079369631)[&city={MY}]:0.1098345407,((1329[&city={NP}]:0.122019722,1332[&city={NP}]:0.122019722)[&city={NP}]:0.141697275,(1373[&city={CN}]:0.4367422002,(298[&city={GB}]:0.4274313928,1380[&city={VE}]:0.7344313928)[&city={GB,VE}]:0.3553108073)[&city={CN}]:0.06797479686)[&city={NP}]:0.09849785219)[&city={NP}]:0.07199411905)[&city={NP}]:0.06116974242,(724[&city={NP}]:0.02859229761,(((1217[&city={CN}]:0.6540473418,1246[&city={BR}]:0.1420473418)[&city={BR}]:0.01897596016,(1245[&city={BR}]:0.02573459816,1250[&city={BR}]:0.08273459816)[&city={BR}]:0.4612887038)[&city={BR}]:0.2905575527,(193[&city={US}]:0.2606559994,784[&city={US}]:0.2336559994)[&city={US}]:0.1659248552)[&city={BR}]:0.149101261)[&city={NP}]:0.522696595)[&city={NP}]:0.1316980903)[&city={NP,VN}]:0.04066566878)[&city={JP}]:0.1064872914)[&city={JP}]:0.1200604541,((258[&city={KR}]:0.5082233689,663[&city={MY}]:0.2582233689)[&city={KR}]:0.02891809334,(((366[&city={KR}]:0.2853607672,587[&city={KR}]:0.3623607672)[&city={KR}]:0.1602369788,(491[&city={HK}]:0.05002082101,((891[&city={BR}]:0.1971097586,945[&city={BR}]:0.1205942526)[&city={BR}]:0.3476540871,(459[&city={HK}]:0.5081877215,(1383[&city={CN}]:0.2559373829,(460[&city={HK}]:0.3115706807,(504[&city={HK}]:0.2316366886,668[&city={MY}]:0.2896366886)[&city={HK}]:0.1509339921)[&city={HK}]:0.1063667022)[&city={HK}]:0.09625033864)[&city={HK}]:0.02190202627)[&city={HK}]:0.06793107323)[&city={HK}]:0.04157692503)[&city={KR}]:0.002975381121,((1090[&city={TH}]:0.2548446698,(385[&city={VN}]:0.07458705449,(376[&city={VN}]:0.01178611003,(547[&city={IN}]:0.4282021439,1303[&city={IN}]:0.4282021439)[&city={IN}]:0.1115839661)[&city={VN}]:1.194800944)[&city={VN}]:0.1742576153)[&city={TH,VN}]:0.04932725768,(662[&city={MY}]:0.04620050103,(664[&city={MY}]:0.108462904,(665[&city={MY}]:0.06597553849,719[&city={VN}]:0.09897553849)[&city={MY}]:0.1184873655)[&city={MY}]:0.06173759704)[&city={MY}]:0.00797142644)[&city={MY}]:0.02140119969)[&city={KR}]:0.126568335)[&city={KR}]:0.04014875312)[&city={KR}]:0.01693780311,((1009[&city={SG}]:0.01770859312,(509[&city={HK}]:0.2348679865,1315[&city={JP}]:0.01886798654)[&city={JP}]:0.2158406066)[&city={SG}]:0.05918553336,(1007[&city={SG}]:0.06706962938,(1010[&city={SG}]:0.04045690621,1011[&city={SG}]:0.04545690621)[&city={SG}]:0.03461272317)[&city={SG}]:0.0048244971)[&city={SG}]:0.07833389194)[&city={KR}]:0.08137855966)[&city={KR}]:0.06817552275)[&city={JP,KR}]:0.1194274999)[&city={CN,IN,JP,KR}]:0.3106718168,(468[&city={HK}]:0.4619493638,984[&city={CN}]:0.2019493638)[&city={CN}]:0.0729320538)[&city={CN}]:0.03112847121)[&city={CN}]:0.02094099151,(430[&city={HK}]:0.9764347808,(1324[&city={TH}]:0.578615488,(238[&city={CN}]:0.1790482947,((1360[&city={CN}]:0.1354288455,1361[&city={CN}]:0.1354288455)[&city={CN}]:0.7046919005,((((705[&city={JP}]:0.08579814023,849[&city={JP}]:0.1207981402)[&city={JP}]:0.75222319,(513[&city={HK}]:0.1252567168,1307[&city={CN}]:0.2042567168)[&city={CN}]:0.1347646134)[&city={CN}]:0.107405724,(1294[&city={CN}]:0.1180996211,(1309[&city={CN}]:0.07272694451,(512[&city={HK}]:0.02752601572,(490[&city={HK}]:0.4556150658,1295[&city={CN}]:0.01161506576)[&city={CN,HK}]:0.11691095)[&city={CN,HK}]:0.02620092879)[&city={CN}]:0.2123726766)[&city={CN}]:0.06832743308)[&city={CN}]:0.01766514073,((506[&city={HK}]:0.3297578637,(477[&city={HK}]:0.1999477505,1387[&city={CN}]:0.1699477505)[&city={CN,HK}]:0.07481011326)[&city={CN,HK}]:0.0322572406,(589[&city={KR}]:0.4569313446,1388[&city={CN}]:0.2629313446)[&city={CN}]:0.01408375977)[&city={CN}]:0.1270770905)[&city={CN}]:0.3480285512)[&city={CN}]:0.1089275487)[&city={CN}]:0.2655671933)[&city={CN}]:0.3728192928)[&city={CN}]:0.1865160995)[&city={CN}]:0.2506719019)[&city={CN}]:0.01854877533,(619[&city={KR}]:0.1934319349,(((127[&city={BD}]:0.1194606858,((122[&city={BD}]:0.175113969,129[&city={BD}]:0.08853944701)[&city={BD}]:0.04172617315,(123[&city={BD}]:0.05367503492,(124[&city={BD}]:0.2961043771,(125[&city={BD}]:0.1155530678,(128[&city={BD}]:0.09732873307,(126[&city={BD}]:0.03693483421,130[&city={BD}]:0.1650481589)[&city={BD}]:0.1071966851)[&city={BD}]:0.207071532)[&city={BD}]:0.06095870106)[&city={BD}]:0.03680467334)[&city={BD}]:0.0147786323)[&city={BD}]:0.0152161643)[&city={BD}]:0.2802599288,((((313[&city={GB}]:0.5758257678,(660[&city={MY}]:0.09035435139,(50[&city={AT}]:0.1050117366,(49[&city={AT}]:0.01316832921,52[&city={AT}]:0.08116832921)[&city={AT}]:0.03684340741)[&city={AT}]:0.2983426148)[&city={AT,MY}]:0.3314714164)[&city={AT,GB,MY}]:0.1518440445,(((((1152[&city={NZ}]:0.05778613525,1179[&city={AU}]:0.2737861352)[&city={NZ}]:0.1378922075,((1166[&city={NZ}]:0.1417733635,1170[&city={NZ}]:0.03477336346)[&city={NZ}]:0.022238714,(1141[&city={NZ}]:0.1424773201,1142[&city={NZ}]:0.03847732013)[&city={NZ}]:0.06553475732)[&city={NZ}]:0.05866626526)[&city={NZ}]:0.01425199068,(1162[&city={NZ}]:0.06395154674,((219[&city={NZ}]:0.1259361983,932[&city={AU}]:0.1729361983)[&city={NZ}]:0.008107791863,(220[&city={NZ}]:0.100809314,(1139[&city={NZ}]:0.005198376852,1178[&city={AU}]:0.2951983769)[&city={NZ}]:0.07361093711)[&city={NZ}]:0.006234676162)[&city={NZ}]:0.0009075566176)[&city={NZ}]:0.1509787867)[&city={NZ}]:0.01785282257,(933[&city={AU}]:0.2193489907,1273[&city={CO}]:0.4143489907)[&city={AU}]:0.2104341652)[&city={AU}]:0.02535073465,((((760[&city={US}]:0.1685343013,804[&city={US}]:0.1905343013)[&city={US}]:0.2972632454,((745[&city={US}]:0.294294463,(1208[&city={AR}]:0.3855661218,1378[&city={UY}]:0.6095661218)[&city={AR,US,UY}]:0.3417283411)[&city={US}]:0.002993361445,(1341[&city={JP}]:0.3291523412,(780[&city={US}]:0.2264583004,803[&city={US}]:0.2374583004)[&city={US}]:0.1106940408)[&city={US}]:0.06113548325)[&city={US}]:0.02850972229)[&city={US}]:0.05257668337,(1177[&city={AU}]:0.2366916848,1276[&city={EC}]:0.6716916848)[&city={AU}]:0.02968254529)[&city={AU}]:0.1563351167,((((841[&city={NO}]:0.04094612573,1354[&city={JP}]:0.1859461257)[&city={GB,JP,NO}]:0.1877121614,(312[&city={GB}]:0.3118012875,(319[&city={GB}]:0.1332883964,(772[&city={US}]:0.1229329416,805[&city={US}]:0.1969329416)[&city={US}]:0.07335545477)[&city={GB}]:0.1545128911)[&city={GB}]:0.02585699965)[&city={GB}]:0.08899690709,(303[&city={GB}]:0.3946178897,(910[&city={IN}]:0.091472423,(1349[&city={PY}]:0.7204567738,(51[&city={AT}]:0.183328627,53[&city={AT}]:0.225328627)[&city={AT}]:0.1061281468)[&city={AT,PY}]:0.2320156492)[&city={AT,GB,IN,PY}]:0.04014546667)[&city={GB}]:0.03203730455)[&city={GB}]:0.1634403338,(((1247[&city={BR}]:0.4041170055,(941[&city={BR}]:0.09463127906,1346[&city={PE}]:0.1056124936)[&city={BR}]:0.1015045118)[&city={BR}]:0.2359003383,(661[&city={MY}]:0.09772561657,(505[&city={HK}]:0.05778973507,511[&city={HK}]:0.1207897351)[&city={HK}]:0.4149358815)[&city={HK,MY}]:0.04629172722)[&city={BR,GB,HK,MY}]:0.04476433143,(311[&city={GB}]:0.2749201956,1282[&city={DE}]:0.3139201956)[&city={GB}]:0.07786147965)[&city={GB}]:0.2593138528)[&city={GB}]:0.02361381884)[&city={AU}]:0.05242454381)[&city={AU}]:0.06353592166)[&city={AT,AU,GB,MY}]:0.09826312584,((769[&city={US}]:0.1025937486,(771[&city={US}]:0.07725437609,775[&city={US}]:0.05325437609)[&city={US}]:0.05533937251)[&city={US}]:0.1507580262,(192[&city={US}]:0.07028855759,1317[&city={KR}]:0.1252885576)[&city={US}]:0.2080632172)[&city={US}]:0.5885811633)[&city={AT,AU,GB,MY,US}]:0.1622275541,(907[&city={IN}]:0.08263839933,(1248[&city={BR}]:0.6826429699,(1277[&city={GF}]:0.2759187419,1323[&city={FR}]:0.1519187419)[&city={FR,GF}]:0.319724228)[&city={BR,FR,GF}]:0.4519954294)[&city={BR,FR,GF,IN}]:0.1735220929)[&city={AT,AU,BR,FR,GB,GF,IN,MY,US}]:0.1576182344)[&city={AT,AU,BD,BR,FR,GB,GF,IN,KR,MY,US}]:0.01514568602,(1316[&city={KR}]:0.1459429741,((1305[&city={JP}]:0.06482422106,((1221[&city={BD}]:0.4512734947,(1264[&city={CL}]:0.2974669214,(1265[&city={CL}]:0.1827350318,(1266[&city={CL}]:0.2014949676,1269[&city={CL}]:0.2454949676)[&city={CL}]:0.03824006416)[&city={CL}]:0.1177318896)[&city={CL}]:0.1708065734)[&city={BD,CL,JP}]:0.001188265465,(57[&city={AT}]:0.144785349,860[&city={JP}]:0.108785349)[&city={JP}]:0.08367641124)[&city={JP}]:0.01736246087)[&city={JP}]:0.09252911094,(1188[&city={CN}]:0.5642933252,1253[&city={KR}]:0.1292933252)[&city={KR}]:0.00106000681)[&city={KR}]:0.007589642072)[&city={KR}]:0.03398143859)[&city={KR}]:0.01350752226)[&city={KR}]:0.03573962267)[&city={CN}]:0.1857879664,((137[&city={CN}]:0.3440831466,1231[&city={CN}]:0.2650831466)[&city={CN}]:0.06483556527,(384[&city={VN}]:0.7935997838,(1234[&city={CN}]:0.1502399167,(1348[&city={PH}]:0.07673166479,(1347[&city={PH}]:0.06125059817,(1336[&city={JP}]:0.3995465846,(934[&city={AU}]:0.3019717737,1283[&city={JP}]:0.4659717737)[&city={JP}]:0.8375748109)[&city={JP}]:0.1437040136)[&city={PH}]:0.01548106662)[&city={PH}]:0.6575082519)[&city={CN}]:0.1553598672)[&city={CN}]:0.103318928)[&city={CN}]:0.05504081205)[&city={CN}]:0.06871738182,((138[&city={CN}]:0.5287182449,(1035[&city={SE}]:0.2369654097,((55[&city={AT}]:0.3465698817,(846[&city={JP}]:0.1169414796,1306[&city={JP}]:0.1739414796)[&city={JP}]:0.1366284021)[&city={AT,JP}]:0.05484567232,((423[&city={HK}]:0.3012105345,((162[&city={BR}]:2.097608428,(422[&city={HK}]:0.1445196281,762[&city={US}]:0.1165196281)[&city={HK}]:0.01782446114)[&city={HK}]:0.05129004076,(482[&city={HK}]:0.09429102871,1379[&city={UY}]:0.4422910287)[&city={HK}]:0.05834310128)[&city={HK}]:0.08257640451)[&city={HK}]:0.1426955167,((424[&city={HK}]:0.331051807,467[&city={HK}]:0.175051807)[&city={HK}]:0.0423851675,(859[&city={JP}]:0.1213135545,(476[&city={HK}]:0.03042997554,(1008[&city={SG}]:0.003898335188,1012[&city={SG}]:0.03689833519)[&city={SG}]:0.7435316404)[&city={HK}]:0.1928835789)[&city={HK}]:0.005123420065)[&city={HK}]:0.07346907668)[&city={HK}]:0.009509502818)[&city={HK}]:0.02188174386)[&city={HK}]:0.105420947)[&city={CN}]:0.04046305796,(1214[&city={AR}]:0.4627551056,1270[&city={CL}]:0.4597551056)[&city={AR,CL}]:0.4874261973)[&city={CN}]:0.1114956029)[&city={CN}]:0.2698202117,(444[&city={HK}]:0.20013073,((881[&city={PH}]:0.1834376492,900[&city={PH}]:0.1834376492)[&city={PH}]:0.06472851439,(58[&city={AT}]:0.8128149575,(457[&city={HK}]:0.1584520184,659[&city={MY}]:0.4564520184)[&city={HK}]:0.06536293904)[&city={HK}]:0.06535120615)[&city={HK}]:0.0699645664)[&city={HK}]:0.05736638742)[&city={HK}]:0.003210282925,(1335[&city={NL}]:0.7341630784,(((1318[&city={JP}]:0.6479092518,(519[&city={CN}]:0.1019305752,(1311[&city={CN}]:0.1030690764,1312[&city={CN}]:0.1200690764)[&city={CN}]:0.4648614988)[&city={CN}]:0.2139786765)[&city={JP}]:0.07202234082,(456[&city={HK}]:0.1968534853,858[&city={JP}]:0.3388534853)[&city={JP}]:0.03807810727)[&city={JP}]:0.04667710856,(458[&city={HK}]:0.2072002319,(464[&city={HK}]:0.01183853573,1319[&city={KR}]:0.09383853572)[&city={HK}]:0.3593616962)[&city={HK}]:0.1624084693)[&city={HK}]:0.008554377274)[&city={HK}]:0.04454432193)[&city={HK}]:0.1144846897)[&city={HK,PH,SE}]:0.2733001097)[&city={CN,HK,IN,PH,SE}]:0.2289503986)[&city={CN}]:0.09495076837,(953[&city={SG}]:0.4343254861,1047[&city={CN}]:0.2043254861)[&city={CN}]:0.3650678807)[&city={CN}]:0.00711411873)[&city={CN}]:0.02352407498,(((63[&city={TH}]:0.4196568916,(1081[&city={TH}]:0.07943168775,1091[&city={TH}]:0.01443168775)[&city={TH}]:0.3862252039)[&city={TH}]:0.3259431721,(635[&city={CN}]:0.0180126871,(905[&city={IN}]:0.2356512765,(536[&city={IN}]:0.1022330633,906[&city={IN}]:0.1022330633)[&city={IN}]:0.1334182132)[&city={IN}]:0.4153614106)[&city={CN}]:0.2205873766)[&city={CN}]:0.09485320247,(421[&city={HK}]:0.4005361862,((515[&city={CN}]:0.1023183759,553[&city={IN}]:0.2068689678)[&city={CN}]:0.0998471993,(1137[&city={CN}]:0.07270665089,(387[&city={CN}]:0.143433014,(473[&city={HK}]:0.09706976865,1101[&city={CN}]:0.05306976865)[&city={CN}]:0.04636324539)[&city={CN}]:0.04427363685)[&city={CN}]:0.009458924311)[&city={CN}]:0.05837061096)[&city={CN}]:0.11391708)[&city={CN}]:0.2365782943)[&city={CN}]:0.6892808424,(950[&city={CN}]:1.020930916,979[&city={CN}]:0.009829843809)[&city={CN}]:0.2273814873)[&city={CN}]:0.1757607305)[&city={CN}]:0.3178841266,(450[&city={HK}]:0.00430225695,451[&city={HK}]:0.00730225695)[&city={HK}]:0.334655003)[&city={HK}]:0.09029242056)[&city={HK}]:0.07098744183)[&city={HK}]:0.03285355152,(((711[&city={NP}]:0.5510795394,957[&city={SG}]:1.148079539)[&city={HK,NP,SG}]:0.05360864745,(435[&city={HK}]:0.6740485943,455[&city={HK}]:0.0300485943)[&city={HK}]:0.1116395926)[&city={HK}]:0.2086685693,((61[&city={TH}]:0.6649208422,449[&city={HK}]:0.004920842168)[&city={HK}]:0.2345039009,((425[&city={HK}]:0.0582016591,440[&city={HK}]:0.2582016591)[&city={HK}]:0.200767777,((391[&city={CN}]:0.4119009469,470[&city={HK}]:0.3869009469)[&city={HK}]:0.4894178398,(983[&city={CN}]:0.4771171149,(447[&city={HK}]:0.2578355597,(446[&city={HK}]:0.1364073816,448[&city={HK}]:0.1664073816)[&city={HK}]:0.09942817812)[&city={HK}]:0.08728155516)[&city={HK}]:0.09820167182)[&city={HK}]:0.1686506494)[&city={HK}]:0.6134553069)[&city={HK}]:0.006932013118)[&city={HK}]:0.2817339177)[&city={HK}]:0.67408768,((593[&city={CN}]:0.3045914404,834[&city={CN}]:0.3442727269)[&city={CN}]:0.2192490413,(135[&city={CN}]:0.1242900823,(438[&city={HK}]:0.1466879783,(370[&city={JP}]:0.6421954614,833[&city={CN}]:0.2640308559)[&city={CN}]:0.008492516916)[&city={CN}]:0.1315735711)[&city={CN}]:0.4092602188)[&city={CN}]:0.1176565857)[&city={HK}]:0.4324285119,((87[&city={BR}]:0.3664311007,(256[&city={ES}]:0.9727322108,598[&city={KR}]:0.6787430416)[&city={KR}]:0.4596880591)[&city={KR}]:0.7259945303,(1342[&city={FR}]:3.384039932,(67[&city={TH}]:0.3484934626,((601[&city={KR}]:0.1790169872,884[&city={PH}]:1.519016987)[&city={KR}]:0.3963751879,(((1180[&city={AU}]:0.2186980003,((439[&city={HK}]:0.2633613391,735[&city={NL}]:0.09536133914)[&city={AU,HK,NL}]:0.5056540741,(1172[&city={AU}]:0.02552819615,1173[&city={AU}]:0.1125281961)[&city={AU}]:0.0584872171)[&city={AU}]:0.09968258709)[&city={AU}]:0.01722822799,(968[&city={AU}]:0.04392737577,(224[&city={NZ}]:0.1466147404,(710[&city={JP}]:0.2531972407,(712[&city={JP}]:0.08986630496,(431[&city={HK}]:0.1628654776,(433[&city={HK}]:0.1797776145,(1171[&city={NZ}]:0.3509528498,(331[&city={JP}]:0.01211877673,1195[&city={JP}]:0.07511877673)[&city={JP}]:0.03483407305)[&city={JP}]:0.02882476475)[&city={HK,JP}]:0.01008786312)[&city={HK,JP}]:0.2500008273)[&city={JP}]:0.08933093571)[&city={JP}]:0.2144174997)[&city={AU,JP,NZ}]:0.01531263536)[&city={AU}]:0.04399885256)[&city={AU}]:0.01628876285,(40[&city={NZ}]:0.1499328009,((936[&city={AU}]:0.01567811224,(1158[&city={NZ}]:0.08898104505,(176[&city={KR}]:0.2828062098,949[&city={JP}]:0.3438062098)[&city={KR}]:0.04717483529)[&city={KR}]:0.1696970672)[&city={AU,KR}]:0.01044341029,(926[&city={AU}]:0.002355688675,(951[&city={JP}]:0.6724586293,(172[&city={KR}]:0.2014439042,175[&city={KR}]:0.2854439042)[&city={KR}]:0.126014725)[&city={KR}]:0.0258970594)[&city={AU,KR}]:0.07276583385)[&city={AU,KR}]:0.05581127836)[&city={AU,KR}]:0.0942821903)[&city={AU,KR}]:0.7011771839)[&city={KR}]:0.08510128752)[&city={KR}]:0.1645464694)[&city={KR}]:0.327385699)[&city={KR}]:0.2681812347)[&city={HK}]:0.008231585278)[&city={HK}]:0.2766198419)[&city={HK}]:0.3144771135,((((((80[&city={BR}]:0.7171088064,(795[&city={US}]:0.143137447,796[&city={US}]:0.143137447)[&city={US}]:0.02297135944)[&city={US}]:0.1945607312,((875[&city={NO}]:0.2748279735,(((273[&city={DK}]:0.1409196811,691[&city={US}]:0.08652179253)[&city={US}]:0.09162339223,(946[&city={BR}]:0.1222606351,(83[&city={BR}]:0.1571965785,874[&city={NO}]:0.3400408416)[&city={BR}]:0.1671112644)[&city={BR}]:0.2628373418)[&city={US}]:0.02514582878,((800[&city={US}]:0.06652625525,954[&city={SG}]:0.1955262553)[&city={US}]:0.0580065942,(271[&city={DK}]:0.1310331828,(274[&city={DK}]:0.0277488422,427[&city={HK}]:0.01568563514)[&city={DK}]:0.0344376)[&city={DK}]:0.03040961431)[&city={US}]:0.03775816408)[&city={US}]:0.05753695996)[&city={US}]:0.116768084,(((95[&city={AU}]:0.2905728062,436[&city={HK}]:0.3255728062)[&city={HK}]:0.07245859718,(797[&city={US}]:0.2477803405,(937[&city={RO}]:0.1665706067,938[&city={RO}]:0.2495706067)[&city={RO}]:0.1082097338)[&city={US}]:0.005251062892)[&city={HK}]:0.02189127977,((437[&city={HK}]:0.2733631695,(84[&city={BR}]:0.4970614885,(62[&city={TH}]:0.1568994173,327[&city={BR}]:0.04021940624)[&city={BR}]:0.06616207124)[&city={BR}]:0.1213016809)[&city={HK}]:0.06141913973,((73[&city={TH}]:0.5469020202,369[&city={JP}]:0.2211917309)[&city={TH}]:0.7887618193,(64[&city={TH}]:0.3857743724,(799[&city={US}]:0.04364257584,(757[&city={US}]:0.05277740822,(270[&city={DK}]:0.07084277357,272[&city={DK}]:0.3109808616)[&city={DK}]:0.06484173162)[&city={US}]:0.03186516761)[&city={US}]:0.05513179653)[&city={TH}]:0.1108894672)[&city={TH}]:0.005118469611)[&city={HK}]:0.08514037398)[&city={HK}]:0.02367337433)[&city={US}]:0.07307348017)[&city={US}]:0.3042522159,((599[&city={UA}]:0.4002730372,939[&city={RO}]:0.4552730372)[&city={RO,UA}]:0.2627100322,(89[&city={BR}]:0.2853180426,225[&city={NZ}]:0.5613180426)[&city={BR,NZ}]:0.7016650268)[&city={BR,NZ}]:0.1139386842)[&city={BR,NZ}]:0.2308125998,(81[&city={BR}]:1.0912081,((525[&city={IN}]:0.203010824,(((1149[&city={NZ}]:0.800648078,(65[&city={TH}]:0.7279918454,68[&city={TH}]:0.3609918454)[&city={TH}]:0.1496562326)[&city={TH}]:0.01276545847,(472[&city={HK}]:0.3819264317,((958[&city={SG}]:0.9137012289,((368[&city={JP}]:0.04674031708,(70[&city={TH}]:0.3100201927,1046[&city={TH}]:0.3070201927)[&city={TH}]:0.3477201244)[&city={TH}]:0.07213371702,(66[&city={TH}]:0.1535841078,1045[&city={TH}]:0.1375841078)[&city={TH}]:0.3462899263)[&city={TH}]:0.08182719483)[&city={TH}]:0.2467129466,(173[&city={KR}]:0.01760124926,734[&city={NL}]:0.1276012493)[&city={KR}]:0.4738129262)[&city={TH}]:0.05751225622)[&city={TH}]:0.001487104718)[&city={TH}]:0.02473703194,(885[&city={KR}]:0.5286163019,(960[&city={SG}]:0.3768094499,(420[&city={HK}]:0.4260195371,((207[&city={NZ}]:0.09196795004,(69[&city={TH}]:0.2611509333,71[&city={TH}]:0.4471509333)[&city={TH}]:0.00581701676)[&city={NZ}]:0.1467775967,(206[&city={NZ}]:0.06370583048,(211[&city={NZ}]:0.05124191016,212[&city={NZ}]:0.06024191016)[&city={NZ}]:0.3274639203)[&city={NZ}]:0.1140397163)[&city={NZ}]:0.3602739903)[&city={NZ}]:0.1337899128)[&city={NZ}]:0.04280685202)[&city={NZ}]:0.04653426643)[&city={NZ}]:0.1508602556)[&city={NZ}]:0.3523877054,(521[&city={NZ}]:0.4015943339,524[&city={IN}]:0.1255943339)[&city={NZ}]:0.2958041955)[&city={NZ}]:0.5828095708)[&city={BR,NZ}]:0.3275262532)[&city={BR,NZ}]:0.0005797090129,((602[&city={KR}]:0.2470418585,(428[&city={HK}]:0.1757772945,(794[&city={US}]:0.1526802502,(429[&city={HK}]:0.2293200161,(86[&city={BR}]:0.3333819808,755[&city={US}]:0.06538198085)[&city={US}]:0.07593803521)[&city={US}]:0.01736023419)[&city={US}]:0.01209704426)[&city={US}]:0.06526456395)[&city={US}]:0.06512570274,(798[&city={US}]:0.2449367259,(756[&city={US}]:0.2010336833,(758[&city={US}]:0.3186825928,(759[&city={US}]:0.2808305945,(179[&city={CL}]:0.0009022344169,947[&city={CL}]:0.01190223442)[&city={CL}]:0.5619283601)[&city={US}]:0.03585199831)[&city={US}]:0.04135109047)[&city={US}]:0.02390304267)[&city={US}]:0.07023083526)[&city={US}]:0.5951465012)[&city={BR,NZ,US}]:0.1543205219,(736[&city={NL}]:0.2382033634,962[&city={AU}]:0.2602033634)[&city={AU,NL}]:0.8154312209)[&city={AU,BR,NL,NZ,US}]:0.6243008221)[&city={AU,BR,HK,NL,NZ,US}]:0.7477930409)[&city={AU,BG,BR,HK,NL,NZ,US}];
+END;
