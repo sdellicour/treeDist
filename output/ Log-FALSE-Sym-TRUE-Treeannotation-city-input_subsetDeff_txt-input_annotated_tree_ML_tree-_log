@@ -1,0 +1,35 @@
+[1] "13 Possible Outlier(s):"
+[1] "cut_off_residual:  6.18193218878203"
+        Transitions
+HK<->CN          54
+JP<->CN          18
+US<->AU          16
+US<->GB          14
+NZ<->AU          13
+US<->CN          13
+KR<->CN          12
+US<->JP          12
+US<->AR          11
+US<->BR          11
+US<->HK          11
+CN<->AU          10
+IN<->CN           9
+
+Call:
+lm(formula = transitions ~ distances)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-3.906 -1.816 -0.619  0.643 49.216 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   6.0255     0.7100   8.486 1.69e-15 ***
+distances    -0.6630     0.1358  -4.883 1.84e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 4.066 on 258 degrees of freedom
+Multiple R-squared:  0.08459,	Adjusted R-squared:  0.08104 
+F-statistic: 23.84 on 1 and 258 DF,  p-value: 1.837e-06
+

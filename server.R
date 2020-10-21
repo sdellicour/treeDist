@@ -11,14 +11,13 @@ observeEvent(input$start, {
 
     
 #### Defining functions ##
-    
+
 transitions_raw_fun = function(distances_raw_file="input/subsetDgeo", city = "states") {
   distances_raw <- read.csv(distances_raw_file, head=T, sep="\t")
   locations = colnames(distances_raw)
   transitions_raw= matrix(0, nrow=dim(distances_raw)[1], ncol=dim(distances_raw)[1])#0 matrix in size of distance matrix 
   row.names(transitions_raw) = countries 
   colnames(transitions_raw) = countries
-  
   for (i in 1:dim(tree$edge)[1])
     #the edge table should be read as: rows are the edge numbers and first col is start node  and 2nd is end node of the branch or edge
   {
@@ -56,25 +55,32 @@ transitions_raw_fun = function(distances_raw_file="input/subsetDgeo", city = "st
 plotting_prep <- function(makeSymmetric = TRUE, transitions_raw, distances_raw) {
   transitions=transitions_raw
   transitions_added=transitions_raw
+  
   if (makeSymmetric == TRUE){
-    for (i in colnames(transitions)){
-      for (j in colnames(transitions)){
+    for (i in 1:dim(transitions)[1]){
+      for (j in 1:dim(transitions)[2]){
         transitions_added[i, j] <- transitions[j, i] + transitions[i, j]
       }
     }
     transitions <- transitions_added
   }
+  
   names<-outer(X = colnames(transitions_raw),
                Y = rownames(transitions_raw),
                FUN = function(X,Y) paste(X,Y,sep="<->"))
-  names = names[lower.tri(transitions)]#assign true to lower triangle values
-  transitions = transitions[lower.tri(transitions)]#assign true to lower triangle values
+  
+  
+  names = names[lower.tri(transitions)]#names and distance call before call to transition
+  distances = distances_raw[lower.tri(distances_raw,diag = F)]
+  transitions = transitions[lower.tri(transitions)]#names and distances call before transition otherwise transition has changed
+  
   names=names[which(transitions!=0)]
-  transitions = transitions[which(transitions != 0)]
-  names(transitions)=names
-  distances = distances_raw[lower.tri(distances_raw)]
   distances = distances[which(transitions != 0)]
-  list<-list(transitions=transitions, distances=distances, transitions_added= transitions_added)
+  transitions = transitions[which(transitions != 0)]
+  
+  names(distances)=names
+  names(transitions)=names
+  list<-list(transitions=transitions, distances=distances, transitions_added= transitions_added, names=names)
   return(list)
 }
 
@@ -119,11 +125,12 @@ linear_regression<-function(cut_off_residual=NULL, percentile=95){
 tree_file="input/h3_small_sample.MCC.tre"
 sampling.locations="input/Sampling_locations.txt"
 countries<-levels(read.table(sampling.locations)[,2])
-distances_raw_file="input/origin.txt"
+distances_raw_file="input/subsetDeff.txt"
 city = "states"
 makeSymmetric=T
 logTransformation = FALSE
-plotname=gsub("\\.|/","_",paste("Log",logTransformation,"Sym",makeSymmetric,"Treeannotation",city,distances_raw_file,tree_file,sep="-"))
+plotname=gsub("\\.|/","_",paste("Log",logTransformation,"Sym",makeSymmetric,"Treeannotation",city,distances_raw_file,tree_file,".pdf",sep="-"))
+logfile=gsub("\\.|/","_",paste("Log",logTransformation,"Sym",makeSymmetric,"Treeannotation",city,distances_raw_file,tree_file,".log",sep="-"))
 #source("AncestralReconstruction.R")
 
 
@@ -136,16 +143,16 @@ transitions_raw=transitions_raw_fun(distances_raw_file=distances_raw_file, city 
 
 transitions<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw, transitions_raw = transitions_raw)$transitions
 distances<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw, transitions_raw = transitions_raw)$distances
+xnames<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw, transitions_raw = transitions_raw)$names
+
 transitions_added<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw, transitions_raw = transitions_raw)$transitions_added
 
+sink(paste("output/",logfile))
 plotting_fun(logTransformation = logTransformation, distances = distances, transitions=transitions)
-
-linear_regression()
-
-
+regression<-linear_regression()
+sink()
 
 ###trials
-
 popsize<-read.table("input/PopSize.txt")
 popsize
 
