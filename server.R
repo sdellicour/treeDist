@@ -103,7 +103,7 @@ linear_regression<-function(cut_off_residual=NULL, percentile=95){
     abline(lm(transitions ~ distances))
     dev.off()
     lm=lm(transitions~distances)
-    pdf(file=paste("output/Residuals",plotname, sep="-"))
+    pdf(file=paste("output/Residuals",plotname,".pdf", sep="-"))
     plot(lm$residuals)
     dev.off()
     #TODO make this also applicable when there are more than one posible outlier.
@@ -129,8 +129,8 @@ distances_raw_file="input/subsetDeff.txt"
 city = "states"
 makeSymmetric=T
 logTransformation = FALSE
-plotname=gsub("\\.|/","_",paste("Log",logTransformation,"Sym",makeSymmetric,"Treeannotation",city,distances_raw_file,tree_file,".pdf",sep="-"))
-logfile=gsub("\\.|/","_",paste("Log",logTransformation,"Sym",makeSymmetric,"Treeannotation",city,distances_raw_file,tree_file,".log",sep="-"))
+plotname=gsub("\\.|/","_",paste("Log",logTransformation,"Sym",makeSymmetric,"Treeannotation",city,distances_raw_file,tree_file,sep="-"))
+logfile=gsub("\\.|/","_",paste("Log",logTransformation,"Sym",makeSymmetric,"Treeannotation",city,distances_raw_file,tree_file,sep="-"))
 #source("AncestralReconstruction.R")
 
 
@@ -147,7 +147,7 @@ xnames<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw
 
 transitions_added<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw, transitions_raw = transitions_raw)$transitions_added
 
-sink(paste("output/",logfile))
+sink(paste("output/",logfile,".log"))
 plotting_fun(logTransformation = logTransformation, distances = distances, transitions=transitions)
 regression<-linear_regression()
 sink()
