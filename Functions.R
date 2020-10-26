@@ -7,8 +7,9 @@ importingFiles<-function(distances_raw_file=distances_raw_fileGlobal, tree_file=
   list(distances_raw, tree)
 }
 
-GenerateRawTransitionMatrix = function(state, distance_raw, tree) {
-
+GenerateRawTransitionMatrix = function(state, x) {
+  distances_raw<-x[[1]]
+  tree<-x[[2]]
   locations = colnames(distances_raw)
   countries=colnames(distances_raw)
   transitions_raw= matrix(0, nrow=dim(distances_raw)[1], ncol=dim(distances_raw)[1])#0 matrix in size of distance matrix 
@@ -60,8 +61,9 @@ makeSymmetric<-function(matrix){
 }
 
 
-GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGlobal, transitions_raw, distances_raw) {
-
+GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGlobal, x ) {
+  transitions_raw<-x[[1]]
+  distances_raw<-x[[2]]
   names_matrixes<-outer(X = colnames(transitions_raw),
                         Y = rownames(transitions_raw),
                         FUN = function(X,Y) paste(X,Y,sep="->"))
@@ -74,7 +76,7 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGloba
   }else{
     names_matrixes =names_matrixes[(lower.tri(names_matrixes) | upper.tri(names_matrixes))] #names and distance call before call to transition
     distances=distances_raw[(lower.tri(distances_raw) |upper.tri(distances_raw))]
-    transitions=transitions[(lower.tri(transitions_raw) | upper.tri(transitions_raw))]
+    transitions=transitions_raw[(lower.tri(transitions_raw) | upper.tri(transitions_raw))]
   }
   
   names_matrixes=names_matrixes[which(transitions!=0)]
@@ -87,8 +89,9 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGloba
   list(transitions=transitions, distances=distances, names_matrixes=names_matrixes)
 }
 
-plotting_fun<-function(logTransformationm,transitions, distances){
- 
+plotting_fun<-function(logTransformation,x){
+  transitions<-x[[1]]
+  distances<- x[[2]]
   #pdf(file=paste("output/Transitions",plotname, ".pdf",sep="-"))
   if (logTransformation == TRUE) distances = log(distances)
   par(mgp=c(0,0,0), oma=c(0,0,0,0), mar=c(3,3.5,1.5,2))
@@ -101,18 +104,18 @@ plotting_fun<-function(logTransformationm,transitions, distances){
   title(ylab="transitions", cex.lab=1.1, mgp=c(2.0,0,0), col.lab="gray30")
   if (logTransformation == TRUE) title(xlab="distance (log)", cex.lab=1.1, mgp=c(1.4,0,0), col.lab="gray30")
   if (logTransformation != TRUE) title(xlab="distance", cex.lab=1.1, mgp=c(1.4,0,0), col.lab="gray30")
+  list(transitions, distances)
 }
 
-linear_regression<-function(cut_off_residual=NULL, percentile=95){
-  
+linear_regression<-function(x,cut_off_residual=NULL, percentile=95){
+  transitions<-x[[1]]
+  distances=x[[2]]
   lm=lm(transitions~distances)
   abline(lm)
   #dev.off()
   #pdf(file=paste("output/Residuals",plotname,".pdf", sep="-"))
-  plot(lm$residuals)
+  #plot(lm$residuals)
   #dev.off()
-  #TODO make this also applicable when there are more than one posible outlier.
-  df_transitions_added<-data.frame(transitions_added)
   if(is.null(cut_off_residual)){ cut_off_residual=quantile((lm$residuals), percentile/100)}
   index=transitions[which(lm$residuals>cut_off_residual)]
   print(paste(length(index), "Possible Outlier(s):" , sep = " "))
