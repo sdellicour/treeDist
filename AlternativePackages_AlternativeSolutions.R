@@ -1,3 +1,23 @@
+#sink(paste("output/",logfile,".log"))
+#plotting_fun(logTransformation = logTransformation, distances = distances, transitions=transitions)
+#linear_regression()
+#sink()
+#plotname=gsub("\\.|/","_",paste("Log",logTransformation,"Sym",makeSymmetric,"Treeannotation",city,distances_raw_file,tree_file,sep="-"))
+#logfile=gsub("\\.|/","_",paste("Log",logTransformation,"Sym",makeSymmetric,"Treeannotation",city,distances_raw_file,tree_file,sep="-"))
+
+###trials
+# popsize<-read.table("input/PopSize.txt")
+# popsize
+# origin<-matrix(rep(popsize[,2],57),ncol=57)
+# colnames(origin)<-popsize[,1]
+# rownames(origin)<-popsize[,1]
+# destination<-t(origin)
+# write.csv(x=destination,file = "input/destination.txt")
+# write.csv(x=origin,file = "input/origin.txt")
+
+
+
+
 ########Other Packages for Ancestral reconstruction using ML##########
 # SYMreconstruction <- ape::ace(country, tree, type="discrete", model="SYM", marginal=T) #symmetrical model 
 # ARDreconstruction <- ace(country, tree, type="discrete", model="ARD") # all rates different model 

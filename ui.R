@@ -26,6 +26,22 @@ shinyUI(fluidPage(
 				)
 			),
 			fluidRow(
+			  column(6,
+			         selectInput(inputId ="Annotation_State", "Annotation for most likely state", c("states",
+			                                                                                        "city"))
+			  )
+			),
+			fluidRow(
+			  column(6,
+			         radioButtons(inputId ="Symmetrie", "Remove directionality",  c("No"=FALSE, "Yes"=TRUE))
+			  )
+			),
+			fluidRow(
+			  column(6,
+			         radioButtons(inputId ="LogTransform", "Log", c("Yes"=TRUE, "No"=FALSE))
+			  )
+			),
+			fluidRow(
       			column(6,
 					actionButton("start", label=h4("RUN"), col.label="red")
 				)

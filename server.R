@@ -2,167 +2,40 @@ library(raster)
 library(shiny)
 library(dplyr)
 library(shinyIncubator)
-
+source("Functions.R")
+source("readT.R")
 shinyServer(function(input, output) {
 
 observeEvent(input$start, {
 
+
+  #tree_fileGlobal="input/annotated_tree_ML.tree"
+  #distances_raw_fileGlobal="input/subsetDeff.txt"
+   state="states"
+  # makeSymmetric=F
+  # logTransformation=F
+  
+ # source("AncestralReconstruction.R")
+  tree_fileGlobal = input$tree_file_wo_transitions$datapath
+  distances_raw_fileGlobal = input$distances_file$datapath
+  stateGlobal= input$Annotation_State
+  makeSymmetricGlobal=input$Symmetrie
+  logTransformationGlobal = input$LogTransform
+  
+  
+  x<-importingFiles(distances_raw_file = distances_raw_fileGlobal,tree_file = tree_fileGlobal)
+  distances_raw<-x[[1]]
+  tree<-x[[2]]
+  y<-GenerateRawTransitionMatrix(state = stateGlobal,distance_raw = distance_raw,tree = tree)
+  trans_raw<-y[[1]]
+  dist_raw<-y[[2]]
+  z<-GenerateFinal_Transitions_Distances(makeSymmetric = makeSymmetricGlobal,transitions_raw =  trans_raw ,distances_raw = dist_raw )
+  transitions<-z[[1]]
+  distances<- z[[2]]
   output$plot = renderPlot({
-
+  plotting_fun(logTransformation = logTransformationGlobal,transitions = transitions, distances = distances)
+  linear_regression()
     
-#### Defining functions ##
-
-transitions_raw_fun = function(distances_raw_file="input/subsetDgeo", city = "states") {
-  distances_raw <- read.csv(distances_raw_file, head=T, sep="\t")
-  locations = colnames(distances_raw)
-  transitions_raw= matrix(0, nrow=dim(distances_raw)[1], ncol=dim(distances_raw)[1])#0 matrix in size of distance matrix 
-  row.names(transitions_raw) = countries 
-  colnames(transitions_raw) = countries
-  for (i in 1:dim(tree$edge)[1])
-    #the edge table should be read as: rows are the edge numbers and first col is start node  and 2nd is end node of the branch or edge
-  {
-    if (tree$edge[i, 1] %in% tree$edge[, 2])
-      #if a start node is also an end node, then we are going from somewhere to that city. We want to assign the start city as location 1
-    {
-      index = which(tree$edge[, 2] == tree$edge[i, 1])#get node that is end node of edge in question
-      location1 = get(city, tree$annotations[[index]]) #assign end node of branch as location1
-      if (is.list(location1))
-      {
-        location1 = get(city, tree$annotations[[index]])[[1]]#take arbritarily the first MP ancestral state
-      }
-    }	else	{
-      location1 = get(city, tree$root.annotation)#tip nodes are not in column 1 so if it is not an internal node it is then the root node
-      if (is.list(location1))
-      {
-        location1 = get(city, tree$root.annotation)[[1]]
-      }
-    }
-    location2 = get(city, tree$annotations[[i]])#location 2 is the start of the branch we are at atm
-    if (is.list(location2))
-    {
-      location2 = get(city, tree$annotations[[i]])[[1]]
-    }
-    if (nchar(location2) > 2 | nchar(location1) > 2) {
-      location2 = substr(location2, start = 1, stop = 2)
-      location1 = substr(location1, start = 1, stop = 2)
-    }
-    transitions_raw[location1, location2] = transitions_raw[location1, location2] + 1
-  }
-  list=list(transitions_raw=transitions_raw,distances_raw=distances_raw)
-  return(list)
-}
-
-plotting_prep <- function(makeSymmetric = TRUE, transitions_raw, distances_raw) {
-  transitions=transitions_raw
-  transitions_added=transitions_raw
-  
-  if (makeSymmetric == TRUE){
-    for (i in 1:dim(transitions)[1]){
-      for (j in 1:dim(transitions)[2]){
-        transitions_added[i, j] <- transitions[j, i] + transitions[i, j]
-      }
-    }
-    transitions <- transitions_added
-  }
-  
-  names<-outer(X = colnames(transitions_raw),
-               Y = rownames(transitions_raw),
-               FUN = function(X,Y) paste(X,Y,sep="<->"))
-  
-  
-  names = names[lower.tri(transitions)]#names and distance call before call to transition
-  distances = distances_raw[lower.tri(distances_raw,diag = F)]
-  transitions = transitions[lower.tri(transitions)]#names and distances call before transition otherwise transition has changed
-  
-  names=names[which(transitions!=0)]
-  distances = distances[which(transitions != 0)]
-  transitions = transitions[which(transitions != 0)]
-  
-  names(distances)=names
-  names(transitions)=names
-  list<-list(transitions=transitions, distances=distances, transitions_added= transitions_added, names=names)
-  return(list)
-}
-
-plotting_fun<-function(logTransformation=TRUE, distances, transitions){
-  pdf(file=paste("output/Transitions",plotname, sep="-"))
-  if (logTransformation == TRUE) distances = log(distances)
-  par(mgp=c(0,0,0), oma=c(0,0,0,0), mar=c(3,3.5,1.5,2))
-  cols1 = c("#FAA521","#4676BB"); 
-  cols2 = c("#FAA52150","#4676BB50")
-  plot(distances, transitions, col=cols2[2], pch=16, cex=1.1, axes = F, ann=F)
-  points(distances, transitions, col=cols1[2], pch=1, cex=1.1)
-  axis(side=1, lwd.tick=0.2, cex.axis=0.9, mgp=c(0,0.4,0), lwd=0.2, tck=-0.02, col.tick="gray30", col.axis="gray30", col="gray30")
-  axis(side=2, lwd.tick=0.2, cex.axis=0.9, mgp=c(0,0.6,0), lwd=0.2, tck=-0.02, col.tick="gray30", col.axis="gray30", col="gray30")
-  title(ylab="transitions", cex.lab=1.1, mgp=c(2.0,0,0), col.lab="gray30")
-  if (logTransformation == TRUE) title(xlab="distance (log)", cex.lab=1.1, mgp=c(1.4,0,0), col.lab="gray30")
-  if (logTransformation != TRUE) title(xlab="distance", cex.lab=1.1, mgp=c(1.4,0,0), col.lab="gray30")
-}
-
-linear_regression<-function(cut_off_residual=NULL, percentile=95){
-    abline(lm(transitions ~ distances))
-    dev.off()
-    lm=lm(transitions~distances)
-    pdf(file=paste("output/Residuals",plotname,".pdf", sep="-"))
-    plot(lm$residuals)
-    dev.off()
-    #TODO make this also applicable when there are more than one posible outlier.
-    df_transitions_added<-data.frame(transitions_added)
-    if(is.null(cut_off_residual)){ cut_off_residual=quantile((lm$residuals), percentile/100)}
-    index=transitions[which(lm$residuals>cut_off_residual)]
-    print(paste(length(index), "Possible Outlier(s):" , sep = " "))
-    print(paste("cut_off_residual: ",cut_off_residual))
-    output<-as.matrix(index%>%sort(decreasing =T))
-    colnames(output)<-"Transitions"
-    print(output)
-    print(summary(lm))
-    list(output=output,lm=lm)
-    }   
-
-
-#### Setting variables ##
-
-tree_file="input/h3_small_sample.MCC.tre"
-sampling.locations="input/Sampling_locations.txt"
-countries<-levels(read.table(sampling.locations)[,2])
-distances_raw_file="input/subsetDeff.txt"
-city = "states"
-makeSymmetric=T
-logTransformation = FALSE
-plotname=gsub("\\.|/","_",paste("Log",logTransformation,"Sym",makeSymmetric,"Treeannotation",city,distances_raw_file,tree_file,sep="-"))
-logfile=gsub("\\.|/","_",paste("Log",logTransformation,"Sym",makeSymmetric,"Treeannotation",city,distances_raw_file,tree_file,sep="-"))
-#source("AncestralReconstruction.R")
-
-
-#### Calling functions ##
-
-source("readT.R")
-tree <-readT(tree_file)
-distances_raw=transitions_raw_fun(distances_raw_file=distances_raw_file, city = city)$distances_raw
-transitions_raw=transitions_raw_fun(distances_raw_file=distances_raw_file, city =city)$transitions_raw
-
-transitions<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw, transitions_raw = transitions_raw)$transitions
-distances<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw, transitions_raw = transitions_raw)$distances
-xnames<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw, transitions_raw = transitions_raw)$names
-
-transitions_added<-plotting_prep(makeSymmetric=makeSymmetric, distances_raw = distances_raw, transitions_raw = transitions_raw)$transitions_added
-
-sink(paste("output/",logfile,".log"))
-plotting_fun(logTransformation = logTransformation, distances = distances, transitions=transitions)
-regression<-linear_regression()
-sink()
-
-###trials
-popsize<-read.table("input/PopSize.txt")
-popsize
-
-origin<-matrix(rep(popsize[,2],57),ncol=57)
-colnames(origin)<-popsize[,1]
-rownames(origin)<-popsize[,1]
-destination<-t(origin)
-write.csv(x=destination,file = "input/destination.txt")
-write.csv(x=origin,file = "input/origin.txt")
-
 }) # output$plot = renderPlot({
 }) # observeEvent(input$start, {
 }) # shinyServer(function(input, output) {
