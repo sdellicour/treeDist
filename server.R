@@ -4,13 +4,14 @@ library(dplyr)
 library(shinyIncubator)
 source("Functions.R")
 source("readT.R")
+source("AncestralReconstruction.R")
+
 
 shinyServer(function(input, output) {
 
 observeEvent(input$start, {
   
   #Ancestral Reconstruction
-  source("AncestralReconstruction.R")
   tree_file_not_annotated<-input$tree_file_wo_transitions$datapath
   sampling_locations = input$sampling_locations$datapath
   method=input$Reconstruction_Method
@@ -43,13 +44,12 @@ observeEvent(input$start, {
   #transitions<-x$transitions 
   #distances<-x$distances
   #names_matrix<-x$names_matrix
-  
     output$plot = renderPlot({
       x%>%
         plotting_fun(logTransformation = logTransformation, .)%>%
         linear_regression(.)
+      
 }) # output$plot = renderPlot({
-    
     renderText(
       expr,
       env = parent.frame(),

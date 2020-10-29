@@ -1,6 +1,6 @@
 #### Defining functions ##
 importingFiles<-function(distances_raw_file=distances_raw_fileGlobal, tree_file=tree_fileGlobal){
-  
+  print("Readint annotated tree")
   tree <-readT(tree_file)
   distances_raw <- read.csv(distances_raw_file, head=T, sep="\t")
   
@@ -16,7 +16,6 @@ importingOnlyDist<-function(distances_raw_file=distances_raw_fileGlobal, tree=tr
 }
 
 GenerateRawTransitionMatrix = function(state, x) {
-  print("Calculating transitions")
   distances_raw<-x[[1]]
   tree<-x[[2]]
   locations = colnames(distances_raw)
@@ -100,7 +99,6 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGloba
 }
 
 plotting_fun<-function(logTransformation,x){
-  print("Rendering...")
   transitions<-x[[1]]
   distances<- x[[2]]
   #pdf(file=paste("output/Transitions",plotname, ".pdf",sep="-"))

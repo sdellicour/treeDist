@@ -90,11 +90,10 @@ writeAnnotatedTree<-function(tree_not_annotated, max_ancestral_positions, countr
 
   annotations <- tibble(node = 1:N, states = ancestral_states_all)
   annotated_tree <- full_join(tree_not_annotated, annotations, by = "node")
-  print("Writing annotated MP reconstruction")
   write.beast(annotated_tree, file = "output/test.tree")
   system("cp output/test.tree input/")
   
-  print("Reading annotated MP tree in beast format")
+  print("Reading annotated tree in beast format")
   readT("input/test.tree")
 }
 
