@@ -23,17 +23,20 @@ observeEvent(input$start, {
   logTransformation = input$LogTransform
   
   if (length(input$tree_file_wo_transitions) == 0){
-    
     tree_file = input$tree_file_w_transitions$datapath
     x<- importingFiles(distances_raw_file = distances_raw_file,tree_file = tree_file)%>%
         GenerateRawTransitionMatrix(state = state, .)%>%
         GenerateFinal_Transitions_Distances(makeSymmetric = makeSymmetric, . )
   }else{
+    if (length(input$sampling_locations) == 0 | length(input$distances_file)==0){
+      print("Please upload a list of tip states and a distance matrix")
+    }else{
         tree_max_ancestral_positions<-importingFilesNotAnnotated(sampling_locations=sampling_locations, tree_file_not_annotated=tree_file_not_annotated)%>%
             chooseReconstructionMethod(method, x= .)
         x<-importingOnlyDist(distances_raw_file = distances_raw_file,tree = tree_max_ancestral_positions$tree)%>%
             GenerateRawTransitionMatrix(state = state, .)%>%
             GenerateFinal_Transitions_Distances(makeSymmetric = makeSymmetric, . )
+    }
   }
   
     
