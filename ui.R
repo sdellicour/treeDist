@@ -26,11 +26,16 @@ shinyUI(fluidPage(
 				)
 			),
 			fluidRow(
-			  column(6,
-			         selectInput(inputId ="Annotation_State", "Annotation for most likely state", c("states",
-			                                                                                        "city"))
+			  column(12,
+			         fileInput("sampling_locations", label=("Sampling Locations"))
 			  )
 			),
+		#	fluidRow(
+		#	  column(6,
+		#	         selectInput(inputId ="Annotation_State", "Annotation for most likely state", c("states",
+		#	                                                                                        "city"))
+		#	  )
+		#	),
 			fluidRow(
 			  column(6,
 			         radioButtons(inputId ="Symmetrie", "Remove directionality",  c("No"=FALSE, "Yes"=TRUE))
@@ -42,13 +47,19 @@ shinyUI(fluidPage(
 			  )
 			),
 			fluidRow(
+			  column(6,
+			         radioButtons(inputId ="Reconstruction_Method", "Method for ancestral reconstruction", 
+			                      c("Maximum Likelihood"="ML","Maximum Parsimony"="MP"))
+			  )
+			),
+			fluidRow(
       			column(6,
 					actionButton("start", label=h4("RUN"), col.label="red")
 				)
 			)
 		),
 		mainPanel(
-			plotOutput(outputId="plot")
+			plotOutput(outputId="plot", hover = "plot_hover")
 		)
 	)	
 ))

@@ -7,7 +7,16 @@ importingFiles<-function(distances_raw_file=distances_raw_fileGlobal, tree_file=
   list(distances_raw, tree)
 }
 
+importingOnlyDist<-function(distances_raw_file=distances_raw_fileGlobal, tree=tree){
+  
+  tree=tree
+  distances_raw <- read.csv(distances_raw_file, head=T, sep="\t")
+  
+  list(distances_raw, tree)
+}
+
 GenerateRawTransitionMatrix = function(state, x) {
+  print("Calculating transitions")
   distances_raw<-x[[1]]
   tree<-x[[2]]
   locations = colnames(distances_raw)
@@ -52,12 +61,13 @@ GenerateRawTransitionMatrix = function(state, x) {
 
 
 makeSymmetric<-function(matrix){
-  for (i in 1:dim(matrix)[1]){
+  matrix_sym<-matrix
+    for (i in 1:dim(matrix)[1]){
     for (j in 1:dim(matrix)[2]){
       matrix_sym[i, j] <- matrix[j, i] + matrix[i, j]
     }
   }
-  matrix_sym
+  matrix
 }
 
 
@@ -90,6 +100,7 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGloba
 }
 
 plotting_fun<-function(logTransformation,x){
+  print("Rendering...")
   transitions<-x[[1]]
   distances<- x[[2]]
   #pdf(file=paste("output/Transitions",plotname, ".pdf",sep="-"))
@@ -130,4 +141,5 @@ linear_regression<-function(x,cut_off_residual=NULL, percentile=95){
   '%!in%' <- function(x,y){
     !('%in%'(x,y))
   }
+  
   
