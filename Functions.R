@@ -1,6 +1,6 @@
 #### Defining functions ##
 importingFiles<-function(distances_raw_file=distances_raw_fileGlobal, tree_file=tree_fileGlobal){
-  print("Readint annotated tree")
+  print("Reading annotated tree")
   tree <-readT(tree_file)
   distances_raw <- read.csv(distances_raw_file, head=T, sep="\t")
   
@@ -95,38 +95,34 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGloba
   names(distances)=c(names_matrixes[upper.tri(names_matrixes)])
   names(transitions)=names_matrixes
   
-  list(transitions=transitions, distances=distances, names_matrixes=names_matrixes)
+  transition_distances<-data.frame(Transitions=transitions, Distances=distances)
+  vals <- reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)))
+  
+  list(transition_distances=transition_distances, vals=vals,  names_matrixes=names_matrixes)
 }
 
-plotting_fun<-function(logTransformation,x){
-  transitions<-x[[1]]
-  distances<- x[[2]]
-  #pdf(file=paste("output/Transitions",plotname, ".pdf",sep="-"))
-  if (logTransformation == TRUE) distances = log(distances)
-  par(mgp=c(0,0,0), oma=c(0,0,0,0), mar=c(3,3.5,1.5,2))
-  cols1 = c("#FAA521","#4676BB"); 
-  cols2 = c("#FAA52150","#4676BB50")
-  plot(distances, transitions, col=cols2[2], pch=16, cex=1.1, axes = F, ann=F)
-  points(distances, transitions, col=cols1[2], pch=1, cex=1.1)
-  axis(side=1, lwd.tick=0.2, cex.axis=0.9, mgp=c(0,0.4,0), lwd=0.2, tck=-0.02, col.tick="gray30", col.axis="gray30", col="gray30")
-  axis(side=2, lwd.tick=0.2, cex.axis=0.9, mgp=c(0,0.6,0), lwd=0.2, tck=-0.02, col.tick="gray30", col.axis="gray30", col="gray30")
-  title(ylab="transitions", cex.lab=1.1, mgp=c(2.0,0,0), col.lab="gray30")
-  if (logTransformation == TRUE) title(xlab="distance (log)", cex.lab=1.1, mgp=c(1.4,0,0), col.lab="gray30")
-  if (logTransformation != TRUE) title(xlab="distance", cex.lab=1.1, mgp=c(1.4,0,0), col.lab="gray30")
-  list(transitions, distances)
+plotting_fun<-function(logTransformation,transition_distances,vals){
+  
+  keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
+  exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
+  
+  theme_set(theme_classic())
+  ggplot(keep, aes(Distances,Transitions)) + 
+    geom_point() +
+    geom_smooth(method = lm, fullrange = TRUE, color = "black")+
+    geom_point(data = exclude, shape = 21, fill = NA, color = "black", alpha = 0.25) +
+    coord_cartesian(xlim = c(1.5, 5.5), ylim = c(5,35))
 }
 
-linear_regression<-function(x,cut_off_residual=NULL, percentile=95){
-  transitions<-x[[1]]
-  distances=x[[2]]
-  lm=lm(transitions~distances)
-  abline(lm)
-  #dev.off()
-  #pdf(file=paste("output/Residuals",plotname,".pdf", sep="-"))
-  #plot(lm$residuals)
-  #dev.off()
+linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95){
+  browser()
+  keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
+  exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
+  
+  lm=lm(keep$Transitions~keep$Distances)
+  
   if(is.null(cut_off_residual)){ cut_off_residual=quantile((lm$residuals), percentile/100)}
-  index=transitions[which(lm$residuals>cut_off_residual)]
+  index=keep$Transitions[which(lm$residuals>cut_off_residual)]
   print(paste(length(index), "Possible Outlier(s):" , sep = " "))
   print(paste("cut_off_residual: ",cut_off_residual))
   output<-as.matrix(index%>%sort(decreasing =T))

@@ -1,6 +1,7 @@
 library(raster)
 library(shiny)
 library(dplyr)
+library(ggplot2)
 library(shinyIncubator)
 source("Functions.R")
 source("readT.R")
@@ -18,7 +19,7 @@ observeEvent(input$start, {
   
   
   #Transitions
-  distances_raw_file = input$distances_file$datapath
+  distances_raw_file<-input$distances_file$datapath
   state= "states" #input$Annotation_State
   makeSymmetric=input$Symmetrie
   logTransformation = input$LogTransform
@@ -39,24 +40,35 @@ observeEvent(input$start, {
             GenerateFinal_Transitions_Distances(makeSymmetric = makeSymmetric, . )
     }
   }
+
+  ##assign to global environment so that visible for other events
+  transition_distances<<-x$transition_distances 
+  vals<<-x$vals
+  names_matrix<<-x$names_matrix
   
-    
-  #transitions<-x$transitions 
-  #distances<-x$distances
-  #names_matrix<-x$names_matrix
-    output$plot = renderPlot({
-      x%>%
-        plotting_fun(logTransformation = logTransformation, .)%>%
-        linear_regression(.)
+  output$plot = renderPlot({
+    linear_regression(transition_distances)
+    plotting_fun(logTransformation = logTransformation, transition_distances, vals)
       
 }) # output$plot = renderPlot({
-    renderText(
-      expr,
-      env = parent.frame(),
-      quoted = FALSE,
-      outputArgs = list(),
-      sep = " "
-    )
 }) # observeEvent(input$start, {
+  
+  # Toggle points that are clicked
+  observeEvent(input$plot1_click, {
+    res <- nearPoints(transition_distances, input$plot1_click, allRows = TRUE)
+    vals$keeprows <- xor(vals$keeprows, res$selected_)
+  })
+  
+  # Toggle points that are brushed, when button is clicked
+  observeEvent(input$exclude_toggle, {
+    res <- brushedPoints(transition_distances, input$plot1_brush, allRows = TRUE)
+    vals$keeprows <- xor(vals$keeprows, res$selected_)
+  })
+  
+  # Reset all points
+  observeEvent(input$exclude_reset, {
+    vals$keeprows <- rep(TRUE, nrow(transition_distances))
+  })
+  
 }) # shinyServer(function(input, output) {
 

@@ -43,13 +43,13 @@ shinyUI(fluidPage(
 			),
 			fluidRow(
 			  column(6,
-			         radioButtons(inputId ="LogTransform", "Log", c("Yes"=TRUE, "No"=FALSE))
+			         radioButtons(inputId ="LogTransform", "Log", c("No"=FALSE, "Yes"=TRUE))
 			  )
 			),
 			fluidRow(
 			  column(6,
 			         radioButtons(inputId ="Reconstruction_Method", "Method for ancestral reconstruction", 
-			                      c("Maximum Likelihood"="ML","Maximum Parsimony"="MP"))
+			                      c("Maximum Parsimony"="MP","Maximum Likelihood"="ML"))
 			  )
 			),
 			fluidRow(
@@ -59,7 +59,6 @@ shinyUI(fluidPage(
 			)
 		),
 		mainPanel(
-		  splitLayout(
 			plotOutput(outputId="plot", click = "plot1_click",
 			           brush = brushOpts(
 			             id = "plot1_brush"
@@ -68,6 +67,5 @@ shinyUI(fluidPage(
 			actionButton("exclude_toggle", "Toggle points"),
 			actionButton("exclude_reset", "Reset")
 		  )
-		)
 	)	
 ))
