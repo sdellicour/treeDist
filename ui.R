@@ -1,7 +1,6 @@
 library(raster)
 library(shiny)
 library(shinyIncubator)
-
 shinyUI(fluidPage(
 	titlePanel(""),
 	sidebarLayout(
@@ -27,18 +26,17 @@ shinyUI(fluidPage(
 			),
 			fluidRow(
 			  column(12,
-			         fileInput("sampling_locations", label=("Sampling Locations"))
+			         fileInput("sampling_locations", label=("Sampling locations"))
 			  )
 			),
-		#	fluidRow(
-		#	  column(6,
-		#	         selectInput(inputId ="Annotation_State", "Annotation for most likely state", c("states",
-		#	                                                                                        "city"))
-		#	  )
-		#	),
+		fluidRow(
+		  column(6,
+		         selectInput(inputId ="Annotation_State", "Annotation state", c("states","city"))
+		  )
+		),
 			fluidRow(
 			  column(6,
-			         radioButtons(inputId ="Symmetrie", "Remove directionality",  c("No"=FALSE, "Yes"=TRUE))
+			         radioButtons(inputId ="Symmetrie", "Symmetrie",  c("No"=FALSE, "Yes"=TRUE))
 			  )
 			),
 			fluidRow(
@@ -48,7 +46,7 @@ shinyUI(fluidPage(
 			),
 			fluidRow(
 			  column(6,
-			         radioButtons(inputId ="Reconstruction_Method", "Method for ancestral reconstruction", 
+			         radioButtons(inputId ="Reconstruction_Method", "AR Method", 
 			                      c("Maximum Parsimony"="MP","Maximum Likelihood"="ML"))
 			  )
 			),
@@ -59,13 +57,29 @@ shinyUI(fluidPage(
 			)
 		),
 		mainPanel(
-			plotOutput(outputId="plot", click = "plot1_click",
+		  fluidRow(
+		  splitLayout(
+			  plotOutput(outputId="plot", click = "plot_click",
 			           brush = brushOpts(
-			             id = "plot1_brush"
+			             id = "plot_brush"
 			           )
+			),
+			plotOutput(outputId="plot_res", click = "plot_res_click",
+			           brush = brushOpts(
+			             id = "plot_res_brush"
+			           )
+			)
 			),
 			actionButton("exclude_toggle", "Toggle points"),
 			actionButton("exclude_reset", "Reset")
-		  )
+		  ),
+			fluidRow(
+			  tableOutput(outputId="lm")
+			),
+			fluidRow(
+			  tableOutput(outputId="output")
+			)
 	)	
-))
+)
+)
+)

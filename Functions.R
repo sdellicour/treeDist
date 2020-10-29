@@ -102,34 +102,42 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGloba
 }
 
 plotting_fun<-function(logTransformation,transition_distances,vals){
-  
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  
+
   theme_set(theme_classic())
-  ggplot(keep, aes(Distances,Transitions)) + 
+  ggplot(keep, mapping= aes(x=Distances,y=Transitions)) + 
     geom_point() +
     geom_smooth(method = lm, fullrange = TRUE, color = "black")+
     geom_point(data = exclude, shape = 21, fill = NA, color = "black", alpha = 0.25) +
-    coord_cartesian(xlim = c(1.5, 5.5), ylim = c(5,35))
+    coord_cartesian(xlim = c(0, max(transition_distances$Distances)), ylim = c(0,max(transition_distances$Transitions)))
+}
+
+plotting_residuals<-function(logTransformation,transition_distances,vals ,x){
+  #keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
+  #exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
+  #lm=lm(keep$Transitions~keep$Distances)
+
+  theme_set(theme_classic())
+  ggplot(x, aes(fitted, residuals))+geom_point() +
+  coord_cartesian(xlim = c(0, max(x$fitted)), ylim = c(0,max(x$residuals)))
 }
 
 linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95){
-  browser()
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  
   lm=lm(keep$Transitions~keep$Distances)
+  x<-data.frame(lm$residuals,lm$fitted.values)
+  colnames(x)<-c("residuals", "fitted")
   
   if(is.null(cut_off_residual)){ cut_off_residual=quantile((lm$residuals), percentile/100)}
-  index=keep$Transitions[which(lm$residuals>cut_off_residual)]
-  print(paste(length(index), "Possible Outlier(s):" , sep = " "))
+  index=keep[which(lm$residuals>cut_off_residual), ]
+  print(paste(length(index$Transitions), "Possible Outlier(s):" , sep = " "))
   print(paste("cut_off_residual: ",cut_off_residual))
-  output<-as.matrix(index%>%sort(decreasing =T))
-  colnames(output)<-"Transitions"
-  print(output)
-  print(summary(lm))
-  list(output=output,lm=lm)
+  output<-index[order(-index$Transitions),]
+  output<-data.frame(rownames(output), output)
+  colnames(output)<-c("Countries", "# Transitions", "Distance between countries")
+  list(statistics=glance(lm), output=output, x=x)
 }   
 
   '%!in%' <- function(x,y){

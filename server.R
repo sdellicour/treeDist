@@ -2,6 +2,8 @@ library(raster)
 library(shiny)
 library(dplyr)
 library(ggplot2)
+library(broom)
+library(ggfortify)
 library(shinyIncubator)
 source("Functions.R")
 source("readT.R")
@@ -20,7 +22,7 @@ observeEvent(input$start, {
   
   #Transitions
   distances_raw_file<-input$distances_file$datapath
-  state= "states" #input$Annotation_State
+  state= input$Annotation_State
   makeSymmetric=input$Symmetrie
   logTransformation = input$LogTransform
   
@@ -47,22 +49,51 @@ observeEvent(input$start, {
   names_matrix<<-x$names_matrix
   
   output$plot = renderPlot({
-    linear_regression(transition_distances)
     plotting_fun(logTransformation = logTransformation, transition_distances, vals)
       
 }) # output$plot = renderPlot({
+  
+  
+  output$plot_res = renderPlot({
+    linear_regression(transition_distances)$x%>%
+    plotting_residuals(logTransformation = logTransformation, transition_distances, vals,.)
+    
+  }) # output$plot = renderPlot({
+  
+  output$lm=renderTable({
+    expr =linear_regression(transition_distances)$statistics
+    
+  })
+  
+  output$output=renderTable({
+    expr =linear_regression(transition_distances)$output
+    
+  })
+                  
 }) # observeEvent(input$start, {
   
   # Toggle points that are clicked
-  observeEvent(input$plot1_click, {
-    res <- nearPoints(transition_distances, input$plot1_click, allRows = TRUE)
+  observeEvent(input$plot_click, {
+    res <- nearPoints(transition_distances, input$plot_click, allRows = TRUE)
+
     vals$keeprows <- xor(vals$keeprows, res$selected_)
+  })
+  
+  observeEvent(input$plot_res_click, {
+    x=linear_regression(transition_distances)$x
+    
+    res_res <- nearPoints(x, input$plot_res_click, allRows = TRUE)
+    vals$keeprows <- xor(vals$keeprows, res_res$selected_)
   })
   
   # Toggle points that are brushed, when button is clicked
   observeEvent(input$exclude_toggle, {
-    res <- brushedPoints(transition_distances, input$plot1_brush, allRows = TRUE)
-    vals$keeprows <- xor(vals$keeprows, res$selected_)
+    x=linear_regression(transition_distances)$x
+   
+    res <- brushedPoints(transition_distances, input$plot_brush, allRows = TRUE)
+    res_res <- brushedPoints(x, input$plot_res_brush, allRows = TRUE)
+   if(sum(res$selected_)>0)     vals$keeprows <- xor(vals$keeprows, res$selected_)
+    else vals$keeprows <- xor(vals$keeprows, res_res$selected_)
   })
   
   # Reset all points
