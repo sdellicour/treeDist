@@ -95,7 +95,7 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGloba
   names(distances)=c(names_matrixes[upper.tri(names_matrixes)])
   names(transitions)=names_matrixes
   
-  transition_distances<-data.frame(Transitions=transitions, Distances=distances)
+  transition_distances<-data.frame(Transitions=transitions, Distances=distances, Key=names(transitions))
   vals <- reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)))
   
   list(transition_distances=transition_distances, vals=vals,  names_matrixes=names_matrixes)
@@ -106,21 +106,25 @@ plotting_fun<-function(logTransformation,transition_distances,vals){
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
 
   theme_set(theme_classic())
-  ggplot(keep, mapping= aes(x=Distances,y=Transitions)) + 
+  p<-ggplot(keep, mapping= aes(x=Distances,y=Transitions, key=Key)) + 
     geom_point() +
     geom_smooth(method = lm, fullrange = TRUE, color = "black")+
     geom_point(data = exclude, shape = 21, fill = NA, color = "black", alpha = 0.25) +
     coord_cartesian(xlim = c(0, max(transition_distances$Distances)), ylim = c(0,max(transition_distances$Transitions)))
+  p <- p %>% plotly::ggplotly(tooltip = "text", source="plot")
+  return(p)
 }
 
 plotting_residuals<-function(logTransformation,transition_distances,vals ,x){
-  #keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
-  #exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  #lm=lm(keep$Transitions~keep$Distances)
+  keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
+  exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
+  lm=lm(keep$Transitions~keep$Distances)
 
   theme_set(theme_classic())
-  ggplot(x, aes(fitted, residuals))+geom_point() +
+  p_res<-ggplot(x, aes(fitted, residuals))+geom_point() +
   coord_cartesian(xlim = c(0, max(x$fitted)), ylim = c(0,max(x$residuals)))
+  p_res <- p_res %>% plotly::ggplotly(tooltip = "text", source="plot_res")
+  return(p_res)
 }
 
 linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95){

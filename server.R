@@ -1,4 +1,5 @@
 library(raster)
+library(plotly)
 library(shiny)
 library(dplyr)
 library(ggplot2)
@@ -15,24 +16,28 @@ shinyServer(function(input, output) {
 observeEvent(input$start, {
   
   #Ancestral Reconstruction
-  tree_file_not_annotated<-input$tree_file_wo_transitions$datapath
-  sampling_locations = input$sampling_locations$datapath
+ tree_file_not_annotated<-input$tree_file_wo_transitions$datapath
+#tree_file_not_annotated<-"input/h3_small_sample.MCC.tre"
+ sampling_locations = input$sampling_locations$datapath
+  #sampling_locations = "input/Sampling_locations.txt"
+  
   method=input$Reconstruction_Method
   
   
   #Transitions
   distances_raw_file<-input$distances_file$datapath
+  #distances_raw_file<-"input/subsetDeff.txt"
   state= input$Annotation_State
   makeSymmetric=input$Symmetrie
   logTransformation = input$LogTransform
   
-  if (length(input$tree_file_wo_transitions) == 0){
+  if (length(tree_file_not_annotated) == 0){
     tree_file = input$tree_file_w_transitions$datapath
     x<- importingFiles(distances_raw_file = distances_raw_file,tree_file = tree_file)%>%
         GenerateRawTransitionMatrix(state = state, .)%>%
         GenerateFinal_Transitions_Distances(makeSymmetric = makeSymmetric, . )
   }else{
-    if (length(input$sampling_locations) == 0 | length(input$distances_file)==0){
+    if (length(sampling_locations) == 0 | length(distances_raw_file)==0){
       print("Please upload a list of tip states and a distance matrix")
     }else{
         tree_max_ancestral_positions<-importingFilesNotAnnotated(sampling_locations=sampling_locations, tree_file_not_annotated=tree_file_not_annotated)%>%
@@ -46,54 +51,50 @@ observeEvent(input$start, {
   ##assign to global environment so that visible for other events
   transition_distances<<-x$transition_distances 
   vals<<-x$vals
+  vals$keeprows <- rep(TRUE, nrow(transition_distances))
   names_matrix<<-x$names_matrix
   
-  output$plot = renderPlot({
+  output$plot = renderPlotly({
     plotting_fun(logTransformation = logTransformation, transition_distances, vals)
       
 }) # output$plot = renderPlot({
   
   
-  output$plot_res = renderPlot({
+  output$plot_res = renderPlotly({
     linear_regression(transition_distances)$x%>%
-    plotting_residuals(logTransformation = logTransformation, transition_distances, vals,.)
+    plotting_residuals(logTransformation = logTransformation, transition_distances, vals, .)
     
   }) # output$plot = renderPlot({
   
   output$lm=renderTable({
     expr =linear_regression(transition_distances)$statistics
     
-  })
+  }) # output$plot = renderTable({
   
   output$output=renderTable({
     expr =linear_regression(transition_distances)$output
     
-  })
+  }) # output$plot = renderTable({
                   
 }) # observeEvent(input$start, {
   
-  # Toggle points that are clicked
-  observeEvent(input$plot_click, {
-    res <- nearPoints(transition_distances, input$plot_click, allRows = TRUE)
-
-    vals$keeprows <- xor(vals$keeprows, res$selected_)
-  })
-  
-  observeEvent(input$plot_res_click, {
-    x=linear_regression(transition_distances)$x
-    
-    res_res <- nearPoints(x, input$plot_res_click, allRows = TRUE)
-    vals$keeprows <- xor(vals$keeprows, res_res$selected_)
-  })
+  output$hover<-renderPrint({
+    hover_data<-event_data("plotly_hover", source = "plot")
+    transition_distances[which(transition_distances$Key==hover_data$key),]
+    })
   
   # Toggle points that are brushed, when button is clicked
   observeEvent(input$exclude_toggle, {
-    x=linear_regression(transition_distances)$x
-   
-    res <- brushedPoints(transition_distances, input$plot_brush, allRows = TRUE)
-    res_res <- brushedPoints(x, input$plot_res_brush, allRows = TRUE)
-   if(sum(res$selected_)>0)     vals$keeprows <- xor(vals$keeprows, res$selected_)
-    else vals$keeprows <- xor(vals$keeprows, res_res$selected_)
+    selected_data<-event_data("plotly_selected", source = "plot")
+
+    res<- data.frame(selected_=rep(FALSE, nrow(transition_distances)))
+    res$selected_[which(transition_distances$Key %in% selected_data$key)]<-TRUE
+
+    res_res<- data.frame(selected_=rep(FALSE, nrow(transition_distances)))
+    res_res$selected_[which(transition_distances$Key %in%selected_data$key)]<-TRUE
+    
+    if(sum(res$selected_)>0)     vals$keeprows <- xor(vals$keeprows, res$selected_)#the ones that are set to true in res are set to false
+    else                         vals$keeprows <- xor(vals$keeprows, res_res$selected_)
   })
   
   # Reset all points

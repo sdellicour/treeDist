@@ -59,20 +59,15 @@ shinyUI(fluidPage(
 		mainPanel(
 		  fluidRow(
 		  splitLayout(
-			  plotOutput(outputId="plot", click = "plot_click",
-			           brush = brushOpts(
-			             id = "plot_brush"
-			           )
-			),
-			plotOutput(outputId="plot_res", click = "plot_res_click",
-			           brush = brushOpts(
-			             id = "plot_res_brush"
-			           )
-			)
+			  plotlyOutput(outputId="plot"),
+			  plotlyOutput(outputId="plot_res")
 			),
 			actionButton("exclude_toggle", "Toggle points"),
 			actionButton("exclude_reset", "Reset")
 		  ),
+			fluidRow(
+			  verbatimTextOutput("hover"),
+			),
 			fluidRow(
 			  tableOutput(outputId="lm")
 			),
