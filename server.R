@@ -28,6 +28,7 @@ observeEvent(input$start, {
   distances_raw_file<-input$distances_file$datapath
   #distances_raw_file<-"input/subsetDeff.txt"
   state= input$Annotation_State
+  order= input$order
   makeSymmetric=input$Symmetrie
   logTransformation = input$LogTransform
   
@@ -61,18 +62,18 @@ observeEvent(input$start, {
   
   
   output$plot_res = renderPlotly({
-    linear_regression(transition_distances)$x%>%
+    linear_regression(transition_distances, order=order)$x%>%
     plotting_residuals(logTransformation = logTransformation, transition_distances, vals, .)
     
   }) # output$plot = renderPlot({
   
   output$lm=renderTable({
-    expr =linear_regression(transition_distances)$statistics
+    expr =linear_regression(transition_distances, order=order)$statistics
     
   }) # output$plot = renderTable({
   
   output$output=renderTable({
-    expr =linear_regression(transition_distances)$output
+    expr =linear_regression(transition_distances, order=order)$output
     
   }) # output$plot = renderTable({
                   
@@ -102,5 +103,9 @@ observeEvent(input$start, {
     vals$keeprows <- rep(TRUE, nrow(transition_distances))
   })
   
+  #Order linear regression
+  observeEvent(input$order, {
+    order= input$order
+  })
 }) # shinyServer(function(input, output) {
 

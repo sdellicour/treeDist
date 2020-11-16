@@ -102,9 +102,11 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGloba
 }
 
 plotting_fun<-function(logTransformation,transition_distances,vals){
+  
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
 
+  
   theme_set(theme_classic())
   p<-ggplot(keep, mapping= aes(x=Distances,y=Transitions, key=Key)) + 
     geom_point() +
@@ -127,10 +129,11 @@ plotting_residuals<-function(logTransformation,transition_distances,vals ,x){
   return(p_res)
 }
 
-linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95){
+linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95, order){
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  lm=lm(keep$Transitions~keep$Distances)
+  
+  lm=lm(log(keep$Transitions)~keep$Distances)
   x<-data.frame(lm$residuals,lm$fitted.values)
   colnames(x)<-c("residuals", "fitted")
   

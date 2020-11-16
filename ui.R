@@ -1,5 +1,6 @@
 library(raster)
 library(shiny)
+library(plotly)
 library(shinyIncubator)
 shinyUI(fluidPage(
 	titlePanel(""),
@@ -63,7 +64,7 @@ shinyUI(fluidPage(
 			  plotlyOutput(outputId="plot_res")
 			),
 			actionButton("exclude_toggle", "Toggle points"),
-			actionButton("exclude_reset", "Reset")
+			actionButton("exclude_reset", "Reset"),
 		  ),
 			fluidRow(
 			  verbatimTextOutput("hover"),
