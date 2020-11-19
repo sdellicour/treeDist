@@ -10,23 +10,20 @@ source("Functions.R")
 source("readT.R")
 source("AncestralReconstruction.R")
 
-
-shinyServer(function(input, output) {
-
+shinyServer(function(input, output, session) {
 observeEvent(input$start, {
-  
   #Ancestral Reconstruction
  tree_file_not_annotated<-input$tree_file_wo_transitions$datapath
-#tree_file_not_annotated<-"input/h3_small_sample.MCC.tre"
+ #tree_file_not_annotated<-"input/h3_small_sample.MCC.tre"
  sampling_locations = input$sampling_locations$datapath
   #sampling_locations = "input/Sampling_locations.txt"
   
   method=input$Reconstruction_Method
   
-  
   #Transitions
+  delimiter<-input$delimiter
   distances_raw_file<-input$distances_file$datapath
-  #distances_raw_file<-"input/subsetDeff.txt"
+ # distances_raw_file<-"input/predictors/bodySize.csv"
   state= input$Annotation_State
   order= input$order
   makeSymmetric=input$Symmetrie
@@ -34,21 +31,22 @@ observeEvent(input$start, {
   
   if (length(tree_file_not_annotated) == 0){
     tree_file = input$tree_file_w_transitions$datapath
-    x<- importingFiles(distances_raw_file = distances_raw_file,tree_file = tree_file)%>%
+    #tree_file = "input/batRABV.MCC.trees"
+    x<- importingFiles(distances_raw_file = distances_raw_file,tree_file = tree_file, delimiter)%>%
         GenerateRawTransitionMatrix(state = state, .)%>%
         GenerateFinal_Transitions_Distances(makeSymmetric = makeSymmetric, . )
   }else{
     if (length(sampling_locations) == 0 | length(distances_raw_file)==0){
       print("Please upload a list of tip states and a distance matrix")
     }else{
-        tree_max_ancestral_positions<-importingFilesNotAnnotated(sampling_locations=sampling_locations, tree_file_not_annotated=tree_file_not_annotated)%>%
+        tree_max_ancestral_positions<-importingFilesNotAnnotated(sampling_locations=sampling_locations, tree_file_not_annotated=tree_file_not_annotated, delimiter,session)%>%
             chooseReconstructionMethod(method, x= .)
-        x<-importingOnlyDist(distances_raw_file = distances_raw_file,tree = tree_max_ancestral_positions$tree)%>%
+        x<-importingOnlyDist(distances_raw_file = distances_raw_file,tree = tree_max_ancestral_positions$tree, delimiter = delimiter)%>%
             GenerateRawTransitionMatrix(state = state, .)%>%
             GenerateFinal_Transitions_Distances(makeSymmetric = makeSymmetric, . )
     }
   }
-
+  
   ##assign to global environment so that visible for other events
   transition_distances<<-x$transition_distances 
   vals<<-x$vals

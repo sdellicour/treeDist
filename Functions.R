@@ -1,18 +1,25 @@
 #### Defining functions ##
-importingFiles<-function(distances_raw_file=distances_raw_fileGlobal, tree_file=tree_fileGlobal){
+importingFiles<-function(distances_raw_file=distances_raw_fileGlobal, tree_file=tree_fileGlobal, delimiter){
   print("Reading annotated tree")
   tree <-readT(tree_file)
-  distances_raw <- read.csv(distances_raw_file, head=T, sep="\t")
-  
+  distances_raw <- read.csv(distances_raw_file, head=T, sep=delimiter)
+  distances_raw<-reshape_Rownames(distances_raw)
   list(distances_raw, tree)
 }
 
-importingOnlyDist<-function(distances_raw_file=distances_raw_fileGlobal, tree=tree){
-  
+importingOnlyDist<-function(distances_raw_file=distances_raw_fileGlobal, tree=tree, delimiter){
   tree=tree
-  distances_raw <- read.csv(distances_raw_file, head=T, sep="\t")
-  
+  distances_raw <- read.csv(distances_raw_file, head=T, sep=delimiter)
+  distances_raw<-reshape_Rownames(distances_raw = distances_raw )
   list(distances_raw, tree)
+}
+
+reshape_Rownames<-function(distances_raw){
+  if(!is.numeric(distances_raw[1,1])){
+    rownames(distances_raw)=(distances_raw[,1])
+    distances_raw=distances_raw[,2:length(distances_raw[1,])]
+  }
+  return(distances_raw)
 }
 
 GenerateRawTransitionMatrix = function(state, x) {
@@ -23,7 +30,6 @@ GenerateRawTransitionMatrix = function(state, x) {
   transitions_raw= matrix(0, nrow=dim(distances_raw)[1], ncol=dim(distances_raw)[1])#0 matrix in size of distance matrix 
   row.names(transitions_raw) = countries
   colnames(transitions_raw) = countries
-  
   for (i in 1:dim(tree$edge)[1])
     #the edge table should be read as: rows are the edge numbers and first col is start node  and 2nd is end node of the branch or edge
   {

@@ -4,20 +4,15 @@ library(dplyr)
 library(castor)
 
 
-#tree_file = input$tree_file_wo_transitions$datapath
-#distances_file = input$distances_file$datapath
-
-#tree<-read.nexus("input/h3_small_sample.MCC.tre")
-
 chooseReconstructionMethod<-function(method, x){
-  country<-x[[1]]$V2
+  country<-x[[1]]
   tree_not_annotated<- x[[2]]
   if(method=="ML"){
     max_ancestral_positions<-ML_Reconstruction(country, tree_not_annotated)%>%
     max_ancestral_positions_ML(tree_not_annotated=tree_not_annotated, ancestral_positions= .)
   }
     if(method=="MP"){
-    max_ancestral_positions<-prepare_states_MP(country)%>%
+      max_ancestral_positions<-prepare_states_MP(country)%>%
         MaximumParsimonyReconstruction(country_numerical = ., tree_not_annotated)%>%
         max_ancestral_positions_MP(country, tree_not_annotated=tree_not_annotated, ancestral_positions= .)
     }
@@ -25,10 +20,18 @@ chooseReconstructionMethod<-function(method, x){
   list(tree=tree, max_ancestral_positions=max_ancestral_positions)
 }
 
-importingFilesNotAnnotated<-function(sampling_locations, tree_file_not_annotated){
-  
+importingFilesNotAnnotated<-function(sampling_locations, tree_file_not_annotated, delimiter,session){
   tree_not_annotated <- read.nexus(tree_file_not_annotated)
-  country <- read.table(sampling_locations, sep="\t")[2]
+  lapply(tree_not_annotated$edge.length, function(edge_length){
+    if(edge_length<=0){
+        shiny::showNotification(
+        ui=paste0("There are negative branch lenght in your tree, remove them before attempting reconstruction." ),
+        type = 'err',
+        duration=30)
+    session$reload()
+    }
+  })
+  country <- read.table(sampling_locations, sep=delimiter)[,1]
   list(country, tree_not_annotated)
 }
 
@@ -37,10 +40,9 @@ importingFilesNotAnnotated<-function(sampling_locations, tree_file_not_annotated
 #the distance of the 2 locations?
 ML_Reconstruction<-function(country, tree_not_annotated){
   print("Creating ML reconstruction")
-  ERreconstruction <- ape::ace(country, tree_not_annotated, type = "discrete")# equal rates model #at the root the US has highest likelhood with 0.05
-  ERreconstruction
+  ERreconstruction <- ape::ace(country, tree_not_annotated, type = "discrete")
+  return(ERreconstruction)
 }
-
 
 ####Maximum Parsimony
 prepare_states_MP<-function(countries){
@@ -52,8 +54,8 @@ prepare_states_MP<-function(countries){
 MaximumParsimonyReconstruction<-function(country_numerical, tree_not_annotated){
   print("Creating MP reconstruction")
   MP_ER <- asr_max_parsimony(
-    tree_not_annotated,
-    country_numerical,
+    tree = tree_not_annotated,
+    tip_states = country_numerical,
     Nstates = NULL,
     transition_costs = "all_equal",
     edge_exponent = 0,
@@ -68,7 +70,7 @@ MaximumParsimonyReconstruction<-function(country_numerical, tree_not_annotated){
 
 #taking the most likely state at each node
 max_ancestral_positions_ML<-function(tree_not_annotated, ancestral_positions){
-
+  browser()
   max_ancestral_positions<-sapply(1:tree_not_annotated$Nnode, function(i) names(which(ancestral_positions$lik.anc[i,]==max(ancestral_positions$lik.anc[i,]))))
   
   max_ancestral_positions
@@ -90,8 +92,8 @@ writeAnnotatedTree<-function(tree_not_annotated, max_ancestral_positions, countr
 
   annotations <- tibble(node = 1:N, states = ancestral_states_all)
   annotated_tree <- full_join(tree_not_annotated, annotations, by = "node")
-  write.beast(annotated_tree, file = "output/test.tree")
-  system("cp output/test.tree input/")
+  write.beast(annotated_tree, file = "input/test.tree")
+  #system("cp output/test.tree input/")
   
   print("Reading annotated tree in beast format")
   readT("input/test.tree")

@@ -32,7 +32,7 @@ shinyUI(fluidPage(
 			),
 		fluidRow(
 		  column(6,
-		         selectInput(inputId ="Annotation_State", "Annotation state", c("states","city"))
+		         selectInput(inputId ="Annotation_State", "Annotation state", c("host","state", "states","city"))
 		  )
 		),
 			fluidRow(
@@ -51,6 +51,12 @@ shinyUI(fluidPage(
 			                      c("Maximum Parsimony"="MP","Maximum Likelihood"="ML"))
 			  )
 			),
+		fluidRow(
+		  column(6,
+		         selectInput(inputId ="delimiter", "Delimiter", 
+		                      c("comma"=",","tab"="\t"))
+		  )
+		),
 			fluidRow(
       			column(6,
 					actionButton("start", label=h4("RUN"), col.label="red")
