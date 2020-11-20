@@ -70,7 +70,6 @@ MaximumParsimonyReconstruction<-function(country_numerical, tree_not_annotated){
 
 #taking the most likely state at each node
 max_ancestral_positions_ML<-function(tree_not_annotated, ancestral_positions){
-  browser()
   max_ancestral_positions<-sapply(1:tree_not_annotated$Nnode, function(i) names(which(ancestral_positions$lik.anc[i,]==max(ancestral_positions$lik.anc[i,]))))
   
   max_ancestral_positions

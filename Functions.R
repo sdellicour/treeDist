@@ -2,10 +2,23 @@
 importingFiles<-function(distances_raw_file=distances_raw_fileGlobal, tree_file=tree_fileGlobal, delimiter){
   print("Reading annotated tree")
   tree <-readT(tree_file)
+  tree<-negativeBranchLength(tree)
   distances_raw <- read.csv(distances_raw_file, head=T, sep=delimiter)
   distances_raw<-reshape_Rownames(distances_raw)
   list(distances_raw, tree)
 }
+
+negativeBranchLength<-function(tree){
+  if(length(which(tree$edge.length<0))>0){
+    shiny::showNotification(
+      ui=paste0("There were negative branch lenght in your tree, these were set to 0." ),
+      type = 'message',
+      duration=30)
+    tree$edge.length[which(tree$edge.length<0)]=1e-100    }
+  browser()
+  return(tree)
+}
+
 
 importingOnlyDist<-function(distances_raw_file=distances_raw_fileGlobal, tree=tree, delimiter){
   tree=tree
