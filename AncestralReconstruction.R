@@ -22,15 +22,7 @@ chooseReconstructionMethod<-function(method, x){
 
 importingFilesNotAnnotated<-function(sampling_locations, tree_file_not_annotated, delimiter,session){
   tree_not_annotated <- read.nexus(tree_file_not_annotated)
-  lapply(tree_not_annotated$edge.length, function(edge_length){
-    if(edge_length<=0){
-        shiny::showNotification(
-        ui=paste0("There are negative branch lenght in your tree, remove them before attempting reconstruction." ),
-        type = 'err',
-        duration=30)
-    session$reload()
-    }
-  })
+  tree_not_annotated<-negativeBranchLength(tree_not_annotated)
   country <- read.table(sampling_locations, sep=delimiter)[,1]
   list(country, tree_not_annotated)
 }

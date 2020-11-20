@@ -11,11 +11,10 @@ importingFiles<-function(distances_raw_file=distances_raw_fileGlobal, tree_file=
 negativeBranchLength<-function(tree){
   if(length(which(tree$edge.length<0))>0){
     shiny::showNotification(
-      ui=paste0("There were negative branch lenght in your tree, these were set to 0." ),
+      ui=paste0("There were negative branch lenght in your tree, these were set to 1e-100." ),
       type = 'message',
       duration=30)
     tree$edge.length[which(tree$edge.length<0)]=1e-100    }
-  browser()
   return(tree)
 }
 

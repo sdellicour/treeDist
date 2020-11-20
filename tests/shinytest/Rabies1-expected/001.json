@@ -1,0 +1,885 @@
+{
+  "input": {
+    "Annotation_State": "host",
+    "delimiter": ",",
+    "distances_file": {
+      "name": [
+        "bodySize.csv"
+      ],
+      "size": [
+        1086
+      ],
+      "type": [
+        "text/csv"
+      ],
+      "datapath": [
+        "0.csv"
+      ]
+    },
+    "exclude_reset": 0,
+    "exclude_toggle": 0,
+    "LogTransform": "FALSE",
+    "Reconstruction_Method": "MP",
+    "sampling_locations": {
+      "name": [
+        "hostnames.txt"
+      ],
+      "size": [
+        1863
+      ],
+      "type": [
+        "text/plain"
+      ],
+      "datapath": [
+        "0.txt"
+      ]
+    },
+    "start": 1,
+    "Symmetrie": "FALSE",
+    "tree_file_w_transitions": {
+      "name": [
+        "batRABV.MCC.trees"
+      ],
+      "size": [
+        853821
+      ],
+      "type": [
+        ""
+      ],
+      "datapath": [
+        "0.trees"
+      ]
+    },
+    "tree_file_wo_transitions": null
+  },
+  "output": {
+    "hover": {
+      "message": "object 'transition_distances' not found",
+      "call": "renderPrint(...)",
+      "type": null
+    },
+    "lm": "<table  class = 'table shiny-table table- spacing-s' style = 'width:auto;'>\n<thead> <tr> <th style='text-align: right;'> r.squared <\/th> <th style='text-align: right;'> adj.r.squared <\/th> <th style='text-align: right;'> sigma <\/th> <th style='text-align: right;'> statistic <\/th> <th style='text-align: right;'> p.value <\/th> <th style='text-align: right;'> df <\/th> <th style='text-align: right;'> logLik <\/th> <th style='text-align: right;'> AIC <\/th> <th style='text-align: right;'> BIC <\/th> <th style='text-align: right;'> deviance <\/th> <th style='text-align: right;'> df.residual <\/th> <th style='text-align: right;'> nobs <\/th>  <\/tr> <\/thead> <tbody>\n  <tr> <td align=\"right\"> 0.06 <\/td> <td align=\"right\"> 0.03 <\/td> <td align=\"right\"> 0.58 <\/td> <td align=\"right\"> 2.01 <\/td> <td align=\"right\"> 0.17 <\/td> <td align=\"right\"> 1.00 <\/td> <td align=\"right\"> -27.78 <\/td> <td align=\"right\"> 61.56 <\/td> <td align=\"right\"> 66.05 <\/td> <td align=\"right\"> 10.40 <\/td> <td align=\"right\">  31 <\/td> <td align=\"right\">  33 <\/td> <\/tr>\n   <\/tbody> <\/table>",
+    "output": "<table  class = 'table shiny-table table- spacing-s' style = 'width:auto;'>\n<thead> <tr> <th style='text-align: left;'> Countries <\/th> <th style='text-align: right;'> # Transitions <\/th> <th style='text-align: right;'> Distance between countries <\/th> <th class='NA'> NA <\/th>  <\/tr> <\/thead> <tbody>\n  <tr> <td> Lb-&gt;Ls <\/td> <td align=\"right\"> 6.00 <\/td> <td align=\"right\"> 11.20 <\/td> <td> Lb-&gt;Ls <\/td> <\/tr>\n  <tr> <td> Mc-&gt;Ml <\/td> <td align=\"right\"> 6.00 <\/td> <td align=\"right\"> 7.00 <\/td> <td> Mc-&gt;Ml <\/td> <\/tr>\n   <\/tbody> <\/table>",
+    "plot": {
+      "x": {
+        "data": [
+          {
+            "x": [
+              15,
+              29.1,
+              12,
+              49,
+              29,
+              41.1,
+              11.2,
+              13.9,
+              12,
+              41.1,
+              55,
+              8,
+              4,
+              35,
+              11.2,
+              4,
+              53,
+              55,
+              20,
+              4,
+              36,
+              6.9,
+              13,
+              7,
+              39,
+              51,
+              4,
+              45,
+              15.9,
+              22,
+              19.9,
+              26,
+              29
+            ],
+            "y": [
+              2,
+              1,
+              3,
+              2,
+              1,
+              2,
+              1,
+              1,
+              4,
+              2,
+              1,
+              1,
+              3,
+              2,
+              6,
+              3,
+              1,
+              3,
+              1,
+              1,
+              2,
+              1,
+              1,
+              6,
+              1,
+              1,
+              4,
+              1,
+              1,
+              1,
+              1,
+              1,
+              2
+            ],
+            "text": "",
+            "key": [
+              "Lc->Ap",
+              "Lb->Ef",
+              "Lc->Ef",
+              "Ps->Ef",
+              "Tb->Ef",
+              "Lc->Lb",
+              "Ls->Lb",
+              "Mc->Lb",
+              "Ef->Lc",
+              "Lb->Lc",
+              "Mc->Lc",
+              "Ef->Li",
+              "Lc->Li",
+              "Lc->Ln",
+              "Lb->Ls",
+              "Lc->Lx",
+              "Lc->Ma",
+              "Lc->Mc",
+              "Ln->Mc",
+              "My->Mc",
+              "Ef->Ml",
+              "Lb->Ml",
+              "Ln->Ml",
+              "Mc->Ml",
+              "Ef->My",
+              "Lc->My",
+              "Mc->My",
+              "Ef->Nh",
+              "Lb->Nh",
+              "Mc->Ph",
+              "Lb->Ps",
+              "Ln->Ps",
+              "Ef->Tb"
+            ],
+            "type": "scatter",
+            "mode": "markers",
+            "marker": {
+              "autocolorscale": false,
+              "color": "rgba(0,0,0,1)",
+              "opacity": 1,
+              "size": 5.66929133858268,
+              "symbol": "circle",
+              "line": {
+                "width": 1.88976377952756,
+                "color": "rgba(0,0,0,1)"
+              }
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "_isNestedKey": false,
+            "frame": null
+          },
+          {
+            "visible": false,
+            "showlegend": false,
+            "xaxis": null,
+            "yaxis": null,
+            "hoverinfo": "text",
+            "mode": "",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 25.7412480974125,
+            "r": 7.30593607305936,
+            "b": 39.6955859969559,
+            "l": 31.4155251141553
+          },
+          "plot_bgcolor": "rgba(255,255,255,1)",
+          "paper_bgcolor": "rgba(255,255,255,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 14.6118721461187
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              -2.75,
+              57.75
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "0",
+              "20",
+              "40"
+            ],
+            "tickvals": [
+              0,
+              20,
+              40
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "0",
+              "20",
+              "40"
+            ],
+            "nticks": null,
+            "ticks": "outside",
+            "tickcolor": "rgba(51,51,51,1)",
+            "ticklen": 3.65296803652968,
+            "tickwidth": 0.66417600664176,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.689497716895
+            },
+            "tickangle": 0,
+            "showline": true,
+            "linecolor": "rgba(0,0,0,1)",
+            "linewidth": 0.66417600664176,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "Distances",
+              "font": {
+                "color": "rgba(0,0,0,1)",
+                "family": "",
+                "size": 14.6118721461187
+              }
+            },
+            "hoverformat": ".2f"
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              -0.3,
+              6.3
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "0",
+              "2",
+              "4",
+              "6"
+            ],
+            "tickvals": [
+              0,
+              2,
+              4,
+              6
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "0",
+              "2",
+              "4",
+              "6"
+            ],
+            "nticks": null,
+            "ticks": "outside",
+            "tickcolor": "rgba(51,51,51,1)",
+            "ticklen": 3.65296803652968,
+            "tickwidth": 0.66417600664176,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.689497716895
+            },
+            "tickangle": 0,
+            "showline": true,
+            "linecolor": "rgba(0,0,0,1)",
+            "linewidth": 0.66417600664176,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "Transitions",
+              "font": {
+                "color": "rgba(0,0,0,1)",
+                "family": "",
+                "size": 14.6118721461187
+              }
+            },
+            "hoverformat": ".2f"
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": false,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.88976377952756,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 11.689497716895
+            }
+          },
+          "hovermode": "closest",
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "showSendToCloud": false
+        },
+        "source": "plot",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.2,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "1.11.3",
+          "src": {
+            "href": "jquery-1.11.3"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.1.0.1",
+          "src": {
+            "href": "crosstalk-1.1.0.1"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "1.52.2",
+          "src": {
+            "href": "plotly-htmlwidgets-css-1.52.2"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "1.52.2",
+          "src": {
+            "href": "plotly-main-1.52.2"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "plot_res": {
+      "x": {
+        "data": [
+          {
+            "x": [
+              0.55665941618993,
+              0.435600934852002,
+              0.582416539878851,
+              0.264745347715493,
+              0.436459505641632,
+              0.332572440096318,
+              0.589285106195896,
+              0.566103694875868,
+              0.582416539878851,
+              0.332572440096318,
+              0.213231100337651,
+              0.616759371464079,
+              0.651102203049307,
+              0.38494525826379,
+              0.589285106195896,
+              0.651102203049307,
+              0.230402516130265,
+              0.213231100337651,
+              0.513730876708395,
+              0.651102203049307,
+              0.376359550367483,
+              0.626203650150016,
+              0.573830831982544,
+              0.625345079360385,
+              0.350602426678563,
+              0.247573931922879,
+              0.651102203049307,
+              0.299088179300721,
+              0.548932279083254,
+              0.496559460915781,
+              0.514589447498026,
+              0.462216629330553,
+              0.436459505641632
+            ],
+            "y": [
+              0.136487764370016,
+              -0.435600934852002,
+              0.516195748789259,
+              0.428401832844452,
+              -0.436459505641632,
+              0.360574740463627,
+              -0.589285106195896,
+              -0.566103694875868,
+              0.80387782124104,
+              0.360574740463627,
+              -0.213231100337651,
+              -0.616759371464079,
+              0.447510085618803,
+              0.308201922296155,
+              1.20247436303216,
+              0.447510085618803,
+              -0.230402516130265,
+              0.885381188330459,
+              -0.513730876708395,
+              -0.651102203049307,
+              0.316787630192462,
+              -0.626203650150016,
+              -0.573830831982544,
+              1.16641438986767,
+              -0.350602426678563,
+              -0.247573931922879,
+              0.735192158070584,
+              -0.299088179300721,
+              -0.548932279083254,
+              -0.496559460915781,
+              -0.514589447498026,
+              -0.462216629330553,
+              0.256687674918313
+            ],
+            "text": "",
+            "type": "scatter",
+            "mode": "markers",
+            "marker": {
+              "autocolorscale": false,
+              "color": "rgba(0,0,0,1)",
+              "opacity": 1,
+              "size": 5.66929133858268,
+              "symbol": "circle",
+              "line": {
+                "width": 1.88976377952756,
+                "color": "rgba(0,0,0,1)"
+              }
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 25.7412480974125,
+            "r": 7.30593607305936,
+            "b": 39.6955859969559,
+            "l": 48.9497716894977
+          },
+          "plot_bgcolor": "rgba(255,255,255,1)",
+          "paper_bgcolor": "rgba(255,255,255,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 14.6118721461187
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              -0.0325551101524653,
+              0.683657313201772
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "0.0",
+              "0.2",
+              "0.4",
+              "0.6"
+            ],
+            "tickvals": [
+              0,
+              0.2,
+              0.4,
+              0.6
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "0.0",
+              "0.2",
+              "0.4",
+              "0.6"
+            ],
+            "nticks": null,
+            "ticks": "outside",
+            "tickcolor": "rgba(51,51,51,1)",
+            "ticklen": 3.65296803652968,
+            "tickwidth": 0.66417600664176,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.689497716895
+            },
+            "tickangle": 0,
+            "showline": true,
+            "linecolor": "rgba(0,0,0,1)",
+            "linewidth": 0.66417600664176,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "fitted",
+              "font": {
+                "color": "rgba(0,0,0,1)",
+                "family": "",
+                "size": 14.6118721461187
+              }
+            },
+            "hoverformat": ".2f"
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              -0.0601237181516079,
+              1.26259808118377
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "0.00",
+              "0.25",
+              "0.50",
+              "0.75",
+              "1.00",
+              "1.25"
+            ],
+            "tickvals": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1,
+              1.25
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "0.00",
+              "0.25",
+              "0.50",
+              "0.75",
+              "1.00",
+              "1.25"
+            ],
+            "nticks": null,
+            "ticks": "outside",
+            "tickcolor": "rgba(51,51,51,1)",
+            "ticklen": 3.65296803652968,
+            "tickwidth": 0.66417600664176,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.689497716895
+            },
+            "tickangle": 0,
+            "showline": true,
+            "linecolor": "rgba(0,0,0,1)",
+            "linewidth": 0.66417600664176,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "residuals",
+              "font": {
+                "color": "rgba(0,0,0,1)",
+                "family": "",
+                "size": 14.6118721461187
+              }
+            },
+            "hoverformat": ".2f"
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": false,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.88976377952756,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 11.689497716895
+            }
+          },
+          "hovermode": "closest",
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "showSendToCloud": false
+        },
+        "source": "plot_res",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.2,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "1.11.3",
+          "src": {
+            "href": "jquery-1.11.3"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.1.0.1",
+          "src": {
+            "href": "crosstalk-1.1.0.1"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "1.52.2",
+          "src": {
+            "href": "plotly-htmlwidgets-css-1.52.2"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "1.52.2",
+          "src": {
+            "href": "plotly-main-1.52.2"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    }
+  },
+  "export": {
+
+  }
+}
