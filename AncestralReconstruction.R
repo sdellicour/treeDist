@@ -3,7 +3,6 @@ library(treeio)
 library(dplyr)
 library(castor)
 
-
 chooseReconstructionMethod<-function(method, x){
   country<-x[[1]]
   tree_not_annotated<- x[[2]]
@@ -27,9 +26,6 @@ importingFilesNotAnnotated<-function(sampling_locations, tree_file_not_annotated
   list(country, tree_not_annotated)
 }
 
-#the Equal rates model assumes that the transition rates from one state to the other and that is just plainly wrong
-#I need to take the distance of the cities into account probably. So here the transition rates would probably depend on
-#the distance of the 2 locations?
 ML_Reconstruction<-function(country, tree_not_annotated){
   print("Creating ML reconstruction")
   ERreconstruction <- ape::ace(country, tree_not_annotated, type = "discrete")
@@ -57,8 +53,6 @@ MaximumParsimonyReconstruction<-function(country_numerical, tree_not_annotated){
   
   MP_ER
 }
-
-
 
 #taking the most likely state at each node
 max_ancestral_positions_ML<-function(tree_not_annotated, ancestral_positions){

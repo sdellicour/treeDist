@@ -9,9 +9,10 @@ importingFiles<-function(distances_raw_file=distances_raw_fileGlobal, tree_file=
 }
 
 negativeBranchLength<-function(tree){
-  if(length(which(tree$edge.length<0))>0){
+  if(length(which(tree$edge.length<=0))>0){
     shiny::showNotification(
-      ui=paste0("There were negative branch lenght in your tree, these were set to 1e-100." ),
+      ui=paste0("There were negative branch lenght in your tree, these were set to 1e-100. \n
+                Running treeannotator with the option 'keep target heights' should avoid negative and 0 branch length." ),
       type = 'message',
       duration=30)
     tree$edge.length[which(tree$edge.length<0)]=1e-100    }
@@ -89,6 +90,7 @@ makeSymmetric<-function(matrix){
 
 
 GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGlobal, x ) {
+  
   transitions_raw<-x[[1]]
   distances_raw<-x[[2]]
   names_matrixes<-outer(X = colnames(transitions_raw),
@@ -98,8 +100,8 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGloba
   if(makeSymmetric==TRUE){
     transitions<-makeSymmetric(transitions_raw)
     names_matrixes = names_matrixes[lower.tri(transitions)]#names and distance call before call to transition
-    distances = distances_raw[lower.tri(distances_raw,diag = F)]
-    transitions = transitions[lower.tri(transitions)]#names and distances call before transition otherwise transition has changed
+    distances = distances_raw[lower.tri(distances_raw,diag = F)]#names and distances call before transition otherwise transition has changed
+    transitions = transitions[lower.tri(transitions)]
   }else{
     names_matrixes =names_matrixes[(lower.tri(names_matrixes) | upper.tri(names_matrixes))] #names and distance call before call to transition
     distances=distances_raw[(lower.tri(distances_raw) |upper.tri(distances_raw))]
@@ -123,35 +125,39 @@ plotting_fun<-function(logTransformation,transition_distances,vals){
   
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-
   
   theme_set(theme_classic())
-  p<-ggplot(keep, mapping= aes(x=Distances,y=Transitions, key=Key)) + 
+  if (logTransformation==FALSE) p <- ggplot(keep, mapping= aes(x=Distances,y=Transitions, key=Key)) 
+  if (logTransformation==TRUE)  p <- ggplot(keep, mapping= aes(x=log(Distances),y=Transitions, key=Key)) #log transformation only here to keep recalculation time short
+  
+  p1<-p +
     geom_point() +
     geom_smooth(method = lm, fullrange = TRUE, color = "black")+
     geom_point(data = exclude, shape = 21, fill = NA, color = "black", alpha = 0.25) +
     coord_cartesian(xlim = c(0, max(transition_distances$Distances)), ylim = c(0,max(transition_distances$Transitions)))
-  p <- p %>% plotly::ggplotly(tooltip = "text", source="plot")
-  return(p)
+  p2 <- p1 %>% plotly::ggplotly(tooltip = "text", source="plot")
+  return(p2)
 }
 
-plotting_residuals<-function(logTransformation,transition_distances,vals ,x){
+plotting_residuals<-function(transition_distances,vals ,x){
+  
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  lm=lm(keep$Transitions~keep$Distances)
 
   theme_set(theme_classic())
   p_res<-ggplot(x, aes(fitted, residuals))+geom_point() +
   coord_cartesian(xlim = c(0, max(x$fitted)), ylim = c(0,max(x$residuals)))
-  p_res <- p_res %>% plotly::ggplotly(tooltip = "text", source="plot_res")
+  p_res1 <- p_res %>% plotly::ggplotly(tooltip = "text", source="plot_res")
   return(p_res)
 }
 
-linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95, order){
+linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95, order, logTransformation){
+  
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
   
-  lm=lm(log(keep$Transitions)~keep$Distances)
+  if(logTransformation==FALSE)   lm=lm(keep$Transitions~keep$Distances)
+  if(logTransformation==TRUE)   lm=lm(keep$Transitions~log(keep$Distances))
   x<-data.frame(lm$residuals,lm$fitted.values)
   colnames(x)<-c("residuals", "fitted")
   
