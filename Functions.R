@@ -116,9 +116,8 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGloba
   names(transitions)=names_matrixes
   
   transition_distances<-data.frame(Transitions=transitions, Distances=distances, Key=names(transitions))
-  vals <- reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)))
   
-  list(transition_distances=transition_distances, vals=vals,  names_matrixes=names_matrixes)
+  list(transition_distances=transition_distances, names_matrixes=names_matrixes)
 }
 
 plotting_fun<-function(logTransformation,transition_distances,vals){
@@ -132,10 +131,11 @@ plotting_fun<-function(logTransformation,transition_distances,vals){
   
   p1<-p +
     geom_point() +
-    geom_smooth(method = lm, fullrange = TRUE, color = "black")+
     geom_point(data = exclude, shape = 21, fill = NA, color = "black", alpha = 0.25) +
+    geom_smooth(mapping=aes(key=NULL),method = "lm")+
     coord_cartesian(xlim = c(0, max(transition_distances$Distances)), ylim = c(0,max(transition_distances$Transitions)))
-  p2 <- p1 %>% plotly::ggplotly(tooltip = "text", source="plot")
+  p2 <- p1 %>% plotly::ggplotly(tooltip = c("Distances", "Transitions", "Key"), source="plot")
+  
   return(p2)
 }
 
@@ -147,11 +147,11 @@ plotting_residuals<-function(transition_distances,vals ,x){
   theme_set(theme_classic())
   p_res<-ggplot(x, aes(fitted, residuals))+geom_point() +
   coord_cartesian(xlim = c(0, max(x$fitted)), ylim = c(0,max(x$residuals)))
-  p_res1 <- p_res %>% plotly::ggplotly(tooltip = "text", source="plot_res")
+  p_res1 <- p_res %>% plotly::ggplotly(tooltip =c("fitted", "residuals"), source="plot_res")
   return(p_res)
 }
 
-linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95, order, logTransformation){
+linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95, logTransformation){
   
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
@@ -163,12 +163,12 @@ linear_regression<-function(transition_distances,cut_off_residual=NULL, percenti
   
   if(is.null(cut_off_residual)){ cut_off_residual=quantile((lm$residuals), percentile/100)}
   index=keep[which(lm$residuals>cut_off_residual), ]
-  print(paste(length(index$Transitions), "Possible Outlier(s):" , sep = " "))
+  print(paste(length(index$Transitions), "Possible Outlier(s)" , sep = " "))
   print(paste("cut_off_residual: ",cut_off_residual))
   output<-index[order(-index$Transitions),]
   output<-data.frame(rownames(output), output)
   colnames(output)<-c("Countries", "# Transitions", "Distance between countries")
-  list(statistics=glance(lm), output=output, x=x)
+  list(lm=lm, output=output, x=x)
 }   
 
   '%!in%' <- function(x,y){

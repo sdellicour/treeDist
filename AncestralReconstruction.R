@@ -1,7 +1,4 @@
-library(ape)
-library(treeio)
-library(dplyr)
-library(castor)
+
 
 chooseReconstructionMethod<-function(method, x){
   country<-x[[1]]
@@ -19,7 +16,7 @@ chooseReconstructionMethod<-function(method, x){
   list(tree=tree, max_ancestral_positions=max_ancestral_positions)
 }
 
-importingFilesNotAnnotated<-function(sampling_locations, tree_file_not_annotated, delimiter,session){
+importingFilesNotAnnotated<-function(sampling_locations, tree_file_not_annotated, delimiter){
   tree_not_annotated <- read.nexus(tree_file_not_annotated)
   tree_not_annotated<-negativeBranchLength(tree_not_annotated)
   country <- read.table(sampling_locations, sep=delimiter)[,1]
