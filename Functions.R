@@ -5,7 +5,7 @@ importingFiles<-function(distances_raw_file=distances_raw_fileGlobal, tree_file=
   tree<-negativeBranchLength(tree)
   distances_raw <- read.csv(distances_raw_file, head=T, sep=delimiter)
   distances_raw<-reshape_Rownames(distances_raw)
-  list(distances_raw, tree)
+  list("distances_raw"=distances_raw, "tree"=tree)
 }
 
 negativeBranchLength<-function(tree){
@@ -24,7 +24,7 @@ importingOnlyDist<-function(distances_raw_file=distances_raw_fileGlobal, tree=tr
   tree=tree
   distances_raw <- read.csv(distances_raw_file, head=T, sep=delimiter)
   distances_raw<-reshape_Rownames(distances_raw = distances_raw )
-  list(distances_raw, tree)
+  list("distances_raw"=distances_raw, "tree"=tree)
 }
 
 reshape_Rownames<-function(distances_raw){
@@ -151,7 +151,7 @@ plotting_residuals<-function(transition_distances,vals ,x){
   return(p_res)
 }
 
-linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95, logTransformation){
+linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95, logTransformation, vals){
   
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
