@@ -54,15 +54,15 @@ shinyServer(function(input, output, session) {
   observeEvent(input$start, {
     annotated= input$annotations
     file_type = input$file_type
-    #tree_file = input$tree_file$datapath
-    tree_file = "input/batRABV.MCC.keep.target.heights.trees"
-    #sampling_locations = input$sampling_locations$datapath
-    sampling_locations = "input/hostnames.txt"
+    tree_file = input$tree_file$datapath
+    #tree_file = "input/batRABV.MCC.keep.target.heights.trees"
+    sampling_locations = input$sampling_locations$datapath
+    #sampling_locations = "input/hostnames.txt"
     method=input$Reconstruction_Method
     #Transitions
     delimiter<-input$delimiter
-    #distances_raw_file<-input$distances_file$datapath
-    distances_raw_file<-"input/predictors/bodySize.csv"
+    distances_raw_file<-input$distances_file$datapath
+    #distances_raw_file<-"input/predictors/bodySize.csv"
     state= input$Annotation_State
     order= input$order
     makeSymmetric=input$Symmetrie
