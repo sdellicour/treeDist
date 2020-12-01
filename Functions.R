@@ -1,12 +1,22 @@
 #### Defining functions ##
-importingFiles<-function(distances_raw_file=distances_raw_fileGlobal, tree_file=tree_fileGlobal, delimiter){
-  print("Reading annotated tree")
-  tree <-readT(tree_file)
-  tree<-negativeBranchLength(tree)
-  distances_raw <- read.csv(distances_raw_file, head=T, sep=delimiter)
-  distances_raw<-reshape_Rownames(distances_raw)
-  list("distances_raw"=distances_raw, "tree"=tree)
-}
+importingTree<-function(sampling_locations, tree_file, file_type){
+  print("Reading tree")
+  switch(file_type,
+         "nexus" = {
+           tree <- read.nexus(tree_file)
+         },
+         "newick" = {
+           tree <- read.tree(tree_file)
+         },
+         "beast" = {
+           tree <- read.beast(tree_file)
+           tree <- as_tibble(tree)
+           colnames(tree)[which(colnames(tree) == "branch.length")] <-"edge.length"
+         })
+  tree <- negativeBranchLength(tree)
+  tip_states <- read.table(sampling_locations)[,1]
+  list(tip_states, tree)
+  }
 
 negativeBranchLength<-function(tree){
   if(length(which(tree$edge.length<=0))>0){
@@ -19,12 +29,10 @@ negativeBranchLength<-function(tree){
   return(tree)
 }
 
-
-importingOnlyDist<-function(distances_raw_file=distances_raw_fileGlobal, tree=tree, delimiter){
-  tree=tree
+importingDist<-function(distances_raw_file, delimiter){
   distances_raw <- read.csv(distances_raw_file, head=T, sep=delimiter)
   distances_raw<-reshape_Rownames(distances_raw = distances_raw )
-  list("distances_raw"=distances_raw, "tree"=tree)
+  "distances_raw"=distances_raw
 }
 
 reshape_Rownames<-function(distances_raw){
@@ -35,45 +43,24 @@ reshape_Rownames<-function(distances_raw){
   return(distances_raw)
 }
 
-GenerateRawTransitionMatrix = function(state, x) {
-  distances_raw<-x[[1]]
-  tree<-x[[2]]
-  locations = colnames(distances_raw)
-  countries=colnames(distances_raw)
+GenerateRawTransitionMatrix = function(state, distances_raw, tree_df) {
+  tip_states=colnames(distances_raw)
   transitions_raw= matrix(0, nrow=dim(distances_raw)[1], ncol=dim(distances_raw)[1])#0 matrix in size of distance matrix 
-  row.names(transitions_raw) = countries
-  colnames(transitions_raw) = countries
-  for (i in 1:dim(tree$edge)[1])
-    #the edge table should be read as: rows are the edge numbers and first col is start node  and 2nd is end node of the branch or edge
-  {
-    if (tree$edge[i, 1] %in% tree$edge[, 2])
-      #if a start node is also an end node, then we are going from somewhere to that state. We want to assign the start state as location 1
-    {
-      index = which(tree$edge[, 2] == tree$edge[i, 1])#get node that is end node of edge in question
-      location1 = get(state, tree$annotations[[index]]) #assign end node of branch as location1
-      if (is.list(location1))
-      {
-        location1 = get(state, tree$annotations[[index]])[[1]]#take arbritarily the first MP ancestral state
-      }
-    }	else	{
-      location1 = get(state, tree$root.annotation)#tip nodes are not in column 1 so if it is not an internal node it is then the root node
-      if (is.list(location1))
-      {
-        location1 = get(state, tree$root.annotation)[[1]]
-      }
+  row.names(transitions_raw) = tip_states
+  colnames(transitions_raw) = tip_states
+  tree_df<-tree_df
+  for(node in tree_df$node){
+    if(node!=rootnode(tree_df)$node){
+      parent_loc = get(state, parent(tree_df,node))
+      if(is.list(parent_loc)) parent_loc=parent_loc[[1]][1]
+      if(nchar(parent_loc) > 2) parent_loc = substr(parent_loc, start = 1, stop = 2)
+      
+      child_loc<-get(state,tree_df[tree_df$node==node,])
+      if(is.list(child_loc)) child_loc=child_loc[[1]][1]
+      if (nchar(child_loc) > 2) child_loc = substr(child_loc, start = 1, stop = 2)
+      transitions_raw[parent_loc, child_loc]=transitions_raw[parent_loc, child_loc]+1
     }
-    location2 = get(state, tree$annotations[[i]])#location 2 is the start of the branch we are at atm
-    if (is.list(location2))
-    {
-      location2 = get(state, tree$annotations[[i]])[[1]]
-    }
-    if (nchar(location2) > 2 | nchar(location1) > 2) {
-      location2 = substr(location2, start = 1, stop = 2)
-      location1 = substr(location1, start = 1, stop = 2)
-    }
-    transitions_raw[location1, location2] = transitions_raw[location1, location2] + 1
-  }
-  
+  } 
   list=list(trans_raw=transitions_raw,dist_raw=distances_raw)
 }
 
@@ -90,7 +77,6 @@ makeSymmetric<-function(matrix){
 
 
 GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGlobal, x ) {
-  
   transitions_raw<-x[[1]]
   distances_raw<-x[[2]]
   names_matrixes<-outer(X = colnames(transitions_raw),
@@ -116,8 +102,7 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric=makeSymmetricGloba
   names(transitions)=names_matrixes
   
   transition_distances<-data.frame(Transitions=transitions, Distances=distances, Key=names(transitions))
-  
-  list(transition_distances=transition_distances, names_matrixes=names_matrixes)
+  transition_distances
 }
 
 plotting_fun<-function(logTransformation,transition_distances,vals){
@@ -139,10 +124,10 @@ plotting_fun<-function(logTransformation,transition_distances,vals){
   return(p2)
 }
 
-plotting_residuals<-function(transition_distances,vals ,x){
+plotting_residuals<-function(transition_distances,vals ,x){#currently vals does not need to be pused here
   
-  keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
-  exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
+  #keep    <- transition_distances[ vals$keeprows, , drop = FALSE]#not needed because only called after linear regression
+  #exclude <- transition_distances[!vals$keeprows, , drop = FALSE]# see above
 
   theme_set(theme_classic())
   p_res<-ggplot(x, aes(fitted, residuals))+geom_point() +
@@ -155,7 +140,6 @@ linear_regression<-function(transition_distances,cut_off_residual=NULL, percenti
   
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  
   if(logTransformation==FALSE)   lm=lm(keep$Transitions~keep$Distances)
   if(logTransformation==TRUE)   lm=lm(keep$Transitions~log(keep$Distances))
   x<-data.frame(lm$residuals,lm$fitted.values)

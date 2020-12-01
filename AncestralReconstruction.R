@@ -1,46 +1,35 @@
-
-
-chooseReconstructionMethod<-function(method, x){
-  country<-x[[1]]
-  tree_not_annotated<- x[[2]]
+chooseReconstructionMethod<-function(method, tip_states, tree_not_annotated){
   if(method=="ML"){
-    max_ancestral_positions<-ML_Reconstruction(country, tree_not_annotated)%>%
-    max_ancestral_positions_ML(tree_not_annotated=tree_not_annotated, ancestral_positions= .)
+    max_ancestral_positions<-ML_Reconstruction(tip_states, tree_not_annotated)%>%
+      max_ancestral_positions_ML(tree_not_annotated=tree_not_annotated, ancestral_positions= .)
   }
-    if(method=="MP"){
-      max_ancestral_positions<-prepare_states_MP(country)%>%
-        MaximumParsimonyReconstruction(country_numerical = ., tree_not_annotated)%>%
-        max_ancestral_positions_MP(country, tree_not_annotated=tree_not_annotated, ancestral_positions= .)
-    }
-  tree<-writeAnnotatedTree(tree_not_annotated=tree_not_annotated, max_ancestral_positions = max_ancestral_positions, country = country )
-  list(tree=tree, max_ancestral_positions=max_ancestral_positions)
+  if(method=="MP"){
+    max_ancestral_positions<-prepare_states_MP(tip_states)%>%
+      MaximumParsimonyReconstruction(tip_states_numerical = ., tree_not_annotated)%>%
+      max_ancestral_positions_MP(tip_states, tree_not_annotated=tree_not_annotated, ancestral_positions= .)
+  }
+  tree_annotated<-writeAnnotatedTree(tree_not_annotated=tree_not_annotated, max_ancestral_positions = max_ancestral_positions, tip_states = tip_states )
+  tree_annotated
 }
 
-importingFilesNotAnnotated<-function(sampling_locations, tree_file_not_annotated, delimiter){
-  tree_not_annotated <- read.nexus(tree_file_not_annotated)
-  tree_not_annotated<-negativeBranchLength(tree_not_annotated)
-  country <- read.table(sampling_locations, sep=delimiter)[,1]
-  list(country, tree_not_annotated)
-}
-
-ML_Reconstruction<-function(country, tree_not_annotated){
+ML_Reconstruction<-function(tip_states, tree_not_annotated){
   print("Creating ML reconstruction")
-  ERreconstruction <- ape::ace(country, tree_not_annotated, type = "discrete")
+  ERreconstruction <- ape::ace(tip_states, tree_not_annotated, type = "discrete")
   return(ERreconstruction)
 }
 
 ####Maximum Parsimony
-prepare_states_MP<-function(countries){
-  encoding<-cbind(levels(countries),as.numeric(1:length(levels(countries))))
-  countries_numerical<-as.numeric(lapply(countries, function(country) encoding[which(encoding[,1]==country),2]))
-  countries_numerical
+prepare_states_MP<-function(tip_states){
+  encoding<-cbind(levels(tip_states),as.numeric(1:length(levels(tip_states))))
+  tip_states_numerical<-as.numeric(lapply(tip_states, function(tip_state) encoding[which(encoding[,1]==tip_state),2]))
+  tip_states_numerical
 }
 
-MaximumParsimonyReconstruction<-function(country_numerical, tree_not_annotated){
+MaximumParsimonyReconstruction<-function(tip_states_numerical, tree_not_annotated){
   print("Creating MP reconstruction")
   MP_ER <- asr_max_parsimony(
     tree = tree_not_annotated,
-    tip_states = country_numerical,
+    tip_states = tip_states_numerical,
     Nstates = NULL,
     transition_costs = "all_equal",
     edge_exponent = 0,
@@ -59,26 +48,24 @@ max_ancestral_positions_ML<-function(tree_not_annotated, ancestral_positions){
 }
 
 #taking the first item at each node
-max_ancestral_positions_MP<-function(country, tree_not_annotated, ancestral_positions){
-
-  colnames(ancestral_positions$ancestral_likelihoods)<-levels(country)
+max_ancestral_positions_MP<-function(tip_states, tree_not_annotated, ancestral_positions){
+  colnames(ancestral_positions$ancestral_likelihoods)<-levels(tip_states)
   max_ancestral_positions<-sapply(1:tree_not_annotated$Nnode, function(i) names(which(ancestral_positions$ancestral_likelihoods[i,]==max(ancestral_positions$ancestral_likelihoods[i,]))))
   
   max_ancestral_positions
 }
 
 
-writeAnnotatedTree<-function(tree_not_annotated, max_ancestral_positions, country){
+writeAnnotatedTree<-function(tree_not_annotated, max_ancestral_positions, tip_states){
   N <- Nnode2(tree_not_annotated)
-  ancestral_states_all<-c(as.vector(country),max_ancestral_positions)
-
+  ancestral_states_all<-c(as.vector(tip_states),max_ancestral_positions)
+  
   annotations <- tibble(node = 1:N, states = ancestral_states_all)
   annotated_tree <- full_join(tree_not_annotated, annotations, by = "node")
   write.beast(annotated_tree, file = "input/test.tree")
   #system("cp output/test.tree input/")
   
-  print("Reading annotated tree in beast format")
-  readT("input/test.tree")
+  as_tibble(annotated_tree)
 }
 
 

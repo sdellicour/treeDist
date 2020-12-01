@@ -1,7 +1,7 @@
-    # This tree_df function 
+  # This tree_df function 
     tree_df <- reactive({
       output <- tree %>% 
-        as_data_frame()
+        as_tibble()
     })
     
     # Rendering the ui elements to select the node to subset, 
