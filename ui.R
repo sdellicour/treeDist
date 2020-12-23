@@ -3,7 +3,7 @@ library(plotly)
 shinyUI(fluidPage(
   title = "TreeDist",
   tabsetPanel(tabPanel(
-    "Transitions",
+    "Univariate",
     sidebarLayout(
       sidebarPanel(
         width = 3,
@@ -17,7 +17,7 @@ shinyUI(fluidPage(
             "Is the tree annotated?",
             c(
               "No, please annotate my tree" = FALSE,
-              "Yes, of course I took care of this!" = TRUE
+              "Yes, I took care of this!" = TRUE
             )
           )
         )),
@@ -42,7 +42,7 @@ shinyUI(fluidPage(
         ),
         fluidRow(column(12,
                         fileInput(
-                          "distances_file", label = ("Distance matrix")
+                          "distances_file", label = ("Distance matrix"), multiple=T
                         ))),
         fluidRow(column(
           12,
@@ -52,8 +52,7 @@ shinyUI(fluidPage(
         )),
         fluidRow(column(
           12,
-          fileInput("sampling_locations", label =
-                      ("Sampling locations"))
+          fileInput("sampling_locations", label ="Sampling locations")
         )),
         fluidRow(column(
           12,
@@ -100,7 +99,8 @@ shinyUI(fluidPage(
             plotlyOutput(outputId = "plot_res")
           ),
           actionButton("exclude_toggle", "Toggle points"),
-          actionButton("exclude_reset", "Reset")
+          actionButton("exclude_reset", "Reset"),
+          selectInput(inputId = "Predictor_uni", label="Predictor", choices=c(NULL))
         ),
         fluidRow(verbatimTextOutput("hover")),
         fluidRow(tableOutput(outputId = "lm")),
@@ -108,9 +108,31 @@ shinyUI(fluidPage(
         fluidRow(tableOutput(outputId = "output"))
       )
     )),
-    #tabPanel
-    tabPanel(title = "Explore Tree",
-             uiOutput("select_node_render"),
-             fluidRow(uiOutput("subtree_render")))
-  ))
-)#)tabsetPanel)#)fluidpage)#)ShinyUI
+  tabPanel(
+    "Multivariate",
+      mainPanel(
+        fluidRow(
+          splitLayout(
+          checkboxGroupInput("variable", "Variables to include in regression:",
+                           c("Updating" = "U")),
+        tableOutput("data"),
+           checkboxGroupInput("Log", "Log",
+                           c("Updating" = "x")),
+        tableOutput("data2")
+      )),
+  
+        fluidRow(
+            plotlyOutput(outputId = "multi_plot")),
+        fluidRow(tableOutput(outputId = "lm_multi")),
+        fluidRow(verbatimTextOutput(outputId = "lm.summary_multi")),
+        fluidRow(tableOutput(outputId = "output_multi")),
+      
+      )
+    ),
+  #tabPanel
+  tabPanel(title = "Explore Tree",
+           uiOutput("select_node_render"),
+           fluidRow(uiOutput("subtree_render")))
+)#)tabsetPanel
+)#)fluidpage
+)#)ShinyUI

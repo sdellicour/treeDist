@@ -68,7 +68,6 @@ writeAnnotatedTree<-function(tree_not_annotated, max_ancestral_positions, tip_st
   as_tibble(annotated_tree)
 }
 
-
 original_states<-function(tree_annotated){
   original.states=c(tree_annotated$root.annotation$states,
                     sapply(which(tree_annotatedree2$edge[,2]>(tree_annotated$Nnode)),function(index){

@@ -8,17 +8,18 @@ library(ggfortify)
 library(shinyIncubator)
 library(reactlog)
 library(ggtree)
-
-#source("readT.R")#  # Objects in this file are shared across all sessions in the same R process
-
+options(shiny.maxRequestSize=10*1024^2)#10mb max file size
 shinyServer(function(input, output, session) {
   reactlog_enable()#logging a reactivity tree
   
   # Objects in this file are defined in each session
-  source("AncestralReconstruction.R", local=T)
   source("Functions.R", local=T)
+  source("Multivariate.R", local=T)
+  source("AncestralReconstruction.R", local=T)
   
-  #update the ui depending on the choice of annotated tree or not
+  
+  # update the ui depending on the choice of annotated tree
+  # Observer####
   observe({
     annotated= input$annotations
     if(annotated==FALSE){
@@ -49,20 +50,44 @@ shinyServer(function(input, output, session) {
         selected="host"
       )
     }
+    
+    distances_raw_file_names = input$distances_file$name
+    column_names<-as.vector(sapply(distances_raw_file_names, first.word))
+    updateSelectInput(
+      session,
+      inputId= "Predictor_uni",
+      choices = column_names,
+      selected = column_names[1]    
+    )
+    
+    updateCheckboxGroupInput(session, 
+                             inputId= "variable", 
+                             label = "Variables for multiple regression", 
+                             choices = column_names,
+                             selected = column_names)
   })         
   
+
+  #observeEvent (RUN) ####
   observeEvent(input$start, {
+    Log_multi=input$Log
+    variable_multi=input$variable
+    print(variable_multi)
+    distances_raw_file_names = input$distances_file$name
+    column_names<-sapply(distances_raw_file_names, first.word)
+    Predictor= input$Predictor_uni
     annotated= input$annotations
     file_type = input$file_type
     tree_file = input$tree_file$datapath
-    #tree_file = "input/batRABV.MCC.keep.target.heights.trees"
+    #tree_file = "input/rabies/batRABV.MCC.keep.target.heights.trees"
     sampling_locations = input$sampling_locations$datapath
-    #sampling_locations = "input/hostnames.txt"
+    #sampling_locations = "input/rabies/hostnames.txt"
     method=input$Reconstruction_Method
     #Transitions
     delimiter<-input$delimiter
     distances_raw_file<-input$distances_file$datapath
-    #distances_raw_file<-"input/predictors/bodySize.csv"
+    
+   # distances_raw_file<-"input/predictors/bodySize.csv"
     state= input$Annotation_State
     order= input$order
     makeSymmetric=input$Symmetrie
@@ -71,40 +96,62 @@ shinyServer(function(input, output, session) {
     tree<-tip_states_tree[[2]]
     tip_states<-tip_states_tree[[1]]
     
-    distances_raw<-as.matrix(importingDist(distances_raw_file, delimiter))
+    distances_raw<-lapply(distances_raw_file, function(distances_raw_file) importingDist(distances_raw_file, delimiter))
     if (annotated==FALSE){
       tree<- chooseReconstructionMethod(method, tip_states,  tree_not_annotated=tree)
     }
-    transition_distances<-GenerateRawTransitionMatrix(state, distances_raw, tree)%>%
-      GenerateFinal_Transitions_Distances(makeSymmetric = makeSymmetric, . )
+    transitions<-GenerateRawTransitionMatrix(state, distances_raw[[1]], tree)
+    transition_distances<-GenerateFinal_Transitions_Distances(makeSymmetric = makeSymmetric, transitions_raw=transitions, distances_raw=distances_raw, column_names=column_names)
     vals <- reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)))
     #whenever this variable "vals" changes then all dependencies, expressions that
     #contain vals is called
     #reactiveValues are eager, and this would not work using reactive, unless I add an observer
     #around reactive which makes it eager as well
     
+    # Multivariate ####
+    ## Plot ####
+    output$multi_plot = renderPlotly({
+      plotting_muĺti(logTransformation = logTransformation, transition_distances, vals, variable_multi=variable_multi, Log_multi=Log_multi)
+    }) # output$plot = renderPlot({
+    
+    ## Glance #######
+    output$lm_multi=renderTable({
+      glance(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, logTransformation, vals, variable_multi=variable_multi, Log_multi=Log_multi)$lm)
+    }) # output$plot = renderTable({
+    
+    ## Output ####
+    output$output_multi=renderTable({
+      lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, logTransformation, vals, variable_multi=variable_multi, Log_multi=Log_multi)$output
+    }) # output$plot = renderTable({
+      
+    output$lm.summary_multi=renderPrint({
+      summary(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, logTransformation, vals, variable_multi=variable_multi, Log_multi=Log_multi)$lm)
+    }) # output$plot = renderTable({
+    
+    # Univariate ####
+    
     output$plot = renderPlotly({
-      plotting_fun(logTransformation = logTransformation, transition_distances, vals)
+      plotting_fun(logTransformation = logTransformation, transition_distances, vals, Predictor)
     }) # output$plot = renderPlot({
     
     output$plot_res = renderPlotly({
-      linear_regression(transition_distances, logTransformation = logTransformation, vals=vals)$x%>%
+      linear_regression(transition_distances, logTransformation = logTransformation, vals=vals, Predictor=Predictor)$x%>%
         plotting_residuals(transition_distances, vals, .)
       
     }) # output$plot = renderPlot({
     
     output$lm=renderTable({
-      glance(linear_regression(transition_distances, logTransformation = logTransformation, vals=vals)$lm)
+      glance(linear_regression(transition_distances, logTransformation = logTransformation, vals=vals, Predictor=Predictor)$lm)
       
     }) # output$plot = renderTable({
     
     output$lm.summary=renderPrint({
-      summary(linear_regression(transition_distances, logTransformation = logTransformation, vals=vals)$lm)
+      summary(linear_regression(transition_distances, logTransformation = logTransformation, vals=vals, Predictor=Predictor)$lm)
       
     }) # output$plot = renderTable({
     
     output$output=renderTable({
-      linear_regression(transition_distances, logTransformation = logTransformation, vals=vals)$output
+      linear_regression(transition_distances, logTransformation = logTransformation, vals=vals, Predictor=Predictor)$output
       
     }) # output$plot = renderTable({
     
@@ -112,6 +159,8 @@ shinyServer(function(input, output, session) {
       hover_data<-event_data("plotly_hover", source = "plot")
       transition_distances[which(transition_distances$Key==hover_data$key),]
     })
+    
+    # Toggle Points #### 
     
     # Toggle points that are brushed, when button is clicked only 
     observeEvent(input$exclude_toggle, {
@@ -133,6 +182,8 @@ shinyServer(function(input, output, session) {
     observeEvent(input$exclude_reset, {
       vals$keeprows <- rep(TRUE, nrow(transition_distances))
     })
+    
+  # Tree ####
     
   tree<-as.treedata(tree)
   source("Tree.R", local=T)#only sourced when "run" is clicked and after variable tree is defined
