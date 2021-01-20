@@ -33,7 +33,6 @@ removeTipsMissingData<-function(tree){
 }
 
 importingDist<-function(distances_raw_file, delimiter){
-  browser()
   if(delimiter==""){
     delimiter<-detect_delimiter(distances_raw_file)
   }
@@ -47,7 +46,6 @@ importingDist<-function(distances_raw_file, delimiter){
 detect_delimiter<-function(distances_raw_file){
   delimiters<-c(",", "\t", ";", " ", "-", "_")#if not one of these, then the method will fail, the user needs to specify uncommon delimiters
   for(delimiter_pre in delimiters){
-    csv <- read.csv(distances_raw_file, sep=delimiter_pre)
     dim <- dim(read.csv(distances_raw_file, sep=delimiter_pre))
     if(dim[1]==(dim[2]-1) | dim[1]==(dim[2])){ #in case the matrix has a rownames column the number of cols can be equal or 1 less then number of rows
       delimiter<-delimiter_pre
