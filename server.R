@@ -12,6 +12,9 @@ options(shiny.maxRequestSize=10*1024^2)#10mb max file size
 shinyServer(function(input, output, session) {
   reactlog_enable()#logging a reactivity tree
   
+  cdata <- session$clientData #https://community.rstudio.com/t/controlling-the-height-of-fluidrow-in-shiny/4968/3
+  #the cdata is used to set the sitze of the facet wrap plot for plotly
+  
   # Objects in this file are defined in each session
   source("Functions.R", local=T)
   source("Multivariate.R", local=T)
@@ -91,7 +94,6 @@ shinyServer(function(input, output, session) {
     state= input$Annotation_State
     order= input$order
     makeSymmetric=input$Symmetrie
-    logTransformation=input$LogTransform
     tip_states_tree<-importingTree(sampling_locations, tree_file, file_type)
     tree<-tip_states_tree[[2]]
     tip_states<-tip_states_tree[[1]]
@@ -103,6 +105,7 @@ shinyServer(function(input, output, session) {
     transitions<-GenerateRawTransitionMatrix(state, distances_raw[[1]], tree)
     transition_distances<-GenerateFinal_Transitions_Distances(makeSymmetric = makeSymmetric, transitions_raw=transitions, distances_raw=distances_raw, column_names=column_names)
     vals <- reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)))
+    logs<-reactiveValues(logtransform= rep(FALSE, 2))
     #whenever this variable "vals" changes then all dependencies, expressions that
     #contain vals is called
     #reactiveValues are eager, and this would not work using reactive, unless I add an observer
@@ -111,47 +114,47 @@ shinyServer(function(input, output, session) {
     # Multivariate ####
     ## Plot ####
     output$multi_plot = renderPlotly({
-      plotting_muĺti(logTransformation = logTransformation, transition_distances, vals, variable_multi=variable_multi, Log_multi=Log_multi)
+      plotting_muĺti(transition_distances, vals, variable_multi=variable_multi, Log_multi=Log_multi, clientData=cdata)
     }) # output$plot = renderPlot({
     
     ## Glance #######
     output$lm_multi=renderTable({
-      glance(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, logTransformation, vals, variable_multi=variable_multi, Log_multi=Log_multi)$lm)
+      glance(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals, variable_multi=variable_multi, Log_multi=Log_multi)$lm)
     }) # output$plot = renderTable({
     
     ## Output ####
     output$output_multi=renderTable({
-      lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, logTransformation, vals, variable_multi=variable_multi, Log_multi=Log_multi)$output
+      lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals, variable_multi=variable_multi, Log_multi=Log_multi)$output
     }) # output$plot = renderTable({
       
     output$lm.summary_multi=renderPrint({
-      summary(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, logTransformation, vals, variable_multi=variable_multi, Log_multi=Log_multi)$lm)
+      summary(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals, variable_multi=variable_multi, Log_multi=Log_multi)$lm)
     }) # output$plot = renderTable({
     
     # Univariate ####
     
     output$plot = renderPlotly({
-      plotting_fun(logTransformation = logTransformation, transition_distances, vals, Predictor)
+      plotting_fun(transition_distances, logs,vals, Predictor)
     }) # output$plot = renderPlot({
     
     output$plot_res = renderPlotly({
-      linear_regression(transition_distances, logTransformation = logTransformation, vals=vals, Predictor=Predictor)$x%>%
+      linear_regression(transition_distances,logs=logs, vals=vals, Predictor=Predictor)$x%>%
         plotting_residuals(transition_distances, vals, .)
       
     }) # output$plot = renderPlot({
     
     output$lm=renderTable({
-      glance(linear_regression(transition_distances, logTransformation = logTransformation, vals=vals, Predictor=Predictor)$lm)
+      glance(linear_regression(transition_distances, logs=logs, vals=vals, Predictor=Predictor)$lm)
       
     }) # output$plot = renderTable({
     
     output$lm.summary=renderPrint({
-      summary(linear_regression(transition_distances, logTransformation = logTransformation, vals=vals, Predictor=Predictor)$lm)
+      summary(linear_regression(transition_distances=transition_distances, logs=logs, vals=vals, Predictor=Predictor)$lm)
       
     }) # output$plot = renderTable({
     
     output$output=renderTable({
-      linear_regression(transition_distances, logTransformation = logTransformation, vals=vals, Predictor=Predictor)$output
+      linear_regression(transition_distances=transition_distances,logs=logs, vals=vals, Predictor=Predictor)$output
       
     }) # output$plot = renderTable({
     
@@ -161,6 +164,14 @@ shinyServer(function(input, output, session) {
     })
     
     # Toggle Points #### 
+    
+    observeEvent(input$log_transitions, {
+      logs$logtransform[1]=!logs$logtransform[1]
+    })
+    
+    observeEvent(input$log_distances, {
+      logs$logtransform[2]=!logs$logtransform[2]
+    })
     
     # Toggle points that are brushed, when button is clicked only 
     observeEvent(input$exclude_toggle, {

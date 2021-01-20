@@ -33,12 +33,30 @@ removeTipsMissingData<-function(tree){
 }
 
 importingDist<-function(distances_raw_file, delimiter){
+  browser()
+  if(delimiter==""){
+    delimiter<-detect_delimiter(distances_raw_file)
+  }
   distances_raw <- read.csv(distances_raw_file, head=T, sep=delimiter)
   distances_raw<-reshape_Rownames(distances_raw = distances_raw )
   distances_raw<-as.matrix(distances_raw)
   "distances_raw"=distances_raw
 }
 
+#assumes square matrix
+detect_delimiter<-function(distances_raw_file){
+  delimiters<-c(",", "\t", ";", " ", "-", "_")#if not one of these, then the method will fail, the user needs to specify uncommon delimiters
+  for(delimiter_pre in delimiters){
+    csv <- read.csv(distances_raw_file, sep=delimiter_pre)
+    dim <- dim(read.csv(distances_raw_file, sep=delimiter_pre))
+    if(dim[1]==(dim[2]-1) | dim[1]==(dim[2])){ #in case the matrix has a rownames column the number of cols can be equal or 1 less then number of rows
+      delimiter<-delimiter_pre
+      break
+    }
+  }
+  "delimiter"=delimiter
+}
+    
 reshape_Rownames<-function(distances_raw){
   if(!is.numeric(distances_raw[1,1])){
     rownames(distances_raw)=(distances_raw[,1])
@@ -105,17 +123,27 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric, transitions_raw, 
   transition_distances
 }
 
-plotting_fun<-function(logTransformation,transition_distances,vals, Predictor){
+plotting_fun<-function(transition_distances, logs ,vals, Predictor){
   keep    <- transition_distances[vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
   theme_set(theme_classic())
-    if (logTransformation==FALSE) p <- ggplot(keep, mapping= aes_string(x=Predictor,y="Transitions", key="Key")) 
-    if (logTransformation==TRUE)  p <- ggplot(keep, mapping= aes_string(x=Predictor,y="Transitions", key="Key")) #log transformation only here to keep recalculation time short
-    p1<-p +
+  if(logs$logtransform[1]==TRUE)   {
+      keep <- keep%>%
+      mutate_at("Transitions", log)
+  }
+  if(logs$logtransform[2]==TRUE)   {
+    keep <- keep%>%
+      mutate_at(Predictor, log)
+  }
+ p <- ggplot(keep, mapping= aes_string(x=Predictor,y="Transitions", key="Key")) 
+ p1<-p +
       geom_point() +
       geom_point(data = exclude, shape = 21, fill = NA, color = "black", alpha = 0.25) +
       geom_smooth(mapping=aes(key=NULL),method = "lm")+
       coord_cartesian(xlim = c(0, max(get(Predictor, transition_distances))), ylim = c(0,max(transition_distances$Transitions)))
+ if(logs$logtransform[1]==TRUE)   {
+   p1<-p1+ coord_cartesian(xlim = c(0, max(get(Predictor, transition_distances))), ylim = c(0,max(log(transition_distances$Transitions))))
+}
     p2 <- p1 %>% plotly::ggplotly(tooltip = c(Predictor, "Transitions", "Key"), source="plot")
   return(p2)
 }
@@ -132,12 +160,20 @@ plotting_residuals<-function(transition_distances,vals ,x, Predictor){#currently
   return(p_res)
 }
 
-linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95, logTransformation, vals, Predictor){
+linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95, logs,  vals, Predictor){
   
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  if(logTransformation==FALSE)   lm=lm(keep$Transitions~get(Predictor, keep))
-  if(logTransformation==TRUE)   lm=lm(keep$Transitions~log(get(Predictor, keep)))
+  if(logs$logtransform[1]==TRUE)   {
+    keep <- keep%>%
+      mutate_at("Transitions", log)
+  }
+  if(logs$logtransform[2]==TRUE)   {
+    keep <- keep%>%
+      mutate_at(Predictor, log)
+  }
+
+  lm=lm(keep$Transitions~get(Predictor, keep))
   x<-data.frame(lm$residuals,lm$fitted.values)
   colnames(x)<-c("residuals", "fitted")
   

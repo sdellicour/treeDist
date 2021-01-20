@@ -46,9 +46,7 @@ shinyUI(fluidPage(
                         ))),
         fluidRow(column(
           12,
-          selectInput(inputId = "delimiter", "Delimiter",
-                      c("comma" = ",", "tab" =
-                          "\t"))
+          textInput(inputId = "delimiter", "Delimiter Distance Matrices (Optional)", value ="")
         )),
         fluidRow(column(
           12,
@@ -66,14 +64,6 @@ shinyUI(fluidPage(
           12,
           radioButtons(inputId = "Symmetrie", "Make matrix symmetric?",  c("No" =
                                                                              FALSE, "Yes" = TRUE))
-        )),
-        fluidRow(column(
-          12,
-          radioButtons(
-            inputId = "LogTransform",
-            "Log transform distance metric?",
-            c("No" = FALSE, "Yes" = TRUE)
-          )
         )),
         fluidRow(column(
           12,
@@ -100,6 +90,9 @@ shinyUI(fluidPage(
           ),
           actionButton("exclude_toggle", "Toggle points"),
           actionButton("exclude_reset", "Reset"),
+          actionButton("log_transitions", "Toggle Log-Transitions"),
+          actionButton("log_distances", "Toggle Log-Distance Metric"),
+          
           selectInput(inputId = "Predictor_uni", label="Predictor", choices=c(NULL))
         ),
         fluidRow(verbatimTextOutput("hover")),
@@ -120,12 +113,10 @@ shinyUI(fluidPage(
                            c("Updating" = "x")),
         tableOutput("data2")
       )),
-  
-        fluidRow(
-            plotlyOutput(outputId = "multi_plot")),
         fluidRow(tableOutput(outputId = "lm_multi")),
         fluidRow(verbatimTextOutput(outputId = "lm.summary_multi")),
         fluidRow(tableOutput(outputId = "output_multi")),
+        fluidRow(plotlyOutput(outputId = "multi_plot"))
       
       )
     ),
