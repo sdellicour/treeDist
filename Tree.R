@@ -4,55 +4,61 @@
         as_tibble()
     })
     
-    # Rendering the ui elements to select the node to subset, 
+    # Rendering the ui elements to select the node to subset,
     # how far back to subset, and tree options (text size, height, width)
     output$select_node_render <- renderUI({
       output <- tagList(
+        # fluidRow(
+        #   column(
+        #     12,
+        #     selectizeInput(
+        #       inputId = "select_nodelabel",
+        #       label = "Select Nodelabel:",
+        #       choices = tree_df() %>%
+        #         select(label) %>%
+        #         arrange(label) %>%
+        #         pull(label),#same as tree_df$label
+        #       width = "100%"
+        #     )
+        #   )
+        # ),
         fluidRow(
           column(
             12,
             selectizeInput(
-              inputId = "select_node",
-              label = "Select Node:",
-              choices = tree_df() %>% 
-                select(label) %>% 
-                arrange(label) %>% 
-                pull(label),
+              inputId = "select_layout",
+              label = "Select Layout:",
+              choices = c("rectangular", "slanted"),
               width = "100%"
             )
           )
         ),
         fluidRow(
           column(
-            3, 
+            12,
             numericInput(
-              inputId = "subtree_levels_back",
-              label = "Select Number of Ancestral Levels:",
-              min = 1,
-              value = 10
-            )
-          ), 
-          column(
-            3,
-            numericInput(
-              inputId = "subtree_text_size",
+              inputId = "tree_text_size",
               label = "Select label text size:",
               min = 2,
               value = 3
             )
+          )
           ),
+        fluidRow(
           column(
-            3,
+            12,
             numericInput(
-              inputId = "subtree_plot_height",
+              inputId = "tree_plot_height",
               label = "Select plot height",
               value = 1200
             )
+          )
           ),
+        fluidRow(
           column(
-            3, 
+            12,
             numericInput(
-              inputId = "subtree_width_multiply",
+              inputId = "tree_width_multiply",
               label = "Select plot width multiplier:",
               value = 1.4,
               min = 1,
@@ -64,52 +70,45 @@
 
       return(output)
     })
-    
-    # creating the subtree
-    output$subtree <- renderPlot({
-      req(input$select_node, tree, 
-          input$subtree_width_multiply, 
-          input$subtree_text_size,
-          input$subtree_plot_height)
-      
-      # getting the subtree phylo or treedata object
-      sub_tree <- tree_subset(tree, node = input$select_node,
-                              levels_back = input$subtree_levels_back)
-      
+
+    # creating the tree
+    output$tree <- renderPlotly({
+      req(input$tree_width_multiply,
+          input$tree_text_size,
+          input$tree_plot_height)
+
+
       # extracting the tip labels from the sub tree
-      if (isS4(sub_tree)) {
-        labels <- sub_tree@phylo$tip.label
+      if (isS4(tree)) {
+        tip_labels <- tree@phylo$tip.label
       } else {
-        labels <- sub_tree$tip.label
+        tip_labels <- tree$tip.label
       }
-      
-      # doing some basic manipulation on labels 
+
+      # doing some basic manipulation on labels
       # this will only really work for labels of the format
       # ;k__;p__;c__;o__;f__;g__;s__
       labels_df <- tibble(
-        label = labels,
-        genus = str_extract(label, "[^;]+;[^;]+$") %>% str_replace(";[^;]+$", ""),
-        species = str_extract(label, "[^;]+$")
-      )  %>% 
+        tip_label = tip_labels,
+        genus = str_extract(tip_label, "[^;]+;[^;]+$") %>% str_replace(";[^;]+$", ""),
+        species = str_extract(tip_labels, "[^;]+$")
+      )  %>%
         mutate(
           species = if_else(is.na(genus), "", str_replace(species, "s__", "")),
-          genus = if_else(is.na(genus), label, str_replace(genus, "g__", ""))
+          genus = if_else(is.na(genus), tip_label, str_replace(genus, "g__", ""))
         )
-      
+
       # creating the plot
-      p <- sub_tree %>% 
-        ggtree(aes(color = group))  %<+% labels_df +
-        geom_tiplab(aes(label = paste(genus, species)), 
-                    size = input$subtree_text_size) +
+      #aes_string(y = colnames(keep_high)[1], x ="value", group = "Predictors", key="Key")
+      p <- tree %>%
+        ggtree(layout = input$select_layout)+
+        geom_point(aes(label = states, label2=label))+
+        #geom_tiplab(aes(label = paste(genus, species)),
+         #           size = input$tree_text_size) +
         theme_tree2() +
         scale_color_manual(values = c(`1` = "red", `0` = "black"))
-      
-      p + lims(x = c(0, max(p$data$x) * input$subtree_width_multiply))
+
+      p1<- p + lims(x = c(0, max(p$data$x) * input$tree_width_multiply))
+      ggplotly(p1, tooltip =  c("label2", "label"), height = input$tree_plot_height, source="tree")
     })
-    
-    # creating the ui element for the subtree 
-    output$subtree_render <- renderUI({
-      req(input$subtree_plot_height, tree)
-      plotOutput("subtree", height = input$subtree_plot_height)
-    })
-  
+
