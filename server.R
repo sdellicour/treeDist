@@ -55,6 +55,7 @@ shinyServer(function(input, output, session) {
     }
     
     distances_raw_file_names = input$distances_file$name
+
     column_names<-as.vector(sapply(distances_raw_file_names, first.word))
     updateSelectInput(
       session,
@@ -81,16 +82,15 @@ shinyServer(function(input, output, session) {
     Predictor= input$Predictor_uni
     annotated= input$annotations
     file_type = input$file_type
-    tree_file = input$tree_file$datapath
-    #tree_file = "input/rabies/batRABV.MCC.keep.target.heights.trees"
-    sampling_locations = input$sampling_locations$datapath
-    #sampling_locations = "input/rabies/hostnames.txt"
+    #tree_file = input$tree_file$datapath
+    tree_file = "input/rabies/batRABV.MCC.keep.target.heights.trees"
+    #sampling_locations = input$sampling_locations$datapath
+    sampling_locations = "input/rabies/hostnames.txt"
     method=input$Reconstruction_Method
     #Transitions
     delimiter<-input$delimiter
     distances_raw_file<-input$distances_file$datapath
-    
-   # distances_raw_file<-"input/predictors/bodySize.csv"
+    #distances_raw_file<-"input/rabies/predictors/bodySize.csv"
     state= input$Annotation_State
     order= input$order
     makeSymmetric=input$Symmetrie

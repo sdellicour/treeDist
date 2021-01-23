@@ -193,3 +193,13 @@ linear_regression<-function(transition_distances,cut_off_residual=NULL, percenti
     strsplit(my.string, sep)[[1]][1]
   }
   
+  
+  # extracting the tip labels from the sub tree
+  getTipLabels<-function(tree){
+    if (isS4(tree)) {
+      tip_labels <- tree@phylo$tip.label
+    } else {
+      tip_labels <- tree$tip.label
+    }
+    return(tip_labels)
+  }

@@ -124,7 +124,11 @@ shinyUI(fluidPage(
   tabPanel(title = "Explore Tree",
            sidebarLayout(
              sidebarPanel(uiOutput("select_node_render")),
-             mainPanel(fluidRow(plotlyOutput(outputId = "tree")))))
+             mainPanel(fluidRow(
+               splitLayout(
+               plotlyOutput(outputId = "plotly_tree"),
+               plotOutput(outputId = "plot_tree")))
+               )))
 )#)tabsetPanel
 )#)fluidpage
 )#)ShinyUI
