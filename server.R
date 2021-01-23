@@ -82,10 +82,10 @@ shinyServer(function(input, output, session) {
     Predictor= input$Predictor_uni
     annotated= input$annotations
     file_type = input$file_type
-    #tree_file = input$tree_file$datapath
-    tree_file = "input/rabies/batRABV.MCC.keep.target.heights.trees"
-    #sampling_locations = input$sampling_locations$datapath
-    sampling_locations = "input/rabies/hostnames.txt"
+    tree_file = input$tree_file$datapath
+    #tree_file = "input/rabies/batRABV.MCC.keep.target.heights.trees"
+    sampling_locations = input$sampling_locations$datapath
+    #sampling_locations = "input/rabies/hostnames.txt"
     method=input$Reconstruction_Method
     #Transitions
     delimiter<-input$delimiter

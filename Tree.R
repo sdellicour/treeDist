@@ -28,8 +28,15 @@
           column(
             12,
             checkboxInput(
-              inputId = "node_labels",
-              label= "Node label"
+              inputId = "node_shapes",
+              label= "Node shapes"
+            ))),
+        fluidRow(
+          column(
+            12,
+            checkboxInput(
+              inputId = "ancestral_states",
+              label= "Ancestral states"
             ))),
         fluidRow(
           column(
@@ -98,8 +105,8 @@
       #aes_string(y = colnames(keep_high)[1], x ="value", group = "Predictors", key="Key")
       p <- tree %>%
         ggtree(layout = input$select_layout)
-      if(input$node_labels) p <- p + geom_point(aes(node=node, parent=parent, label = states, label2=label))
-      if(!input$node_labels) p <- p + geom_point(aes(node=node, parent=parent, label = states, label2=label), alpha=0)
+      if(input$node_shapes) p <- p + geom_point(aes(node=node, parent=parent, label = states, label2=label))
+      if(!input$node_shapes) p <- p + geom_point(aes(node=node, parent=parent, label = states, label2=label), alpha=0)
       p<- p+ theme_tree2() +
         scale_color_manual(values = c(`1` = "red", `0` = "black"))
 
@@ -116,8 +123,9 @@
       #aes_string(y = colnames(keep_high)[1], x ="value", group = "Predictors", key="Key")
       p <- tree %>%
         ggtree(layout = input$select_layout)
-      if(input$node_labels) p <- p + geom_point(aes(label = states, label2=label))
+      if(input$node_shapes) p <- p + geom_point(aes(label = states, label2=label))
       if(input$tip_labels)  p <- p + geom_tiplab(size = input$tree_text_size)
+      if(input$ancestral_states) p <- p + geom_text(aes(x=branch, label=states))
       p <-viewClade(p, input$clade)
       p <- p +theme_tree2() +
         scale_color_manual(values = c(`1` = "red", `0` = "black"))
