@@ -74,7 +74,7 @@
             numericInput(
               inputId = "tree_plot_height",
               label = "Select plot height",
-              value = 1200
+              value = 600
             )
           )
           ),
@@ -111,7 +111,11 @@
         scale_color_manual(values = c(`1` = "red", `0` = "black"))
 
       p1<- p + lims(x = c(0, max(p$data$x) * input$tree_width_multiply))
-      ggplotly(p1, tooltip =  c("node", "parent", "label2", "label"), height = input$tree_plot_height, source="tree")
+      ggplotly(p1, tooltip =  c("node", "parent", "label2", "label"), source="tree")
+    })
+    
+    output$plotly_ui <- renderUI({
+      plotlyOutput("plotly_tree", height = input$tree_plot_height)
     })
     
     output$plot_tree <- renderPlot({
@@ -129,9 +133,11 @@
       p <-viewClade(p, input$clade)
       p <- p +theme_tree2() +
         scale_color_manual(values = c(`1` = "red", `0` = "black"))
-      p1<- p + lims(x = c(0, max(p$data$x) * input$tree_width_multiply))
+      p1<- p + lims(x=c(0, max(p$data$x) * input$tree_width_multiply))
       p1
     })
     
-    
+    output$plot_ui <- renderUI({
+      plotOutput("plot_tree", height = input$tree_plot_height)
+    })
 

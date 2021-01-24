@@ -138,9 +138,9 @@ plotting_fun<-function(transition_distances, logs ,vals, Predictor){
       geom_point() +
       geom_point(data = exclude, shape = 21, fill = NA, color = "black", alpha = 0.25) +
       geom_smooth(mapping=aes(key=NULL),method = "lm")+
-      coord_cartesian(xlim = c(0, max(get(Predictor, transition_distances))), ylim = c(0,max(transition_distances$Transitions)))
+      coord_cartesian(xlim = c(min(get(Predictor, transition_distances)), max(get(Predictor, transition_distances))), ylim = c(0,max(transition_distances$Transitions)))
  if(logs$logtransform[1]==TRUE)   {
-   p1<-p1+ coord_cartesian(xlim = c(0, max(get(Predictor, transition_distances))), ylim = c(0,max(log(transition_distances$Transitions))))
+   p1<-p1+ coord_cartesian(xlim = c(min(get(Predictor, transition_distances)), max(get(Predictor, transition_distances))), ylim = c(0,max(log(transition_distances$Transitions))))
 }
     p2 <- p1 %>% plotly::ggplotly(tooltip = c(Predictor, "Transitions", "Key"), source="plot")
   return(p2)
@@ -153,7 +153,7 @@ plotting_residuals<-function(transition_distances,vals ,x, Predictor){#currently
 
   theme_set(theme_classic())
   p_res<-ggplot(x, aes(fitted, residuals))+geom_point() +
-  coord_cartesian(xlim = c(0, max(x$fitted)), ylim = c(0,max(x$residuals)))
+  coord_cartesian(xlim = c(min(x$fitted), max(x$fitted)), ylim = c(min(x$residuals),max(x$residuals)))
   p_res1 <- p_res %>% plotly::ggplotly(tooltip =c("fitted", "residuals"), source="plot_res")
   return(p_res)
 }
