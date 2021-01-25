@@ -125,9 +125,13 @@ shinyUI(fluidPage(
            sidebarLayout(
              sidebarPanel(width=3,
                           uiOutput("select_node_render")),
-             mainPanel(fluidRow(splitLayout(
-               uiOutput(outputId = "plotly_ui"),
-               uiOutput(outputId = "plot_ui")))
+             mainPanel(fluidRow(
+               splitLayout(
+               tags$h4("Plolty  - Zoomable tree"),
+               tags$h4("Plot - Annotatable tree"))),
+               fluidRow(splitLayout(
+                 uiOutput(outputId = "plotly_ui"),
+                 uiOutput(outputId = "plot_ui")))
                )))
 )#)tabsetPanel
 )#)fluidpage

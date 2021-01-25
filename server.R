@@ -96,7 +96,7 @@ shinyServer(function(input, output, session) {
     makeSymmetric=input$Symmetrie
     tip_states_tree<-importingTree(sampling_locations, tree_file, file_type)
     tree<-tip_states_tree[[2]]
-    tip_states<-tip_states_tree[[1]]
+    tip_states<-as.factor(tip_states_tree[[1]])
     
     distances_raw<-lapply(distances_raw_file, function(distances_raw_file) importingDist(distances_raw_file, delimiter))
     if (annotated==FALSE){
