@@ -66,7 +66,7 @@ shinyServer(function(input, output, session) {
     
     updateCheckboxGroupInput(session, 
                              inputId= "variable", 
-                             label = "Variables for multiple regression", 
+                             label = "Variables:", 
                              choices = column_names,
                              selected = column_names)
   })         
@@ -76,7 +76,6 @@ shinyServer(function(input, output, session) {
   observeEvent(input$start, {
     Log_multi=input$Log
     variable_multi=input$variable
-    print(variable_multi)
     distances_raw_file_names = input$distances_file$name
     column_names<-sapply(distances_raw_file_names, first.word)
     Predictor= input$Predictor_uni
@@ -92,6 +91,8 @@ shinyServer(function(input, output, session) {
     distances_raw_file<-input$distances_file$datapath
     #distances_raw_file<-"input/rabies/predictors/bodySize.csv"
     state= input$Annotation_State
+    print(state)
+    
     order= input$order
     makeSymmetric=input$Symmetrie
     tip_states_tree<-importingTree(sampling_locations, tree_file, file_type)

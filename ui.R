@@ -8,6 +8,7 @@ shinyUI(fluidPage(
       sidebarPanel(
         width = 3,
         tags$h3("TreeDist"),
+        tags$h4("Univariate"),
         p(""),
         br(),
         fluidRow(column(
@@ -38,12 +39,15 @@ shinyUI(fluidPage(
                         #"Newick" = "newick"),
                         selected = "beast"
             )
-          ))
+          ))#   selectInput(inputId = "Predictor_uni", label="Predictor", choices=c(NULL))
         ),
         fluidRow(column(12,
                         fileInput(
                           "distances_file", label = ("Distance matrix"), multiple=T
                         ))),
+        fluidRow(column(12,
+                        selectInput(inputId = "Predictor_uni", label="Univariate Predictor", choices=c(NULL))
+                        )),
         fluidRow(column(
           12,
           textInput(inputId = "delimiter", "Delimiter Distance Matrices (Optional)", value ="")
@@ -85,50 +89,68 @@ shinyUI(fluidPage(
       mainPanel(
         fluidRow(
           splitLayout(
+            tags$h4("Plotly - Scatterplot"),
+            tags$h4("Plot - Residuals Plot"))),
+        fluidRow(
+          splitLayout(
             plotlyOutput(outputId = "plot"),
             plotlyOutput(outputId = "plot_res")
           ),
           actionButton("exclude_toggle", "Toggle points"),
           actionButton("exclude_reset", "Reset"),
           actionButton("log_transitions", "Toggle Log-Transitions"),
-          actionButton("log_distances", "Toggle Log-Distance Metric"),
-          
-          selectInput(inputId = "Predictor_uni", label="Predictor", choices=c(NULL))
+          actionButton("log_distances", "Toggle Log-Distance Metric")
         ),
+        tags$h4("Hovering output:"),
         fluidRow(verbatimTextOutput("hover")),
+        tags$h4("Basic univariate statistics:"),
         fluidRow(tableOutput(outputId = "lm")),
+        tags$h4("Univariate Regression output:"),
         fluidRow(verbatimTextOutput(outputId = "lm.summary")),
+        tags$h4("Possible Outliers"),
         fluidRow(tableOutput(outputId = "output"))
       )
     )),
   tabPanel(
     "Multivariate",
-      mainPanel(
+        sidebarLayout(
+        sidebarPanel(
+          tags$h3("TreeDist"),
+          tags$h4("Multivariate"),
+          width = 3,
         fluidRow(
           splitLayout(
-          checkboxGroupInput("variable", "Variables to include in regression:",
+          checkboxGroupInput("variable", "Variables:",
                            c("Updating" = "U")),
         tableOutput("data"),
-           checkboxGroupInput("Log", "Log",
+           checkboxGroupInput("Log", "Log:",
                            c("Updating" = "x")),
         tableOutput("data2")
-      )),
+      ))),
+      mainPanel(
+        tags$h4("Basic Statistical Overview"),
         fluidRow(tableOutput(outputId = "lm_multi")),
+        tags$h4("Multivariate Regression Model"),
         fluidRow(verbatimTextOutput(outputId = "lm.summary_multi")),
+        tags$h4("Possible Outliers"),
         fluidRow(tableOutput(outputId = "output_multi")),
+        tags$h4("Scatterplot per predictive variable:"),
         fluidRow(plotlyOutput(outputId = "multi_plot"))
       
       )
-    ),
+    )),
   #tabPanel
   tabPanel(title = "Explore Tree",
            sidebarLayout(
-             sidebarPanel(width=3,
-                          uiOutput("select_node_render")),
+             sidebarPanel(
+               tags$h3("TreeDist"),
+               tags$h4("Tree"),
+               width=3,
+               uiOutput("select_node_render")),
              mainPanel(fluidRow(
                splitLayout(
-               tags$h4("Plolty  - Zoomable tree"),
-               tags$h4("Plot - Annotatable tree"))),
+               tags$h4("Plotly  - Zoom tree"),
+               tags$h4("Plot - Annotation tree"))),
                fluidRow(splitLayout(
                  uiOutput(outputId = "plotly_ui"),
                  uiOutput(outputId = "plot_ui")))
