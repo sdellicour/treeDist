@@ -1,5 +1,3 @@
-library(plotly)
-
 shinyUI(fluidPage(
   title = "TreeDist",
   tabsetPanel(tabPanel(
@@ -61,7 +59,7 @@ shinyUI(fluidPage(
           selectInput(
             inputId = "Annotation_State",
             "Annotation Label in tree",
-            c("host", "state", "states", "city")
+            c("host", "state", "states", "city", "location.states")
           )
         )),
         fluidRow(column(
@@ -117,7 +115,7 @@ shinyUI(fluidPage(
         sidebarPanel(
           tags$h3("TreeDist"),
           tags$h4("Multivariate"),
-          width = 3,
+          width = 12,
         fluidRow(
           splitLayout(
           checkboxGroupInput("variable", "Variables:",

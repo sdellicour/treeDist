@@ -1,4 +1,3 @@
-library(RColorBrewer)
 # This tree_df function 
     # Rendering the ui elements to select the node to subset,
     # how far back to subset, and tree options (text size, height, width)

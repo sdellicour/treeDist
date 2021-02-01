@@ -1,13 +1,3 @@
-library(raster)
-library(tidyverse)
-library(ape)
-library(treeio)
-library(castor)
-library(broom)
-library(ggfortify)
-library(shinyIncubator)
-library(reactlog)
-library(ggtree)
 options(shiny.maxRequestSize=10*1024^2)#10mb max file size
 shinyServer(function(input, output, session) {
   reactlog_enable()#logging a reactivity tree
@@ -49,7 +39,7 @@ shinyServer(function(input, output, session) {
       updateSelectInput(
         session,
         inputId = "Annotation_State",
-        choices=c("host", "state", "states", "city"),
+        choices=c("host", "state", "states", "city", "location.states"),
         selected="host"
       )
     }

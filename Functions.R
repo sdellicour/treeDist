@@ -3,18 +3,18 @@ importingTree<-function(sampling_locations, tree_file, file_type){
   print("Reading tree")
   switch(file_type,
          "nexus" = {
-           tree <- read.nexus(tree_file)
+           tree <- ape::read.nexus(tree_file)
          },
          "newick" = {
-           tree <- read.tree(tree_file)
+           tree <- ape::read.tree(tree_file)
          },
          "beast" = {
-           tree <- read.beast(tree_file)
-           tree <- as_tibble(tree)
+           tree <- treeio::read.beast(tree_file)
+           tree <- dplyr::as_tibble(tree)
            colnames(tree)[which(colnames(tree) == "branch.length")] <-"edge.length"
          })
   tree <- negativeBranchLength(tree)
-  tip_states <- read.table(sampling_locations, blank.lines.skip = F)[,1]
+  tip_states <- utils::read.table(sampling_locations, blank.lines.skip = F)[,1]
   list(tip_states, tree)
   }
 
@@ -29,16 +29,13 @@ negativeBranchLength<-function(tree){
   return(tree)
 }
 
-removeTipsMissingData<-function(tree){
-}
-
 importingDist<-function(distances_raw_file, delimiter){
   if(delimiter==""){
     delimiter<-detect_delimiter(distances_raw_file)
   }
-  distances_raw <- read.csv(distances_raw_file, head=T, sep=delimiter)
+  distances_raw <- utils::read.csv(distances_raw_file, head=T, sep=delimiter)
   distances_raw<-reshape_Rownames(distances_raw = distances_raw )
-  distances_raw<-as.matrix(distances_raw)
+  distances_raw<-base::as.matrix(distances_raw)
   "distances_raw"=distances_raw
 }
 
@@ -70,16 +67,16 @@ GenerateRawTransitionMatrix = function(state, distances_raw, tree_df) {
   colnames(transitions_raw) = tip_states
   tree_df<-tree_df
   for(node in tree_df$node){
-    if(node!=rootnode(tree_df)$node){
-      parent_loc = get(state, parent(tree_df,node))
+    if(node!=tidytree::rootnode(tree_df)$node){
+      parent_loc = get(state, tidytree::parent(tree_df,node))
       if(is.list(parent_loc)) parent_loc=parent_loc[[1]][1]
-      parent_loc = str_split(parent_loc,"\\+")[[1]][1]
-      parent_loc = str_split(parent_loc," ")[[1]][1]
+      parent_loc = stringr::str_split(parent_loc,"\\+")[[1]][1]
+      parent_loc = stringr::str_split(parent_loc," ")[[1]][1]
       
       child_loc<-get(state,tree_df[tree_df$node==node,])
       if(is.list(child_loc)) child_loc=child_loc[[1]][1]
-      child_loc = str_split(child_loc,"\\+")[[1]][1]
-      child_loc = str_split(child_loc," ")[[1]][1]
+      child_loc = stringr::str_split(child_loc,"\\+")[[1]][1]
+      child_loc = stringr::str_split(child_loc," ")[[1]][1]
       transitions_raw[parent_loc, child_loc]=transitions_raw[parent_loc, child_loc]+1
     }
   } 
@@ -124,14 +121,14 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric, transitions_raw, 
 plotting_fun<-function(transition_distances, logs ,vals, Predictor){
   keep    <- transition_distances[vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  theme_set(theme_classic())
+  ggplot2::theme_set(theme_classic())
   if(logs$logtransform[1]==TRUE)   {
       keep <- keep%>%
-      mutate_at("Transitions", log)
+      dplyr::mutate_at("Transitions", log)
   }
   if(logs$logtransform[2]==TRUE)   {
     keep <- keep%>%
-      mutate_at(Predictor, log)
+      dplyr::mutate_at(Predictor, log)
   }
  p <- ggplot(keep, mapping= aes_string(x=Predictor,y="Transitions", key="Key")) 
  p1<-p +
@@ -190,7 +187,7 @@ linear_regression<-function(transition_distances,cut_off_residual=NULL, percenti
   }
   
   first.word <- function(my.string, sep="\\."){
-    strsplit(my.string, sep)[[1]][1]
+    base::strsplit(my.string, sep)[[1]][1]
   }
   
   
