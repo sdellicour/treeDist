@@ -78,23 +78,27 @@ shinyServer(function(input, output, session) {
     method=input$Reconstruction_Method
     #Transitions
     delimiter<-input$delimiter
-    distances_raw_file<-input$distances_file$datapath
+    browser()
+    distances_raw_file<-input$distances_file$datapath #for multivariate case this is a vector of strings, 
+    #each string is the temp variable for the distance matrix
+    
     #distances_raw_file<-"input/rabies/predictors/bodySize.csv"
     state= input$Annotation_State
-    print(state)
-    
-    order= input$order
     makeSymmetric=input$Symmetrie
     tip_states_tree<-importingTree(sampling_locations, tree_file, file_type)
     tree<-tip_states_tree[[2]]
     tip_states<-as.factor(tip_states_tree[[1]])
     
     distances_raw<-lapply(distances_raw_file, function(distances_raw_file) importingDist(distances_raw_file, delimiter))
+    #distances_raw is a list of the actual distance matrices, the length of the list is the number of seected matrices
     if (annotated==FALSE){
       tree<- chooseReconstructionMethod(method, tip_states,  tree_not_annotated=tree)
     }
-    transitions<-GenerateRawTransitionMatrix(state, distances_raw[[1]], tree)
+    transitions<-GenerateRawTransitionMatrix(state, distances_raw[[1]], tree) 
+    #take any distance matrix to get the col names and dimensions for the transitions matrix
+    
     transition_distances<-GenerateFinal_Transitions_Distances(makeSymmetric = makeSymmetric, transitions_raw=transitions, distances_raw=distances_raw, column_names=column_names)
+    
     vals <- reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)))
     logs<-reactiveValues(logtransform= rep(FALSE, 2))
     #whenever this variable "vals" changes then all dependencies, expressions that
