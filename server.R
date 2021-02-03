@@ -194,7 +194,7 @@ shinyServer(function(input, output, session) {
     #all.equal(x_global, tree$phylo$edge.length, check.attributes=F) 
     #check attributes false becasue x_global has attributes such as "na.action"=1368, which is the root node which was found to be NA.
     
-    browser() #uncmomment for debugging mode
+    #browser() #uncmomment for debugging mode
     if(is.null(tree@phylo$edge.length)){
       x=na.omit(tree@data$edge.length)
       tree@phylo$edge.length=x

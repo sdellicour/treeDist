@@ -183,7 +183,6 @@ shinyUI(fluidPage(
                        label = "Select plot height",
                        value = 1000
                      ))),
-                 useShinyjs(),
                  ###Annotation Tree only ####
                  wellPanel("Annotation Tree",
                            conditionalPanel(condition = "input.Z_A_Tree=='A_Tree'",
@@ -276,7 +275,6 @@ shinyUI(fluidPage(
                ),#)sidebarPanel
                ## MainPanel ####
                mainPanel(fluidRow(
-                 useShinyjs(),
                  wellPanel("Tree",
                            conditionalPanel(condition = "input.Z_A_Tree=='Z_Tree'",
                                             uiOutput(outputId = "plotly_ui")
