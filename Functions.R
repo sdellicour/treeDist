@@ -16,7 +16,7 @@ importingTree<-function(sampling_locations, tree_file, file_type){
   tree <- negativeBranchLength(tree)
   tip_states <- utils::read.table(sampling_locations, blank.lines.skip = F)[,1]
   list(tip_states, tree)
-  }
+}
 
 negativeBranchLength<-function(tree){
   if(length(which(tree$edge.length<=0))>0){
@@ -51,7 +51,7 @@ detect_delimiter<-function(distances_raw_file){
   }
   "delimiter"=delimiter
 }
-    
+
 reshape_Rownames<-function(distances_raw){
   if(!is.numeric(distances_raw[1,1])){
     rownames(distances_raw)=(distances_raw[,1])
@@ -108,10 +108,10 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric, transitions_raw, 
   }else{
     names_matrixes =names_matrixes[(lower.tri(names_matrixes) | upper.tri(names_matrixes))] #names and distance call before call to transition
     #only the diagonal is excluded otherwise we keep both directions
-     distances = sapply(distances_raw, function(distances_raw) distances_raw[(lower.tri(distances_raw) |upper.tri(distances_raw))])
+    distances = sapply(distances_raw, function(distances_raw) distances_raw[(lower.tri(distances_raw) |upper.tri(distances_raw))])
     #distances is a matrix with the columns representing each a distacne matrix
-     transitions=transitions_raw[(lower.tri(transitions_raw) | upper.tri(transitions_raw))]
-     #bring transitions in same format, 1 columns and each transition for 1 state to the other, bidirectional, in rows
+    transitions=transitions_raw[(lower.tri(transitions_raw) | upper.tri(transitions_raw))]
+    #bring transitions in same format, 1 columns and each transition for 1 state to the other, bidirectional, in rows
   }
   colnames(distances)<-column_names   #adding the names to cols
   transition_distances<-data.frame(Transitions=transitions, distances, Key=names_matrixes)
@@ -127,23 +127,23 @@ plotting_fun<-function(transition_distances, logs ,vals, Predictor){
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
   ggplot2::theme_set(theme_classic())
   if(logs$logtransform[1]==TRUE)   {
-      keep <- keep%>%
+    keep <- keep%>%
       dplyr::mutate_at("Transitions", log)
   }
   if(logs$logtransform[2]==TRUE)   {
     keep <- keep%>%
       dplyr::mutate_at(Predictor, log)
   }
- p <- ggplot(keep, mapping= aes_string(x=Predictor,y="Transitions", key="Key")) 
- p1<-p +
-      geom_point() +
-      geom_point(data = exclude, shape = 21, fill = NA, color = "black", alpha = 0.25) +
-      geom_smooth(mapping=aes(key=NULL),method = "lm")+
-      coord_cartesian(xlim = c(min(get(Predictor, transition_distances)), max(get(Predictor, transition_distances))), ylim = c(0,max(transition_distances$Transitions)))
- if(logs$logtransform[1]==TRUE)   {
-   p1<-p1+ coord_cartesian(xlim = c(min(get(Predictor, transition_distances)), max(get(Predictor, transition_distances))), ylim = c(0,max(log(transition_distances$Transitions))))
-}
-    p2 <- p1 %>% plotly::ggplotly(tooltip = c(Predictor, "Transitions", "Key"), source="plot")
+  p <- ggplot(keep, mapping= aes_string(x=Predictor,y="Transitions", key="Key")) 
+  p1<-p +
+    geom_point() +
+    geom_point(data = exclude, shape = 21, fill = NA, color = "black", alpha = 0.25) +
+    geom_smooth(mapping=aes(key=NULL),method = "lm")+
+    coord_cartesian(xlim = c(min(get(Predictor, transition_distances)), max(get(Predictor, transition_distances))), ylim = c(0,max(transition_distances$Transitions)))
+  if(logs$logtransform[1]==TRUE)   {
+    p1<-p1+ coord_cartesian(xlim = c(min(get(Predictor, transition_distances)), max(get(Predictor, transition_distances))), ylim = c(0,max(log(transition_distances$Transitions))))
+  }
+  p2 <- p1 %>% plotly::ggplotly(tooltip = c(Predictor, "Transitions", "Key"), source="plot")
   return(p2)
 }
 
@@ -151,10 +151,10 @@ plotting_residuals<-function(transition_distances,vals ,x, Predictor){#currently
   
   #keep    <- transition_distances[ vals$keeprows, , drop = FALSE]#not needed because only called after linear regression
   #exclude <- transition_distances[!vals$keeprows, , drop = FALSE]# see above
-
+  
   theme_set(theme_classic())
   p_res<-ggplot(x, aes(fitted, residuals))+geom_point() +
-  coord_cartesian(xlim = c(min(x$fitted), max(x$fitted)), ylim = c(min(x$residuals),max(x$residuals)))
+    coord_cartesian(xlim = c(min(x$fitted), max(x$fitted)), ylim = c(min(x$residuals),max(x$residuals)))
   p_res1 <- p_res %>% plotly::ggplotly(tooltip =c("fitted", "residuals"), source="plot_res")
   return(p_res)
 }
@@ -171,7 +171,7 @@ linear_regression<-function(transition_distances,cut_off_residual=NULL, percenti
     keep <- keep%>%
       mutate_at(Predictor, log)
   }
-
+  
   lm=lm(keep$Transitions~get(Predictor, keep))
   x<-data.frame(lm$residuals,lm$fitted.values)
   colnames(x)<-c("residuals", "fitted")
@@ -186,21 +186,21 @@ linear_regression<-function(transition_distances,cut_off_residual=NULL, percenti
   list(lm=lm, output=output, x=x)
 }   
 
-  '%!in%' <- function(x,y){
-    !('%in%'(x,y))
+'%!in%' <- function(x,y){
+  !('%in%'(x,y))
+}
+
+first.word <- function(my.string, sep="\\."){
+  base::strsplit(my.string, sep)[[1]][1]
+}
+
+
+# extracting the tip labels from the sub tree
+getTipLabels<-function(tree){
+  if (isS4(tree)) {
+    tip_labels <- tree@phylo$tip.label
+  } else {
+    tip_labels <- tree$tip.label
   }
-  
-  first.word <- function(my.string, sep="\\."){
-    base::strsplit(my.string, sep)[[1]][1]
-  }
-  
-  
-  # extracting the tip labels from the sub tree
-  getTipLabels<-function(tree){
-    if (isS4(tree)) {
-      tip_labels <- tree@phylo$tip.label
-    } else {
-      tip_labels <- tree$tip.label
-    }
-    return(tip_labels)
-  }
+  return(tip_labels)
+}

@@ -45,7 +45,7 @@ shinyServer(function(input, output, session) {
     }
     
     distances_raw_file_names = input$distances_file$name
-
+    
     column_names<-as.vector(sapply(distances_raw_file_names, first.word))
     updateSelectInput(
       session,
@@ -61,7 +61,7 @@ shinyServer(function(input, output, session) {
                              selected = column_names)
   })         
   
-
+  
   #observeEvent (RUN) ####
   observeEvent(input$start, {
     Log_multi=input$Log
@@ -78,7 +78,6 @@ shinyServer(function(input, output, session) {
     method=input$Reconstruction_Method
     #Transitions
     delimiter<-input$delimiter
-    browser()
     distances_raw_file<-input$distances_file$datapath #for multivariate case this is a vector of strings, 
     #each string is the temp variable for the distance matrix
     
@@ -121,7 +120,7 @@ shinyServer(function(input, output, session) {
     output$output_multi=renderTable({
       lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals, variable_multi=variable_multi, Log_multi=Log_multi)$output
     }) # output$plot = renderTable({
-      
+    
     output$lm.summary_multi=renderPrint({
       summary(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals, variable_multi=variable_multi, Log_multi=Log_multi)$lm)
     }) # output$plot = renderTable({
@@ -189,10 +188,10 @@ shinyServer(function(input, output, session) {
       vals$keeprows <- rep(TRUE, nrow(transition_distances))
     })
     
-  # Tree ####
+    # Tree ####
     
-  tree<-as.treedata(tree)
-  source("Tree.R", local=T)#only sourced when "run" is clicked and after variable tree is defined
+    tree<-as.treedata(tree)
+    source("Tree.R", local=T)#only sourced when "run" is clicked and after variable tree is defined
     
   }) # observeEvent(input$start, {
   

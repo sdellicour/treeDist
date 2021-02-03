@@ -21,14 +21,14 @@ plotting_muĺti<-function(transition_distances,vals,variable_multi, Log_multi, c
       colname
     }
   })
-
+  
   keep_high<- tidyr::gather(data=keep, key="Predictors", value="value", -c(colnames(keep)[1], Key))
   theme_set(theme_classic())
   p1 <-ggplot(keep_high, aes_string(y = colnames(keep_high)[1], x ="value", group = "Predictors", key="Key")) + #color = Predictors
     facet_wrap(. ~ Predictors, scale="free", ncol=3) +
     geom_smooth(method = "lm")+
     geom_point()
-    p2 <- p1 %>% plotly::ggplotly(tooltip = c("value",  colnames(keep_high)[1], "Key"), source="multi_plot",  width = cdata$output_pid_width, height =  ceiling(length(unique(keep_high$Predictors))/2)*300)
+  p2 <- p1 %>% plotly::ggplotly(tooltip = c("value",  colnames(keep_high)[1], "Key"), source="multi_plot",  width = cdata$output_pid_width, height =  ceiling(length(unique(keep_high$Predictors))/2)*300)
   return(p2)
 }
 
