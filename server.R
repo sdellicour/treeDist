@@ -23,24 +23,12 @@ shinyServer(function(input, output, session) {
                     "Newick" = "newick"),
         selected = "nexus"
       )
-      updateSelectInput(
-        session,
-        inputId = "Annotation_State",
-        choices = "states",
-        selected = "states"
-      )
     }else{
       updateSelectInput(
         session,
         inputId= "file_type",
         choices = c("Beast" = "beast"),
         selected = "beast"
-      )
-      updateSelectInput(
-        session,
-        inputId = "Annotation_State",
-        choices=c("host", "state", "states", "city", "location.states"),
-        selected="host"
       )
     }
     
@@ -82,7 +70,11 @@ shinyServer(function(input, output, session) {
     #each string is the temp variable for the distance matrix
     
     #distances_raw_file<-"input/rabies/predictors/bodySize.csv"
-    state= input$Annotation_State
+    if(annotated){
+      state= input$Annotation_State
+    }else{
+      state="states"
+    }
     makeSymmetric=input$Symmetrie
     tip_states_tree<-importingTree(sampling_locations, tree_file, file_type)
     tree<-tip_states_tree[[2]]
@@ -189,8 +181,25 @@ shinyServer(function(input, output, session) {
     })
     
     # Tree ####
-    
     tree<-as.treedata(tree)
+    
+    # The if clause below, checks if the location where ggtree is checking for the edge.length (tree@phylo$edge.length) is null
+    #if it is null then the conversion from data.frame/tibble to treedata object did not work correctly and the edge.length has been written to
+    #tree@data$edge.length, and in our case the root node has an associated edge.length of "NA". So I drop that value and then assign the edge.length data
+    #to the location where ggtree expects it and the tree is plotted correctly.
+    
+    #I confirmed this by assigning the edge.length from na.omit(tree@data$edge.length) to a global variable when running the app with the annotated tree
+    #in a next step the app can be run using the browser() function below with the non-annotated version and then the edge.length can be compared via the
+    #following line of code, which can be entered in the console:
+    #all.equal(x_global, tree$phylo$edge.length, check.attributes=F) 
+    #check attributes false becasue x_global has attributes such as "na.action"=1368, which is the root node which was found to be NA.
+    
+    browser() #uncmomment for debugging mode
+    if(is.null(tree@phylo$edge.length)){
+      x=na.omit(tree@data$edge.length)
+      tree@phylo$edge.length=x
+      x_global <<- x
+    }
     source("Tree.R", local=T)#only sourced when "run" is clicked and after variable tree is defined
     
   }) # observeEvent(input$start, {

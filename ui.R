@@ -1,5 +1,5 @@
 #Univariate ####
-##Sidebar
+##Sidebar####
 shinyUI(fluidPage(
   title = "TreeDist",
   tabsetPanel(tabPanel(
@@ -22,25 +22,26 @@ shinyUI(fluidPage(
             )
           )
         )),
-        fluidRow(column(
-          12,
-          selectInput(
-            inputId = "Annotation_State",
-            "Annotation Label in tree",
-            c("host", "state", "states", "city", "location.states")
-          )
-        )),
-        fluidRow(column(
-          12,
-          radioButtons(
-            inputId = "Reconstruction_Method",
-            "AR Method",
-            c(
-              "Maximum Parsimony" = "MP",
-              "Maximum Likelihood" = "ML"
-            )
-          )
-        )),
+        wellPanel("Annotations",
+                  conditionalPanel(condition = "input.annotations=='TRUE'",
+                                   fluidRow(column(
+                                     12,
+                                     selectInput(
+                                       inputId = "Annotation_State",
+                                       "Annotation Label in tree",
+                                       c("host", "state", "states", "city", "location.states")
+                                     )
+                                   ))),
+                  conditionalPanel(condition = "input.annotations=='FALSE'",
+                                   fluidRow(column(
+                                     12,
+                                     radioButtons(
+                                       inputId = "Reconstruction_Method",
+                                       "AR Method",
+                                       c(
+                                         "Maximum Parsimony" = "MP",
+                                         "Maximum Likelihood" = "ML")))))),
+       
         fluidRow(column(12,
                         fileInput(
                           "tree_file", label = ("Tree file")
@@ -82,6 +83,7 @@ shinyUI(fluidPage(
                          "red")
         ))
       ),
+      ##MainPanel ####
       mainPanel(
         fluidRow(
           splitLayout(
@@ -97,7 +99,7 @@ shinyUI(fluidPage(
           actionButton("exclude_toggle", "Toggle points"),
           actionButton("exclude_reset", "Reset"),
           actionButton("log_transitions", "Toggle Log-Transitions"),
-          actionButton("log_distances", "Toggle Log-Distance Metric"),
+          actionButton("log_distances", "Toggle Log-Distance Metric")
         ),
         tags$h4("Hovering output:"),
         fluidRow(verbatimTextOutput("hover")),
@@ -109,9 +111,11 @@ shinyUI(fluidPage(
         fluidRow(tableOutput(outputId = "output"))
       )
     )),
+    #Multivariate ####
     tabPanel(
       "Multivariate",
       sidebarLayout(
+        ##Sidebar ####
         sidebarPanel(
           tags$h3("TreeDist"),
           tags$h4("Multivariate"),
@@ -125,6 +129,7 @@ shinyUI(fluidPage(
                                  c("Updating" = "x")),
               tableOutput("data2")
             ))),
+        ##MainPanel ####
         mainPanel(
           tags$h4("Basic Statistical Overview"),
           fluidRow(tableOutput(outputId = "lm_multi")),
@@ -137,9 +142,10 @@ shinyUI(fluidPage(
           
         )
       )),
-    #tabPanel
+    #Explore Tree ####
     tabPanel(title = "Explore Tree",
              sidebarLayout(
+               ##Sidebar ####
                sidebarPanel(
                  tags$h3("TreeDist"),
                  tags$h4("Tree"),
@@ -159,6 +165,16 @@ shinyUI(fluidPage(
                        inputId = "colour_by_states",
                        label= "Colour by States"
                      ))),
+                 wellPanel("Coloured by states",
+                           conditionalPanel(condition = "input.colour_by_states",
+                                            fluidRow(
+                                              column(
+                                                12,
+                                                numericInput(
+                                                  inputId = "annotation_plot_legend_size",
+                                                  label= "Annotation tree -  Legend text Size",
+                                                  value =15
+                                                ))))),
                  fluidRow(
                    column(
                      12,
@@ -168,25 +184,45 @@ shinyUI(fluidPage(
                        value = 1000
                      ))),
                  useShinyjs(),
+                 ###Annotation Tree only ####
                  wellPanel("Annotation Tree",
                            conditionalPanel(condition = "input.Z_A_Tree=='A_Tree'",
                                             fluidRow(
                                               column(
                                                 12,
                                                 checkboxInput(
-                                                  inputId = "tip_labels",
-                                                  label= "Annotation tree - Tip label"
+                                                  inputId = "ancestral_states",
+                                                  label= "Ancestral states"
                                                 ))),
+                                            wellPanel("Ancestral states options",
+                                                      conditionalPanel(condition = "input.ancestral_states",
+                                                                       fluidRow(
+                                                                         column(
+                                                                           12,
+                                                                           numericInput(
+                                                                             inputId = "ancestral_states_size",
+                                                                             label= "Ancestral states Size",
+                                                                             value =3
+                                                                           ))))),
+                                            uiOutput("select_node_render"),        
                                             fluidRow(
                                               column(
                                                 12,
-                                                numericInput(
-                                                  inputId = "tree_text_size",
-                                                  label = "Annotation tree - Tip label size:",
-                                                  min = 0,
-                                                  value = 3
+                                                checkboxInput(
+                                                  inputId = "tip_labels",
+                                                  label= "Tip label"
                                                 ))),
-                                            uiOutput("select_node_render"),        
+                                            wellPanel("Tip label options",
+                                                      conditionalPanel(condition = "input.tip_labels",
+                                                                       fluidRow(
+                                                                         column(
+                                                                           12,
+                                                                           numericInput(
+                                                                             inputId = "tree_text_size",
+                                                                             label = "Tip label size:",
+                                                                             min = 0,
+                                                                             value = 3
+                                                                           ))))),
                                             fluidRow(
                                               column(
                                                 12,
@@ -209,16 +245,18 @@ shinyUI(fluidPage(
                                                 12,
                                                 checkboxInput(
                                                   inputId = "node_number",
-                                                  label= "Annotation tree - Node number"
+                                                  label= "Node number"
                                                 ))),
-                                            fluidRow(
-                                              column(
-                                                12,
-                                                numericInput(
-                                                  inputId = "node_number_size",
-                                                  label= "Annotation tree - Node number size",
-                                                  value = 3
-                                                ))),
+                                            wellPanel("Node numberoptions",
+                                                      conditionalPanel(condition = "input.node_number",
+                                                                       fluidRow(
+                                                                         column(
+                                                                           12,
+                                                                           numericInput(
+                                                                             inputId = "node_number_size",
+                                                                             label= "Node number size",
+                                                                             value = 3
+                                                                           ))))),
                                             fluidRow(
                                               column(
                                                 12,
@@ -231,33 +269,12 @@ shinyUI(fluidPage(
                                                 12,
                                                 checkboxInput(
                                                   inputId = "node_shapes",
-                                                  label= "Annotation tree - Node shapes"
-                                                ))),
-                                            fluidRow(
-                                              column(
-                                                12,
-                                                checkboxInput(
-                                                  inputId = "ancestral_states",
-                                                  label= "Annotation tree - Ancestral states"
-                                                ))),
-                                            fluidRow(
-                                              column(
-                                                12,
-                                                numericInput(
-                                                  inputId = "ancestral_states_size",
-                                                  label= "Annotation tree -  Ancestral states Size",
-                                                  value =3
-                                                ))),
-                                            fluidRow(
-                                              column(
-                                                12,
-                                                numericInput(
-                                                  inputId = "annotation_plot_legend_size",
-                                                  label= "Annotation tree -  Legend text Size",
-                                                  value =15
-                                                ))))
-                 )
-               ),
+                                                  label= "Node shapes"
+                                                )))
+                           )#)wellPanel
+                 )#)conditionalPanel
+               ),#)sidebarPanel
+               ## MainPanel ####
                mainPanel(fluidRow(
                  useShinyjs(),
                  wellPanel("Tree",
@@ -267,8 +284,11 @@ shinyUI(fluidPage(
                            conditionalPanel(condition= "input.Z_A_Tree=='A_Tree'",
                                             uiOutput(outputId = "plot_ui")
                            )
-                 )
-               ))))
+                 )#)wellpanel
+               )#)fluidrow
+               )#)mainPanel
+             )#)SidebarLayout
+    )#)TabPanel
     
     
   )#)tabsetPanel

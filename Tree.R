@@ -30,7 +30,7 @@ output$plotly_tree <- renderPlotly({
   }
   
   ggplotly(p, tooltip =  c("node", "parent", "label2", "label"), source="tree") %>%
-    layout(legend = list(orientation = "h" , y=-0.25, title=get(state, tree)))
+    layout(legend = list(orientation = "h" , y=-0.01, title=get(state, tree), font = list(size=input$annotation_plot_legend_size )))
 })
 
 output$plotly_ui <- renderUI({
