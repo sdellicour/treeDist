@@ -81,8 +81,8 @@ negativeBranchLength<-function(tree){
 #' Function is only relevant in case tree was already annotated.
 #' @param tree Tree in beast format 
 #' @param distances_raw distance matrix in matrix format.
-detectState(tree, distances_raw){
-  
+detectState<-function(tree, distances_raw){
+  return()
 }
 
 GenerateRawTransitionMatrix = function(state, distances_raw, tree_df) {
