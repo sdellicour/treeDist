@@ -27,7 +27,7 @@ plotting_muĺti<-function(transition_distances,vals,variable_multi, Log_multi, c
   p1 <-ggplot(keep_high, aes_string(y = colnames(keep_high)[1], x ="value", group = "Predictors", key="Key")) + #color = Predictors
     facet_wrap(. ~ Predictors, scale="free", ncol=3) +
     geom_smooth(method = "lm")+
-    geom_point()
+    geom_point(shape=21, colour="#4D4D4D", fill= "#0e74af80")
   p2 <- p1 %>% plotly::ggplotly(tooltip = c("value",  colnames(keep_high)[1], "Key"), source="multi_plot",  width = cdata$output_pid_width, height =  ceiling(length(unique(keep_high$Predictors))/2)*300)
   return(p2)
 }

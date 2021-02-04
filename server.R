@@ -69,19 +69,20 @@ shinyServer(function(input, output, session) {
     distances_raw_file<-input$distances_file$datapath #for multivariate case this is a vector of strings, 
     #each string is the temp variable for the distance matrix
     
+    makeSymmetric=input$Symmetrie
+    
+    distances_raw<-lapply(distances_raw_file, function(distances_raw_file) importingDist(distances_raw_file, delimiter))
+    #distances_raw is a list of the actual distance matrices, the length of the list is the number of seected matrices
     #distances_raw_file<-"input/rabies/predictors/bodySize.csv"
     if(annotated){
       state= input$Annotation_State
     }else{
       state="states"
     }
-    makeSymmetric=input$Symmetrie
     tip_states_tree<-importingTree(sampling_locations, tree_file, file_type)
     tree<-tip_states_tree[[2]]
     tip_states<-as.factor(tip_states_tree[[1]])
     
-    distances_raw<-lapply(distances_raw_file, function(distances_raw_file) importingDist(distances_raw_file, delimiter))
-    #distances_raw is a list of the actual distance matrices, the length of the list is the number of seected matrices
     if (annotated==FALSE){
       tree<- chooseReconstructionMethod(method, tip_states,  tree_not_annotated=tree)
     }

@@ -1,16 +1,18 @@
 #Univariate ####
 ##Sidebar####
 shinyUI(fluidPage(
-  title = "TreeDist",
   tabsetPanel(tabPanel(
-    "Univariate",
+    "Univariate analysis",
+    headerPanel(
+      list(HTML('<img src=Logo_Lemey_Lab.jpeg height=100 width=100/>'),
+           "TreeDist"),
+      windowTitle="TreeDist"
+    ),
     sidebarLayout(
       sidebarPanel(
         width = 3,
-        tags$h3("TreeDist"),
-        tags$h4("Univariate"),
+        tags$h4("Univariate analysis"),
         tags$h4("Input controls:"),
-        
         fluidRow(column(
           12,
           radioButtons(
@@ -28,7 +30,7 @@ shinyUI(fluidPage(
                                      12,
                                      selectInput(
                                        inputId = "Annotation_State",
-                                       "Annotation Label in tree",
+                                       "Annotation label in tree",
                                        c("host", "state", "states", "city", "location.states")
                                      )
                                    ))),
@@ -39,8 +41,8 @@ shinyUI(fluidPage(
                                        inputId = "Reconstruction_Method",
                                        "AR Method",
                                        c(
-                                         "Maximum Parsimony" = "MP",
-                                         "Maximum Likelihood" = "ML")))))),
+                                         "Maximum parsimony" = "MP",
+                                         "Maximum likelihood" = "ML")))))),
        
         fluidRow(column(12,
                         fileInput(
@@ -50,7 +52,7 @@ shinyUI(fluidPage(
           12,
           selectInput(
             inputId = "file_type",
-            label = "Select Tree File Type:",
+            label = "Select tree file type:",
             choices = c("Beast" = "beast",
                         #"MrBayes" = "mrbayes",
                         #"phylip" = "phylip",
@@ -66,7 +68,7 @@ shinyUI(fluidPage(
                         ))),
         fluidRow(column(
           12,
-          textInput(inputId = "delimiter", "Delimiter Distance Matrices (Optional)", value ="")
+          textInput(inputId = "delimiter", "Delimiter distance matrices (optional)", value ="")
         )),
         fluidRow(column(
           12,
@@ -87,15 +89,15 @@ shinyUI(fluidPage(
       mainPanel(
         fluidRow(
           splitLayout(
-            tags$h4("Plotly - Scatterplot"),
-            tags$h4("Plot - Residuals Plot"))),
+            tags$h4("Plotly - scatterplot"),
+            tags$h4("Plot - residuals plot"))),
         fluidRow(
           splitLayout(
             plotlyOutput(outputId = "plot"),
             plotlyOutput(outputId = "plot_res")
           ),
           tags$h4("Regression controls:"),
-          selectInput(inputId = "Predictor_uni", label="Univariate Predictor", choices=c(NULL)),
+          selectInput(inputId = "Predictor_uni", label="Univariate predictor", choices=c(NULL)),
           actionButton("exclude_toggle", "Toggle points"),
           actionButton("exclude_reset", "Reset"),
           actionButton("log_transitions", "Toggle Log-Transitions"),
@@ -105,20 +107,23 @@ shinyUI(fluidPage(
         fluidRow(verbatimTextOutput("hover")),
         tags$h4("Basic univariate statistics:"),
         fluidRow(tableOutput(outputId = "lm")),
-        tags$h4("Univariate Regression output:"),
+        tags$h4("Univariate regression output:"),
         fluidRow(verbatimTextOutput(outputId = "lm.summary")),
-        tags$h4("Possible Outliers"),
+        tags$h4("Possible outliers:"),
         fluidRow(tableOutput(outputId = "output"))
       )
     )),
     #Multivariate ####
     tabPanel(
-      "Multivariate",
+      "Multivariate analysis",
+      headerPanel(
+        list(HTML('<img src="Logo_Lemey_Lab.jpeg" height=100 width=100/>'), "TreeDist"),
+        windowTitle="TreeDist multivariate analysis"
+      ),
       sidebarLayout(
         ##Sidebar ####
         sidebarPanel(
-          tags$h3("TreeDist"),
-          tags$h4("Multivariate"),
+          tags$h4("Multivariate analysis"),
           width = 12,
           fluidRow(
             splitLayout(
@@ -131,11 +136,11 @@ shinyUI(fluidPage(
             ))),
         ##MainPanel ####
         mainPanel(
-          tags$h4("Basic Statistical Overview"),
+          tags$h4("Basic statistical overview:"),
           fluidRow(tableOutput(outputId = "lm_multi")),
-          tags$h4("Multivariate Regression Model"),
+          tags$h4("Multivariate regression model:"),
           fluidRow(verbatimTextOutput(outputId = "lm.summary_multi")),
-          tags$h4("Possible Outliers"),
+          tags$h4("Possible outliers:"),
           fluidRow(tableOutput(outputId = "output_multi")),
           tags$h4("Scatterplot per predictive variable:"),
           fluidRow(plotlyOutput(outputId = "multi_plot"))
@@ -143,11 +148,14 @@ shinyUI(fluidPage(
         )
       )),
     #Explore Tree ####
-    tabPanel(title = "Explore Tree",
+    tabPanel(title = "Explore tree",
+             headerPanel(
+               list(HTML('<img src="Logo_Lemey_Lab.jpeg" height=100 width=100/>'), "TreeDist"),
+               windowTitle="TreeDist tree exploration"
+             ),
              sidebarLayout(
                ##Sidebar ####
                sidebarPanel(
-                 tags$h3("TreeDist"),
                  tags$h4("Tree"),
                  width=3,
                  fluidRow(
@@ -155,7 +163,7 @@ shinyUI(fluidPage(
                      12,
                      selectInput(
                        inputId = "Z_A_Tree",
-                       "Zoom or Annotation Tree",
+                       "Zoom or annotation tree",
                        c("Zoom Tree (plotly)"="Z_Tree", "Annotation Tree (ggtree)"="A_Tree"))
                    )),
                  fluidRow(
@@ -163,7 +171,7 @@ shinyUI(fluidPage(
                      12,
                      checkboxInput(
                        inputId = "colour_by_states",
-                       label= "Colour by States"
+                       label= "Colour by states"
                      ))),
                  wellPanel("Coloured by states",
                            conditionalPanel(condition = "input.colour_by_states",
@@ -172,7 +180,7 @@ shinyUI(fluidPage(
                                                 12,
                                                 numericInput(
                                                   inputId = "annotation_plot_legend_size",
-                                                  label= "Annotation tree -  Legend text Size",
+                                                  label= "Annotation tree -  Legend text size",
                                                   value =15
                                                 ))))),
                  fluidRow(
@@ -200,9 +208,13 @@ shinyUI(fluidPage(
                                                                            12,
                                                                            numericInput(
                                                                              inputId = "ancestral_states_size",
-                                                                             label= "Ancestral states Size",
+                                                                             label= "Ancestral states size",
                                                                              value =3
                                                                            ))))),
+                                            ### Annotation tree - Selection of internal node #####
+                                            ### This ui is generated in the tree.R file, so server side
+                                            ### It is used to select the root node of the subtree that
+                                            ### will be displayed when selected.
                                             uiOutput("select_node_render"),        
                                             fluidRow(
                                               column(
@@ -227,7 +239,7 @@ shinyUI(fluidPage(
                                                 12,
                                                 selectizeInput(
                                                   inputId = "select_layout",
-                                                  label = "Annotation tree - Select Layout:",
+                                                  label = "Select layout:",
                                                   choices = c("rectangular", 
                                                               "slanted",
                                                               "fan", 
@@ -246,7 +258,7 @@ shinyUI(fluidPage(
                                                   inputId = "node_number",
                                                   label= "Node number"
                                                 ))),
-                                            wellPanel("Node numberoptions",
+                                            wellPanel("Node number options",
                                                       conditionalPanel(condition = "input.node_number",
                                                                        fluidRow(
                                                                          column(
@@ -261,7 +273,7 @@ shinyUI(fluidPage(
                                                 12,
                                                 checkboxInput(
                                                   inputId = "tip_shapes",
-                                                  label= "Annotation tree - Tip shapes"
+                                                  label= "Annotation tree - tip shapes"
                                                 ))),
                                             fluidRow(
                                               column(
