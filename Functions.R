@@ -186,7 +186,7 @@ plotting_fun<-function(transition_distances, logs ,vals){
   if(!logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE) {
       p<-p+ coord_cartesian(xlim = c(min(values), max(values)), ylim = c(0,max(transition_distances$Transitions)))+
         xlab(input$Predictor_uni)+
-        ylab("Transitions_log")
+        ylab("Transitions")
     }
   if(logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE){
     p<-p + coord_cartesian(xlim = c(min(values), max(values)), ylim = c(0,max(log(transition_distances$Transitions))))+
@@ -194,17 +194,13 @@ plotting_fun<-function(transition_distances, logs ,vals){
       ylab("Transitions_log")
   }
   if(!logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
-    p<-p + coord_cartesian(xlim = c(min(log(values))), max(log(values)), ylim = c(0,max(transition_distances$Transitions)))+
-      xlab(paste0(input$Predictor_uni, "_log"))+
-      ylab("Transitions")
+    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni, "_log"),limits =  c(min(log(values)), max(log(values))))+
+      scale_y_continuous(name = "Transitions", limits=c(0,max(transition_distances$Transitions)))
   }
   if(logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
-    p<-p + coord_cartesian(xlim = c(min(log(values))), max(log(values)), ylim = c(0,max(log(transition_distances$Transitions))))+
-      xlab(paste0(input$Predictor_uni, "_log"))+
-      ylab("(Transition_log")
+    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni, "_log"),limits =  c(min(log(values)), max(log(values))))+
+      scale_y_continuous(name = "Transition_log", limits=c(0,max(log(transition_distances$Transitions))))
   }
-  browser()
-  
   p <- p %>% plotly::ggplotly(tooltip = c(input$Predictor_uni, "Transitions", "Key"), source="plot")
 
   return(p)
