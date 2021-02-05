@@ -60,7 +60,7 @@ shinyUI(fluidPage(useShinyjs(), #activate Shinyjs
                         #"Newick" = "newick"),
                         selected = "beast"
             )
-          ))#   selectInput(inputId = "Predictor_uni", label="Predictor", choices=c(NULL))
+          ))
         ),
         fluidRow(column(12,
                         fileInput(
@@ -113,33 +113,35 @@ shinyUI(fluidPage(useShinyjs(), #activate Shinyjs
             tags$div(class="regression_control",
             tags$h4("Plot layout controls:"),
           column(3,selectInput(inputId = "Predictor_uni", label="Univariate predictor", choices=c(NULL))),
-          column(3,numericInput(inputId = "stroke",label= "Stroke thickness", value=0.2)),
-          column(3,numericInput(inputId = "size",label= "Point size", value=3)),
-          column(3,numericInput(inputId = "alpha",label= "Shading", value=0.5))
+          column(3,numericInput(inputId = "stroke",label= "Stroke thickness", value=0.2,min = 0, step = 0.1)),
+          column(3,numericInput(inputId = "size",label= "Point size", value=3, min = 0, step = 0.25 )),
+          column(3,numericInput(inputId = "alpha",label= "Shading", value=0.5, min = 0, max = 1, step = 0.05))
         ))),
         fluidRow(
           shinyjs::hidden(
             tags$div(class="regression_control",
-            column(3,actionButton("exclude_toggle", "Toggle points")),
-            column(3,actionButton("exclude_reset", "Reset")),
-            column(3,actionButton("log_transitions", "Toggle Log-Transitions")),
-            column(3,actionButton("log_distances", "Toggle Log-Distance Metric"))
-        ))),
+                     conditionalPanel(condition = "input.Scatter_residual=='scatter'",
+                                      column(3,actionButton("exclude_toggle", "Toggle points")),
+                                      column(3,actionButton("exclude_reset", "Reset")),
+                                      column(3,actionButton("log_transitions", "Toggle Log-Transitions")),
+                                      column(3,actionButton("log_distances", "Toggle Log-Distance Metric"))
+                     )))),
         fluidRow(
           shinyjs::hidden(
             tags$div(class="regression_control",
-            tags$h4("Regression line controls:"),
-          column(4,checkboxInput(inputId = "regression_line",label= "Regression line")),
-          column(4, conditionalPanel(condition = "input.regression_line",
-                                     radioButtons(inputId = "se",
-                                                  label= "Show Confidence Interval", 
-                                                  choices = c(TRUE, FALSE), 
-                                                  selected = FALSE))),
-          column(4, conditionalPanel(condition = "input.regression_line && input.se=='TRUE'",
-                                     numericInput(inputId = "level",
-                                                  label= "Confidence level - shaded area",
-                                                  value = 0.95)))
-        ))),
+                     conditionalPanel(condition = "input.Scatter_residual=='scatter'",
+                                      tags$h4("Regression line controls:"),
+                                      column(4,checkboxInput(inputId = "regression_line",label= "Regression line")),
+                                      column(4, conditionalPanel(condition = "input.regression_line",
+                                                                 radioButtons(inputId = "se",
+                                                                              label= "Show Confidence Interval", 
+                                                                              choices = c(TRUE, FALSE), 
+                                                                              selected = FALSE))),
+                                      column(4, conditionalPanel(condition = "input.regression_line && input.se=='TRUE'",
+                                                                 numericInput(inputId = "level",
+                                                                              label= "Confidence level - shaded area",
+                                                                              value = 0.95, min = 0, max = 1, step = 0.05)))
+                     )))),
         #tags$h4("Hovering output:"),
         #fluidRow(verbatimTextOutput("hover")),
         fluidRow(tableOutput(outputId = "lm")),
@@ -159,18 +161,17 @@ shinyUI(fluidPage(useShinyjs(), #activate Shinyjs
         ##Sidebar ####
         sidebarPanel(
           tags$h4("Multivariate analysis"),
-          width = 12,
+          width = 4,
           fluidRow(
             splitLayout(
               checkboxGroupInput("variable", "Variables:",
                                  c("Updating" = "U")),
-              tableOutput("data"),
               checkboxGroupInput("Log", "Log:",
-                                 c("Updating" = "x")),
-              tableOutput("data2")
+                                 c("Updating" = "x"))
             ))),
         ##MainPanel ####
         mainPanel(
+          width = 8,
           tags$h4("Basic statistical overview:"),
           fluidRow(tableOutput(outputId = "lm_multi")),
           tags$h4("Multivariate regression model:"),

@@ -1,9 +1,9 @@
-chooseReconstructionMethod<-function(method, tip_states, tree_not_annotated){
-  if(method=="ML"){
+chooseReconstructionMethod<-function(tip_states, tree_not_annotated){
+  if(input$Reconstruction_Method=="ML"){
     max_ancestral_positions<-ML_Reconstruction(tip_states, tree_not_annotated)%>%
       max_ancestral_positions_ML(tree_not_annotated=tree_not_annotated, ancestral_positions= .)
   }
-  if(method=="MP"){
+  if(input$Reconstruction_Method=="MP"){
     max_ancestral_positions<-prepare_states_MP(tip_states)%>%
       MaximumParsimonyReconstruction(tip_states_numerical = ., tree_not_annotated)%>%
       max_ancestral_positions_MP(tip_states, tree_not_annotated=tree_not_annotated, ancestral_positions= .)

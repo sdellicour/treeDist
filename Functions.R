@@ -6,7 +6,7 @@
 #' @return The matrices in R matrix format, named.
 importingDist<-function(distances_raw_file, delimiter){
   #In case the user did not enter a delimiter, then the function detect delimiter is called.
-  if(delimiter==""){
+  if(input$delimiter==""){
     delimiter<-detect_delimiter(distances_raw_file)
   }
   distances_raw <- utils::read.csv(distances_raw_file, head=T, sep=delimiter)
@@ -119,12 +119,12 @@ makeSymmetric<-function(matrix){
   matrix_sym
 }
 
-GenerateFinal_Transitions_Distances <- function(makeSymmetric, transitions_raw, distances_raw, column_names) {
+GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw, column_names) {
   names_matrixes<-outer(X = colnames(transitions_raw),
                         Y = rownames(transitions_raw),
                         FUN = function(X,Y) paste(X,Y,sep="->"))#all combination of transitions
   
-  if(makeSymmetric==TRUE){
+  if(input$Symmetrie==TRUE){
     transitions<-makeSymmetric(transitions_raw)
     names_matrixes = names_matrixes[lower.tri(transitions)]#names and distance call before call to transition
     

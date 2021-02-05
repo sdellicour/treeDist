@@ -1,3 +1,4 @@
+
 observe({
   updateCheckboxGroupInput(session, 
                            inputId= "Log", 
@@ -6,16 +7,16 @@ observe({
                            selected = NULL)
 })
 
-plotting_muĺti<-function(transition_distances,vals,variable_multi, Log_multi, clientData){
+plotting_muĺti<-function(transition_distances,vals, clientData){
   
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
   
   keep<-keep%>%
-    select(Transitions, variable_multi, Key)%>%
-    mutate_at(Log_multi, log)
+    select(Transitions, input$variable, Key)%>%
+    mutate_at(input$Log, log)
   colnames(keep)<-sapply(colnames(keep), function(colname){
-    if(colname %in% Log_multi) {
+    if(colname %in% input$Log) {
       paste0(colname, "_log")
     }else{
       colname
@@ -33,23 +34,23 @@ plotting_muĺti<-function(transition_distances,vals,variable_multi, Log_multi, c
 }
 
 
-lm_multi<-function(transition_distances,cut_off_residual=NULL, percentile=95, vals, variable_multi, Log_multi){
+lm_multi<-function(transition_distances,cut_off_residual=NULL, percentile=95, vals){
   
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
   
-  variable=as.vector(sapply(variable_multi, function(variable) {
-    if (variable %in% Log_multi){
+  variable=as.vector(sapply(input$variable, function(variable) {
+    if (variable %in% input$Log){
       variable=paste0("log(", variable, ")")
     }
     variable
   }))
   
-  if("Transitions" %!in% Log_multi){
+  if("Transitions" %!in% input$Log){
     lm=lm(as.formula(paste0("Transitions~",paste(variable, collapse="+"))), data=keep)
     lm=lm(as.formula(paste0("Transitions~",paste(variable, collapse="+"))), data=keep)
   }
-  if("Transitions" %in% Log_multi){
+  if("Transitions" %in% input$Log){
     lm=lm(as.formula(paste0("log(Transitions)~",paste(variable, collapse="+"))), data=keep)
     lm=lm(as.formula(paste0("log(Transitions)~",paste(variable, collapse="+"))), data=keep)
   }
