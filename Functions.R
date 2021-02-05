@@ -156,6 +156,7 @@ plotting_fun<-function(transition_distances, logs ,vals){
       dplyr::mutate_at("Transitions", log)
   }
   
+  
   ##Give a warning if the predictive variable is log transformed but contains values equal or below 0.
   if(min(get(input$Predictor_uni, transition_distances))<=0 & logs$logtransform[2]==TRUE){
     shiny::showNotification(
@@ -176,30 +177,34 @@ plotting_fun<-function(transition_distances, logs ,vals){
     geom_point(data=keep, shape=21, colour="#4D4D4D" ,fill=alpha("#0e74af", input$alpha),  stroke = input$stroke, size=input$size) + 
     geom_point(data = exclude, shape = 21, fill = NA, color = "red", alpha = input$alpha, stroke = input$stroke, size=input$size)
 
+  
+  values<- get(input$Predictor_uni, transition_distances)
   if(!input$regression_line==FALSE){ 
      p <- p + geom_smooth(mapping=aes(key=NULL), method = "lm", se=as.logical(input$se), level=input$level)
    }
 
   if(!logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE) {
-      p<-p+ coord_cartesian(xlim = c(min(get(input$Predictor_uni, transition_distances)), max(get(input$Predictor_uni, transition_distances))), ylim = c(0,max(transition_distances$Transitions)))+
+      p<-p+ coord_cartesian(xlim = c(min(values), max(values)), ylim = c(0,max(transition_distances$Transitions)))+
         xlab(input$Predictor_uni)+
-        ylab("Transitions")
+        ylab("Transitions_log")
     }
   if(logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE){
-    p<-p + coord_cartesian(xlim = c(min(get(input$Predictor_uni, transition_distances)), max(get(input$Predictor_uni, transition_distances))), ylim = c(0,max(log(transition_distances$Transitions))))+
+    p<-p + coord_cartesian(xlim = c(min(values), max(values)), ylim = c(0,max(log(transition_distances$Transitions))))+
       xlab(input$Predictor_uni)+
-      ylab("log(Transitions)")
+      ylab("Transitions_log")
   }
   if(!logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
-    p<-p + coord_cartesian(xlim = c(min(log(get(input$Predictor_uni, transition_distances)))), max(log(get(input$Predictor_uni))), ylim = c(0,max(transition_distances$Transitions)))+
-      xlab(paste0("log(", input$Predictor_uni, ")"))+
+    p<-p + coord_cartesian(xlim = c(min(log(values))), max(log(values)), ylim = c(0,max(transition_distances$Transitions)))+
+      xlab(paste0(input$Predictor_uni, "_log"))+
       ylab("Transitions")
   }
   if(logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
-    p<-p + coord_cartesian(xlim = c(min(log(get(input$Predictor_uni, transition_distances)))), max(log(get(input$Predictor_uni, transition_distances))), ylim = c(0,max(log(transition_distances$Transitions))))+
-      xlab(paste0("log(", input$Predictor_uni, ")"))+
-      ylab("log(Transitions)")
+    p<-p + coord_cartesian(xlim = c(min(log(values))), max(log(values)), ylim = c(0,max(log(transition_distances$Transitions))))+
+      xlab(paste0(input$Predictor_uni, "_log"))+
+      ylab("(Transition_log")
   }
+  browser()
+  
   p <- p %>% plotly::ggplotly(tooltip = c(input$Predictor_uni, "Transitions", "Key"), source="plot")
 
   return(p)
@@ -257,3 +262,5 @@ getTipLabels<-function(tree){
   }
   return(tip_labels)
 }
+
+

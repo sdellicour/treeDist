@@ -11,6 +11,16 @@ output$select_node_render <- renderUI({
           value= length(getTipLabels(tree))+1
         ))))
 })
+
+output$log <- renderUI({
+  output <- tagList(
+      checkboxGroupInput(inputId= "log", 
+                         label = "Log", 
+                         choices =log_validated,
+                         selected = NULL)
+    )
+})
+
 # creating the tree
 output$plotly_tree <- renderPlotly({
   req(input$tree_text_size,

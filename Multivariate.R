@@ -1,12 +1,21 @@
 
-observe({
-  updateCheckboxGroupInput(session, 
-                           inputId= "Log", 
-                           label = "Log", 
-                           choices = c(input$variable, "Transitions"),
-                           selected = NULL)
+log_choices<-function(transition_distances){
+  log_validated<-names(which(apply(transition_distances[,1:dim(transition_distances)[2]-1], 2, min)>0))
+  return(log_validated)
+}
+
+observeEvent(input$multi_input_control, {
+  shinyjs::toggle(selector = "div.multi_input_control", animType = "fade", anim=T)
 })
 
+observeEvent(input$multi_regression_output, {
+  shinyjs::toggle(selector = "div.multi_regression_output", animType = "fade", anim=T)
+})
+
+observeEvent(input$multi_plot_output, {
+  shinyjs::toggle(selector = "div.multi_plot_output", animType = "fade", anim=T)
+})
+  
 plotting_muĺti<-function(transition_distances,vals, clientData){
   
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]

@@ -55,7 +55,9 @@ shinyServer(function(input, output, session) {
                              selected = column_names)
   })         
   
-  
+  observeEvent(input$  uni_regression_output, {
+    shinyjs::toggle(selector = "div.uni_regression_output", animType = "fade", anim=T)
+  })
   #' observeEvent (RUN) that triggers the import of the files, the calculation of transition matrix and plotting of all plots.
   #' @param input$start Actionbutton that is pressed by the user triggers the execution of the code within this observer
   observeEvent(input$start, {
@@ -79,6 +81,7 @@ shinyServer(function(input, output, session) {
     distances_raw<-lapply(distances_raw_file, function(distances_raw_file) importingDist(distances_raw_file, input$delimiter))
     #distances_raw_file<-"input/rabies/predictors/bodySize.csv"
     
+
     if(input$annotations){
       state= input$Annotation_State
     }else{
@@ -94,9 +97,10 @@ shinyServer(function(input, output, session) {
     }
     transitions<-GenerateRawTransitionMatrix(state, distances_raw[[1]], tree) 
     #take any distance matrix to get the col names and dimensions for the transitions matrix
-    
     transition_distances<-GenerateFinal_Transitions_Distances(transitions_raw=transitions, distances_raw=distances_raw, column_names=column_names)
     
+    log_validated<-log_choices(transition_distances)
+
     vals <- reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)))
     logs<-reactiveValues(logtransform= rep(FALSE, 2))
     #whenever this variable "vals" changes then all dependencies, expressions that
