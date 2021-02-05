@@ -52,11 +52,16 @@ shinyServer(function(input, output, session) {
   
   #observeEvent (RUN) ####
   observeEvent(input$start, {
+    shinyjs::show(selector = "div.regression_control", animType = "fade", anim=T)
+    # show("mainpanel4")
+    # show("mainpanel5")
+    # show("mainpanel6")
+    # show("mainpanel7")
+    # show("mainpanel8")#show mainpanel univariate tab
     Log_multi=input$Log
     variable_multi=input$variable
     distances_raw_file_names = input$distances_file$name
     column_names<-sapply(distances_raw_file_names, first.word)
-    Predictor= input$Predictor_uni
     annotated= input$annotations
     file_type = input$file_type
     tree_file = input$tree_file$datapath
@@ -109,11 +114,11 @@ shinyServer(function(input, output, session) {
       glance(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals, variable_multi=variable_multi, Log_multi=Log_multi)$lm)
     }) # output$plot = renderTable({
     
-    ## Output ####
-    output$output_multi=renderTable({
-      lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals, variable_multi=variable_multi, Log_multi=Log_multi)$output
-    }) # output$plot = renderTable({
-    
+    # ## Output ####
+    # output$output_multi=renderTable({
+    #   lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals, variable_multi=variable_multi, Log_multi=Log_multi)$output
+    # }) # output$plot = renderTable({
+    # 
     output$lm.summary_multi=renderPrint({
       summary(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals, variable_multi=variable_multi, Log_multi=Log_multi)$lm)
     }) # output$plot = renderTable({
@@ -121,35 +126,35 @@ shinyServer(function(input, output, session) {
     # Univariate ####
     
     output$plot = renderPlotly({
-      plotting_fun(transition_distances, logs,vals, Predictor)
+      plotting_fun(transition_distances, logs,vals)
     }) # output$plot = renderPlot({
     
     output$plot_res = renderPlotly({
-      linear_regression(transition_distances,logs=logs, vals=vals, Predictor=Predictor)$x%>%
+      linear_regression(transition_distances,logs=logs, vals=vals)$x%>%
         plotting_residuals(transition_distances, vals, .)
       
     }) # output$plot = renderPlot({
     
     output$lm=renderTable({
-      glance(linear_regression(transition_distances, logs=logs, vals=vals, Predictor=Predictor)$lm)
+      glance(linear_regression(transition_distances, logs=logs, vals=vals)$lm)
       
     }) # output$plot = renderTable({
     
     output$lm.summary=renderPrint({
-      summary(linear_regression(transition_distances=transition_distances, logs=logs, vals=vals, Predictor=Predictor)$lm)
+      summary(linear_regression(transition_distances=transition_distances, logs=logs, vals=vals)$lm)
       
     }) # output$plot = renderTable({
     
-    output$output=renderTable({
-      linear_regression(transition_distances=transition_distances,logs=logs, vals=vals, Predictor=Predictor)$output
+    # output$output=renderTable({
+    #   linear_regression(transition_distances=transition_distances,logs=logs, vals=vals)$output
       
-    }) # output$plot = renderTable({
+    #}) # output$plot = renderTable({
     
-    output$hover<-renderPrint({
-      hover_data<-event_data("plotly_hover", source = "plot")
-      transition_distances[which(transition_distances$Key==hover_data$key),]
-    })
-    
+    # output$hover<-renderPrint({
+    #   hover_data<-event_data("plotly_hover", source = "plot")
+    #   transition_distances[which(transition_distances$Key==hover_data$key),]
+    # })
+    # 
     # Toggle Points #### 
     
     observeEvent(input$log_transitions, {
@@ -195,7 +200,7 @@ shinyServer(function(input, output, session) {
     #all.equal(x_global, tree$phylo$edge.length, check.attributes=F) 
     #check attributes false becasue x_global has attributes such as "na.action"=1368, which is the root node which was found to be NA.
     
-    #browser() #uncmomment for debugging mode
+    #browser() #uncomment for debugging mode
     if(is.null(tree@phylo$edge.length)){
       x=na.omit(tree@data$edge.length)
       tree@phylo$edge.length=x

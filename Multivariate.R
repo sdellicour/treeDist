@@ -56,12 +56,5 @@ lm_multi<-function(transition_distances,cut_off_residual=NULL, percentile=95, va
   x<-data.frame(lm$residuals,lm$fitted.values)
   colnames(x)<-c("residuals", "fitted")
   
-  if(is.null(cut_off_residual)){ cut_off_residual=quantile((lm$residuals), percentile/100)}
-  index=keep[which(lm$residuals>cut_off_residual), ]
-  print(paste(length(index$Transitions), "Possible Outlier(s)" , sep = " "))
-  print(paste("cut_off_residual: ",cut_off_residual))
-  output<-index[order(-index$Transitions),]
-  output<-data.frame(rownames(output), output)
-  colnames(output)<-c("Countries", "# Transitions", "Distance between countries")
-  list(lm=lm, output=output, x=x)
+  list(lm=lm)#, output=output, x=x)
 }   

@@ -147,7 +147,7 @@ GenerateFinal_Transitions_Distances <- function(makeSymmetric, transitions_raw, 
   transition_distances
 }
 
-plotting_fun<-function(transition_distances, logs ,vals, Predictor){
+plotting_fun<-function(transition_distances, logs ,vals){
   keep    <- transition_distances[vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
   ggplot2::theme_set(theme_classic())
@@ -157,9 +157,9 @@ plotting_fun<-function(transition_distances, logs ,vals, Predictor){
   }
   
   ##Give a warning if the predictive variable is log transformed but contains values equal or below 0.
-  if(min(get(Predictor, transition_distances))<=0 & logs$logtransform[2]==TRUE){
+  if(min(get(input$Predictor_uni, transition_distances))<=0 & logs$logtransform[2]==TRUE){
     shiny::showNotification(
-      ui=paste0("There are values smaller or equal to 0 in ", Predictor, " the log transformation is not possible.
+      ui=paste0("There are values smaller or equal to 0 in ", input$Predictor_uni, " the log transformation is not possible.
                 The transform is rolled back and displayed as before." ),
       type = 'warning',
       duration=30)
@@ -169,53 +169,56 @@ plotting_fun<-function(transition_distances, logs ,vals, Predictor){
   
   if(logs$logtransform[2]==TRUE)   {
     keep <- keep%>%
-      dplyr::mutate_at(Predictor, log)
+      dplyr::mutate_at(input$Predictor_uni, log)
   }
-  p <- ggplot(keep, mapping= aes_string(x=Predictor,y="Transitions", key="Key")) 
+  p <- ggplot(keep, mapping= aes_string(x=input$Predictor_uni,y="Transitions", key="Key")) 
   p<-p +
-    geom_point(data=keep, shape=21, colour="#4D4D4D", fill="#0e74af80") + 
-    geom_point(data = exclude, shape = 21, fill = NA, color = "red", alpha = 0.25) +
-    geom_smooth(mapping=aes(key=NULL),method = "lm")
+    geom_point(data=keep, shape=21, colour="#4D4D4D" ,fill=alpha("#0e74af", input$alpha),  stroke = input$stroke, size=input$size) + 
+    geom_point(data = exclude, shape = 21, fill = NA, color = "red", alpha = input$alpha, stroke = input$stroke, size=input$size)
 
-    if(!logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE) {
-      p<-p+ coord_cartesian(xlim = c(min(get(Predictor, transition_distances)), max(get(Predictor, transition_distances))), ylim = c(0,max(transition_distances$Transitions)))+
-        xlab(Predictor)+
+  if(!input$regression_line==FALSE){ 
+     p <- p + geom_smooth(mapping=aes(key=NULL), method = "lm", se=as.logical(input$se), level=input$level)
+   }
+
+  if(!logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE) {
+      p<-p+ coord_cartesian(xlim = c(min(get(input$Predictor_uni, transition_distances)), max(get(input$Predictor_uni, transition_distances))), ylim = c(0,max(transition_distances$Transitions)))+
+        xlab(input$Predictor_uni)+
         ylab("Transitions")
     }
   if(logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE){
-    p<-p + coord_cartesian(xlim = c(min(get(Predictor, transition_distances)), max(get(Predictor, transition_distances))), ylim = c(0,max(log(transition_distances$Transitions))))+
-      xlab(Predictor)+
+    p<-p + coord_cartesian(xlim = c(min(get(input$Predictor_uni, transition_distances)), max(get(input$Predictor_uni, transition_distances))), ylim = c(0,max(log(transition_distances$Transitions))))+
+      xlab(input$Predictor_uni)+
       ylab("log(Transitions)")
   }
   if(!logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
-    p<-p + coord_cartesian(xlim = c(min(log(get(Predictor, transition_distances)))), max(log(get(Predictor, transition_distances))), ylim = c(0,max(transition_distances$Transitions)))+
-      xlab(paste0("log(", Predictor, ")"))+
+    p<-p + coord_cartesian(xlim = c(min(log(get(input$Predictor_uni, transition_distances)))), max(log(get(input$Predictor_uni))), ylim = c(0,max(transition_distances$Transitions)))+
+      xlab(paste0("log(", input$Predictor_uni, ")"))+
       ylab("Transitions")
   }
   if(logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
-    p<-p + coord_cartesian(xlim = c(min(log(get(Predictor, transition_distances)))), max(log(get(Predictor, transition_distances))), ylim = c(0,max(log(transition_distances$Transitions))))+
-      xlab(paste0("log(", Predictor, ")"))+
+    p<-p + coord_cartesian(xlim = c(min(log(get(input$Predictor_uni, transition_distances)))), max(log(get(input$Predictor_uni, transition_distances))), ylim = c(0,max(log(transition_distances$Transitions))))+
+      xlab(paste0("log(", input$Predictor_uni, ")"))+
       ylab("log(Transitions)")
   }
-  p <- p %>% plotly::ggplotly(tooltip = c(Predictor, "Transitions", "Key"), source="plot")
+  p <- p %>% plotly::ggplotly(tooltip = c(input$Predictor_uni, "Transitions", "Key"), source="plot")
 
   return(p)
 }
 
-plotting_residuals<-function(transition_distances,vals ,x, Predictor){#currently vals does not need to be pused here
+plotting_residuals<-function(transition_distances,vals ,x){#currently vals does not need to be pused here
   
   #keep    <- transition_distances[ vals$keeprows, , drop = FALSE]#not needed because only called after linear regression
   #exclude <- transition_distances[!vals$keeprows, , drop = FALSE]# see above
   
   theme_set(theme_classic())
   p_res<-ggplot(x, aes(fitted, residuals))+
-    geom_point(shape=21, colour="#4D4D4D", fill="#0e74af80")+ #rgba notation, 80 refers to 50%
+    geom_point(shape=21, colour="#4D4D4D", fill=alpha("#0e74af", input$alpha), stroke = input$stroke, size=input$size) + 
     coord_cartesian(xlim = c(min(x$fitted), max(x$fitted)), ylim = c(min(x$residuals),max(x$residuals)))
   p_res1 <- p_res %>% plotly::ggplotly(tooltip =c("fitted", "residuals"), source="plot_res")
   return(p_res)
 }
 
-linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95, logs,  vals, Predictor){
+linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95, logs,  vals){
   
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
@@ -225,21 +228,15 @@ linear_regression<-function(transition_distances,cut_off_residual=NULL, percenti
   }
   if(logs$logtransform[2]==TRUE)   {
     keep <- keep%>%
-      mutate_at(Predictor, log)
+      mutate_at(input$Predictor_uni, log)
   }
   
-  lm=lm(keep$Transitions~get(Predictor, keep))
+  lm=lm(keep$Transitions~get(input$Predictor_uni, keep))
   x<-data.frame(lm$residuals,lm$fitted.values)
   colnames(x)<-c("residuals", "fitted")
   
-  if(is.null(cut_off_residual)){ cut_off_residual=quantile((lm$residuals), percentile/100)}
-  index=keep[which(lm$residuals>cut_off_residual), ]
-  print(paste(length(index$Transitions), "Possible Outlier(s)" , sep = " "))
-  print(paste("cut_off_residual: ",cut_off_residual))
-  output<-index[order(-index$Transitions),]
-  output<-data.frame(rownames(output), output)
-  colnames(output)<-c("Countries", "# Transitions", "Distance between countries")
-  list(lm=lm, output=output, x=x)
+  
+  list(lm=lm, x=x)
 }   
 
 '%!in%' <- function(x,y){

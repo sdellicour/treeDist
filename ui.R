@@ -1,6 +1,6 @@
 #Univariate ####
 ##Sidebar####
-shinyUI(fluidPage(
+shinyUI(fluidPage(useShinyjs(), #activate Shinyjs
   tabsetPanel(tabPanel(
     "Univariate analysis",
     headerPanel(
@@ -43,7 +43,7 @@ shinyUI(fluidPage(
                                        c(
                                          "Maximum parsimony" = "MP",
                                          "Maximum likelihood" = "ML")))))),
-       
+        
         fluidRow(column(12,
                         fileInput(
                           "tree_file", label = ("Tree file")
@@ -88,29 +88,64 @@ shinyUI(fluidPage(
       ##MainPanel ####
       mainPanel(
         fluidRow(
-          splitLayout(
-            tags$h4("Plotly - scatterplot"),
-            tags$h4("Plot - residuals plot"))),
-        fluidRow(
-          splitLayout(
-            plotlyOutput(outputId = "plot"),
-            plotlyOutput(outputId = "plot_res")
+          shinyjs::hidden(
+            tags$div(class="regression_control",
+          conditionalPanel(condition = "input.Scatter_residual=='scatter'",
+                           tags$h4("Plotly - scatterplot"),
+                           plotlyOutput(outputId = "plot")
           ),
-          tags$h4("Regression controls:"),
-          selectInput(inputId = "Predictor_uni", label="Univariate predictor", choices=c(NULL)),
-          actionButton("exclude_toggle", "Toggle points"),
-          actionButton("exclude_reset", "Reset"),
-          actionButton("log_transitions", "Toggle Log-Transitions"),
-          actionButton("log_distances", "Toggle Log-Distance Metric")
-        ),
-        tags$h4("Hovering output:"),
-        fluidRow(verbatimTextOutput("hover")),
-        tags$h4("Basic univariate statistics:"),
+          conditionalPanel(condition= "input.Scatter_residual=='residuals'",
+                           tags$h4("Plot - residuals plot"),
+                           plotlyOutput(outputId = "plot_res")
+          )))),
+        fluidRow(
+          shinyjs::hidden(
+            tags$div(class="regression_control",
+          column(
+            12,
+            selectInput(
+              inputId = "Scatter_residual",
+              "Scatter, residual plot selection",
+              c("Scatter plot (plotly)"="scatter", "Residuals plot"="residuals"))
+          )))),
+        fluidRow(
+          shinyjs::hidden(
+            tags$div(class="regression_control",
+            tags$h4("Plot layout controls:"),
+          column(3,selectInput(inputId = "Predictor_uni", label="Univariate predictor", choices=c(NULL))),
+          column(3,numericInput(inputId = "stroke",label= "Stroke thickness", value=0.2)),
+          column(3,numericInput(inputId = "size",label= "Point size", value=3)),
+          column(3,numericInput(inputId = "alpha",label= "Shading", value=0.5))
+        ))),
+        fluidRow(
+          shinyjs::hidden(
+            tags$div(class="regression_control",
+            column(3,actionButton("exclude_toggle", "Toggle points")),
+            column(3,actionButton("exclude_reset", "Reset")),
+            column(3,actionButton("log_transitions", "Toggle Log-Transitions")),
+            column(3,actionButton("log_distances", "Toggle Log-Distance Metric"))
+        ))),
+        fluidRow(
+          shinyjs::hidden(
+            tags$div(class="regression_control",
+            tags$h4("Regression line controls:"),
+          column(4,checkboxInput(inputId = "regression_line",label= "Regression line")),
+          column(4, conditionalPanel(condition = "input.regression_line",
+                                     radioButtons(inputId = "se",
+                                                  label= "Show Confidence Interval", 
+                                                  choices = c(TRUE, FALSE), 
+                                                  selected = FALSE))),
+          column(4, conditionalPanel(condition = "input.regression_line && input.se=='TRUE'",
+                                     numericInput(inputId = "level",
+                                                  label= "Confidence level - shaded area",
+                                                  value = 0.95)))
+        ))),
+        #tags$h4("Hovering output:"),
+        #fluidRow(verbatimTextOutput("hover")),
         fluidRow(tableOutput(outputId = "lm")),
-        tags$h4("Univariate regression output:"),
-        fluidRow(verbatimTextOutput(outputId = "lm.summary")),
-        tags$h4("Possible outliers:"),
-        fluidRow(tableOutput(outputId = "output"))
+        fluidRow(verbatimTextOutput(outputId = "lm.summary"))
+        #tags$h4("Possible outliers:"),
+        #fluidRow(tableOutput(outputId = "output"))
       )
     )),
     #Multivariate ####
@@ -140,8 +175,8 @@ shinyUI(fluidPage(
           fluidRow(tableOutput(outputId = "lm_multi")),
           tags$h4("Multivariate regression model:"),
           fluidRow(verbatimTextOutput(outputId = "lm.summary_multi")),
-          tags$h4("Possible outliers:"),
-          fluidRow(tableOutput(outputId = "output_multi")),
+          #tags$h4("Possible outliers:"),
+          #fluidRow(tableOutput(outputId = "output_multi")),
           tags$h4("Scatterplot per predictive variable:"),
           fluidRow(plotlyOutput(outputId = "multi_plot"))
           
