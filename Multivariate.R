@@ -4,6 +4,23 @@ log_choices<-function(transition_distances){
   return(log_validated)
 }
 
+logs_multi <- reactive({
+  req(transition_distances, vals)#require to compute the transitions and the distance matrices first before executing this code
+  log_validated = log_choices(transition_distances)
+  return(c(c(log_validated[log_validated %in% c(input$variable)]), "Transitions"))
+})
+
+
+output$log <- renderUI({
+  req(transition_distances, vals)
+  output <- checkboxGroupInput(
+    inputId = "Log",
+    label = "Log",
+    choices = logs_multi(),
+    selected = NULL
+  )
+})
+
 observeEvent(input$multi_input_control, {
   shinyjs::toggle(selector = "div.multi_input_control", animType = "fade", anim=T)
 })
@@ -17,10 +34,9 @@ observeEvent(input$multi_plot_output, {
 })
   
 plotting_muĺti<-function(transition_distances,vals, clientData){
-  
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  
+
   keep<-keep%>%
     select(Transitions, input$variable, Key)%>%
     mutate_at(input$Log, log)
@@ -68,3 +84,30 @@ lm_multi<-function(transition_distances,cut_off_residual=NULL, percentile=95, va
   
   list(lm=lm)#, output=output, x=x)
 }   
+
+
+# Multivariate ####
+## Plot ####
+observe({
+  output$multi_plot = renderPlotly({
+    req(transition_distances, vals, logs_multi(), input$variable)
+    plotting_muĺti(transition_distances, vals, clientData=cdata)
+  }) # output$plot = renderPlot({
+  
+  ## Glance #######
+  output$lm_multi=renderTable({
+    req(transition_distances, vals, logs_multi(), input$variable)
+    glance(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals)$lm)
+  }) # output$plot = renderTable({
+  
+  # ## Output ####
+  # output$output_multi=renderTable({
+  #   lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals)$output
+  # }) # output$plot = renderTable({
+  # 
+  output$lm.summary_multi=renderPrint({
+    req(transition_distances, vals, logs_multi(), input$variable)
+    summary(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals)$lm)
+  }) # output$plot = renderTable({
+  
+})

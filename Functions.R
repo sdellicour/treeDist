@@ -46,7 +46,7 @@ reshape_Rownames<-function(distances_raw){
 # Import tree -------------------------------------------------------------
 
 #TODO documentation
-importingTree<-function(sampling_locations, tree_file, file_type){
+importingTree<-function(tree_file, file_type){
   print("Reading tree")
   switch(file_type,
          "nexus" = {
@@ -61,8 +61,12 @@ importingTree<-function(sampling_locations, tree_file, file_type){
            colnames(tree)[which(colnames(tree) == "branch.length")] <-"edge.length"
          })
   tree <- negativeBranchLength(tree)
+  tree
+}
+
+importingSamplingLocations<-function(sampling_locations){
   tip_states <- utils::read.table(sampling_locations, blank.lines.skip = F)[,1]
-  list(tip_states, tree)
+  tip_states
 }
 
 #TODO documentation
@@ -85,7 +89,7 @@ detectState<-function(tree, distances_raw){
   return()
 }
 
-GenerateRawTransitionMatrix = function(state, distances_raw, tree_df) {
+GenerateRawTransitionMatrix = function(distances_raw, tree_df) {
   tip_states=colnames(distances_raw)
   transitions_raw= matrix(0, nrow=dim(distances_raw)[1], ncol=dim(distances_raw)[1])#0 matrix in size of distance matrix 
   row.names(transitions_raw) = tip_states
@@ -93,12 +97,12 @@ GenerateRawTransitionMatrix = function(state, distances_raw, tree_df) {
   tree_df<-tree_df
   for(node in tree_df$node){
     if(node!=tidytree::rootnode(tree_df)$node){
-      parent_loc = get(state, tidytree::parent(tree_df,node))
+      parent_loc = get(state(), tidytree::parent(tree_df,node))
       if(is.list(parent_loc)) parent_loc=parent_loc[[1]][1]
       parent_loc = stringr::str_split(parent_loc,"\\+")[[1]][1]
       parent_loc = stringr::str_split(parent_loc," ")[[1]][1]
       
-      child_loc<-get(state,tree_df[tree_df$node==node,])
+      child_loc<-get(state(),tree_df[tree_df$node==node,])
       if(is.list(child_loc)) child_loc=child_loc[[1]][1]
       child_loc = stringr::str_split(child_loc,"\\+")[[1]][1]
       child_loc = stringr::str_split(child_loc," ")[[1]][1]
@@ -119,7 +123,7 @@ makeSymmetric<-function(matrix){
   matrix_sym
 }
 
-GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw, column_names) {
+GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) {
   names_matrixes<-outer(X = colnames(transitions_raw),
                         Y = rownames(transitions_raw),
                         FUN = function(X,Y) paste(X,Y,sep="->"))#all combination of transitions
@@ -138,7 +142,7 @@ GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw, 
     transitions=transitions_raw[(lower.tri(transitions_raw) | upper.tri(transitions_raw))]
     #bring transitions in same format, 1 columns and each transition for 1 state to the other, bidirectional, in rows
   }
-  colnames(distances)<-column_names   #adding the names to cols
+  colnames(distances)<-column_names()   #adding the names to cols
   transition_distances<-data.frame(Transitions=transitions, distances, Key=names_matrixes)
   #adding the transitions as a column, adding the row_names as an additional variable (needed for tooltip)
   rownames(transition_distances)<-names_matrixes #adding rownames, not strictly required but neat
@@ -147,98 +151,7 @@ GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw, 
   transition_distances
 }
 
-plotting_fun<-function(transition_distances, logs ,vals){
-  keep    <- transition_distances[vals$keeprows, , drop = FALSE]
-  exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  ggplot2::theme_set(theme_classic())
-  if(logs$logtransform[1]==TRUE)   {
-    keep <- keep%>%
-      dplyr::mutate_at("Transitions", log)
-  }
-  
-  
-  ##Give a warning if the predictive variable is log transformed but contains values equal or below 0.
-  if(min(get(input$Predictor_uni, transition_distances))<=0 & logs$logtransform[2]==TRUE){
-    shiny::showNotification(
-      ui=paste0("There are values smaller or equal to 0 in ", input$Predictor_uni, " the log transformation is not possible.
-                The transform is rolled back and displayed as before." ),
-      type = 'warning',
-      duration=30)
-    logs$logtransform[2]=FALSE
-    return()
-    }
-  
-  if(logs$logtransform[2]==TRUE)   {
-    keep <- keep%>%
-      dplyr::mutate_at(input$Predictor_uni, log)
-  }
-  p <- ggplot(keep, mapping= aes_string(x=input$Predictor_uni,y="Transitions", key="Key")) 
-  p<-p +
-    geom_point(data=keep, shape=21, colour="#4D4D4D" ,fill=alpha("#0e74af", input$alpha),  stroke = input$stroke, size=input$size) + 
-    geom_point(data = exclude, shape = 21, fill = NA, color = "red", alpha = input$alpha, stroke = input$stroke, size=input$size)
 
-  
-  values<- get(input$Predictor_uni, transition_distances)
-  if(!input$regression_line==FALSE){ 
-     p <- p + geom_smooth(mapping=aes(key=NULL), method = "lm", se=as.logical(input$se), level=input$level)
-   }
-
-  if(!logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE) {
-      p<-p+ coord_cartesian(xlim = c(min(values), max(values)), ylim = c(0,max(transition_distances$Transitions)))+
-        xlab(input$Predictor_uni)+
-        ylab("Transitions")
-    }
-  if(logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE){
-    p<-p + coord_cartesian(xlim = c(min(values), max(values)), ylim = c(0,max(log(transition_distances$Transitions))))+
-      xlab(input$Predictor_uni)+
-      ylab("Transitions_log")
-  }
-  if(!logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
-    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni, "_log"),limits =  c(min(log(values)), max(log(values))))+
-      scale_y_continuous(name = "Transitions", limits=c(0,max(transition_distances$Transitions)))
-  }
-  if(logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
-    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni, "_log"),limits =  c(min(log(values)), max(log(values))))+
-      scale_y_continuous(name = "Transition_log", limits=c(0,max(log(transition_distances$Transitions))))
-  }
-  p <- p %>% plotly::ggplotly(tooltip = c(input$Predictor_uni, "Transitions", "Key"), source="plot")
-
-  return(p)
-}
-
-plotting_residuals<-function(transition_distances,vals ,x){#currently vals does not need to be pused here
-  
-  #keep    <- transition_distances[ vals$keeprows, , drop = FALSE]#not needed because only called after linear regression
-  #exclude <- transition_distances[!vals$keeprows, , drop = FALSE]# see above
-  
-  theme_set(theme_classic())
-  p_res<-ggplot(x, aes(fitted, residuals))+
-    geom_point(shape=21, colour="#4D4D4D", fill=alpha("#0e74af", input$alpha), stroke = input$stroke, size=input$size) + 
-    coord_cartesian(xlim = c(min(x$fitted), max(x$fitted)), ylim = c(min(x$residuals),max(x$residuals)))
-  p_res1 <- p_res %>% plotly::ggplotly(tooltip =c("fitted", "residuals"), source="plot_res")
-  return(p_res)
-}
-
-linear_regression<-function(transition_distances,cut_off_residual=NULL, percentile=95, logs,  vals){
-  
-  keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
-  exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  if(logs$logtransform[1]==TRUE)   {
-    keep <- keep%>%
-      mutate_at("Transitions", log)
-  }
-  if(logs$logtransform[2]==TRUE)   {
-    keep <- keep%>%
-      mutate_at(input$Predictor_uni, log)
-  }
-  
-  lm=lm(keep$Transitions~get(input$Predictor_uni, keep))
-  x<-data.frame(lm$residuals,lm$fitted.values)
-  colnames(x)<-c("residuals", "fitted")
-  
-  
-  list(lm=lm, x=x)
-}   
 
 '%!in%' <- function(x,y){
   !('%in%'(x,y))
