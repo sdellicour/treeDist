@@ -10,7 +10,6 @@ logs_multi <- reactive({
   return(c(c(log_validated[log_validated %in% c(input$variable)]), "Transitions"))
 })
 
-
 output$log <- renderUI({
   req(transition_distances, vals)
   output <- checkboxGroupInput(

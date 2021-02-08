@@ -2,8 +2,7 @@
 #Rendering the ui elements to select the node to subset,
 
 tree_data<-reactive({
-  req(tree(), transition_distances)
-  tree<-tree()
+  req(tree, transition_distances)
   tree_data<-as.treedata(tree)
   
   # The if clause below, checks if the location where ggtree is checking for the edge.length (tree@phylo$edge.length) is null
@@ -20,7 +19,7 @@ tree_data<-reactive({
   if(is.null(tree_data@phylo$edge.length)){
     x=na.omit(tree_data@data$edge.length)
     tree_data@phylo$edge.length=x
-    x_global <<- x
+    #x_global <<- x
   }
   tree_data
 })

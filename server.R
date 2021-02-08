@@ -6,6 +6,8 @@ options(shiny.maxRequestSize=10*1024^2) #10mb max file size
 #' @param output
 #' @param session
 shinyServer(function(input, output, session) {
+  source("Functions.R", local=T)
+  
   reactlog_enable() #logging a reactivity tree
   cdata <- session$clientData #https://community.rstudio.com/t/controlling-the-height-of-fluidrow-in-shiny/4968/3
   #the cdata is used to set the size of the facet wrap plot for multivariate Plotly
@@ -13,6 +15,7 @@ shinyServer(function(input, output, session) {
   #Session variables
   transition_distances<-NULL 
   vals<-NULL
+  tree<-NULL
   #this variable assignment here, is then found by R when the actual value is assigned using the
   #"<<-" operator which goes up through the environments to assign this value, we need to declare it here
   #to keep the variable at session level. otherwise the variable will be global and available across sessions, for all users using
@@ -30,46 +33,27 @@ shinyServer(function(input, output, session) {
   
   #the names of the distance matrices
   column_names<-reactive({
-    req(state())
-    sapply(input$distances_file$name, first.word)
+    req(input$distances_file$name)
+    unlist(lapply(input$distances_file$name, first.word))
   })
   
+  #distances_raw is a list of the actual distance matrices, the length of the list is the number of seected matrices
+  distances_raw<-reactive({
+    req(input$distances_file$datapath)
+    lapply(input$distances_file$datapath , function(distances_raw_file) importingDist(distances_raw_file, input$delimiter))
+  })
+
   tip_states<-reactive({
+    req(input$distances_file$name, input$sampling_locations$datapath)
     sampling_locations = input$sampling_locations$datapath
-    #sampling_locations = "input/rabies/hostnames.txt"
-    
     tip_states<-as.factor(importingSamplingLocations(sampling_locations))
     tip_states
   })
   
-  tree<-reactive({
-    req(tip_states())
-    tree_file = input$tree_file$datapath
-    #tree_file = "input/rabies/batRABV.MCC.keep.target.heights.trees"
-    tree_not_annotated<-importingTree(tree_file, input$file_type)
-    
-    if (input$annotations==FALSE){
-      tree_annotated<- chooseReconstructionMethod(tip_states(),  tree_not_annotated)
-      tree<-tree_annotated
-    }else{
-      tree<-tree_not_annotated
-    }
-    tree
-  })
-
-  #distances_raw is a list of the actual distance matrices, the length of the list is the number of seected matrices
-  distances_raw<-reactive({
-    #distances_raw_file<-"input/rabies/predictors/bodySize.csv"
-    lapply(input$distances_file$datapath , function(distances_raw_file) importingDist(distances_raw_file, input$delimiter))
-  })
-  
-  #This observer creates the list:
-  ##file types depending on whether the tree is already annotated.
-  ##extracts the names of the covariates (the distance matrices) that are uploaded by the user. And then the selectInput widget for univariate predictor and the checkbox list for the
-  ##multivariate predictor are updated.
   observe({
     #Depending on choice of annotations included or not in the tree different file types can be selected.
     if(input$annotations==FALSE){
+      shinyjs::show("tag_sampling_locations")
       updateSelectInput(
         session,
         inputId= "file_type",
@@ -78,6 +62,7 @@ shinyServer(function(input, output, session) {
         selected = "nexus"
       )
     }else{
+      shinyjs::hide("tag_sampling_locations")
       updateSelectInput(
         session,
         inputId= "file_type",
@@ -85,6 +70,51 @@ shinyServer(function(input, output, session) {
         selected = "beast"
       )
     }
+  })
+  
+  observe({
+    req(distances_raw(), input$tree_file)
+    if(input$annotations==TRUE){
+      if(is.null(tree)){
+        shinyjs::disable(selector = "div.run")#disable the run button while tree is loaded and annotation guessed
+        tree<<-importingTree(input$tree_file$datapath, "beast")
+        candidate_annotation_columns<-colnames(tree[,unique(which(tree==colnames(distances_raw()[[1]])[1], arr.ind=TRUE)[,2])])
+        if(length(candidate_annotation_columns)>0){
+          
+        shiny::showNotification(
+          ui=paste0("Done! \n Check the suggestions in the dropdown list for 'Annotation label in tree'."),
+          type = 'message',
+          duration=10)
+        
+        shinyjs::enable(selector = "div.run")#enable the "Run" button again
+        } else{
+          #else the run button stays disabled
+          shiny::showNotification(
+            ui="There seems to be no annotation in the tree that matches the column names of the distance matrices.",
+            type="error",
+            duration=10
+          )
+        }
+      }else{
+        candidate_annotation_columns<-colnames(tree[,unique(which(tree==colnames(distances_raw()[[1]])[1], arr.ind=TRUE)[,2])])
+      }
+      
+      updateSelectInput(
+        session,
+        inputId= "Annotation_State",
+        choices = candidate_annotation_columns,
+        selected = candidate_annotation_columns[1]
+      )
+    }
+  })
+  
+  
+  #This observer creates the list:
+  ##file types depending on whether the tree is already annotated.
+  ##extracts the names of the covariates (the distance matrices) that are uploaded by the user. And then the selectInput widget for univariate predictor and the checkbox list for the
+  ##multivariate predictor are updated.
+  observe({
+    req(input$distances_file$name, column_names())
     #For the univariate dropdown list of predictors.
     updateSelectInput(
       session,
@@ -92,17 +122,16 @@ shinyServer(function(input, output, session) {
       choices = column_names(),
       selected = column_names()[1]    
     )
+
     #Multivariate checkbox group with the same names of the covariates as for the univariat analysis.
     updateCheckboxGroupInput(session, 
                              inputId= "variable", 
                              label = "Variables:", 
                              choices = column_names(),
-                             selected = column_names())
+                             selected = column_names()
+    )
   })         
   
-
-
-
   logs<-reactiveValues(logtransform= rep(FALSE, 2))  #whenever this variable "vals" changes then all dependencies, expressions that
   #contain vals is called
   #reactiveValues are eager, and this would not work using reactive, unless I add an observer
@@ -111,7 +140,6 @@ shinyServer(function(input, output, session) {
   #Objects in this file are defined in each session
   #These documents are outside the actionbutton "RUN", everything outside of "RUN" canbe updated without doing all calculations again. 
   #When we need to add new distance matrices, another tree or another sampling_location file, then "RUN" is needed.
-  source("Functions.R", local=T)
   source("Multivariate.R", local=T)
   source("AncestralReconstruction.R", local=T)
   source("Univariate.R", local=T)
@@ -124,15 +152,36 @@ shinyServer(function(input, output, session) {
   #' observeEvent (RUN) that triggers the import of the files, the calculation of transition matrix and plotting of all plots.
   #' @param input$start Actionbutton that is pressed by the user triggers the execution of the code within this observer
   observeEvent(input$start, {
-    req(state())
+
+    req(input$tree_file, input$distances_file)
+    if(input$annotations==FALSE) {req(input$annotations)}
+
+    shinyjs::show(selector = "div.regression_control", animType = "fade", anim=T)
+    shinyjs::disable(selector="div.sidebar")
+    shinyjs::enable(id="reset")
+    
+    if (input$annotations==FALSE){
+      tree_as_uploaded<-importingTree(input$tree_file$datapath, input$file_type)
+      tree_annotated<- chooseReconstructionMethod(tip_states(),  tree_as_uploaded)
+      tree<<-tree_annotated
+    }
+    
     #show all elements of type "div" that have the html class "regression.control"
     #Within the UI a range of these divs are hidden in the univariate tab to make the page look cleaner.
-    shinyjs::show(selector = "div.regression_control", animType = "fade", anim=T)
-    transitions<-GenerateRawTransitionMatrix(distances_raw()[[1]], tree=tree()) 
+    transitions<-GenerateRawTransitionMatrix(distances_raw()[[1]], tree=tree) 
     #take any distance matrix to get the col names and dimensions for the transitions matrix
     transition_distances <<- GenerateFinal_Transitions_Distances(transitions_raw=transitions, distances_raw=distances_raw())
     vals <<- reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)))    
+
   }) # observeEvent(input$start, {
   
+  observeEvent(input$reset, {
+    shinyjs::enable(selector="div.sidebar")
+    shinyjs::reset(id = "sidebar")
+    transition_distances<<-NULL 
+    vals<<-NULL
+    tree<<-NULL
+  })
+    
+  
 }) # shinyServer(function(input, output) {
-

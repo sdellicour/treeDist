@@ -8,7 +8,9 @@ importingDist<-function(distances_raw_file, delimiter){
   #In case the user did not enter a delimiter, then the function detect delimiter is called.
   if(input$delimiter==""){
     delimiter<-detect_delimiter(distances_raw_file)
+    if(is.null(delimiter)){return()}
   }
+  
   distances_raw <- utils::read.csv(distances_raw_file, head=T, sep=delimiter)
   #Call to function reshape_Rownames
   distances_raw<-reshape_Rownames(distances_raw = distances_raw )
@@ -28,7 +30,17 @@ detect_delimiter<-function(distances_raw_file){
       break
     }
   }
-  "delimiter"=delimiter
+  if(exists("delimiter")) {return("delimiter"=delimiter)}
+  else{
+    shiny::showNotification(
+      ui="Delimiter could not be automatically detected. \n Try specifying the delimiter manually in the optional field. \n
+      Also check whether you included the correct file!",
+      type="error",
+      duration=10
+    )
+    shinyjs::reset("distance_matrix_input")
+    NULL
+  }
 }
 
 #' This function is called from within importingDist() and checks whether the first entry in the first row and column is a number.
@@ -44,7 +56,6 @@ reshape_Rownames<-function(distances_raw){
 }
 
 # Import tree -------------------------------------------------------------
-
 #TODO documentation
 importingTree<-function(tree_file, file_type){
   print("Reading tree")
@@ -56,6 +67,11 @@ importingTree<-function(tree_file, file_type){
            tree <- ape::read.tree(tree_file)
          },
          "beast" = {
+           shiny::showNotification(
+             ui=paste0("Checking for annotations based on column names in distance matrices...\n
+                       This can take a few seconds." ),
+             type = 'message',
+             duration=30)
            tree <- treeio::read.beast(tree_file)
            tree <- dplyr::as_tibble(tree)
            colnames(tree)[which(colnames(tree) == "branch.length")] <-"edge.length"

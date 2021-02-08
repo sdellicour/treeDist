@@ -9,82 +9,86 @@ shinyUI(fluidPage(shinyjs::useShinyjs(), #activate Shinyjs
                       windowTitle="TreeDist"
                     ),
                     sidebarLayout(
-                      sidebarPanel(
-                        width = 3,
-                        tags$h4("Univariate analysis"),
-                        tags$h4("Input controls:"),
-                        fluidRow(column(
-                          12,
-                          radioButtons(
-                            inputId = "annotations",
-                            "Is the tree annotated?",
-                            c(
-                              "No, please annotate my tree" = FALSE,
-                              "Yes, I took care of this!" = TRUE
-                            )
-                          )
-                        )),
-                        wellPanel("Annotations",
-                                  conditionalPanel(condition = "input.annotations=='TRUE'",
-                                                   fluidRow(column(
-                                                     12,
-                                                     selectInput(
-                                                       inputId = "Annotation_State",
-                                                       "Annotation label in tree",
-                                                       c("host", "state", "states", "city", "location.states")
-                                                     )
-                                                   ))),
-                                  conditionalPanel(condition = "input.annotations=='FALSE'",
-                                                   fluidRow(column(
-                                                     12,
-                                                     radioButtons(
-                                                       inputId = "Reconstruction_Method",
-                                                       "AR Method",
-                                                       c(
-                                                         "Maximum parsimony" = "MP",
-                                                         "Maximum likelihood" = "ML")))))),
-                        
-                        fluidRow(column(12,
-                                        fileInput(
-                                          "tree_file", label = ("Tree file")
-                                        ))),
-                        fluidRow(column(
-                          12,
-                          selectInput(
-                            inputId = "file_type",
-                            label = "Select tree file type:",
-                            choices = c("Beast" = "beast",
-                                        #"MrBayes" = "mrbayes",
-                                        #"phylip" = "phylip",
-                                        #"Nexus" = "nexus",
-                                        #"Newick" = "newick"),
-                                        selected = "beast"
-                            )
-                          ))
-                        ),
-                        fluidRow(column(12,
-                                        fileInput(
-                                          "distances_file", label = ("Distance matrix"), multiple=T
-                                        ))),
-                        fluidRow(column(
-                          12,
-                          textInput(inputId = "delimiter", "Delimiter distance matrices (optional)", value ="")
-                        )),
-                        fluidRow(column(
-                          12,
-                          fileInput("sampling_locations", label ="Sampling locations")
-                        )),
-                        fluidRow(column(
-                          12,
-                          radioButtons(inputId = "Symmetrie", "Make matrix symmetric?",  c("No" =
-                                                                                             FALSE, "Yes" = TRUE))
-                        )),
-                        fluidRow(column(
-                          12,
-                          actionButton("start", label = h4("RUN"), col.label =
-                                         "red")
-                        ))
-                      ),
+                      tags$div(class="sidebar", id="sidebar",
+                               sidebarPanel(
+                                 width = 3,
+                                 tags$h4("Univariate analysis"),
+                                 tags$h4("Input controls:"),
+                                 fluidRow(column(12,
+                                                 fileInput(
+                                                   "tree_file", label = ("Tree file")
+                                                 ))),
+                                 fluidRow(column(
+                                   12,
+                                   selectInput(
+                                     inputId = "file_type",
+                                     label = "Select tree file type:",
+                                     choices = c("Beast" = "beast",
+                                                 #"MrBayes" = "mrbayes",
+                                                 #"phylip" = "phylip",
+                                                 #"Nexus" = "nexus",
+                                                 #"Newick" = "newick"),
+                                                 selected = "beast"
+                                     )
+                                   ))
+                                 ),
+                                 tags$div(id="distance_matrix_input",
+                                          fluidRow(column(12,
+                                                          fileInput(
+                                                            "distances_file", label = ("Distance matrix"), multiple=T
+                                                          )))),
+                                 fluidRow(column(
+                                   12,
+                                   textInput(inputId = "delimiter", "Delimiter distance matrices (optional)", value ="")
+                                 )),
+                                 fluidRow(column(
+                                   12,
+                                   radioButtons(
+                                     inputId = "annotations",
+                                     label = "Is the tree annotated?",
+                                     choices = c(
+                                       "No, please annotate my tree" = FALSE,
+                                       "Yes, I took care of this!" = TRUE)
+                                   )
+                                 )),
+                                 wellPanel("Annotations",
+                                           conditionalPanel(condition = "input.annotations=='TRUE'",
+                                                            fluidRow(column(
+                                                              12,
+                                                              selectInput(
+                                                                inputId = "Annotation_State",
+                                                                "Annotation label in tree",
+                                                                #c("host", "state", "states", "city", "location.states")
+                                                                NULL
+                                                              )
+                                                            ))),
+                                           conditionalPanel(condition = "input.annotations=='FALSE'",
+                                                            fluidRow(column(
+                                                              12,
+                                                              radioButtons(
+                                                                inputId = "Reconstruction_Method",
+                                                                "AR Method",
+                                                                c(
+                                                                  "Maximum parsimony" = "MP",
+                                                                  "Maximum likelihood" = "ML")))))),
+                                 tags$div(id="tag_sampling_locations",
+                                 fluidRow(column(
+                                   12,
+                                   fileInput("sampling_locations", label ="Sampling locations")
+                                 ))
+                                 ),
+                                 fluidRow(column(
+                                   12,
+                                   radioButtons(inputId = "Symmetrie", "Make matrix symmetric?",  c("No" =
+                                                                                                      FALSE, "Yes" = TRUE))
+                                 )),
+                                 tags$div(class="run",
+                                          fluidRow(
+                                            column(6,actionButton("start", label = h4("RUN"), col.label ="red")),
+                                            column(6,actionButton("reset", label = h4("CLEAR"), col.label ="red"))
+                                            
+                                          ))
+                               )),
                       ##MainPanel ####
                       mainPanel(
                         fluidRow(
@@ -201,7 +205,6 @@ shinyUI(fluidPage(shinyjs::useShinyjs(), #activate Shinyjs
                           ))
                       )
                     ),
-                    
                     #Explore Tree ####
                     tabPanel(title = "Explore tree",
                              headerPanel(
@@ -354,8 +357,6 @@ shinyUI(fluidPage(shinyjs::useShinyjs(), #activate Shinyjs
                                )#)mainPanel
                              )#)SidebarLayout
                     )#)TabPanel
-                    
-                    
                   )#)tabsetPanel
 )#)fluidpage
 )#)ShinyUI
