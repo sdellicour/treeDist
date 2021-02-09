@@ -51,9 +51,9 @@ shinyServer(function(input, output, session) {
           type="error",
           duration=10
         )
-        Sys.sleep(5)
         distances_raw$data<-NULL
         reset("distances_file")
+        Sys.sleep(5)
         return()
       }
     )  
@@ -68,9 +68,9 @@ shinyServer(function(input, output, session) {
         as.factor(importingSamplingLocations(sampling_locations))
       },
       error=function(){
-        Sys.sleep(5)
         tip_states$data<-NULL
         reset("distances_file")
+        Sys.sleep(5)
         return()
       }
     )
@@ -114,9 +114,9 @@ shinyServer(function(input, output, session) {
                         Please provide an appropriate file!"),
               type = "error",
               duration=10)
-            Sys.sleep(5)
             tree<<-NULL
             reset("tree_file")
+            Sys.sleep(5)
             return()
           }
         )
@@ -138,7 +138,7 @@ shinyServer(function(input, output, session) {
           )
         }
       }else{
-        candidate_annotation_columns<-colnames(tree[,unique(which(tree==colnames(distances_raw[[1]])[1], arr.ind=TRUE)[,2])])
+        candidate_annotation_columns<-colnames(tree[,unique(which(tree==colnames(distances_raw$data[[1]])[1], arr.ind=TRUE)[,2])])
       }
       updateSelectInput(
         session,
@@ -223,9 +223,9 @@ shinyServer(function(input, output, session) {
                         Please provide an appropriate file!"),
             type = "error",
             duration=10)
-          Sys.sleep(5)
           tree<<-NULL
           reset("tree_file")
+          Sys.sleep(5)
           return()
         }
       )
@@ -243,12 +243,12 @@ shinyServer(function(input, output, session) {
                         Please provide an appropriate sampling locations and tree file!"),
             type = "error",
             duration=10)
-          Sys.sleep(5)
           tip_states<-NULL
           reset("sampling_locations")
           tree<<-NULL
           reset("tree_file")
           shinyjs::enable("sidebar")
+          Sys.sleep(5)
           return()
         }
       )

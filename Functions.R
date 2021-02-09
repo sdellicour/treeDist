@@ -86,8 +86,6 @@ importingSamplingLocations<-function(sampling_locations){
 
 validate_sampling_locations<-function(session, sampling_locations, distances_raw, tree){
   distance_matrix_states<-colnames(distances_raw[[1]])    
-  browser()
-
   #validating sampling locations
   grouped_states<-lapply(sampling_locations, function(sampling_location) tree$tip.label[which(grepl(sampling_location, distance_matrix_states)==T)])
   only_in_sampling_locations<-unique(sampling_locations[which(lapply(grouped_states, function(grouped_state) which(length(grouped_state)==0))==1)])
