@@ -8,7 +8,15 @@ importingDist<-function(distances_raw_file, delimiter){
   #In case the user did not enter a delimiter, then the function detect delimiter is called.
   if(input$delimiter==""){
     delimiter<-detect_delimiter(distances_raw_file)
-    if(is.null(delimiter)){return()}
+    if(is.null(delimiter)){
+      shiny::showNotification(
+        ui="Delimiter could not be automatically detected. \n Try specifying the delimiter manually in the optional field. \n
+      Also check whether you included the correct file!",
+        type="error",
+        duration=10
+      )
+      return()
+    }
   }
   
   distances_raw <- utils::read.csv(distances_raw_file, head=T, sep=delimiter)
@@ -30,18 +38,9 @@ detect_delimiter<-function(distances_raw_file){
       break
     }
   }
-  if(exists("delimiter")) {return("delimiter"=delimiter)}
-  else{
-    shiny::showNotification(
-      ui="Delimiter could not be automatically detected. \n Try specifying the delimiter manually in the optional field. \n
-      Also check whether you included the correct file!",
-      type="error",
-      duration=10
-    )
-    shinyjs::reset("distance_matrix_input")
-    NULL
-  }
+  return(delimiter)
 }
+
 
 #' This function is called from within importingDist() and checks whether the first entry in the first row and column is a number.
 #' This function assumes, square matrices and numeric distances metrics.
@@ -71,7 +70,7 @@ importingTree<-function(tree_file, file_type){
              ui=paste0("Checking for annotations based on column names in distance matrices...\n
                        This can take a few seconds." ),
              type = 'message',
-             duration=30)
+             duration=10)
            tree <- treeio::read.beast(tree_file)
            tree <- dplyr::as_tibble(tree)
            colnames(tree)[which(colnames(tree) == "branch.length")] <-"edge.length"
@@ -84,6 +83,46 @@ importingSamplingLocations<-function(sampling_locations){
   tip_states <- utils::read.table(sampling_locations, blank.lines.skip = F)[,1]
   tip_states
 }
+
+validate_sampling_locations<-function(session, sampling_locations, distances_raw, tree){
+  distance_matrix_states<-colnames(distances_raw[[1]])    
+  browser()
+
+  #validating sampling locations
+  grouped_states<-lapply(sampling_locations, function(sampling_location) tree$tip.label[which(grepl(sampling_location, distance_matrix_states)==T)])
+  only_in_sampling_locations<-unique(sampling_locations[which(lapply(grouped_states, function(grouped_state) which(length(grouped_state)==0))==1)])
+  if(length(only_in_sampling_locations)>0){
+    sampling_locations<-sampling_locations[sampling_locations %!in% only_in_sampling_locations]
+    if(length(tree$tip.label)!=length(sampling_locations)){
+      tree<-lapply(only_in_sampling_locations, function(only_in_sampling_location){
+        tree<-treeio::drop.tip(tree, tree$tip.label[which(grepl(only_in_sampling_location, tree$tip.label)==T)])
+      })
+      if(length(tree$tip.labels)==length(sampling_locations)){
+        shiny::showNotification(
+          ui=paste0("The following state is present in your sampling locations file but not in the column names of the distance
+          matrices: ", only_in_sampling_locations, " We removed this(these) state(s) from the sampling locations file and also removed the corresponding tips from the
+                    tree."),
+          type = "warning",
+          duration=30)
+      }else{
+        stop() #throw error,equivalent to "throw()". I cannot think of a way out here, the user needs to upload updated documents. Error will be handled in calling observer in server.R
+      }
+    }else{
+      shiny::showNotification(
+        ui=paste0("The following state is present in your sampling locations file but not in the column names of the distance
+          matrices: ", only_in_sampling_locations, " We removed this(these) state(s) from the sampling locations file. The tree was not modified but the resulting sampling
+                  location files had the matchin number of states to tips in the tree."),
+        type = "warning",
+        duration=30)
+    }
+  }else{
+    if(length(tree$tip.label)!=length(sampling_locations)){
+      stop() #throw error,equivalent to "throw()". I cannot think of a way out here, the user needs to upload updated documents. Error will be handled in calling observer in server.R
+    }
+  }
+  return(list("sampling_locations"=sampling_locations, "tree"=tree))
+}
+
 
 #TODO documentation
 negativeBranchLength<-function(tree){
@@ -128,7 +167,6 @@ GenerateRawTransitionMatrix = function(distances_raw, tree_df) {
   "transitions_raw"=transitions_raw
 }
 
-
 makeSymmetric<-function(matrix){
   matrix_sym<-matrix
   for (i in 1:dim(matrix)[1]){
@@ -143,11 +181,9 @@ GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) 
   names_matrixes<-outer(X = colnames(transitions_raw),
                         Y = rownames(transitions_raw),
                         FUN = function(X,Y) paste(X,Y,sep="->"))#all combination of transitions
-  
   if(input$Symmetrie==TRUE){
     transitions<-makeSymmetric(transitions_raw)
     names_matrixes = names_matrixes[lower.tri(transitions)]#names and distance call before call to transition
-    
     distances = sapply(distances_raw, function(distances_raw) distances_raw[lower.tri(distances_raw,diag = F)])#names and distances call before transition otherwise transition has changed
     transitions = transitions[lower.tri(transitions)]
   }else{
@@ -162,12 +198,9 @@ GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) 
   transition_distances<-data.frame(Transitions=transitions, distances, Key=names_matrixes)
   #adding the transitions as a column, adding the row_names as an additional variable (needed for tooltip)
   rownames(transition_distances)<-names_matrixes #adding rownames, not strictly required but neat
-  
   transition_distances=transition_distances[which(transitions!=0),] #remove transitions that did not occur
   transition_distances
 }
-
-
 
 '%!in%' <- function(x,y){
   !('%in%'(x,y))
@@ -176,7 +209,6 @@ GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) 
 first.word <- function(my.string, sep="\\."){
   base::strsplit(my.string, sep)[[1]][1]
 }
-
 
 # extracting the tip labels from the sub tree
 getTipLabels<-function(tree){
@@ -187,5 +219,3 @@ getTipLabels<-function(tree){
   }
   return(tip_labels)
 }
-
-

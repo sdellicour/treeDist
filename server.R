@@ -1,7 +1,8 @@
 options(shiny.maxRequestSize=10*1024^2) #10mb max file size
 
+
 #' Shiny server is doing the back-end work for the treedist application. It consists of 5 files in total. This server.R file itsels, 3 files that are sourced upon startup of the app
-#' (Functions.R, Multivariate.R, AncestralReconstruction.R) and the Tree.R file which is encapsulated within the "RUN" observer.
+#' (Functions.R, Multivariate.R, AncestralReconstruction.R) and the Tree.R file which is encapsulated within the "RUN" observer. 
 #' @param input
 #' @param output
 #' @param session
@@ -37,17 +38,42 @@ shinyServer(function(input, output, session) {
     unlist(lapply(input$distances_file$name, first.word))
   })
   
-  #distances_raw is a list of the actual distance matrices, the length of the list is the number of seected matrices
-  distances_raw<-reactive({
-    req(input$distances_file$datapath)
-    lapply(input$distances_file$datapath , function(distances_raw_file) importingDist(distances_raw_file, input$delimiter))
+  distances_raw<-reactiveValues(data=NULL)
+  observe({
+    req(input$distances_file)
+    distances_raw$data <- tryCatch(
+      {
+        lapply(input$distances_file$datapath , function(distances_raw_file) importingDist(distances_raw_file, input$delimiter))
+      },
+      error=function(cond) {
+        shiny::showNotification(
+          ui="This does not seem to be a distance matrix, please provide a matrix with unique row and column names.",
+          type="error",
+          duration=10
+        )
+        Sys.sleep(5)
+        distances_raw$data<-NULL
+        reset("distances_file")
+        return()
+      }
+    )  
   })
-
-  tip_states<-reactive({
+  
+  tip_states<-reactiveValues(data=NULL)
+  observe({
     req(input$distances_file$name, input$sampling_locations$datapath)
     sampling_locations = input$sampling_locations$datapath
-    tip_states<-as.factor(importingSamplingLocations(sampling_locations))
-    tip_states
+    tip_states$data<-tryCatch(
+      {
+        as.factor(importingSamplingLocations(sampling_locations))
+      },
+      error=function(){
+        Sys.sleep(5)
+        tip_states$data<-NULL
+        reset("distances_file")
+        return()
+      }
+    )
   })
   
   observe({
@@ -72,23 +98,39 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  #distances_raw is a list of the actual distance matrices, the length of the list is the number of seected matrices
   observe({
-    req(distances_raw(), input$tree_file)
+    req(distances_raw$data, input$tree_file)
     if(input$annotations==TRUE){
       if(is.null(tree)){
         shinyjs::disable(selector = "div.run")#disable the run button while tree is loaded and annotation guessed
-        tree<<-importingTree(input$tree_file$datapath, "beast")
-        candidate_annotation_columns<-colnames(tree[,unique(which(tree==colnames(distances_raw()[[1]])[1], arr.ind=TRUE)[,2])])
+        tree<<-tryCatch(
+          {
+            importingTree(input$tree_file$datapath, "beast")
+          },
+          error=function(cond){
+            shiny::showNotification(
+              ui=paste0("This file: ", input$tree_file$name, " does not appear to be a beast formatted phylogeny. 
+                        Please provide an appropriate file!"),
+              type = "error",
+              duration=10)
+            Sys.sleep(5)
+            tree<<-NULL
+            reset("tree_file")
+            return()
+          }
+        )
+        if(is.null(tree)){return()}#in that case we already informed the user
+        candidate_annotation_columns<-colnames(tree[,unique(which(tree==colnames(distances_raw$data[[1]])[1], arr.ind=TRUE)[,2])])
         if(length(candidate_annotation_columns)>0){
-          
-        shiny::showNotification(
-          ui=paste0("Done! \n Check the suggestions in the dropdown list for 'Annotation label in tree'."),
-          type = 'message',
-          duration=10)
-        
-        shinyjs::enable(selector = "div.run")#enable the "Run" button again
+          shiny::showNotification(
+            ui=paste0("Done! \n Check the suggestions in the dropdown list for 'Annotation label in tree'."),
+            type = 'message',
+            duration=10)
+          shinyjs::disable(selector="div.tree_file")#disable the run button while tree is loaded and annotation guessed
+          shinyjs::disable(selector="div.distance_matrix_input")#disable the run button while tree is loaded and annotation guessed
+          shinyjs::enable(selector = "div.run")#enable the "Run" button again
         } else{
-          #else the run button stays disabled
           shiny::showNotification(
             ui="There seems to be no annotation in the tree that matches the column names of the distance matrices.",
             type="error",
@@ -96,9 +138,8 @@ shinyServer(function(input, output, session) {
           )
         }
       }else{
-        candidate_annotation_columns<-colnames(tree[,unique(which(tree==colnames(distances_raw()[[1]])[1], arr.ind=TRUE)[,2])])
+        candidate_annotation_columns<-colnames(tree[,unique(which(tree==colnames(distances_raw[[1]])[1], arr.ind=TRUE)[,2])])
       }
-      
       updateSelectInput(
         session,
         inputId= "Annotation_State",
@@ -107,7 +148,6 @@ shinyServer(function(input, output, session) {
       )
     }
   })
-  
   
   #This observer creates the list:
   ##file types depending on whether the tree is already annotated.
@@ -122,7 +162,7 @@ shinyServer(function(input, output, session) {
       choices = column_names(),
       selected = column_names()[1]    
     )
-
+    
     #Multivariate checkbox group with the same names of the covariates as for the univariat analysis.
     updateCheckboxGroupInput(session, 
                              inputId= "variable", 
@@ -152,36 +192,88 @@ shinyServer(function(input, output, session) {
   #' observeEvent (RUN) that triggers the import of the files, the calculation of transition matrix and plotting of all plots.
   #' @param input$start Actionbutton that is pressed by the user triggers the execution of the code within this observer
   observeEvent(input$start, {
-
+    if(is.null(input$tree_file)|| is.null(input$distances_file)){
+      shiny::showNotification(
+        ui=paste0("Please upload a tree file and at least one distance matrix."),
+        type = 'error',
+        duration=10)
+    }
     req(input$tree_file, input$distances_file)
-    if(input$annotations==FALSE) {req(input$annotations)}
-
+    if(input$annotations==FALSE) {
+      if(is.null(input$sampling_locations)){
+        shiny::showNotification(
+          ui=paste0("Please upload a sampling locations file, consisting of all tip states."),
+          type = 'error',
+          duration=10)
+      }
+      req(input$sampling_locations)
+    }
     shinyjs::show(selector = "div.regression_control", animType = "fade", anim=T)
     shinyjs::disable(selector="div.sidebar")
     shinyjs::enable(id="reset")
     
     if (input$annotations==FALSE){
-      tree_as_uploaded<-importingTree(input$tree_file$datapath, input$file_type)
-      tree_annotated<- chooseReconstructionMethod(tip_states(),  tree_as_uploaded)
-      tree<<-tree_annotated
+      tree<-tryCatch(
+        {
+          importingTree(input$tree_file$datapath, input$file_type)
+        },
+        error=function(cond){
+          shiny::showNotification(
+            ui=paste0("This file: ", input$tree_file$name, " does not appear to be a phylogeny. 
+                        Please provide an appropriate file!"),
+            type = "error",
+            duration=10)
+          Sys.sleep(5)
+          tree<<-NULL
+          reset("tree_file")
+          return()
+        }
+      )
+      if(is.null(tree)){
+        return()
+      }
+      
+      input_reconstruction<-tryCatch(
+        {
+          validate_sampling_locations(session, tip_states$data, distances_raw$data, tree)
+        },
+        error=function(cond){
+          shiny::showNotification(
+            ui=paste0("This sampling locations number of states do not match the number of tip nodes.  
+                        Please provide an appropriate sampling locations and tree file!"),
+            type = "error",
+            duration=10)
+          Sys.sleep(5)
+          tip_states<-NULL
+          reset("sampling_locations")
+          tree<<-NULL
+          reset("tree_file")
+          shinyjs::enable("sidebar")
+          return()
+        }
+      )
+        if(is.null(input_reconstruction)){
+          return()
+        }
+        tree <<- tree <- chooseReconstructionMethod(input_reconstruction$sampling_locations,  input_reconstruction$tree)
     }
-    
     #show all elements of type "div" that have the html class "regression.control"
     #Within the UI a range of these divs are hidden in the univariate tab to make the page look cleaner.
-    transitions<-GenerateRawTransitionMatrix(distances_raw()[[1]], tree=tree) 
-    #take any distance matrix to get the col names and dimensions for the transitions matrix
-    transition_distances <<- GenerateFinal_Transitions_Distances(transitions_raw=transitions, distances_raw=distances_raw())
-    vals <<- reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)))    
 
-  }) # observeEvent(input$start, {
-  
-  observeEvent(input$reset, {
-    shinyjs::enable(selector="div.sidebar")
-    shinyjs::reset(id = "sidebar")
-    transition_distances<<-NULL 
-    vals<<-NULL
-    tree<<-NULL
-  })
+    transitions<-GenerateRawTransitionMatrix(distances_raw$data[[1]], tree=tree) 
+    #take any distance matrix to get the col names and dimensions for the transitions matrix
     
-  
+     
+    transition_distances <<- transition_distances <- GenerateFinal_Transitions_Distances(transitions_raw=transitions, distances_raw=distances_raw$data)
+    #double assignment, to keep variable also locally...
+    vals <<- reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)))    
+  }) # observeEvent(input$start, {
+      
+      observeEvent(input$reset, {
+        # tree<-NULL
+        # distances_raw$data<-NULL
+        # tip_states$data<-NULL
+        # reset("sidebar")
+        session$reload()
+      })
 }) # shinyServer(function(input, output) {

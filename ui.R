@@ -1,6 +1,8 @@
 #Univariate ####
 ##Sidebar####
-shinyUI(fluidPage(shinyjs::useShinyjs(), #activate Shinyjs
+
+shinyUI(fluidPage(
+  shinyjs::useShinyjs(), #activate Shinyjs
                   tabsetPanel(tabPanel(
                     "Univariate analysis",
                     headerPanel(
@@ -12,12 +14,13 @@ shinyUI(fluidPage(shinyjs::useShinyjs(), #activate Shinyjs
                       tags$div(class="sidebar", id="sidebar",
                                sidebarPanel(
                                  width = 3,
+                                 tags$div(class="tree_file",
                                  tags$h4("Univariate analysis"),
                                  tags$h4("Input controls:"),
                                  fluidRow(column(12,
                                                  fileInput(
                                                    "tree_file", label = ("Tree file")
-                                                 ))),
+                                                 )))),
                                  fluidRow(column(
                                    12,
                                    selectInput(
@@ -32,15 +35,15 @@ shinyUI(fluidPage(shinyjs::useShinyjs(), #activate Shinyjs
                                      )
                                    ))
                                  ),
-                                 tags$div(id="distance_matrix_input",
+                                 tags$div(class="distance_matrix_input",
                                           fluidRow(column(12,
                                                           fileInput(
                                                             "distances_file", label = ("Distance matrix"), multiple=T
-                                                          )))),
+                                                          ))),
                                  fluidRow(column(
                                    12,
                                    textInput(inputId = "delimiter", "Delimiter distance matrices (optional)", value ="")
-                                 )),
+                                 ))),
                                  fluidRow(column(
                                    12,
                                    radioButtons(
@@ -71,6 +74,16 @@ shinyUI(fluidPage(shinyjs::useShinyjs(), #activate Shinyjs
                                                                 c(
                                                                   "Maximum parsimony" = "MP",
                                                                   "Maximum likelihood" = "ML")))))),
+                                 shinyjs::hidden(
+                                 tags$div(id="missings",
+                                          fluidRow(column(
+                                            12,
+                                            checkboxGroupInput(inputId = "missings",
+                                                               label ="Missings", 
+                                                              choices = "", 
+                                                              selected = "")
+                                          ))
+                                 )),
                                  tags$div(id="tag_sampling_locations",
                                  fluidRow(column(
                                    12,
@@ -85,7 +98,7 @@ shinyUI(fluidPage(shinyjs::useShinyjs(), #activate Shinyjs
                                  tags$div(class="run",
                                           fluidRow(
                                             column(6,actionButton("start", label = h4("RUN"), col.label ="red")),
-                                            column(6,actionButton("reset", label = h4("CLEAR"), col.label ="red"))
+                                            column(6,actionButton("reset", label = h4("RESET"), col.label ="red"))
                                             
                                           ))
                                )),

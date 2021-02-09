@@ -13,8 +13,11 @@ chooseReconstructionMethod<-function(tip_states, tree_not_annotated){
 }
 
 ML_Reconstruction<-function(tip_states, tree_not_annotated){
-  print("Creating ML reconstruction")
-  ERreconstruction <- ape::ace(tip_states, tree_not_annotated, type = "discrete")
+  shiny::showNotification(
+    ui=paste0("Creating ML reconstruction"),
+    type = "message",
+    duration=10)
+  ERreconstruction<-   ape::ace(tip_states, tree_not_annotated, type = "discrete")
   return(ERreconstruction)
 }
 
@@ -27,16 +30,35 @@ prepare_states_MP<-function(tip_states){
 
 MaximumParsimonyReconstruction<-function(tip_states_numerical, tree_not_annotated){
   print("Creating MP reconstruction")
-  MP_ER <- asr_max_parsimony(
-    tree = tree_not_annotated,
-    tip_states = tip_states_numerical,
-    Nstates = NULL,
-    transition_costs = "all_equal",
-    edge_exponent = 0,
-    weight_by_scenarios = TRUE,
-    check_input = TRUE
-  )
-  MP_ER
+  MP_ER <-   tryCatch(
+    {
+      asr_max_parsimony(
+        tree = tree_not_annotated,
+        tip_states = tip_states_numerical,
+        Nstates = NULL,
+        transition_costs = "all_equal",
+        edge_exponent = 0,
+        weight_by_scenarios = TRUE,
+        check_input = TRUE
+      )
+    },
+    error=function(error){
+      if(length(tree_not_annotated$tip.label) !=  length(tip_states)){
+        shiny::showNotification(
+          ui=paste0("The number of tips is ", length(tree_not_annotated$tip.label), " and the number of provided states is ", length(tip_states), ". \n
+                Please update your tree or sampling locations file."),
+          type = "error",
+          duration=10)
+        shiny::stopApp()
+      }else{
+        shiny::showNotification(
+          ui=paste0(error),
+          type = "error",
+          duration=10)
+        shiny::stopApp()
+      }
+    })
+  return(MP_ER)
 }
 
 #taking the most likely state at each node

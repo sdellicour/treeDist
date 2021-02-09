@@ -4,7 +4,6 @@
 tree_data<-reactive({
   req(tree, transition_distances)
   tree_data<-as.treedata(tree)
-  
   # The if clause below, checks if the location where ggtree is checking for the edge.length (tree@phylo$edge.length) is null
   #if it is null then the conversion from data.frame/tibble to treedata object did not work correctly and the edge.length has been written to
   #tree@data$edge.length, and in our case the root node has an associated edge.length of "NA". So I drop that value and then assign the edge.length data
