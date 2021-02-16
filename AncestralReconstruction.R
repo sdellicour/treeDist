@@ -14,7 +14,7 @@ chooseReconstructionMethod<-function(tip_states, tree_not_annotated){
 
 ML_Reconstruction<-function(tip_states, tree_not_annotated){
   shiny::showNotification(
-    ui=paste0("Creating ML reconstruction"),
+    ui=paste0("Creating Maximum Likelihood reconstruction"),
     type = "message",
     duration=10)
   ERreconstruction<-   ape::ace(tip_states, tree_not_annotated, type = "discrete")
@@ -29,7 +29,10 @@ prepare_states_MP<-function(tip_states){
 }
 
 MaximumParsimonyReconstruction<-function(tip_states_numerical, tree_not_annotated){
-  print("Creating MP reconstruction")
+  shiny::showNotification(
+    ui=paste0("Creating Maximum Parsimony reconstruction"),
+    type = "message",
+    duration=10)
   MP_ER <-   tryCatch(
     {
       asr_max_parsimony(

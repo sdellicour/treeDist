@@ -4,7 +4,7 @@
 shinyUI(fluidPage(
   shinyjs::useShinyjs(), #activate Shinyjs
                   tabsetPanel(tabPanel(
-                    "Univariate analysis",
+                    "Simple Univariate analysis",
                     headerPanel(
                       list(HTML('<img src=Logo_Lemey_Lab.jpeg height=100 width=100/>'),
                            "TreeDist"),
@@ -154,7 +154,17 @@ shinyUI(fluidPage(
                                                                                    numericInput(inputId = "level",
                                                                                                 label= "Confidence level - shaded area",
                                                                                                 value = 0.95, min = 0, max = 1, step = 0.05)))
-                                       ))))),
+                                       )),
+                                     fluidRow(
+                                       column(
+                                         12,
+                                         selectInput(
+                                           inputId = "colour_by_states_uni",
+                                           label= "Colour by states",
+                                           choices = c("To", "From", "All blue"),
+                                           selected = "All blue"
+                                         )))
+                                     ))),
                         #tags$h4("Hovering output:"),
                         #fluidRow(verbatimTextOutput("hover")),
                         shinyjs::hidden(
@@ -175,7 +185,7 @@ shinyUI(fluidPage(
                     #tags$h4("Possible outliers:"),
                     #fluidRow(tableOutput(outputId = "output"))
                     
-                    #Multivariate ####
+                    #Multiple Univariate Regression ####
                     tabPanel(
                       "Multivariate analysis",
                       headerPanel(

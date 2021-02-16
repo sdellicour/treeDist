@@ -197,6 +197,7 @@ GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) 
   #adding the transitions as a column, adding the row_names as an additional variable (needed for tooltip)
   rownames(transition_distances)<-names_matrixes #adding rownames, not strictly required but neat
   transition_distances=transition_distances[which(transitions!=0),] #remove transitions that did not occur
+  write.csv(transition_distances, file = "output/transition_distances.csv")
   transition_distances
 }
 
@@ -204,8 +205,9 @@ GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) 
   !('%in%'(x,y))
 }
 
-first.word <- function(my.string, sep="\\."){
-  base::strsplit(my.string, sep)[[1]][1]
+#gives first word in a string defaults to first word and the . as seperator
+first.word <- function(my.string, sep="\\.", n=1){
+  base::strsplit(my.string, sep)[[1]][n]
 }
 
 # extracting the tip labels from the sub tree
