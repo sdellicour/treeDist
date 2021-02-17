@@ -255,7 +255,22 @@ shinyServer(function(input, output, session) {
         if(is.null(input_reconstruction)){
           return()
         }
-        tree <<- tree <- chooseReconstructionMethod(input_reconstruction$sampling_locations,  input_reconstruction$tree)
+      
+         tree <<- tree <- #tryCatch(
+        #   {
+             chooseReconstructionMethod(input_reconstruction$sampling_locations,  input_reconstruction$tree)
+        #   },
+        #   error=function(cond){
+        #     shiny::showNotification(
+        #       ui=paste0("The ancestral reconstruction failed, make sure you provide a rooted and fully dichotomous tree."),
+        #       type = "error",
+        #       duration=10)
+        #     tree<<-NULL
+        #     reset("tree_file")
+        #     shinyjs::enable("sidebar")
+        #     return()
+        #   }
+        # ) 
     }
     #show all elements of type "div" that have the html class "regression.control"
     #Within the UI a range of these divs are hidden in the univariate tab to make the page look cleaner.

@@ -98,34 +98,15 @@ plotting_fun<-function(){
   
   ggplot2::theme_set(theme_classic())
   p <- ggplot(keep, mapping= aes_string(x=input$Predictor_uni,y="Transitions", key="Key")) 
-  values<- get(input$Predictor_uni, transition_distances)
-  
-  if(!logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE) {
-    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni),limits =  c(min(values), max(values)))+
-      scale_y_continuous(name = "Transitions", limits=c(0,max(transition_distances$Transitions)))
-  }
-  if(logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE){
-    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni),limits =  c(min(values), max(values)))+
-      scale_y_continuous(name = "Transition_log", limits=c(0,max(log(transition_distances$Transitions))))
-  }
-  if(!logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
-    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni, "_log"),limits =  c(min(log(values)), max(log(values))))+
-      scale_y_continuous(name = "Transitions", limits=c(0,max(transition_distances$Transitions)))
-  }
-  if(logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
-    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni, "_log"),limits =  c(min(log(values)), max(log(values))))+
-      scale_y_continuous(name = "Transition_log", limits=c(0,max(log(transition_distances$Transitions))))
-  }
-  p<-p + geom_point(data = exclude, shape = 21, fill = NA, color = "red", alpha = input$alpha, stroke = input$stroke, size=input$size)
 
+  p<-p + geom_point(data = exclude, shape = 21, fill = NA, color = "red", alpha = input$alpha, stroke = input$stroke, size=input$size)
+  
   if(input$colour_by_states_uni=="To"){
     toStates<-unlist(lapply(keep$Key, function(key) first.word(my.string = key,sep =  "->", n= 2)))
     nbColoursUni_to<-length(unique(toStates))#the states are added as a list in order to unlist them I need to take only the first word otherwise we get too many states
     getPalette = colorRampPalette(brewer.pal(9, "Set1"))#these 9 colours will be interpolated to obtain  the most divergent result
-   
-     p <- p + geom_point(aes( fill= toStates),alpha =  input$alpha , data=keep, shape=21, colour="#4D4D4D", stroke = input$stroke, size=input$size)+
+    p <- p + geom_point(aes( fill= toStates),alpha =  input$alpha , data=keep, shape=21, colour="#4D4D4D", stroke = input$stroke, size=input$size)+
       scale_fill_manual(values=getPalette(nbColoursUni_to))
-  
   }else if(input$colour_by_states_uni=="From"){
     fromStates<-unlist(lapply(keep$Key, function(key) first.word(my.string = key,sep =  "->", n= 1)))
     nbColoursUni_from<-length(unique(fromStates))#  
@@ -135,8 +116,32 @@ plotting_fun<-function(){
   }else{
     p<-p +geom_point(data=keep, shape=21, colour="#4D4D4D" ,fill=alpha("#0e74af", input$alpha),  stroke = input$stroke, size=input$size) 
   }
+  
+  values<- get(input$Predictor_uni, transition_distances)
   if(!input$regression_line==FALSE){ 
-    p <- p + geom_smooth(mapping=aes(key=NULL), method = "lm", se=as.logical(input$se), level=input$level)
+    p <- p + geom_smooth(mapping=aes(key=NULL), method = "lm", se=as.logical(input$se), level=input$level) 
+  }
+  
+  if(!logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE) {
+    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni))+
+      scale_y_continuous(name = "Transitions")+
+      coord_cartesian(xlim =c(min(values), max(values)), ylim=c(0,max(transition_distances$Transitions)))
+  }
+  if(logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE){
+    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni))+
+      scale_y_continuous(name = "Transition_log")+
+    coord_cartesian(xlim =c(min(values), max(values)),  ylim=c(0,log(max(transition_distances$Transitions))))
+    
+  }
+  if(!logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
+    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni, "_log"))+
+      scale_y_continuous(name = "Transitions")+
+    coord_cartesian(xlim =c(min(log(values)), max(log(values))),  ylim=c(0,max(transition_distances$Transitions)))
+  }
+  if(logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
+    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni, "_log"))+
+      scale_y_continuous(name = "Transition_log")+
+    coord_cartesian(xlim =c(min(log(values)), max(log(values))), ylim=c(0,log(max(transition_distances$Transitions))))
   }
   
   p <- p %>% plotly::ggplotly(tooltip = c(input$Predictor_uni, "Transitions", "Key"), source="plot")
