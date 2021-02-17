@@ -138,7 +138,7 @@ plotting_fun<-function(){
   if(!input$regression_line==FALSE){ 
     p <- p + geom_smooth(mapping=aes(key=NULL), method = "lm", se=as.logical(input$se), level=input$level)
   }
-
+  
   p <- p %>% plotly::ggplotly(tooltip = c(input$Predictor_uni, "Transitions", "Key"), source="plot")
   
   return(p)

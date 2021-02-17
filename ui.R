@@ -90,11 +90,11 @@ shinyUI(fluidPage(
                                    fileInput("sampling_locations", label ="Sampling locations")
                                  ))
                                  ),
-                                 fluidRow(column(
-                                   12,
-                                   radioButtons(inputId = "Symmetrie", "Make matrix symmetric?",  c("No" =
-                                                                                                      FALSE, "Yes" = TRUE))
-                                 )),
+                                 # fluidRow(column(
+                                 #   12,
+                                 #   radioButtons(inputId = "Symmetrie", "Make matrix symmetric?",  c("No" =
+                                 #                                                                      FALSE, "Yes" = TRUE))
+                                 # )),
                                  tags$div(class="run",
                                           fluidRow(
                                             column(6,actionButton("start", label = h4("RUN"), col.label ="red")),
@@ -156,6 +156,8 @@ shinyUI(fluidPage(
                                                                                                 value = 0.95, min = 0, max = 1, step = 0.05)))
                                        )),
                                      fluidRow(
+                                       conditionalPanel(condition = "input.Scatter_residual=='scatter'",
+                                                        tags$h4("Colouring by Transition to/from states:"),
                                        column(
                                          12,
                                          selectInput(
@@ -163,7 +165,7 @@ shinyUI(fluidPage(
                                            label= "Colour by states",
                                            choices = c("To", "From", "All blue"),
                                            selected = "All blue"
-                                         )))
+                                         ))))
                                      ))),
                         #tags$h4("Hovering output:"),
                         #fluidRow(verbatimTextOutput("hover")),

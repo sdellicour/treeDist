@@ -179,19 +179,19 @@ GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) 
   names_matrixes<-outer(X = colnames(transitions_raw),
                         Y = rownames(transitions_raw),
                         FUN = function(X,Y) paste(X,Y,sep="->"))#all combination of transitions
-  if(input$Symmetrie==TRUE){
-    transitions<-makeSymmetric(transitions_raw)
-    names_matrixes = names_matrixes[lower.tri(transitions)]#names and distance call before call to transition
-    distances = sapply(distances_raw, function(distances_raw) distances_raw[lower.tri(distances_raw,diag = F)])#names and distances call before transition otherwise transition has changed
-    transitions = transitions[lower.tri(transitions)]
-  }else{
+  # if(input$Symmetrie==TRUE){
+  #   transitions<-makeSymmetric(transitions_raw)
+  #   names_matrixes = names_matrixes[lower.tri(transitions)]#names and distance call before call to transition
+  #   distances = sapply(distances_raw, function(distances_raw) distances_raw[lower.tri(distances_raw,diag = F)])#names and distances call before transition otherwise transition has changed
+  #   transitions = transitions[lower.tri(transitions)]
+  # }else{
     names_matrixes =names_matrixes[(lower.tri(names_matrixes) | upper.tri(names_matrixes))] #names and distance call before call to transition
     #only the diagonal is excluded otherwise we keep both directions
     distances = sapply(distances_raw, function(distances_raw) distances_raw[(lower.tri(distances_raw) |upper.tri(distances_raw))])
     #distances is a matrix with the columns representing each a distacne matrix
     transitions=transitions_raw[(lower.tri(transitions_raw) | upper.tri(transitions_raw))]
     #bring transitions in same format, 1 columns and each transition for 1 state to the other, bidirectional, in rows
-  }
+  # }
   colnames(distances)<-column_names()   #adding the names to cols
   transition_distances<-data.frame(Transitions=transitions, distances, Key=names_matrixes)
   #adding the transitions as a column, adding the row_names as an additional variable (needed for tooltip)
