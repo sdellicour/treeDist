@@ -54,7 +54,7 @@ output$plotly_tree <- renderPlotly({
   if(input$colour_by_states) {
     nbColours<-length(unique(unlist(lapply(get(state(), tree_data), first.word))))#the states are added as a list in order to unlist them I need to take only the first word otherwise we get too many states
     getPalette = colorRampPalette(brewer.pal(9, "Set1"))#these 9 colours will be interpolated to obtain  the most divergent result
-    p <- p + geom_tree(aes(color=unlist(lapply(get(state(), tree_data), first.word))))+
+    p <- p + geom_point(aes(color=unlist(lapply(get(state(), tree_data), first.word))))+
       scale_colour_manual(values=getPalette(nbColours))
   }
   ggplotly(p, tooltip =  c("node", "parent", "label2", "label"), source="tree") %>%
@@ -89,7 +89,7 @@ output$plot_tree <- renderPlot({
   if(input$colour_by_states) {
     nbColours<-length(unique(unlist(lapply(get(state(), subtree2), first.word))))#the states are added as a list in order to unlist them I need to take only the first word otherwise we get too many states
     getPalette = colorRampPalette(brewer.pal(9, "Set1"))#these 9 colours will be interpolated to obtain  the most divergent result
-    p <- p + geom_tree(aes(color=unlist(lapply(get(state(), subtree2), first.word))))+
+    p <- p + geom_point(aes(color=unlist(lapply(get(state(), subtree2), first.word))))+
       scale_colour_manual(values=getPalette(nbColours))+
       theme(legend.position="bottom", legend.text=element_text(size= input$annotation_plot_legend_size), legend.title = element_blank())
   }

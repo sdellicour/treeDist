@@ -126,6 +126,8 @@ plotting_fun<-function(){
     p<-p+scale_x_continuous(name =paste0(input$Predictor_uni))+
       scale_y_continuous(name = "Transitions")+
       coord_cartesian(xlim =c(min(values), max(values)), ylim=c(0,max(transition_distances$Transitions)))
+    #having ylim and ylim specified within coord_cartesian keeps data and allows to calcualte the confidence interval properly. 
+    #speciyfying xlim and ylim within scale continous replaces oob values with NA
   }
   if(logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE){
     p<-p+scale_x_continuous(name =paste0(input$Predictor_uni))+
