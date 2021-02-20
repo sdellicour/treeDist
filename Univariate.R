@@ -4,11 +4,16 @@ output$plot = renderPlotly({
   plotting_fun()
 }) # output$plot = renderPlot({
 
+# Univariate ####
+output$histo = renderPlotly({
+  req(transition_distances, vals, logs)
+  histo_fun()
+}) # output$plot = renderPlot({
+
 output$plot_res = renderPlotly({
   req(transition_distances, vals, logs)
   linear_regression()$x%>%
     plotting_residuals(.)
-  
 }) # output$plot = renderPlot({
 
 output$lm=renderTable({
@@ -68,16 +73,35 @@ observeEvent(input$exclude_reset, {
 })
 
 plotting_fun<-function(){
+  #data modification part
   keep    <- transition_distances[vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  
+
+  #takes care of log 
+  keep_exclude<-log_uni_data(keep, exclude)
+  keep<-keep_exclude$keep
+  exclude<-keep_exclude$exclude
+ 
+  #plotting part
+  ggplot2::theme_set(theme_classic())
+  p <- ggplot(keep, mapping= aes_string(x=input$Predictor_uni,y="Transitions", key="Key")) 
+  p<-p + geom_point(data = exclude, shape = 21, fill = NA, color = "red", alpha = input$alpha, stroke = input$stroke, size=input$size)
+  p<-log_uni(p)
+  p<-colour_by_states_uni(p, keep)
+  if(!input$regression_line==FALSE){ 
+    p <- p + geom_smooth(mapping=aes(key=NULL), method = "lm", se=as.logical(input$se), level=input$level) 
+  }
+  p <- p %>% plotly::ggplotly(tooltip = c(input$Predictor_uni, "Transitions", "Key"), source="plot")
+  return(p)
+}
+
+log_uni_data<-function(keep, exclude){
   if(logs$logtransform[1]==TRUE)   {
     keep <- keep%>%
       dplyr::mutate_at("Transitions", log)
     exclude <- exclude%>%
       dplyr::mutate_at("Transitions", log)
   }
-  
   ##Give a warning if the predictive variable is log transformed but contains values equal or below 0.
   if(min(get(input$Predictor_uni, transition_distances))<=0 & logs$logtransform[2]==TRUE){
     shiny::showNotification(
@@ -95,32 +119,42 @@ plotting_fun<-function(){
     exclude <- exclude%>%
       dplyr::mutate_at(input$Predictor_uni, log)
   }
-  
-  ggplot2::theme_set(theme_classic())
-  p <- ggplot(keep, mapping= aes_string(x=input$Predictor_uni,y="Transitions", key="Key")) 
+  list("keep"=keep, "exclude"=exclude)
+}
 
-  p<-p + geom_point(data = exclude, shape = 21, fill = NA, color = "red", alpha = input$alpha, stroke = input$stroke, size=input$size)
+
+histo_fun<-function(){
+  keep_exclude<-summarize_to_from()
+  keep<-keep_exclude$keep
+  exclude<-keep_exclude$exclude
   
-  if(input$colour_by_states_uni=="To"){
-    toStates<-unlist(lapply(keep$Key, function(key) first.word(my.string = key,sep =  "->", n= 2)))
-    nbColoursUni_to<-length(unique(toStates))#the states are added as a list in order to unlist them I need to take only the first word otherwise we get too many states
-    getPalette = colorRampPalette(brewer.pal(9, "Set1"))#these 9 colours will be interpolated to obtain  the most divergent result
-    p <- p + geom_point(aes( fill= toStates),alpha =  input$alpha , data=keep, shape=21, colour="#4D4D4D", stroke = input$stroke, size=input$size)+
-      scale_fill_manual(values=getPalette(nbColoursUni_to))
-  }else if(input$colour_by_states_uni=="From"){
-    fromStates<-unlist(lapply(keep$Key, function(key) first.word(my.string = key,sep =  "->", n= 1)))
-    nbColoursUni_from<-length(unique(fromStates))#  
-    getPalette = colorRampPalette(brewer.pal(9, "Set1"))#these 9 colours will be interpolated to obtain  the most divergent result
-    p <- p + geom_point(aes( fill= fromStates),alpha =  input$alpha , data=keep, shape=21, colour="#4D4D4D",  stroke = input$stroke, size=input$size)+
-      scale_fill_manual(values=getPalette(nbColoursUni_from))
-  }else{
-    p<-p +geom_point(data=keep, shape=21, colour="#4D4D4D" ,fill=alpha("#0e74af", input$alpha),  stroke = input$stroke, size=input$size) 
-  }
+  p<-ggplot(data=keep, aes(x=get(input$to_from, keep), y=sum_Transitions ))+ geom_bar(stat="identity")
+  plotly::ggplotly(p)%>%layout(xaxis=list(tickangle=45))
+}
+
+summarize_to_from<-function(){
+  keep    <- transition_distances[vals$keeprows, , drop = FALSE]
+  exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
+
+  keep<-keep%>% 
+    separate(Key, c("From", "To"), "->")%>% 
+    group_by(across(input$to_from))%>%
+    summarise(sum_Transitions=sum(Transitions))%>%
+    arrange(desc(sum_Transitions))
+  exclude<-exclude%>% 
+    separate(Key, c("From", "To"), "->")%>% 
+    group_by(across(input$to_from))%>%
+    summarise(sum_Transitions=sum(Transitions))%>%
+    arrange(desc(sum_Transitions))
   
+  list("keep"=keep, "exclude"=exclude)
+}
+
+
+
+log_uni<-function(p){
   values<- get(input$Predictor_uni, transition_distances)
-  if(!input$regression_line==FALSE){ 
-    p <- p + geom_smooth(mapping=aes(key=NULL), method = "lm", se=as.logical(input$se), level=input$level) 
-  }
+
   
   if(!logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE) {
     p<-p+scale_x_continuous(name =paste0(input$Predictor_uni))+
@@ -132,24 +166,42 @@ plotting_fun<-function(){
   if(logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE){
     p<-p+scale_x_continuous(name =paste0(input$Predictor_uni))+
       scale_y_continuous(name = "Transition_log")+
-    coord_cartesian(xlim =c(min(values), max(values)),  ylim=c(0,log(max(transition_distances$Transitions))))
+      coord_cartesian(xlim =c(min(values), max(values)),  ylim=c(0,log(max(transition_distances$Transitions))))
     
   }
   if(!logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
     p<-p+scale_x_continuous(name =paste0(input$Predictor_uni, "_log"))+
       scale_y_continuous(name = "Transitions")+
-    coord_cartesian(xlim =c(min(log(values)), max(log(values))),  ylim=c(0,max(transition_distances$Transitions)))
+      coord_cartesian(xlim =c(min(log(values)), max(log(values))),  ylim=c(0,max(transition_distances$Transitions)))
   }
   if(logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
     p<-p+scale_x_continuous(name =paste0(input$Predictor_uni, "_log"))+
       scale_y_continuous(name = "Transition_log")+
-    coord_cartesian(xlim =c(min(log(values)), max(log(values))), ylim=c(0,log(max(transition_distances$Transitions))))
+      coord_cartesian(xlim =c(min(log(values)), max(log(values))), ylim=c(0,log(max(transition_distances$Transitions))))
   }
-  
-  p <- p %>% plotly::ggplotly(tooltip = c(input$Predictor_uni, "Transitions", "Key"), source="plot")
-  
   return(p)
 }
+
+colour_by_states_uni<-function(p, keep){
+  if(input$colour_by_states_uni=="To"){
+    toStates<-unlist(lapply(keep$Key, function(key) first.word(my.string = key,sep =  "->", n= 2)))
+    nbColoursUni_to<-length(unique(toStates))#the states are added as a list in order to unlist them I need to take only the first word otherwise we get too many states
+    getPalette = colorRampPalette(brewer.pal(9, "Set1"))#these 9 colours will be interpolated to obtain  the most divergent result
+    p <- p + geom_point(aes(fill= toStates),alpha =  input$alpha , data=keep, shape=21, colour="#4D4D4D", stroke = input$stroke, size=input$size)+
+      scale_fill_manual(values=getPalette(nbColoursUni_to))
+  }else if(input$colour_by_states_uni=="From"){
+    fromStates<-unlist(lapply(keep$Key, function(key) first.word(my.string = key,sep =  "->", n= 1)))
+    nbColoursUni_from<-length(unique(fromStates))#  
+    getPalette = colorRampPalette(brewer.pal(9, "Set1"))#these 9 colours will be interpolated to obtain  the most divergent result
+    p <- p + geom_point(aes( fill= fromStates),alpha =  input$alpha , data=keep, shape=21, colour="#4D4D4D",  stroke = input$stroke, size=input$size)+
+      scale_fill_manual(values=getPalette(nbColoursUni_from))
+  }else{
+    p<-p +geom_point(data=keep, shape=21, colour="#4D4D4D" ,fill=alpha("#0e74af", input$alpha),  stroke = input$stroke, size=input$size) 
+  }
+  return(p)
+}
+
+
 
 plotting_residuals<-function(x){
   #keep    <- transition_distances[ vals$keeprows, , drop = FALSE]#not needed because only called after linear regression

@@ -67,9 +67,9 @@ shinyServer(function(input, output, session) {
       {
         as.factor(importingSamplingLocations(sampling_locations))
       },
-      error=function(){
+      error=function(cond){
         tip_states$data<-NULL
-        reset("distances_file")
+        reset("sampling_locations")
         Sys.sleep(5)
         return()
       }
@@ -219,7 +219,7 @@ shinyServer(function(input, output, session) {
         },
         error=function(cond){
           shiny::showNotification(
-            ui=paste0("This file: ", input$tree_file$name, " does not appear to be a phylogeny. 
+            ui=paste0("This file: ", input$tree_file$name, " does not appear to be a rooted, binary phylogeny. 
                         Please provide an appropriate file!"),
             type = "error",
             duration=10)
