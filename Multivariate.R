@@ -31,11 +31,11 @@ observeEvent(input$multi_regression_output, {
 observeEvent(input$multi_plot_output, {
   shinyjs::toggle(selector = "div.multi_plot_output", animType = "fade", anim=T)
 })
-  
+
 plotting_muĺti<-function(transition_distances,vals, clientData){
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-
+  
   keep<-keep%>%
     select(Transitions, input$variable, Key)%>%
     mutate_at(input$Log, log)
@@ -58,7 +58,7 @@ plotting_muĺti<-function(transition_distances,vals, clientData){
 }
 
 
-lm_multi<-function(transition_distances,cut_off_residual=NULL, percentile=95, vals){
+lm_multi<-function(transition_distances, vals){
   
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
@@ -71,13 +71,14 @@ lm_multi<-function(transition_distances,cut_off_residual=NULL, percentile=95, va
   }))
   
   if("Transitions" %!in% input$Log){
-    lm=lm(as.formula(paste0("Transitions~",paste(variable, collapse="+"))), data=keep)
-    lm=lm(as.formula(paste0("Transitions~",paste(variable, collapse="+"))), data=keep)
+    f<-paste0("Transitions~",paste(variable, collapse="+"))
   }
   if("Transitions" %in% input$Log){
-    lm=lm(as.formula(paste0("log(Transitions)~",paste(variable, collapse="+"))), data=keep)
-    lm=lm(as.formula(paste0("log(Transitions)~",paste(variable, collapse="+"))), data=keep)
+    f<-paste0("log(Transitions)~",paste(variable, collapse="+"))
   }
+  lm=lm(as.formula(f), data=keep)
+  lm[["call"]][["formula"]]<-lm$terms #this seemed to be the easiest way to have the evaluated variables printed to the summary output under "call" 
+  
   x<-data.frame(lm$residuals,lm$fitted.values)
   colnames(x)<-c("residuals", "fitted")
   
@@ -96,7 +97,7 @@ observe({
   ## Glance #######
   output$lm_multi=renderTable({
     req(transition_distances, vals, logs_multi(), input$variable)
-    glance(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals)$lm)
+    glance(lm_multi(transition_distances, vals)$lm)
   }) # output$plot = renderTable({
   
   # ## Output ####
@@ -106,7 +107,7 @@ observe({
   # 
   output$lm.summary_multi=renderPrint({
     req(transition_distances, vals, logs_multi(), input$variable)
-    summary(lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals)$lm)
+    summary(lm_multi(transition_distances, vals)$lm)
   }) # output$plot = renderTable({
   
 })

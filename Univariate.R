@@ -217,15 +217,21 @@ plotting_residuals<-function(x){
 linear_regression<-function(cut_off_residual=NULL, percentile=95){
   keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  if(logs$logtransform[1]==TRUE)   {
-    keep <- keep%>%
-      mutate_at("Transitions", log)
-  }
+
+  variable=input$Predictor_uni
   if(logs$logtransform[2]==TRUE)   {
-    keep <- keep%>%
-      mutate_at(input$Predictor_uni, log)
+    variable=paste0("log(", input$Predictor_uni, ")")
   }
-  lm=lm(keep$Transitions~get(input$Predictor_uni, keep))
+  
+  if(logs$logtransform[1]==FALSE)   {
+    f <- paste("Transitions",variable, sep="~")
+  }
+  if(logs$logtransform[1]==TRUE)   {
+    f <- paste("log(Transitions)", variable, sep = "~")
+  }
+  
+  lm=lm(as.formula(f), data=keep)
+  lm[["call"]][["formula"]]<-lm$terms #this seemed to be the easiest way to have the evaluated variables printed to the summary output under "call" 
   x<-data.frame(lm$residuals,lm$fitted.values)
   colnames(x)<-c("residuals", "fitted")
   list(lm=lm, x=x)
