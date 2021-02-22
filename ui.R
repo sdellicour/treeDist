@@ -7,8 +7,8 @@ shinyUI(fluidPage(
     "Simple Univariate analysis",
     headerPanel(
       list(HTML('<img src=Logo_Lemey_Lab.jpeg height=100 width=100/>'),
-           "TreeDist"),
-      windowTitle="TreeDist"
+           "PhyCovA"),
+      windowTitle="PhyCovA"
     ),
     sidebarLayout(
       tags$div(class="sidebar", id="sidebar",
@@ -203,8 +203,8 @@ shinyUI(fluidPage(
     tabPanel(
       "Multivariate analysis",
       headerPanel(
-        list(HTML('<img src="Logo_Lemey_Lab.jpeg" height=100 width=100/>'), "TreeDist"),
-        windowTitle="TreeDist multivariate analysis"
+        list(HTML('<img src="Logo_Lemey_Lab.jpeg" height=100 width=100/>'), "PhyCovA"),
+        windowTitle="PhyCovA multivariate analysis"
       ),
       ##MainPanel ####
       mainPanel(
@@ -245,8 +245,8 @@ shinyUI(fluidPage(
     #Explore Tree ####
     tabPanel(title = "Explore tree",
              headerPanel(
-               list(HTML('<img src="Logo_Lemey_Lab.jpeg" height=100 width=100/>'), "TreeDist"),
-               windowTitle="TreeDist tree exploration"
+               list(HTML('<img src="Logo_Lemey_Lab.jpeg" height=100 width=100/>'), "PhyCovA"),
+               windowTitle="PhyCovA tree exploration"
              ),
              sidebarLayout(
                ##Sidebar ####
