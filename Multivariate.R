@@ -33,35 +33,30 @@ observeEvent(input$multi_plot_output, {
 })
 
 plotting_muĺti<-function(transition_distances,vals, clientData){
-  keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
-  exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-  
-  keep<-keep%>%
+  transition_distances<-transition_distances%>%
     select(Transitions, input$variable, Key)%>%
     mutate_at(input$Log, log)
-  colnames(keep)<-sapply(colnames(keep), function(colname){
+  colnames(transition_distances)<-sapply(colnames(transition_distances), function(colname){
     if(colname %in% input$Log) {
       paste0(colname, "_log")
     }else{
       colname
     }
   })
-  
-  keep_high<- tidyr::gather(data=keep, key="Predictors", value="value", -c(colnames(keep)[1], Key))
+  #transform the data into high format and then group by distance matrix
+  transition_distances_high<- tidyr::gather(data=transition_distances, key="Predictor", value="Distance", -c(colnames(transition_distances)[1], Key))
   theme_set(theme_classic())
-  p1 <-ggplot(keep_high, aes_string(y = colnames(keep_high)[1], x ="value", group = "Predictors", key="Key")) + #color = Predictors
-    facet_wrap(. ~ Predictors, scale="free", ncol=3) +
+
+  p1 <-ggplot(transition_distances_high, aes_string(y = colnames(transition_distances_high)[1], x ="Distance", group = "Predictor", key="Key")) + #color = Predictors
+    facet_wrap(. ~ Predictor, scale="free", ncol=3 )+
     geom_smooth(method = "lm")+
     geom_point(shape=21, colour="#4D4D4D", fill= "#0e74af80")
-  p2 <- p1 %>% plotly::ggplotly(tooltip = c("value",  colnames(keep_high)[1], "Key"), source="multi_plot",  width = cdata$output_pid_width, height =  ceiling(length(unique(keep_high$Predictors))/2)*300)
+  p2 <- p1 %>% plotly::ggplotly(tooltip = c("Predictor","Distance",  colnames(transition_distances_high)[1], "Key"), source="multi_plot",  width = cdata$output_pid_width*0.9, height =  ceiling(length(unique(transition_distances_high$Predictor))/2)*300)
   return(p2)
 }
 
 
 lm_multi<-function(transition_distances, vals){
-  
-  keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
-  exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
   
   variable=as.vector(sapply(input$variable, function(variable) {
     if (variable %in% input$Log){
@@ -76,7 +71,7 @@ lm_multi<-function(transition_distances, vals){
   if("Transitions" %in% input$Log){
     f<-paste0("log(Transitions)~",paste(variable, collapse="+"))
   }
-  lm=lm(as.formula(f), data=keep)
+  lm=lm(as.formula(f), data=transition_distances)
   lm[["call"]][["formula"]]<-lm$terms #this seemed to be the easiest way to have the evaluated variables printed to the summary output under "call" 
   
   x<-data.frame(lm$residuals,lm$fitted.values)
@@ -100,11 +95,6 @@ observe({
     glance(lm_multi(transition_distances, vals)$lm)
   }) # output$plot = renderTable({
   
-  # ## Output ####
-  # output$output_multi=renderTable({
-  #   lm_multi(transition_distances,cut_off_residual=NULL, percentile=95, vals)$output
-  # }) # output$plot = renderTable({
-  # 
   output$lm.summary_multi=renderPrint({
     req(transition_distances, vals, logs_multi(), input$variable)
     summary(lm_multi(transition_distances, vals)$lm)

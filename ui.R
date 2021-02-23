@@ -117,7 +117,7 @@ shinyUI(fluidPage(
                      ),
                      conditionalPanel(condition = "input.Scatter_residual=='bar'",
                                       tags$h4("Plotly - Barplot"),
-                                      plotlyOutput(outputId = "histo")
+                                      plotlyOutput(outputId = "bar")
                      )))),
         shinyjs::hidden(
           tags$div(class="regression_control",

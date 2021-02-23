@@ -18,7 +18,11 @@ ML_Reconstruction<-function(tip_states, tree_not_annotated){
     type = "message",
     duration=10)
   
-  ERreconstruction<-   ape::ace(tip_states, tree_not_annotated, type = "discrete")
+  ERreconstruction<-   ape::ace(x=tip_states, 
+                                phy=tree_not_annotated, 
+                                type = "discrete", method = "ML", 
+                                marginal = FALSE, 
+                                model="ER" )
   return(ERreconstruction)
 }
 

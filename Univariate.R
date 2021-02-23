@@ -1,44 +1,35 @@
 # Univariate ####
+
+##scatter plot output####
 output$plot = renderPlotly({
   req(transition_distances, vals, logs)
   plotting_fun()
 }) # output$plot = renderPlot({
 
-# Univariate ####
-output$histo = renderPlotly({
+##bar plot output####
+output$bar = renderPlotly({
   req(transition_distances, vals, logs)
   histo_fun()
 }) # output$plot = renderPlot({
 
+##residual plot output####
 output$plot_res = renderPlotly({
   req(transition_distances, vals, logs)
   linear_regression()$x%>%
     plotting_residuals(.)
 }) # output$plot = renderPlot({
 
+##glance output ####
 output$lm=renderTable({
   req(transition_distances, vals, logs)
   glance(linear_regression()$lm)
-  
 }) # output$plot = renderTable({
 
+## lm summary output ####
 output$lm.summary=renderPrint({
   req(transition_distances, vals, logs)
   summary(linear_regression()$lm)
-  
 }) # output$plot = renderTable({
-
-# output$output=renderTable({
-#   linear_regression(transition_distances=transition_distances,logs=logs, vals()=vals())$output
-
-#}) # output$plot = renderTable({
-
-# output$hover<-renderPrint({
-#   hover_data<-event_data("plotly_hover", source = "plot")
-#   transition_distances[which(transition_distances$Key==hover_data$key),]
-# })
-# 
-# Toggle Points #### 
 
 observeEvent(input$log_transitions, {
   req(transition_distances, vals, logs)
@@ -73,53 +64,56 @@ observeEvent(input$exclude_reset, {
 })
 
 plotting_fun<-function(){
+  selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
+  
+  #takes care of log 
+  transition_distances<-log_uni_data()
+  
   #data modification part
   keep    <- transition_distances[vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
 
-  #takes care of log 
-  keep_exclude<-log_uni_data(keep, exclude)
-  keep<-keep_exclude$keep
-  exclude<-keep_exclude$exclude
- 
   #plotting part
   ggplot2::theme_set(theme_classic())
-  p <- ggplot(keep, mapping= aes_string(x=input$Predictor_uni,y="Transitions", key="Key")) 
+  p <- ggplot(keep, mapping= aes_string(x=colnames(keep)[selected_col],y=colnames(keep)[1], key=colnames(keep)[dim(keep)[2]])) 
+  p<-log_uni(p, transition_distances)
   p<-p + geom_point(data = exclude, shape = 21, fill = NA, color = "red", alpha = input$alpha, stroke = input$stroke, size=input$size)
-  p<-log_uni(p)
   p<-colour_by_states_uni(p, keep)
-  if(!input$regression_line==FALSE){ 
+
+   if(!input$regression_line==FALSE){ 
     p <- p + geom_smooth(mapping=aes(key=NULL), method = "lm", se=as.logical(input$se), level=input$level) 
-  }
-  p <- p %>% plotly::ggplotly(tooltip = c(input$Predictor_uni, "Transitions", "Key"), source="plot")
+   }
+  p <- p %>% plotly::ggplotly(tooltip =c("x", "y", "key"), source="plot")
   return(p)
 }
 
-log_uni_data<-function(keep, exclude){
+log_uni_data<-function(){
+  #since for the predictor the column number is not fixed and the column name is not fixed we need to select via pattern search
+  selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
+
   if(logs$logtransform[1]==TRUE)   {
-    keep <- keep%>%
-      dplyr::mutate_at("Transitions", log)
-    exclude <- exclude%>%
-      dplyr::mutate_at("Transitions", log)
+    transition_distances <- transition_distances%>%
+      dplyr::mutate(across(Transitions, log))%>%
+      rename(Transitions_Log=Transitions)
   }
   ##Give a warning if the predictive variable is log transformed but contains values equal or below 0.
-  if(min(get(input$Predictor_uni, transition_distances))<=0 & logs$logtransform[2]==TRUE){
-    shiny::showNotification(
-      ui=paste0("There are values smaller or equal to 0 in ", input$Predictor_uni, " the log transformation is not possible.
-                The transform is rolled back and displayed as before." ),
-      type = 'warning',
-      duration=30)
-    logs$logtransform[2]=FALSE
-    return()
-  }
   
   if(logs$logtransform[2]==TRUE)   {
-    keep <- keep%>%
-      dplyr::mutate_at(input$Predictor_uni, log)
-    exclude <- exclude%>%
-      dplyr::mutate_at(input$Predictor_uni, log)
+    if(min(get(input$Predictor_uni, transition_distances))<=0){
+      shiny::showNotification(
+        ui=paste0("There are values smaller or equal to 0 in ", input$Predictor_uni, " the log transformation is not possible.
+                The transform is rolled back and displayed as before." ),
+        type = 'warning',
+        duration=30)
+      logs$logtransform[2]=FALSE
+      return()
+    }
+    
+    transition_distances <- transition_distances%>%
+      dplyr::mutate(across(input$Predictor_uni, log))
+      colnames(transition_distances)[selected_col]<- paste(input$Predictor_uni, "log", sep ="_")
   }
-  list("keep"=keep, "exclude"=exclude)
+  transition_distances
 }
 
 
@@ -127,8 +121,8 @@ histo_fun<-function(){
   keep_exclude<-summarize_to_from()
   keep<-keep_exclude$keep
   exclude<-keep_exclude$exclude
-  
   p<-ggplot(data=keep, aes(x=get(input$to_from, keep), y=sum_Transitions ))+ geom_bar(stat="identity")
+  p[["labels"]][["x"]]<-paste0("Transitions ", input$to_from)
   plotly::ggplotly(p)%>%layout(xaxis=list(tickangle=45))
 }
 
@@ -150,35 +144,12 @@ summarize_to_from<-function(){
   list("keep"=keep, "exclude"=exclude)
 }
 
-
-
-log_uni<-function(p){
-  values<- get(input$Predictor_uni, transition_distances)
-
-  
-  if(!logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE) {
-    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni))+
-      scale_y_continuous(name = "Transitions")+
-      coord_cartesian(xlim =c(min(values), max(values)), ylim=c(0,max(transition_distances$Transitions)))
-    #having ylim and ylim specified within coord_cartesian keeps data and allows to calcualte the confidence interval properly. 
-    #speciyfying xlim and ylim within scale continous replaces oob values with NA
-  }
-  if(logs$logtransform[1]==TRUE & !logs$logtransform[2]==TRUE){
-    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni))+
-      scale_y_continuous(name = "Transition_log")+
-      coord_cartesian(xlim =c(min(values), max(values)),  ylim=c(0,log(max(transition_distances$Transitions))))
-    
-  }
-  if(!logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
-    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni, "_log"))+
-      scale_y_continuous(name = "Transitions")+
-      coord_cartesian(xlim =c(min(log(values)), max(log(values))),  ylim=c(0,max(transition_distances$Transitions)))
-  }
-  if(logs$logtransform[1]==TRUE & logs$logtransform[2]==TRUE){
-    p<-p+scale_x_continuous(name =paste0(input$Predictor_uni, "_log"))+
-      scale_y_continuous(name = "Transition_log")+
-      coord_cartesian(xlim =c(min(log(values)), max(log(values))), ylim=c(0,log(max(transition_distances$Transitions))))
-  }
+log_uni<-function(p, transition_distances){
+  selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
+  numeric_transitions_distances<-transition_distances[,1:selected_col]
+  p<-p+scale_x_continuous(name =colnames(numeric_transitions_distances)[selected_col])+
+        scale_y_continuous(name = colnames(numeric_transitions_distances)[1])+
+        coord_cartesian(xlim =c(min(numeric_transitions_distances[,selected_col]), max(numeric_transitions_distances[,selected_col])), ylim=c(0,max(numeric_transitions_distances[,1])))
   return(p)
 }
 
@@ -195,7 +166,7 @@ colour_by_states_uni<-function(p, keep){
     getPalette = colorRampPalette(brewer.pal(9, "Set1"))#these 9 colours will be interpolated to obtain  the most divergent result
     p <- p + geom_point(aes( fill= fromStates),alpha =  input$alpha , data=keep, shape=21, colour="#4D4D4D",  stroke = input$stroke, size=input$size)+
       scale_fill_manual(values=getPalette(nbColoursUni_from))
-  }else{
+  }else if (input$colour_by_states_uni=="All blue"){
     p<-p +geom_point(data=keep, shape=21, colour="#4D4D4D" ,fill=alpha("#0e74af", input$alpha),  stroke = input$stroke, size=input$size) 
   }
   return(p)
