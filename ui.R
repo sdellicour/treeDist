@@ -4,7 +4,7 @@
 shinyUI(fluidPage(
   shinyjs::useShinyjs(), #activate Shinyjs
   tabsetPanel(tabPanel(
-    "Simple Univariate analysis",
+    "Univariate analysis",
     headerPanel(
       list(HTML('<img src=Logo_Lemey_Lab.jpeg height=100 width=100/>'),
            "PhyCovA"),
@@ -329,6 +329,17 @@ shinyUI(fluidPage(
                                                                              min = 0,
                                                                              value = 3
                                                                            ))))),
+                                            fluidRow(
+                                              column(
+                                                12,
+                                                numericInput(
+                                                  inputId = "xlim_scaling",
+                                                  label = "Scale width",
+                                                  min = 1,
+                                                  value = 1,
+                                                  max=5,
+                                                  step = 0.1
+                                                ))),
                                             fluidRow(
                                               column(
                                                 12,

@@ -32,7 +32,7 @@ observeEvent(input$multi_plot_output, {
   shinyjs::toggle(selector = "div.multi_plot_output", animType = "fade", anim=T)
 })
 
-plotting_muĺti<-function(transition_distances,vals, clientData){
+plotting_muĺti<-function(transition_distances,vals){
   transition_distances<-transition_distances%>%
     select(Transitions, input$variable, Key)%>%
     mutate_at(input$Log, log)
@@ -86,7 +86,7 @@ lm_multi<-function(transition_distances, vals){
 observe({
   output$multi_plot = renderPlotly({
     req(transition_distances, vals, logs_multi(), input$variable)
-    plotting_muĺti(transition_distances, vals, clientData=cdata)
+    plotting_muĺti(transition_distances, vals)
   }) # output$plot = renderPlot({
   
   ## Glance #######

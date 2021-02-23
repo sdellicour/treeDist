@@ -45,19 +45,23 @@ output$plotly_tree <- renderPlotly({
   
   # creating the plot
   #aes_string(y = colnames(keep_high)[1], x ="value", group = "Predictors", key="Key")
-  p <- tree_data %>%
-    ggtree(aes(label = get(state(), tree_data), label2=label))
   tree_data <- tree_data %>%
     fortify() %>% 
     as_tibble()
   
+  Ancestral_States<-get(state(), tree_data)
+  tree_data[which(tree_data$isTip==FALSE), "label"]<- "Internal Node"
+  p <- tree_data %>%
+    ggtree()+
+    geom_point(aes("node"=node, "parent"=parent, label = Ancestral_States, label2=label), size=0.01)
+  #geom_point seems to be needed to have the mapping done correctly for the tooltip
   if(input$colour_by_states) {
-    nbColours<-length(unique(unlist(lapply(get(state(), tree_data), first.word))))#the states are added as a list in order to unlist them I need to take only the first word otherwise we get too many states
+    nbColours<-length(unique(unlist(lapply(Ancestral_States, first.word))))#the states are added as a list in order to unlist them I need to take only the first word otherwise we get too many states
     getPalette = colorRampPalette(brewer.pal(9, "Set1"))#these 9 colours will be interpolated to obtain  the most divergent result
-    p <- p + geom_point(aes(color=unlist(lapply(get(state(), tree_data), first.word))))+
+    p <- p + geom_point(aes("node"=node, "parent"=parent,label = Ancestral_States, label2=label,color=unlist(lapply(Ancestral_States, first.word))))+
       scale_colour_manual(values=getPalette(nbColours))
   }
-  ggplotly(p, tooltip =  c("node", "parent", "label2", "label"), source="tree") %>%
+  ggplotly(p, tooltip =  c("node", "parent", "label2", "label"), source="plotly_tree") %>%
     layout(legend = list(orientation = "h" , y=-0.01, title=get(state(), tree_data), font = list(size=input$annotation_plot_legend_size )))
 })
 
@@ -68,32 +72,32 @@ output$plotly_ui <- renderUI({
 output$plot_tree <- renderPlot({
   req(tree_data())
   tree_data<-tree_data()
-  
+
   # creating the plot
   subtree <- tree_data %>%
     fortify() %>% 
-    offspring(.node=input$node, include_self=TRUE)
+    offspring(.node=input$node, include_self=F, tiponly = FALSE) #include_self is not working properly
   
   subtree2 <- tree_data %>%
-    fortify() %>% 
+    fortify() %>%
     as_tibble() %>%
-    filter(node %in% subtree$node)
+    filter(node %in% c(subtree$node, input$node))
   
-  
-  p<- subtree2 %>% ggtree(layout=input$select_layout) 
+  p<- subtree2 %>% ggtree(layout=input$select_layout)
   if(input$node_shapes) p <- p + geom_nodepoint(aes(label = get(state(), subtree2), label2=label))
   if(input$tip_shapes) p <- p + geom_tippoint(aes(label = get(state(), subtree2) , label2=label))
   if(input$tip_labels)  p <- p + geom_tiplab(size = input$tree_text_size)
-  if(input$ancestral_states) p <- p + geom_text(aes(x=branch, label= get(state(), subtree2), vjust =-0.5), size= input$ancestral_states_size )
+  if(input$ancestral_states) p <- p + geom_label(aes(label= get(state(), subtree2)), size= input$ancestral_states_size )
   if(input$node_number) p <- p +    geom_label(mapping = aes(label = node), size = input$node_number_size)
   if(input$colour_by_states) {
     nbColours<-length(unique(unlist(lapply(get(state(), subtree2), first.word))))#the states are added as a list in order to unlist them I need to take only the first word otherwise we get too many states
     getPalette = colorRampPalette(brewer.pal(9, "Set1"))#these 9 colours will be interpolated to obtain  the most divergent result
-    p <- p + geom_point(aes(color=unlist(lapply(get(state(), subtree2), first.word))))+
+    p <- p + geom_nodepoint(aes(color=unlist(lapply(get(state(), subtree2), first.word))))+
       scale_colour_manual(values=getPalette(nbColours))+
       theme(legend.position="bottom", legend.text=element_text(size= input$annotation_plot_legend_size), legend.title = element_blank())
   }
-  p
+  p$data$x<-p$data$x-min(p$data$x)
+  p + xlim(c(0, max(p$data$x)*input$xlim_scaling))
 })
 
 output$plot_ui <- renderUI({
