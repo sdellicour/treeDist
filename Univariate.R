@@ -65,6 +65,7 @@ observeEvent(input$exclude_reset, {
 
 plotting_fun<-function(){
   selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
+  selected_col_response<-grep(input$response_uni, colnames(transition_distances))
   
   #takes care of log 
   transition_distances<-log_uni_data()
@@ -75,7 +76,7 @@ plotting_fun<-function(){
 
   #plotting part
   ggplot2::theme_set(theme_classic())
-  p <- ggplot(keep, mapping= aes_string(x=colnames(keep)[selected_col],y=colnames(keep)[1], key=colnames(keep)[dim(keep)[2]])) 
+  p <- ggplot(keep, mapping= aes_string(x=colnames(keep)[selected_col],y=colnames(keep)[selected_col_response], key=colnames(keep)[dim(keep)[2]])) 
   p<-log_uni(p, transition_distances)
   p<-p + geom_point(data = exclude, shape = 21, fill = NA, color = "red", alpha = input$alpha, stroke = input$stroke, size=input$size)
   p<-colour_by_states_uni(p, keep)
@@ -88,13 +89,24 @@ plotting_fun<-function(){
 }
 
 log_uni_data<-function(){
+  browser()
   #since for the predictor the column number is not fixed and the column name is not fixed we need to select via pattern search
   selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
-
+  selected_col_response<-grep(input$response_uni, colnames(transition_distances))
   if(logs$logtransform[1]==TRUE)   {
-    transition_distances <- transition_distances%>%
-      dplyr::mutate(across(Transitions, log))%>%
-      rename(Transitions_Log=Transitions)
+    
+    if(min(get(input$response_uni, transition_distances))<=0){
+      shiny::showNotification(
+        ui=paste0("There are values smaller or equal to 0 in ", input$response_uni, " the log transformation is not possible.
+                The transform is rolled back and displayed as before." ),
+        type = 'warning',
+        duration=30)
+      logs$logtransform[1]=FALSE
+      return()
+    }
+    transition_distances <- transition_distances %>%
+      dplyr::mutate(across(input$response_uni, log))
+      colnames(transition_distances)[selected_col_response]<- paste(input$response_uni, "log", sep ="_")
   }
   ##Give a warning if the predictive variable is log transformed but contains values equal or below 0.
   
@@ -121,35 +133,34 @@ histo_fun<-function(){
   keep_exclude<-summarize_to_from()
   keep<-keep_exclude$keep
   exclude<-keep_exclude$exclude
-  p<-ggplot(data=keep, aes(x=get(input$to_from, keep), y=sum_Transitions ))+ geom_bar(stat="identity")
-  p[["labels"]][["x"]]<-paste0("Transitions ", input$to_from)
+  p<-ggplot(data=keep, aes(x=get(input$to_from, keep), y=sum ))+ geom_bar(stat="identity")
+  p[["labels"]][["x"]]<-paste0(input$response_uni, input$to_from)
   plotly::ggplotly(p)%>%layout(xaxis=list(tickangle=45))
 }
 
 summarize_to_from<-function(){
   keep    <- transition_distances[vals$keeprows, , drop = FALSE]
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-
-  keep<-keep%>% 
+    keep<-keep%>% 
     separate(Key, c("From", "To"), "->")%>% 
     group_by(across(input$to_from))%>%
-    summarise(sum_Transitions=sum(Transitions))%>%
-    arrange(desc(sum_Transitions))
+    summarise("sum"=sum(!!sym(input$response_uni)))
   exclude<-exclude%>% 
     separate(Key, c("From", "To"), "->")%>% 
     group_by(across(input$to_from))%>%
-    summarise(sum_Transitions=sum(Transitions))%>%
-    arrange(desc(sum_Transitions))
+    summarise("sum"=sum(!!sym(input$response_uni)))
   
   list("keep"=keep, "exclude"=exclude)
 }
 
 log_uni<-function(p, transition_distances){
   selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
-  numeric_transitions_distances<-transition_distances[,1:selected_col]
+  selected_col_response<-grep(input$response_uni, colnames(transition_distances))
+  
+  numeric_transitions_distances<-transition_distances[,colnames(transition_distances)!="Key"]
   p<-p+scale_x_continuous(name =colnames(numeric_transitions_distances)[selected_col])+
-        scale_y_continuous(name = colnames(numeric_transitions_distances)[1])+
-        coord_cartesian(xlim =c(min(numeric_transitions_distances[,selected_col]), max(numeric_transitions_distances[,selected_col])), ylim=c(0,max(numeric_transitions_distances[,1])))
+        scale_y_continuous(name = colnames(numeric_transitions_distances)[selected_col_response])+
+        coord_cartesian(xlim =c(min(numeric_transitions_distances[,selected_col]), max(numeric_transitions_distances[,selected_col])), ylim=c(min(numeric_transitions_distances[,selected_col_response]),max(numeric_transitions_distances[,selected_col_response])))
   return(p)
 }
 
@@ -195,10 +206,10 @@ linear_regression<-function(cut_off_residual=NULL, percentile=95){
   }
   
   if(logs$logtransform[1]==FALSE)   {
-    f <- paste("Transitions",variable, sep="~")
+    f <- paste(input$response_uni,variable, sep="~")
   }
   if(logs$logtransform[1]==TRUE)   {
-    f <- paste("log(Transitions)", variable, sep = "~")
+    f <- paste(paste0("log(", input$response_uni, ")"), variable, sep = "~")
   }
   
   lm=lm(as.formula(f), data=keep)

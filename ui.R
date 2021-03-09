@@ -73,7 +73,8 @@ shinyUI(fluidPage(
                                                 "AR Method",
                                                 c(
                                                   "Maximum parsimony" = "MP",
-                                                  "Maximum likelihood" = "ML")))))),
+                                                  "Maximum likelihood" = "ML",
+                                                  "TreeTime ML - GTR method" = "TT")))))),
                  shinyjs::hidden(
                    tags$div(id="missings",
                             fluidRow(column(
@@ -124,14 +125,19 @@ shinyUI(fluidPage(
                    wellPanel(
                      fluidRow(
                        column(
-                         6,
+                         4,
                          selectInput(
                            inputId = "Scatter_residual",
                            "Scatter, residual plot selection",
                            c("Scatter plot (plotly)"="scatter", "Residuals plot"="residuals", "Barplot of Sum"="bar"))
                        ),
+                       column(
+                         4,
+                         selectInput(
+                           inputId = "response_uni", label="Univariate response", choices=c(NULL))),
                        conditionalPanel(condition = "input.Scatter_residual!='bar'",
-                                        column(6,selectInput(inputId = "Predictor_uni", label="Univariate predictor", choices=c(NULL))),
+                                        column(4,selectInput(inputId = "Predictor_uni", label="Univariate predictor", choices=c(NULL))),
+                                        
                        )),
                        conditionalPanel(condition = "input.Scatter_residual=='bar'",
                                         column(6,radioButtons(inputId = "to_from",
@@ -216,11 +222,13 @@ shinyUI(fluidPage(
           ),
           fluidRow(
             tags$div(class="multi_input_control",
-                     splitLayout(
-                       checkboxGroupInput("variable", "Variables:",
-                                          c("Updating" = "U")),
-                       uiOutput("log")
-                     )))),
+                     column(4,
+                            checkboxGroupInput("variable", "Variables:",
+                                          c("Updating" = "U"))),
+                       column(4, uiOutput("response_multi")),
+                       
+                       column(4,uiOutput("log"))
+                     ))),
         wellPanel(
           fluidRow(
             column(width=4, tags$h4("Multivariate regression analysis:")),

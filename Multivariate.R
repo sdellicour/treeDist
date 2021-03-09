@@ -20,6 +20,17 @@ output$log <- renderUI({
   )
 })
 
+output$response_multi <- renderUI({
+  req(transition_distances, vals)
+  output<-selectizeInput(
+    inputId= "response_multi",
+    label="Response variable: ",
+    choices = c(column_names(), "Transitions") ,
+    selected =  "Transitions"
+  )
+})
+
+
 observeEvent(input$multi_input_control, {
   shinyjs::toggle(selector = "div.multi_input_control", animType = "fade", anim=T)
 })
@@ -43,18 +54,18 @@ plotting_muĺti<-function(transition_distances,vals){
       colname
     }
   })
+  selected_col_response<-grep(input$response_multi, colnames(transition_distances))
   #transform the data into high format and then group by distance matrix
-  transition_distances_high<- tidyr::gather(data=transition_distances, key="Predictor", value="Distance", -c(colnames(transition_distances)[1], Key))
+  transition_distances_high<- tidyr::gather(data=transition_distances, key="Predictor", value="Distance", -c(colnames(transition_distances)[selected_col_response], Key))
   theme_set(theme_classic())
 
   p1 <-ggplot(transition_distances_high, aes_string(y = colnames(transition_distances_high)[1], x ="Distance", group = "Predictor", key="Key")) + #color = Predictors
     facet_wrap(. ~ Predictor, scale="free", ncol=3 )+
     geom_smooth(method = "lm")+
     geom_point(shape=21, colour="#4D4D4D", fill= "#0e74af80")
-  p2 <- p1 %>% plotly::ggplotly(tooltip = c("Predictor","Distance",  colnames(transition_distances_high)[1], "Key"), source="multi_plot",  width = cdata$output_pid_width*0.9, height =  ceiling(length(unique(transition_distances_high$Predictor))/2)*300)
+  p2 <- p1 %>% plotly::ggplotly(tooltip = c("Predictor","Distance",  colnames(transition_distances_high)[1], "Key"), source="multi_plot",  width = cdata$output_multi_plot_width*0.95, height =  ceiling(length(unique(transition_distances_high$Predictor))/2)*300)
   return(p2)
 }
-
 
 lm_multi<-function(transition_distances, vals){
   
@@ -79,7 +90,6 @@ lm_multi<-function(transition_distances, vals){
   
   list(lm=lm)#, output=output, x=x)
 }   
-
 
 # Multivariate ####
 ## Plot ####

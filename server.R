@@ -35,12 +35,19 @@ shinyServer(function(input, output, session) {
   #the names of the distance matrices
   column_names<-reactive({
     req(input$distances_file$name)
-    unlist(lapply(input$distances_file$name, first.word))
+    column_names<-unlist(lapply(input$distances_file$name, first.word))
+    if(input$Reconstruction_Method!="MP"){
+      column_names<-c(unlist(lapply(input$distances_file$name, first.word)), "Transition_Rates")
+    }
+    column_names
   })
   
   distances_raw<-reactiveValues(data=NULL)
   observe({
     req(input$distances_file)
+    if(input$Annotation_State==FALSE) {
+      req(input$sampling_locations)
+    }
     distances_raw$data <- tryCatch(
       {
         lapply(input$distances_file$datapath , function(distances_raw_file) importingDist(distances_raw_file, input$delimiter))
@@ -162,6 +169,12 @@ shinyServer(function(input, output, session) {
       choices = column_names(),
       selected = column_names()[1]    
     )
+    updateSelectInput(
+      session,
+      inputId= "response_uni",
+      choices = c("Transitions", column_names()),
+      selected = "Transitions"
+    )
     
     #Multivariate checkbox group with the same names of the covariates as for the univariat analysis.
     updateCheckboxGroupInput(session, 
@@ -274,7 +287,6 @@ shinyServer(function(input, output, session) {
     }
     #show all elements of type "div" that have the html class "regression.control"
     #Within the UI a range of these divs are hidden in the univariate tab to make the page look cleaner.
-
     transitions<-GenerateRawTransitionMatrix(distances_raw$data[[1]], tree=tree) 
     #take any distance matrix to get the col names and dimensions for the transitions matrix
     

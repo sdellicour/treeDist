@@ -1,15 +1,33 @@
 chooseReconstructionMethod<-function(tip_states, tree_not_annotated){
-  if(input$Reconstruction_Method=="ML"){
-    max_ancestral_positions<-ML_Reconstruction(tip_states, tree_not_annotated)%>%
-      max_ancestral_positions_ML(tree_not_annotated=tree_not_annotated, ancestral_positions= .)
-  }
+
   if(input$Reconstruction_Method=="MP"){
     max_ancestral_positions<-prepare_states_MP(tip_states)%>%
       MaximumParsimonyReconstruction(tip_states_numerical = ., tree_not_annotated)%>%
       max_ancestral_positions_MP(tip_states, tree_not_annotated=tree_not_annotated, ancestral_positions= .)
+      tree_annotated<-writeAnnotatedTree(tree_not_annotated=tree_not_annotated, max_ancestral_positions = max_ancestral_positions, tip_states = tip_states )
+      return(tree_annotated)
   }
-  tree_annotated<-writeAnnotatedTree(tree_not_annotated=tree_not_annotated, max_ancestral_positions = max_ancestral_positions, tip_states = tip_states )
-  tree_annotated
+  if(input$Reconstruction_Method=="ML"){
+    ERreconstruction<-ML_Reconstruction(tip_states, tree_not_annotated)
+    Q<-matrix(ERreconstruction_Rate$rate, length(tip_states, length(tip_states)))
+    max_ancestral_positions_ML(tree_not_annotated=tree_not_annotated, ancestral_positions= ERreconstruction_Rate)
+    tree_annotated<-writeAnnotatedTree(tree_not_annotated=tree_not_annotated, max_ancestral_positions = max_ancestral_positions, tip_states = tip_states )
+  }
+  
+  if(input$Reconstruction_Method=="TT"){
+    ancestralStates_Q<-treeTime_fun(tip_states, tree_not_annotated)
+    ancestral_states<-ancestralStates_Q$ancestral_states 
+    Q<-ancestralStates_Q$Q
+    tree_annotated<-writeAnnotatedTree(tree_not_annotated=tree_not_annotated, max_ancestral_positions = ancestral_states, tip_states = tip_states )
+  }
+  colnames(Q)<-levels(tip_states)
+  rownames(Q)<-levels(tip_states)
+  write.csv(file = "treeTime/transition_rates.csv", x = Q)
+  shiny::showNotification(
+    ui=paste0("Created Maximum Likelihood reconstruction - Inferring transitions and creating regression analysis!"),
+    type = "message",
+    duration=30)
+  return(tree_annotated)
 }
 
 ML_Reconstruction<-function(tip_states, tree_not_annotated){
@@ -17,20 +35,42 @@ ML_Reconstruction<-function(tip_states, tree_not_annotated){
     ui=paste0("Creating Maximum Likelihood reconstruction"),
     type = "message",
     duration=10)
-  
-  ERreconstruction<-   ape::ace(x=tip_states, 
-                                phy=tree_not_annotated, 
-                                type = "discrete", method = "ML", 
-                                marginal = FALSE, 
+  browser()
+  ERreconstruction<-   ape::ace(x=tip_states,
+                                phy=tree_not_annotated,
+                                type = "discrete", method = "ML",
+                                marginal = FALSE,
                                 model="ER" )
+  #ERreconstruction<-ace_for_Q(x=tip_states, phy=tree_not_annotated, type = "discrete", method = "ML",  marginal = FALSE,  model=Q)
   return(ERreconstruction)
+}
+
+treeTime_fun<-function(tip_states, tree_not_annotated){
+  shiny::showNotification(
+    ui=paste0("Creating Maximum Likelihood reconstruction via TreeTime - sit tight, we are right back!"),
+    type = "message",
+    duration=30)
+  
+  states<-data.frame(tree_not_annotated$tip.label, tip_states)
+  colnames(states)<-c("tip_labels", "tip_states")
+  write.csv(file = "treeTime/states.csv", x = states)
+  ape::write.tree(file="treeTime/tree_not_annotated.nwk", phy = tree_not_annotated)
+  import("treetime")
+  system("treetime mugration --tree treeTime/tree_not_annotated.nwk --states treeTime/states.csv --name-column tip_labels --attribute tip_states --outdir treeTime")
+  system("grep -A5000 -m1 -e 'Actual rates from j->i (Q_ij):' treeTime/GTR.txt | tail -n+2 > Q.txt")
+  Q<-read.table("Q.txt")
+  treetext<-read_file("treeTime/annotated_tree.nexus")
+  matched_string<-stringr::str_match_all(treetext, pattern="&tip_states=\"(\\w+)\\\"[]][)]NODE_")
+  ancestral_states<-matched_string[[1]][tree_not_annotated$Nnode:1,2]
+  return(list("ancestral_states"=ancestral_states, "Q"=Q))
 }
 
 ####Maximum Parsimony
 prepare_states_MP<-function(tip_states){
-  encoding<-cbind(levels(tip_states),as.numeric(1:length(levels(tip_states))))
-  tip_states_numerical<-as.numeric(lapply(tip_states, function(tip_state) encoding[which(encoding[,1]==tip_state),2]))
-  tip_states_numerical
+  as.numeric(as.factor(tip_states))
+  #encoding<-cbind(levels(tip_states),as.numeric(1:length(levels(tip_states))))
+  #tip_states_numerical<-as.numeric(lapply(tip_states, function(tip_state) encoding[which(encoding[,1]==tip_state),2]))
+  #tip_states_numerical
 }
 
 MaximumParsimonyReconstruction<-function(tip_states_numerical, tree_not_annotated){
