@@ -31,8 +31,15 @@ RUN Rscript -e 'install.packages("renv")'
 RUN Rscript -e 'renv::consent(provided = TRUE)'
 RUN Rscript -e 'renv::restore()'
 
-# expose port
-EXPOSE 3838
 
-# run app on container start
+#docker hub########################################################################
+EXPOSE 3838
 CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = 3838)"]
+#\dockerhub########################################################################
+
+####horeku#########################################################################################               
+#RUN rm -rf /var/lib/apt/lists/*              
+#RUN useradd shiny_user
+#USER shiny_user
+#CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = as.numeric(Sys.getenv('PORT')))"]
+####\horeku########################################################################################                 

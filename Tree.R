@@ -61,9 +61,12 @@ output$plotly_tree <- renderPlotly({
     p <- p + geom_point(aes("node"=node, "parent"=parent,label = Ancestral_States, label2=label,color=unlist(lapply(Ancestral_States, first.word))))+
       scale_colour_manual(values=getPalette(nbColours))
   }
-  ggplotly(p, tooltip =  c("node", "parent", "label2", "label"), source="plotly_tree") %>%
+  browser()
+  p<- ggplotly(p, tooltip =c("parent", node), source="plotly_tree",dynamicTicks = T ) %>%
     layout(legend = list(orientation = "h" , y=-0.01, title=get(state(), tree_data), font = list(size=input$annotation_plot_legend_size )))
-})
+  p %>% toWebGL() #TODO either supress warnings because "hoveron" not known by toWebGL() or figure out to transfer info to 
+  #label that is known to toWebGL() or perhaps rewrite plot to a non ggplot tree and then pipe to plotly from there
+  })
 
 output$plotly_ui <- renderUI({
   plotlyOutput("plotly_tree", height = input$tree_plot_height)
@@ -97,7 +100,7 @@ output$plot_tree <- renderPlot({
       theme(legend.position="bottom", legend.text=element_text(size= input$annotation_plot_legend_size), legend.title = element_blank())
   }
   p$data$x<-p$data$x-min(p$data$x)
-  p + xlim(c(0, max(p$data$x)*input$xlim_scaling))
+  p + xlim(c(0, max(p$data$x)*input$xlim_scaling)) 
 })
 
 output$plot_ui <- renderUI({

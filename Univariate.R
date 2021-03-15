@@ -89,7 +89,6 @@ plotting_fun<-function(){
 }
 
 log_uni_data<-function(){
-  browser()
   #since for the predictor the column number is not fixed and the column name is not fixed we need to select via pattern search
   selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
   selected_col_response<-grep(input$response_uni, colnames(transition_distances))
