@@ -23,10 +23,6 @@ chooseReconstructionMethod<-function(tip_states, tree_not_annotated){
   colnames(Q)<-levels(tip_states)
   rownames(Q)<-levels(tip_states)
   write.csv(file = "treeTime/transition_rates.csv", x = Q)
-  shiny::showNotification(
-    ui=paste0("Created Maximum Likelihood reconstruction - Inferring transitions and creating regression analysis!"),
-    type = "message",
-    duration=30)
   return(tree_annotated)
 }
 
@@ -56,7 +52,14 @@ treeTime_fun<-function(tip_states, tree_not_annotated){
   write.csv(file = "treeTime/states.csv", x = states)
   ape::write.tree(file="treeTime/tree_not_annotated.nwk", phy = tree_not_annotated)
   import("treetime")
-  system("treetime mugration --tree treeTime/tree_not_annotated.nwk --states treeTime/states.csv --name-column tip_labels --attribute tip_states --outdir treeTime")
+  system("treetime mugration --tree treeTime/tree_not_annotated.nwk --states treeTime/states.csv --name-column tip_labels --attribute tip_states --outdir treeTime > tree_time.log")
+  tree_time_log<-read_file(file = "tree_time.log")
+  
+  shiny::showNotification(
+    ui=paste0(tree_time_log),
+    type = "message",
+    duration=30)
+  
   system("grep -A5000 -m1 -e 'Actual rates from j->i (Q_ij):' treeTime/GTR.txt | tail -n+2 > Q.txt")
   Q<-read.table("Q.txt")
   treetext<-read_file("treeTime/annotated_tree.nexus")

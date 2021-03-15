@@ -218,21 +218,18 @@ shinyUI(fluidPage(
         wellPanel(
           fluidRow(
             column(width=4, tags$h4("Multivariate input control:")),
-            column(offset = 6, width = 2, checkboxInput(inputId = "multi_input_control",label= "Show"))
+            column(offset = 6, width = 2, checkboxInput(inputId = "multi_input_control",label= "Show",value=T))
           ),
           fluidRow(
             tags$div(class="multi_input_control",
-                     column(4,
-                            checkboxGroupInput("variable", "Variables:",
-                                          c("Updating" = "U"))),
-                       column(4, uiOutput("response_multi")),
-                       
-                       column(4,uiOutput("log"))
-                     ))),
+                     column(4, uiOutput( outputId ="response_multi_out" )),
+                     column(4, checkboxGroupInput("variable", "Variables:")),
+                     column(4, uiOutput(outputId ="log"))
+            ))),
         wellPanel(
           fluidRow(
             column(width=4, tags$h4("Multivariate regression analysis:")),
-            column(offset = 6, width = 2, checkboxInput(inputId = "multi_regression_output",label= "Show"))
+            column(offset = 6, width = 2, checkboxInput(inputId = "multi_regression_output",label= "Show", value =F))
           ),
           tags$div(class="multi_regression_output",
                    tags$h4("Basic statistical overview:"),

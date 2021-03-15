@@ -5,8 +5,8 @@ output: html_document
 
 ```{r}
 library(xml2)
-source("Functions.R") #I will use some functions I also use in the app
-ebola_xml<-read_xml("input/ebola/Makona_1610_cds_ig.joint_GLM.xml")
+source("../Functions.R") #I will use some functions I also use in the app
+ebola_xml<-read_xml("../input/Makona_1610_cds_ig.joint_GLM.xml")
 #get the general linear model from the xml
 ebola_glm_model<-xml_child(xml_child(ebola_xml, "glmSubstitutionModel"), "glmModel")
 
@@ -52,38 +52,31 @@ counter=0
 apply(distances_final,2, function(predictor){
   counter<<-counter+1 #global variable is updated and so actually increased
   S<-diag(dimensions_states)
-  S[upper.tri(S, diag=F)]<-predictor[1:(length(predictor)/2)]
-  S[lower.tri(S, diag=F)]<-predictor[(length(predictor)/2+1):length(predictor)]
-  S=t(S)
+  S1<-diag(dimensions_states)
+  S2<-diag(dimensions_states)
+  
+  S1[lower.tri(S1, diag=F)]<-predictor[(length(predictor)/2+1):length(predictor)] #this ir adding values columnwise as wanted for second half of predictors
+  
+  S2[lower.tri(S2, diag=F)]<-predictor[1:(length(predictor)/2)] #by adding also the first half to the lower triangle and transposing the first half is added rowise
+  S2=t(S2)
+  
+  S[lower.tri(S, diag=F)]<-S1[lower.tri(S1, diag=F)]
+  S[upper.tri(S, diag=F)]<-S2[upper.tri(S2, diag=F)]
+  
   diag(S)=rep(0, length(diag(S)))
   colnames(S)<-names
   rownames(S)<-names
-  write.csv(S, file=paste0("input/ebola/tryout/",colnames(distances_final)[counter], ".csv"))
+  write.csv(S, file=paste0("/home/tim/Documents/Bioinformatics/MasterThesis/treeDist/input/ebola/",colnames(distances_final)[counter], ".csv"))
 })
 ```
 
 
 ```{r}
-##creating sampling locations from tree tips but removing all missing data tips since they will not be mapped ####
-ebola<-read.beast("input/ebola/Makona_1610_cds_ig.GLM.MCC.tree")
-tips<-getTipLabels(ebola)
-
-missings<-c(which(as.vector(sapply(tips, function(x) str_split(x,"\\|")[[1]][5]))==""), 
-            which(as.vector(sapply(tips, function(x) str_split(x,"\\|")[[1]][5]))=="?"),
-            which(as.vector(sapply(tips, function(x) str_split(x,"\\|")[[1]][5]))=="WesternArea"))
-
-
-ebola <-drop.tip(ebola,sort(missings, decreasing = T))
-tips<-ebola@phylo[["tip.label"]]
-sampling_locations<-as.vector(sapply(tips, function(x) str_split(x,"\\|")[[1]][5]))
-write(sampling_locations, "input/ebola/tryout/ebola_sampling_locations.txt")
-a<-read.table("input/ebola/tryout/ebola_sampling_locations.txt",blank.lines.skip = F)
-write.beast(file = "input/ebola/tryout/ebola_no_missings", treedata = ebola)
-df<-as_tibble(ebola)
-sort(unique(sampling_locations))
-names
-unique(names[names %!in% sampling_locations])
-unique(sampling_locations[sampling_locations %!in% names])
+##creating sampling locations from annotation
+source("../Functions.R")
+ebola<-treeio::read.beast("../input/ebola/Makona_1610_cds_ig.GLM.MCC.tree")
+sampling_locations<-ebola@data$location.states[1:length(ebola@phylo$tip.label)]
+#write(sampling_locations, "input/ebola/tryout/ebola_sampling_locations.txt")
 ```
 
   

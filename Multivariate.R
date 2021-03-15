@@ -5,13 +5,13 @@ log_choices<-function(transition_distances){
 }
 
 logs_multi <- reactive({
-  req(transition_distances, vals)#require to compute the transitions and the distance matrices first before executing this code
+  req(transition_distances)#require to compute the transitions and the distance matrices first before executing this code
   log_validated = log_choices(transition_distances)
   return(c(c(log_validated[log_validated %in% c(input$variable)]), "Transitions"))
 })
 
 output$log <- renderUI({
-  req(transition_distances, vals)
+  req(transition_distances)
   output <- checkboxGroupInput(
     inputId = "Log",
     label = "Log",
@@ -20,8 +20,8 @@ output$log <- renderUI({
   )
 })
 
-output$response_multi <- renderUI({
-  req(transition_distances, vals)
+output$response_multi_out <- renderUI({
+  req(transition_distances)
   output<-selectizeInput(
     inputId= "response_multi",
     label="Response variable: ",
@@ -32,18 +32,18 @@ output$response_multi <- renderUI({
 
 
 observeEvent(input$multi_input_control, {
-  shinyjs::toggle(selector = "div.multi_input_control", animType = "fade", anim=T)
+  shinyjs::toggle(selector = "div.multi_input_control", animType = "fade", anim=T, condition = input$multi_input_control==TRUE)
 })
 
 observeEvent(input$multi_regression_output, {
-  shinyjs::toggle(selector = "div.multi_regression_output", animType = "fade", anim=T)
+  shinyjs::toggle(selector = "div.multi_regression_output", animType = "fade", anim=T, condition = input$multi_regression_output==TRUE)
 })
 
 observeEvent(input$multi_plot_output, {
-  shinyjs::toggle(selector = "div.multi_plot_output", animType = "fade", anim=T)
+  shinyjs::toggle(selector = "div.multi_plot_output", animType = "fade", anim=T, condition = input$multi_plot_output==TRUE)
 })
 
-plotting_muĺti<-function(transition_distances,vals){
+plotting_muĺti<-reactive({
   transition_distances<-transition_distances%>%
     select(Transitions, input$variable, Key)%>%
     mutate_at(input$Log, log)
@@ -64,10 +64,11 @@ plotting_muĺti<-function(transition_distances,vals){
     geom_smooth(method = "lm")+
     geom_point(shape=21, colour="#4D4D4D", fill= "#0e74af80")
   p2 <- p1 %>% plotly::ggplotly(tooltip = c("Predictor","Distance",  colnames(transition_distances_high)[1], "Key"), source="multi_plot",  width = cdata$output_multi_plot_width*0.95, height =  ceiling(length(unique(transition_distances_high$Predictor))/2)*300)
-  return(p2)
-}
+  p2
+})
 
-lm_multi<-function(transition_distances, vals){
+lm_multi<-reactive({
+  req(transition_distances)
   
   variable=as.vector(sapply(input$variable, function(variable) {
     if (variable %in% input$Log){
@@ -76,38 +77,51 @@ lm_multi<-function(transition_distances, vals){
     variable
   }))
   
-  if("Transitions" %!in% input$Log){
-    f<-paste0("Transitions~",paste(variable, collapse="+"))
+  if(input$response_multi %in% variable){
+    variable<-variable[variable != input$response_multi]
+    shiny::showNotification(
+      ui=paste0("The response appeared on the right-hand side and was dropped as predictor. This is equivalent to R standard behaviour."),
+      type = "warning",
+      duration=10)
   }
-  if("Transitions" %in% input$Log){
-    f<-paste0("log(Transitions)~",paste(variable, collapse="+"))
+  
+  #check whether both transitions and transtions rate are in the model
+  if(length(grep("Transition", c(input$response_multi,variable)))>1){
+    shiny::showNotification(
+      ui=paste0("Your regression model contains both Transition counts and Transition rates, this might be redundant information 
+                but if you know what you are doing, continue to do so."),
+      type = "message",
+      duration=10)
   }
-  lm=lm(as.formula(f), data=transition_distances)
-  lm[["call"]][["formula"]]<-lm$terms #this seemed to be the easiest way to have the evaluated variables printed to the summary output under "call" 
-  
-  x<-data.frame(lm$residuals,lm$fitted.values)
-  colnames(x)<-c("residuals", "fitted")
-  
-  list(lm=lm)#, output=output, x=x)
-}   
+    
+  if(input$response_multi %!in% input$Log){
+    f<-paste0(input$response_multi,"~", paste(variable, collapse="+"))
+  }
+  if(input$response_multi %in% input$Log){
+    f<-paste0("log(", input$response_multi, ") ~",paste(variable, collapse="+"))
+  }
+  lm_multi=lm(as.formula(f), data=transition_distances)
+  lm_multi[["call"]][["formula"]]<-eval(lm_multi[["call"]][["formula"]]) #this seemed to be the easiest way to have the evaluated variables printed to the summary output under "call" 
+  lm_multi
+})
 
 # Multivariate ####
 ## Plot ####
 observe({
   output$multi_plot = renderPlotly({
-    req(transition_distances, vals, logs_multi(), input$variable)
-    plotting_muĺti(transition_distances, vals)
+    req(transition_distances, logs_multi(), input$variable)
+    plotting_muĺti()
   }) # output$plot = renderPlot({
   
   ## Glance #######
   output$lm_multi=renderTable({
-    req(transition_distances, vals, logs_multi(), input$variable)
-    glance(lm_multi(transition_distances, vals)$lm)
+    req(transition_distances, logs_multi(), input$variable)
+    glance(lm_multi())
   }) # output$plot = renderTable({
   
   output$lm.summary_multi=renderPrint({
-    req(transition_distances, vals, logs_multi(), input$variable)
-    summary(lm_multi(transition_distances, vals)$lm)
+    req(transition_distances, logs_multi(), input$variable)
+    summary(lm_multi())
   }) # output$plot = renderTable({
   
 })
