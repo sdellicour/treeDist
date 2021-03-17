@@ -168,6 +168,7 @@ GenerateRawTransitionMatrix = function(distances_raw, tree_df) {
 
 GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) {
   distances_raw<- lapply(distances_raw, function(matrix){
+    rownames(matrix)<-colnames(matrix)
     matrix<-matrix[,colnames(matrix) %in% levels(tip_states$data)] 
     matrix<-matrix[rownames(matrix) %in% levels(tip_states$data),]
   })
@@ -191,7 +192,10 @@ GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) 
   transition_distances<-data.frame(Transitions=transitions, distances, Key=names_matrixes)
   #adding the transitions as a column, adding the row_names as an additional variable (needed for tooltip)
   rownames(transition_distances)<-names_matrixes #adding rownames, not strictly required but neat
-  transition_distances=transition_distances[which(transitions!=0),] #remove transitions that did not occur
+  
+  if(input$include_zero_transitions=="No"){
+    transition_distances=transition_distances[which(transitions!=0),] #remove transitions that did not occur
+  }
   write.csv(transition_distances, file = "output/transition_distances.csv")
   transition_distances
 }
