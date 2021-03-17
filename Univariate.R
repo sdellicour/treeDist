@@ -48,13 +48,12 @@ observeEvent(input$exclude_toggle, {
   res<- data.frame(selected_=rep(FALSE, nrow(transition_distances)))
   res$selected_[which(transition_distances$Key %in% selected_data$key)]<-TRUE
   vals$keeprows <- xor(vals$keeprows, res$selected_)      
-  #Below code for bidirectional reactivity but it gets confusing when both plots contains selected points
-  
-  #res_res<- data.frame(selected_=rep(FALSE, nrow(transition_distances)))
-  #res_res$selected_[which(transition_distances$Key %in%selected_data$key)]<-TRUE
-  
-  #if(sum(res$selected_)>0)     vals$keeprows <- xor(vals$keeprows, res$selected_)#the ones that are set to true in res are set to false
-  #else                         vals$keeprows <- xor(vals$keeprows, res_res$selected_)
+})
+
+# Toggle points that have 0 transitions when button is clicked
+observeEvent(input$includeZerosUni, {
+  req(transition_distances, vals, logs)
+  vals$keeprows <- xor(vals$keeprows, res$selected_)
 })
 
 # Reset all points
@@ -155,7 +154,6 @@ summarize_to_from<-function(){
 log_uni<-function(p, transition_distances){
   selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
   selected_col_response<-grep(input$response_uni, colnames(transition_distances))
-  
   numeric_transitions_distances<-transition_distances[,colnames(transition_distances)!="Key"]
   p<-p+scale_x_continuous(name =colnames(numeric_transitions_distances)[selected_col])+
         scale_y_continuous(name = colnames(numeric_transitions_distances)[selected_col_response])+

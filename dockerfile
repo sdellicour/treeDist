@@ -1,3 +1,12 @@
+#include the treetime python module and its dependencies
+FROM python:3.8-slim-buster AS treetime_image
+RUN apt-get update
+RUN python -m venv /opt/PhyCovA
+ENV PATH="/opt/PhyCovA/bin:$PATH"
+COPY treetime-master treetime-master/.
+RUN pip install treetime-master/.
+
+
 # Base image https://hub.docker.com/u/rocker/
 FROM rocker/shiny:latest
 
@@ -20,11 +29,12 @@ RUN apt-get update && \
     apt-get clean
 
 # copy necessary files
-## renv.lock file
+#artifacts from previous stage
+COPY --from=treetime_image /opt/PhyCovA /opt/PhyCovA
+# renv.lock file
 COPY renv.lock ./renv.lock
 ## app folder
 COPY . ./app
-
 
 # install renv & restore packages
 RUN Rscript -e 'install.packages("renv")'
@@ -33,13 +43,19 @@ RUN Rscript -e 'renv::restore()'
 
 
 #docker hub########################################################################
-EXPOSE 3838
-CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = 3838)"]
+#EXPOSE 3838
+#RUN chmod +x app/changeSymlink.sh
+#RUN app/changeSymlink.sh
+#ENV PATH="/opt/PhyCovA/bin:$PATH"
+#CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = 3838)"]
 #\dockerhub########################################################################
 
 ####horeku#########################################################################################               
-#RUN rm -rf /var/lib/apt/lists/*              
-#RUN useradd shiny_user
-#USER shiny_user
-#CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = as.numeric(Sys.getenv('PORT')))"]
+RUN rm -rf /var/lib/apt/lists/*              
+RUN chmod +x app/changeSymlink.sh
+RUN app/changeSymlink.sh
+ENV PATH="/opt/PhyCovA/bin:$PATH"
+RUN useradd shiny_user
+USER shiny_user
+CMD ["R", "-e", "shiny::runApp('/app', host = '0.0.0.0', port = as.numeric(Sys.getenv('PORT')))"]
 ####\horeku########################################################################################                 

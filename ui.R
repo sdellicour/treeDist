@@ -40,6 +40,9 @@ shinyUI(fluidPage(
                                           fileInput(
                                             "distances_file", label = ("Distance matrix"), multiple=T
                                           ))),
+                          fluidRow(column(12, 
+                                          radioButtons(inputId = "include_zero_transitions", label="Include observations with 0 transitions:", choices=c("Yes", "No"), selected="No"
+                                          ))),
                           fluidRow(column(
                             12,
                             textInput(inputId = "delimiter", "Delimiter distance matrices (optional)", value ="")

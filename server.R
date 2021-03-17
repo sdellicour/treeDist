@@ -1,6 +1,5 @@
 options(shiny.maxRequestSize=10*1024^2) #10mb max file size
 
-
 #' Shiny server is doing the back-end work for the treedist application. It consists of 5 files in total. This server.R file itsels, 3 files that are sourced upon startup of the app
 #' (Functions.R, Multivariate.R, AncestralReconstruction.R) and the Tree.R file which is encapsulated within the "RUN" observer. 
 #' @param input
@@ -265,42 +264,42 @@ shinyServer(function(input, output, session) {
           return()
         }
       )
-        if(is.null(input_reconstruction)){
+      if(is.null(input_reconstruction)){
+        return()
+      }
+      
+      tree <<- tree <- tryCatch(
+        {
+          chooseReconstructionMethod(input_reconstruction$sampling_locations,  input_reconstruction$tree)
+        },
+        error=function(cond){
+          shiny::showNotification(
+            ui=paste0("The ancestral reconstruction failed, make sure you provide a rooted and fully dichotomous tree."),
+            type = "error",
+            duration=10)
+          tree<<-NULL
+          reset("tree_file")
+          shinyjs::enable("sidebar")
           return()
         }
-      
-         tree <<- tree <- tryCatch(
-          {
-             chooseReconstructionMethod(input_reconstruction$sampling_locations,  input_reconstruction$tree)
-          },
-          error=function(cond){
-            shiny::showNotification(
-              ui=paste0("The ancestral reconstruction failed, make sure you provide a rooted and fully dichotomous tree."),
-              type = "error",
-              duration=10)
-            tree<<-NULL
-            reset("tree_file")
-            shinyjs::enable("sidebar")
-            return()
-          }
-        )
+      )
     }
     #show all elements of type "div" that have the html class "regression.control"
     #Within the UI a range of these divs are hidden in the univariate tab to make the page look cleaner.
     transitions<-GenerateRawTransitionMatrix(distances_raw$data[[1]], tree=tree) 
     #take any distance matrix to get the col names and dimensions for the transitions matrix
     
-     
+    
     transition_distances <<- transition_distances <- GenerateFinal_Transitions_Distances(transitions_raw=transitions, distances_raw=distances_raw$data)
     #double assignment, to keep variable also locally...
     vals <<- reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)))    
   }) # observeEvent(input$start, {
-      
-      observeEvent(input$reset, {
-        # tree<-NULL
-        # distances_raw$data<-NULL
-        # tip_states$data<-NULL
-        # reset("sidebar")
-        session$reload()
-      })
+  
+  observeEvent(input$reset, {
+    # tree<-NULL
+    # distances_raw$data<-NULL
+    # tip_states$data<-NULL
+    # reset("sidebar")
+    session$reload()
+  })
 }) # shinyServer(function(input, output) {

@@ -9,8 +9,8 @@ chooseReconstructionMethod<-function(tip_states, tree_not_annotated){
   }
   if(input$Reconstruction_Method=="ML"){
     ERreconstruction<-ML_Reconstruction(tip_states, tree_not_annotated)
-    Q<-matrix(ERreconstruction_Rate$rate, length(tip_states, length(tip_states)))
-    max_ancestral_positions_ML(tree_not_annotated=tree_not_annotated, ancestral_positions= ERreconstruction_Rate)
+    Q<-matrix(ERreconstruction$rate, length(levels(tip_states)), length(levels(tip_states)))
+    max_ancestral_positions<-max_ancestral_positions_ML(tree_not_annotated=tree_not_annotated, ancestral_positions= ERreconstruction)
     tree_annotated<-writeAnnotatedTree(tree_not_annotated=tree_not_annotated, max_ancestral_positions = max_ancestral_positions, tip_states = tip_states )
   }
   
@@ -31,13 +31,11 @@ ML_Reconstruction<-function(tip_states, tree_not_annotated){
     ui=paste0("Creating Maximum Likelihood reconstruction"),
     type = "message",
     duration=10)
-  browser()
   ERreconstruction<-   ape::ace(x=tip_states,
                                 phy=tree_not_annotated,
                                 type = "discrete", method = "ML",
                                 marginal = FALSE,
                                 model="ER" )
-  #ERreconstruction<-ace_for_Q(x=tip_states, phy=tree_not_annotated, type = "discrete", method = "ML",  marginal = FALSE,  model=Q)
   return(ERreconstruction)
 }
 
@@ -49,9 +47,9 @@ treeTime_fun<-function(tip_states, tree_not_annotated){
   
   states<-data.frame(tree_not_annotated$tip.label, tip_states)
   colnames(states)<-c("tip_labels", "tip_states")
+  system("mkdir -p treeTime")
   write.csv(file = "treeTime/states.csv", x = states)
   ape::write.tree(file="treeTime/tree_not_annotated.nwk", phy = tree_not_annotated)
-  import("treetime")
   system("treetime mugration --tree treeTime/tree_not_annotated.nwk --states treeTime/states.csv --name-column tip_labels --attribute tip_states --outdir treeTime > tree_time.log")
   tree_time_log<-read_file(file = "tree_time.log")
   
