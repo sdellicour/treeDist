@@ -40,9 +40,6 @@ shinyUI(fluidPage(
                                           fileInput(
                                             "distances_file", label = ("Distance matrix"), multiple=T
                                           ))),
-                          fluidRow(column(12, 
-                                          radioButtons(inputId = "include_zero_transitions", label="Include observations with 0 transitions:", choices=c("Yes", "No"), selected="No"
-                                          ))),
                           fluidRow(column(
                             12,
                             textInput(inputId = "delimiter", "Delimiter distance matrices (optional)", value ="")
@@ -128,18 +125,22 @@ shinyUI(fluidPage(
                    wellPanel(
                      fluidRow(
                        column(
-                         4,
+                         3,
                          selectInput(
                            inputId = "Scatter_residual",
                            "Scatter, residual plot selection",
                            c("Scatter plot (plotly)"="scatter", "Residuals plot"="residuals", "Barplot of Sum"="bar"))
                        ),
                        column(
-                         4,
+                         3,
                          selectInput(
                            inputId = "response_uni", label="Univariate response", choices=c(NULL))),
+                       conditionalPanel(condition = "input.response_uni=='Transitions'",
+                                        column(3, 
+                                               checkboxInput(inputId = "includeZerosUni", label="Include observations with 0 transitions:",  value = FALSE
+                                               ))),
                        conditionalPanel(condition = "input.Scatter_residual!='bar'",
-                                        column(4,selectInput(inputId = "Predictor_uni", label="Univariate predictor", choices=c(NULL))),
+                                        column(3,selectInput(inputId = "Predictor_uni", label="Univariate predictor", choices=c(NULL))),
                                         
                        )),
                        conditionalPanel(condition = "input.Scatter_residual=='bar'",
@@ -221,14 +222,19 @@ shinyUI(fluidPage(
         wellPanel(
           fluidRow(
             column(width=4, tags$h4("Multivariate input control:")),
-            column(offset = 6, width = 2, checkboxInput(inputId = "multi_input_control",label= "Show",value=T))
+            conditionalPanel(condition = "input.response_multi=='Transitions'",
+                             column(3, 
+                                    tags$div(class="multi_input_control",checkboxInput(inputId = "includeZerosMulti", label="Include observations with 0 transitions:",  value = FALSE
+                                    )))),
+            column(offset = 3, width = 2, checkboxInput(inputId = "multi_input_control",label= "Show",value=T))
+         
           ),
           fluidRow(
             tags$div(class="multi_input_control",
-                     column(4, uiOutput( outputId ="response_multi_out" )),
-                     column(4, checkboxGroupInput("variable", "Variables:")),
-                     column(4, uiOutput(outputId ="log"))
-            ))),
+                     column(3, uiOutput( outputId ="response_multi_out", label="Response variable" )),
+                     column(3, checkboxGroupInput(inputId = "variable", label = "Predictors:")),
+                     column(3, uiOutput(outputId ="log", label="Log-transoform:")),
+                     column(3, uiOutput(outputId="standardize", label="Standardize (center[mean=0] and "))))),
         wellPanel(
           fluidRow(
             column(width=4, tags$h4("Multivariate regression analysis:")),

@@ -165,13 +165,17 @@ shinyServer(function(input, output, session) {
     updateSelectInput(
       session,
       inputId= "Predictor_uni",
-      choices = column_names(),
+      choices = column_names()[column_names() %!in% c("Transition_Rates")],
       selected = column_names()[1]    
     )
+    responses<-"Transitions"
+    if(input$Reconstruction_Method=="TT"){
+      responses<-c("Transitions", "Transition_Rates")
+    }
     updateSelectInput(
       session,
       inputId= "response_uni",
-      choices = c("Transitions", column_names()),
+      choices = responses,
       selected = "Transitions"
     )
     
@@ -179,8 +183,8 @@ shinyServer(function(input, output, session) {
     updateCheckboxGroupInput(session, 
                              inputId= "variable", 
                              label = "Variables:", 
-                             choices = column_names(),
-                             selected = column_names()
+                             choices = column_names()[column_names() %!in% c("Transition_Rates")],
+                             selected = column_names()[column_names() %!in% c("Transition_Rates")]
     )
   })         
   
@@ -292,7 +296,11 @@ shinyServer(function(input, output, session) {
     
     transition_distances <<- transition_distances <- GenerateFinal_Transitions_Distances(transitions_raw=transitions, distances_raw=distances_raw$data)
     #double assignment, to keep variable also locally...
-    vals <<- reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)))    
+    vals <-reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)), keepZerosUni=rep(TRUE, nrow(transition_distances)), keepZerosMulti=rep(TRUE, nrow(transition_distances)) )    
+    #do not display 0 transitions by default
+    vals$keepZerosUni[which(transition_distances$Transitions==0)]<- FALSE
+    vals$keepZerosMulti[which(transition_distances$Transitions==0)]<- FALSE
+    vals<<-vals
   }) # observeEvent(input$start, {
   
   observeEvent(input$reset, {

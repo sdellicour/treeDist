@@ -5,10 +5,15 @@ log_choices<-function(transition_distances){
 }
 
 logs_multi <- reactive({
-  req(transition_distances)#require to compute the transitions and the distance matrices first before executing this code
+  req(transition_distances, vals)#require to compute the transitions and the distance matrices first before executing this code
+  transition_distances <- transition_distances[ vals$keepZerosMulti, , drop = FALSE]
+  transition_distances<-mutate(transition_distances, across(all_of(input$standardize), scale))
+  transition_distances
   log_validated = log_choices(transition_distances)
-  return(c(c(log_validated[log_validated %in% c(input$variable)]), "Transitions"))
+  return(c(log_validated[log_validated %in% c(input$variable,  "Transitions")]))
 })
+
+
 
 output$log <- renderUI({
   req(transition_distances)
@@ -20,16 +25,39 @@ output$log <- renderUI({
   )
 })
 
+output$standardize <- renderUI({
+  req(transition_distances)
+  output <- checkboxGroupInput(
+    inputId = "standardize",
+    label = "Standardize:",
+    choices = column_names()[which(column_names() %in% input$variable)],
+    selected = NULL
+  )
+})
+
 output$response_multi_out <- renderUI({
   req(transition_distances)
+  responses<-"Transitions"
+  if(input$Reconstruction_Method=="TT"){
+    responses<-c("Transitions", "Transition_Rates")
+  }
   output<-selectizeInput(
     inputId= "response_multi",
     label="Response variable: ",
-    choices = c(column_names(), "Transitions") ,
+    choices = responses ,
     selected =  "Transitions"
   )
 })
 
+observeEvent(input$includeZerosMulti,{
+  req(transition_distances, vals, logs)
+  if(input$includeZerosMulti=="FALSE"){
+    vals$keepZerosMulti[which(transition_distances$Transitions==0)]<- FALSE
+  }else if(input$includeZerosMulti=="TRUE"){
+    vals$keepZerosMulti <- rep(TRUE, nrow(transition_distances))
+  }
+  vals<<-vals
+})
 
 observeEvent(input$multi_input_control, {
   shinyjs::toggle(selector = "div.multi_input_control", animType = "fade", anim=T, condition = input$multi_input_control==TRUE)
@@ -44,9 +72,12 @@ observeEvent(input$multi_plot_output, {
 })
 
 plotting_muĺti<-reactive({
+  
+  transition_distances <- transition_distances[ vals$keepZerosMulti, , drop = FALSE]
+  transition_distances <-mutate(transition_distances, across(all_of(input$standardize), scale))
   transition_distances<-transition_distances%>%
     select(Transitions, input$variable, Key)%>%
-    mutate_at(input$Log, log)
+    mutate(across(.cols=input$Log, .fns= log))
   colnames(transition_distances)<-sapply(colnames(transition_distances), function(colname){
     if(colname %in% input$Log) {
       paste0(colname, "_log")
@@ -64,11 +95,13 @@ plotting_muĺti<-reactive({
     geom_smooth(method = "lm")+
     geom_point(shape=21, colour="#4D4D4D", fill= "#0e74af80")
   p2 <- p1 %>% plotly::ggplotly(tooltip = c("Predictor","Distance",  colnames(transition_distances_high)[1], "Key"), source="multi_plot",  width = cdata$output_multi_plot_width*0.95, height =  ceiling(length(unique(transition_distances_high$Predictor))/2)*300)
-  p2 %>% toWebGL()
+  p2 #%>% toWebGL()
 })
 
 lm_multi<-reactive({
   req(transition_distances)
+  transition_distances <- transition_distances[ vals$keepZerosMulti, , drop = FALSE]
+  transition_distances <-mutate(transition_distances, across(all_of(input$standardize), scale))
   
   variable=as.vector(sapply(input$variable, function(variable) {
     if (variable %in% input$Log){

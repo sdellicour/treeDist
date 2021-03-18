@@ -47,13 +47,18 @@ observeEvent(input$exclude_toggle, {
   selected_data<-event_data("plotly_selected", source = "plot")
   res<- data.frame(selected_=rep(FALSE, nrow(transition_distances)))
   res$selected_[which(transition_distances$Key %in% selected_data$key)]<-TRUE
-  vals$keeprows <- xor(vals$keeprows, res$selected_)      
+  vals$keeprows <- xor(vals$keeprows, res$selected_)
 })
 
 # Toggle points that have 0 transitions when button is clicked
-observeEvent(input$includeZerosUni, {
+observeEvent(input$includeZerosUni,{
   req(transition_distances, vals, logs)
-  vals$keeprows <- xor(vals$keeprows, res$selected_)
+  if(input$includeZerosUni=="FALSE"){
+    vals$keepZerosUni[which(transition_distances$Transitions==0)]<- FALSE
+  }else if(input$includeZerosUni=="TRUE"){
+    vals$keepZerosUni <- rep(TRUE, nrow(transition_distances))
+  }
+  vals<<-vals
 })
 
 # Reset all points
@@ -67,12 +72,13 @@ plotting_fun<-function(){
   selected_col_response<-grep(input$response_uni, colnames(transition_distances))
   
   #takes care of log 
-  transition_distances<-log_uni_data()
+  transition_distances<-dplyr::mutate(transition_distances, across(input$Predictor_uni, scale))
+  transition_distances<-log_uni_data(transition_distances)
   
   #data modification part
-  keep    <- transition_distances[vals$keeprows, , drop = FALSE]
+  keep    <- transition_distances[intersect(which(vals$keepZerosUni), which(vals$keeprows)) , , drop = FALSE]
+  keep <- dplyr::mutate(keep, across(input$Predictor_uni, scale))
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-
   #plotting part
   ggplot2::theme_set(theme_classic())
   p <- ggplot(keep, mapping= aes_string(x=colnames(keep)[selected_col],y=colnames(keep)[selected_col_response], key=colnames(keep)[dim(keep)[2]])) 
@@ -87,7 +93,7 @@ plotting_fun<-function(){
   return(p)
 }
 
-log_uni_data<-function(){
+log_uni_data<-function(transition_distances){
   #since for the predictor the column number is not fixed and the column name is not fixed we need to select via pattern search
   selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
   selected_col_response<-grep(input$response_uni, colnames(transition_distances))
@@ -100,7 +106,7 @@ log_uni_data<-function(){
         type = 'warning',
         duration=30)
       logs$logtransform[1]=FALSE
-      return()
+      return(transition_distances)
     }
     transition_distances <- transition_distances %>%
       dplyr::mutate(across(input$response_uni, log))
@@ -116,7 +122,7 @@ log_uni_data<-function(){
         type = 'warning',
         duration=30)
       logs$logtransform[2]=FALSE
-      return()
+      return(transition_distances)
     }
     
     transition_distances <- transition_distances%>%
@@ -194,9 +200,9 @@ plotting_residuals<-function(x){
 }
 
 linear_regression<-function(cut_off_residual=NULL, percentile=95){
-  keep    <- transition_distances[ vals$keeprows, , drop = FALSE]
+  keep    <- transition_distances[intersect(which(vals$keepZerosUni), which(vals$keeprows)) , , drop = FALSE]
+  keep <- dplyr::mutate(keep, across(input$Predictor_uni, scale))
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
-
   variable=input$Predictor_uni
   if(logs$logtransform[2]==TRUE)   {
     variable=paste0("log(", input$Predictor_uni, ")")

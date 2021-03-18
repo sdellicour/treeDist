@@ -193,9 +193,6 @@ GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) 
   #adding the transitions as a column, adding the row_names as an additional variable (needed for tooltip)
   rownames(transition_distances)<-names_matrixes #adding rownames, not strictly required but neat
   
-  if(input$include_zero_transitions=="No"){
-    transition_distances=transition_distances[which(transitions!=0),] #remove transitions that did not occur
-  }
   write.csv(transition_distances, file = "output/transition_distances.csv")
   transition_distances
 }
