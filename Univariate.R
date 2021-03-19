@@ -71,18 +71,27 @@ plotting_fun<-function(){
   selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
   selected_col_response<-grep(input$response_uni, colnames(transition_distances))
   
-  #takes care of log 
-  transition_distances<-dplyr::mutate(transition_distances, across(input$Predictor_uni, scale))
-  transition_distances<-log_uni_data(transition_distances)
   
   #data modification part
   keep    <- transition_distances[intersect(which(vals$keepZerosUni), which(vals$keeprows)) , , drop = FALSE]
-  keep <- dplyr::mutate(keep, across(input$Predictor_uni, scale))
-  exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
+  if(input$standardize_uni){
+    keep <- dplyr::mutate(keep, across(input$Predictor_uni, scale)) #scale againt to account for possibly removed 0 transitions
+  }
+  exclude <- transition_distances[!vals$keeprows, , drop = FALSE] 
+  if(dim(exclude)[1]>0 && input$standardize_uni){#scale the excluded point the same way as the included points, still the scaling is different then when including
+    #the points of course. but depending on how many points are excluded, not scaling the excluded points might push them of the plot but not sure
+    #what is the best to do here. anyway the excluded points are not regarded for regression and scaling of the included points.
+    exclude[input$Predictor_uni]<-get(input$Predictor_uni, exclude)/attributes(get(input$Predictor_uni, keep))$`scaled:scale`
+    exclude[input$Predictor_uni]<-get(input$Predictor_uni, exclude)-attributes(get(input$Predictor_uni, keep))$`scaled:center`
+  }
+  keep<-log_uni_data(keep)
+  exclude<-log_uni_data(exclude)
+  
   #plotting part
   ggplot2::theme_set(theme_classic())
-  p <- ggplot(keep, mapping= aes_string(x=colnames(keep)[selected_col],y=colnames(keep)[selected_col_response], key=colnames(keep)[dim(keep)[2]])) 
-  p<-log_uni(p, transition_distances)
+  p <- ggplot(keep, mapping= aes_string(x=colnames(keep)[selected_col],y=colnames(keep)[selected_col_response], key=colnames(keep)[dim(keep)[2]]))
+  p<-log_uni(p, keep, exclude) #to have the axis properly scaled only pass in the values that are actually shown, but keep in
+  #brushed points that can be individually excluded to show them in different colour to the user still
   p<-p + geom_point(data = exclude, shape = 21, fill = NA, color = "red", alpha = input$alpha, stroke = input$stroke, size=input$size)
   p<-colour_by_states_uni(p, keep)
 
@@ -98,16 +107,15 @@ log_uni_data<-function(transition_distances){
   selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
   selected_col_response<-grep(input$response_uni, colnames(transition_distances))
   if(logs$logtransform[1]==TRUE)   {
-    
-    if(min(get(input$response_uni, transition_distances))<=0){
-      shiny::showNotification(
-        ui=paste0("There are values smaller or equal to 0 in ", input$response_uni, " the log transformation is not possible.
-                The transform is rolled back and displayed as before." ),
-        type = 'warning',
-        duration=30)
-      logs$logtransform[1]=FALSE
-      return(transition_distances)
-    }
+      if(dim(transition_distances)[1]>0 && min(get(input$response_uni, transition_distances))<=0){
+        shiny::showNotification(
+          ui=paste0("There are values smaller or equal to 0 in ", input$response_uni, " the log transformation is not possible.
+                  The transform is rolled back and displayed as before." ),
+          type = 'warning',
+          duration=30)
+        logs$logtransform[1]=FALSE
+        return(transition_distances)
+      }
     transition_distances <- transition_distances %>%
       dplyr::mutate(across(input$response_uni, log))
       colnames(transition_distances)[selected_col_response]<- paste(input$response_uni, "log", sep ="_")
@@ -115,7 +123,7 @@ log_uni_data<-function(transition_distances){
   ##Give a warning if the predictive variable is log transformed but contains values equal or below 0.
   
   if(logs$logtransform[2]==TRUE)   {
-    if(min(get(input$Predictor_uni, transition_distances))<=0){
+    if(dim(transition_distances)[1]>0 && min(get(input$Predictor_uni, transition_distances))<=0){
       shiny::showNotification(
         ui=paste0("There are values smaller or equal to 0 in ", input$Predictor_uni, " the log transformation is not possible.
                 The transform is rolled back and displayed as before." ),
@@ -157,10 +165,12 @@ summarize_to_from<-function(){
   list("keep"=keep, "exclude"=exclude)
 }
 
-log_uni<-function(p, transition_distances){
-  selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
-  selected_col_response<-grep(input$response_uni, colnames(transition_distances))
+log_uni<-function(p, keep, exclude){
+  transition_distances<-rbind(keep, exclude)
   numeric_transitions_distances<-transition_distances[,colnames(transition_distances)!="Key"]
+  
+  selected_col<-grep(input$Predictor_uni, colnames(numeric_transitions_distances))
+  selected_col_response<-grep(input$response_uni, colnames(numeric_transitions_distances))
   p<-p+scale_x_continuous(name =colnames(numeric_transitions_distances)[selected_col])+
         scale_y_continuous(name = colnames(numeric_transitions_distances)[selected_col_response])+
         coord_cartesian(xlim =c(min(numeric_transitions_distances[,selected_col]), max(numeric_transitions_distances[,selected_col])), ylim=c(min(numeric_transitions_distances[,selected_col_response]),max(numeric_transitions_distances[,selected_col_response])))
@@ -201,7 +211,9 @@ plotting_residuals<-function(x){
 
 linear_regression<-function(cut_off_residual=NULL, percentile=95){
   keep    <- transition_distances[intersect(which(vals$keepZerosUni), which(vals$keeprows)) , , drop = FALSE]
-  keep <- dplyr::mutate(keep, across(input$Predictor_uni, scale))
+  if(input$standardize_uni){
+    keep <- dplyr::mutate(keep, across(input$Predictor_uni, scale))
+  }
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE]
   variable=input$Predictor_uni
   if(logs$logtransform[2]==TRUE)   {

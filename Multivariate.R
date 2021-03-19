@@ -72,9 +72,10 @@ observeEvent(input$multi_plot_output, {
 })
 
 plotting_muĺti<-reactive({
-  
   transition_distances <- transition_distances[ vals$keepZerosMulti, , drop = FALSE]
-  transition_distances <-mutate(transition_distances, across(all_of(input$standardize), scale))
+  transition_distances <-mutate(transition_distances, across(all_of(input$standardize), function(predictor){
+    as.numeric(scale(x=predictor, scale=TRUE, center=TRUE))
+  }))  #scale does return a matrix with attributes which gather drops and gives a warning, that could be ignored, since I do not want a warning, I drop the attributes manually before 
   transition_distances<-transition_distances%>%
     select(Transitions, input$variable, Key)%>%
     mutate(across(.cols=input$Log, .fns= log))
@@ -101,6 +102,7 @@ plotting_muĺti<-reactive({
 lm_multi<-reactive({
   req(transition_distances)
   transition_distances <- transition_distances[ vals$keepZerosMulti, , drop = FALSE]
+  browser
   transition_distances <-mutate(transition_distances, across(all_of(input$standardize), scale))
   
   variable=as.vector(sapply(input$variable, function(variable) {

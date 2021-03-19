@@ -44,6 +44,10 @@ shinyUI(fluidPage(
                             12,
                             textInput(inputId = "delimiter", "Delimiter distance matrices (optional)", value ="")
                           ))),
+                 fluidRow(column(12,
+                                 fileInput(
+                                   "population_sizes_file", label = ("List of population sizes (1 column)")
+                                 ))),
                  fluidRow(column(
                    12,
                    radioButtons(
@@ -75,16 +79,6 @@ shinyUI(fluidPage(
                                                   "Maximum parsimony" = "MP",
                                                   "Maximum likelihood" = "ML",
                                                   "TreeTime ML - GTR method" = "TT")))))),
-                 shinyjs::hidden(
-                   tags$div(id="missings",
-                            fluidRow(column(
-                              12,
-                              checkboxGroupInput(inputId = "missings",
-                                                 label ="Missings", 
-                                                 choices = "", 
-                                                 selected = "")
-                            ))
-                   )),
                  tags$div(id="tag_sampling_locations",
                           fluidRow(column(
                             12,
@@ -125,30 +119,31 @@ shinyUI(fluidPage(
                    wellPanel(
                      fluidRow(
                        column(
-                         3,
+                         4,
                          selectInput(
                            inputId = "Scatter_residual",
                            "Scatter, residual plot selection",
                            c("Scatter plot (plotly)"="scatter", "Residuals plot"="residuals", "Barplot of Sum"="bar"))
                        ),
+                       conditionalPanel(condition = "input.Scatter_residual!='bar'",
+                                        column(4,selectInput(inputId = "Predictor_uni", label="Univariate predictor", choices=c(NULL))),
+                                        column(4, checkboxInput(inputId = "standardize_uni",label= "Standardize"))
+                       )),
+                     fluidRow(
                        column(
-                         3,
+                         4,
                          selectInput(
                            inputId = "response_uni", label="Univariate response", choices=c(NULL))),
                        conditionalPanel(condition = "input.response_uni=='Transitions'",
-                                        column(3, 
+                                        column(4, 
                                                checkboxInput(inputId = "includeZerosUni", label="Include observations with 0 transitions:",  value = FALSE
-                                               ))),
-                       conditionalPanel(condition = "input.Scatter_residual!='bar'",
-                                        column(3,selectInput(inputId = "Predictor_uni", label="Univariate predictor", choices=c(NULL))),
-                                        
-                       )),
-                       conditionalPanel(condition = "input.Scatter_residual=='bar'",
-                                        column(6,radioButtons(inputId = "to_from",
-                                                     label= "Transitions to/from", 
-                                                     choices = c("To"="To", "From"="From"), 
-                                                     selected = "To")
-                       )),
+                                               )))),
+                     conditionalPanel(condition = "input.Scatter_residual=='bar'",
+                                      column(6,radioButtons(inputId = "to_from",
+                                                            label= "Transitions to/from", 
+                                                            choices = c("To"="To", "From"="From"), 
+                                                            selected = "To")
+                                      )),
                      fluidRow(
                        conditionalPanel(condition = "input.Scatter_residual!='bar'",
                                         tags$h4("Plot layout controls:"),
@@ -227,14 +222,14 @@ shinyUI(fluidPage(
                                     tags$div(class="multi_input_control",checkboxInput(inputId = "includeZerosMulti", label="Include observations with 0 transitions:",  value = FALSE
                                     )))),
             column(offset = 3, width = 2, checkboxInput(inputId = "multi_input_control",label= "Show",value=T))
-         
+            
           ),
           fluidRow(
             tags$div(class="multi_input_control",
                      column(3, uiOutput( outputId ="response_multi_out", label="Response variable" )),
                      column(3, checkboxGroupInput(inputId = "variable", label = "Predictors:")),
                      column(3, uiOutput(outputId ="log", label="Log-transoform:")),
-                     column(3, uiOutput(outputId="standardize", label="Standardize (center[mean=0] and "))))),
+                     column(3, uiOutput(outputId="standardize", label="Standardize"))))),
         wellPanel(
           fluidRow(
             column(width=4, tags$h4("Multivariate regression analysis:")),

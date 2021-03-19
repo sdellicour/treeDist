@@ -55,6 +55,22 @@ reshape_Rownames<-function(distances_raw){
   return(distances_raw)
 }
 
+# Import Population Sizes file -------------------------------------------
+importingPopSizes<-function(population_sizes_file){
+  pop_table <- utils::read.table(population_sizes_file, blank.lines.skip = F)
+  
+  values<-as.numeric(pop_table[,2])
+  locations<-pop_table[,1]
+  
+  origin<-matrix(rep(values, length(values)), ncol=length(values))
+  colnames(origin)<-locations
+  rownames(origin)<-locations
+  
+  destination<-t(origin)
+  
+  list("origin"=origin,"destination"=destination)
+  }
+  
 # Import tree -------------------------------------------------------------
 #TODO documentation
 importingTree<-function(tree_file, file_type){
@@ -80,6 +96,7 @@ importingTree<-function(tree_file, file_type){
   tree
 }
 
+# Import sampling location -------------------------------------------------------------
 importingSamplingLocations<-function(sampling_locations){
   tip_states <- utils::read.table(sampling_locations, blank.lines.skip = F)[,1]
   tip_states
@@ -174,10 +191,14 @@ GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) 
   })
   transitions_raw<-transitions_raw[, colnames(transitions_raw) %in% levels(tip_states$data)]
   transitions_raw<-transitions_raw[rownames(transitions_raw) %in% levels(tip_states$data),]
-  
+  browser()
   if (input$annotations==FALSE &  (input$Reconstruction_Method=="ML" |  input$Reconstruction_Method=="TT")){
     Q<-importingDist("treeTime/transition_rates.csv")
     distances_raw[[length(distances_raw)+1]]<-Q
+  }
+  if (exists("pop_sizes")){
+    distances_raw[[length(distances_raw)+1]]<-pop_sizes$data$origin
+    distances_raw[[length(distances_raw)+1]]<-pop_sizes$data$destination
   }
     names_matrixes<-outer(X = colnames(transitions_raw),
                         Y = rownames(transitions_raw),

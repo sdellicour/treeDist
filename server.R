@@ -36,7 +36,10 @@ shinyServer(function(input, output, session) {
     req(input$distances_file$name)
     column_names<-unlist(lapply(input$distances_file$name, first.word))
     if(input$Reconstruction_Method!="MP"){
-      column_names<-c(unlist(lapply(input$distances_file$name, first.word)), "Transition_Rates")
+      column_names<-c(column_names, "Transition_Rates")
+    }
+    if(!is.null(input$population_sizes_file)){
+      column_names<-c(column_names, "Ori_Pop_Size", "Dest_Pop_Size")
     }
     column_names
   })
@@ -60,6 +63,29 @@ shinyServer(function(input, output, session) {
         distances_raw$data<-NULL
         reset("distances_file")
         Sys.sleep(5)
+        return()
+      }
+    )  
+  })
+  
+  pop_sizes<-reactiveValues(data=NULL)
+  observe({
+    req(input$population_sizes_file)
+    if(input$Annotation_State==FALSE) {
+      req(input$sampling_locations)
+    }
+    pop_sizes$data <- tryCatch(
+      {
+        importingPopSizes(input$population_sizes_file$datapath)
+      },
+      error=function(cond) {
+        shiny::showNotification(
+          ui="This does not seem to be a 1 column file containing the population sizes of the states at the ancestral nodes.",
+          type="error",
+          duration=10
+        )
+        distances_raw$data<-NULL
+        reset("population_sizes_file")
         return()
       }
     )  
