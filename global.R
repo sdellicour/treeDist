@@ -16,6 +16,9 @@ library(ggfortify) # tree visualization
 library(reactlog) #not needed, just for analytics
 library(ggtree) # tree visualization
 library(reticulate) # use python for treeTime
+library(corrplot)#correlation plot
+library(GGally) #some more correlation plots
+library(memoise) #caching plots to speed up the performance
 
 #Tree.R ####
 library(RColorBrewer) #tree visualization

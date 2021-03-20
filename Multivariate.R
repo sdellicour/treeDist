@@ -71,7 +71,8 @@ observeEvent(input$multi_plot_output, {
   shinyjs::toggle(selector = "div.multi_plot_output", animType = "fade", anim=T, condition = input$multi_plot_output==TRUE)
 })
 
-plotting_muĺti<-reactive({
+data_transform<-function(){
+  req(transition_distances)
   transition_distances <- transition_distances[ vals$keepZerosMulti, , drop = FALSE]
   transition_distances <-mutate(transition_distances, across(all_of(input$standardize), function(predictor){
     as.numeric(scale(x=predictor, scale=TRUE, center=TRUE))
@@ -86,6 +87,11 @@ plotting_muĺti<-reactive({
       colname
     }
   })
+  transition_distances
+}
+
+plotting_muĺti<-reactive({
+  transition_distances<-data_transform()
   selected_col_response<-grep(input$response_multi, colnames(transition_distances))
   #transform the data into high format and then group by distance matrix
   transition_distances_high<- tidyr::gather(data=transition_distances, key="Predictor", value="Distance", -c(colnames(transition_distances)[selected_col_response], Key))
@@ -97,6 +103,25 @@ plotting_muĺti<-reactive({
     geom_point(shape=21, colour="#4D4D4D", fill= "#0e74af80")
   p2 <- p1 %>% plotly::ggplotly(tooltip = c("Predictor","Distance",  colnames(transition_distances_high)[1], "Key"), source="multi_plot",  width = cdata$output_multi_plot_width*0.95, height =  ceiling(length(unique(transition_distances_high$Predictor))/2)*300)
   p2 #%>% toWebGL()
+})
+
+plotting_corr<-reactive({
+  req(transition_distances)
+  transition_distances<-data_transform()
+  corrplot::corrplot(cor(transition_distances[colnames(transition_distances )!="Key"]), type="upper", order="hclust",
+           col=brewer.pal(n=8, name="RdYlBu"))
+})
+
+plotting_pairs<-reactive({
+  req(transition_distances)
+  transition_distances<-data_transform()
+  plot(transition_distances[colnames(transition_distances )!="Key"])
+})
+
+plotting_ggpairs<-reactive({
+  req(transition_distances)
+  transition_distances<-data_transform()
+  GGally::ggpairs(transition_distances[colnames(transition_distances )!="Key"])
 })
 
 lm_multi<-reactive({
@@ -159,4 +184,34 @@ observe({
     summary(lm_multi())
   }) # output$plot = renderTable({
   
+  output$typeMultiPlot <- renderText({ 
+    switch(
+      input$typeMultiPlot,
+      "scatter" = paste0("<b>Scatter plot for all predictors and ", input$response_multi, " \b"),
+      "corr_balls" = paste0("<b> Correlation between all variables \b"),
+      "pairs"="<b>Base plot of pair-wise correlations \b",
+      "ggpairs"="<b>GGally version of pair-wise correlations \b"
+    )
+  })
+  
+  output$corr_balls = renderPlot(
+    expr={
+    req(transition_distances, logs_multi(), input$variable)
+    plotting_corr()
+    }, 
+    width = input$width, 
+    height = input$height ) # output$plot = renderPlot({
+  output$pairs = renderPlot({
+    req(transition_distances, logs_multi(), input$variable)
+    plotting_pairs()
+  }, 
+  width = input$width, 
+  height = input$height) # output$plot = renderPlot({
+  
+  output$ggpairs = renderPlot({
+    req(transition_distances, logs_multi(), input$variable)
+    plotting_ggpairs()
+    }, 
+    width = input$width, 
+    height = input$height) # output$plot = renderPlot({
 })

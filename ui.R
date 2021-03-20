@@ -46,7 +46,7 @@ shinyUI(fluidPage(
                           ))),
                  fluidRow(column(12,
                                  fileInput(
-                                   "population_sizes_file", label = ("List of population sizes (1 column)")
+                                   "population_sizes_file", label = ("List of population sizes (optional)")
                                  ))),
                  fluidRow(column(
                    12,
@@ -243,11 +243,44 @@ shinyUI(fluidPage(
           )),
         wellPanel(
           fluidRow(
-            column(width=4, tags$h4("Scatterplot per predictive variable:")),
+            column(width=4, htmlOutput("typeMultiPlot")),
             column(offset = 6, width = 2, checkboxInput(inputId = "multi_plot_output",label= "Show"))
           ),
           tags$div(class="multi_plot_output",
-                   fluidRow(plotlyOutput(outputId = "multi_plot"))
+                   fluidRow(column(4,
+                                   selectInput(
+                                     inputId="typeMultiPlot",
+                                     label="Type of plot",
+                                     choices=c("Scatter plot"="scatter", 
+                                               "Correlation Matrix"="corr_balls", 
+                                               "Base pair plot"="pairs", 
+                                               "GGally pairs plot"="ggpairs")
+                                   ))),
+                   fluidRow(
+                     column(6, sliderInput(
+                       inputId = "width",
+                       label = "Width",
+                       min = 400, 
+                       max = 2000,
+                       step = 50,
+                       value = 800
+                     )),
+                     column(6, sliderInput(
+                       inputId = "height",
+                       label = "Height",
+                       min = 400, 
+                       max =2000,
+                       step =50,
+                       value = 800
+                     ))),
+                   conditionalPanel(condition="input.typeMultiPlot=='scatter'",
+                                    fluidRow(plotlyOutput(outputId = "multi_plot"))),
+                   conditionalPanel(condition="input.typeMultiPlot=='corr_balls'",
+                                    fluidRow(plotOutput(outputId = "corr_balls"))),
+                   conditionalPanel(condition="input.typeMultiPlot=='pairs'",
+                                    fluidRow(plotOutput(outputId = "pairs"))),
+                   conditionalPanel(condition="input.typeMultiPlot=='ggpairs'",
+                                    fluidRow(plotOutput(outputId = "ggpairs"))),
           ))
       )
     ),
