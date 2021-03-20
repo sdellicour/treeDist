@@ -71,8 +71,8 @@ observeEvent(input$multi_plot_output, {
   shinyjs::toggle(selector = "div.multi_plot_output", animType = "fade", anim=T, condition = input$multi_plot_output==TRUE)
 })
 
-data_transform<-function(){
-  req(transition_distances)
+data_transform<-reactive({
+  req(input$height, input$width)
   transition_distances <- transition_distances[ vals$keepZerosMulti, , drop = FALSE]
   transition_distances <-mutate(transition_distances, across(all_of(input$standardize), function(predictor){
     as.numeric(scale(x=predictor, scale=TRUE, center=TRUE))
@@ -88,9 +88,10 @@ data_transform<-function(){
     }
   })
   transition_distances
-}
+} )
 
 plotting_muĺti<-reactive({
+  
   transition_distances<-data_transform()
   selected_col_response<-grep(input$response_multi, colnames(transition_distances))
   #transform the data into high format and then group by distance matrix
@@ -102,14 +103,14 @@ plotting_muĺti<-reactive({
     geom_smooth(method = "lm")+
     geom_point(shape=21, colour="#4D4D4D", fill= "#0e74af80")
   p2 <- p1 %>% plotly::ggplotly(tooltip = c("Predictor","Distance",  colnames(transition_distances_high)[1], "Key"), source="multi_plot",  width = cdata$output_multi_plot_width*0.95, height =  ceiling(length(unique(transition_distances_high$Predictor))/2)*300)
-  p2 #%>% toWebGL()
+  p2 
 })
 
 plotting_corr<-reactive({
   req(transition_distances)
   transition_distances<-data_transform()
   corrplot::corrplot(cor(transition_distances[colnames(transition_distances )!="Key"]), type="upper", order="hclust",
-           col=brewer.pal(n=8, name="RdYlBu"))
+           col=brewer.pal(n=8, name="RdYlBu") )
 })
 
 plotting_pairs<-reactive({
@@ -200,18 +201,27 @@ observe({
     plotting_corr()
     }, 
     width = input$width, 
-    height = input$height ) # output$plot = renderPlot({
+    height = input$height
+    ) # output$plot = renderPlot({
+  
+
+  
   output$pairs = renderPlot({
-    req(transition_distances, logs_multi(), input$variable)
+    req(transition_distances, logs_multi(),data_transform())
     plotting_pairs()
   }, 
   width = input$width, 
-  height = input$height) # output$plot = renderPlot({
+  height = input$height
+  ) # output$plot = renderPlot({
   
-  output$ggpairs = renderPlot({
-    req(transition_distances, logs_multi(), input$variable)
+  
+  
+  output$ggpairs = renderPlot(
+    expr={
+    req(transition_distances, logs_multi(), data_transform())
     plotting_ggpairs()
     }, 
     width = input$width, 
-    height = input$height) # output$plot = renderPlot({
+    height = input$height
+    )
 })
