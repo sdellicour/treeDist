@@ -327,6 +327,14 @@ shinyUI(fluidPage(
                        label = "Select plot height",
                        value = 1000
                      ))),
+                 conditionalPanel(condition = "input.Z_A_Tree=='Z_Tree'",
+                                  fluidRow(
+                                    column(
+                                      12,
+                                      checkboxInput(
+                                        inputId = "boost",
+                                        label= "Reduce datapoints for large trees (scattergl) in trade for a considerable performance boost"
+                                      )))),
                  ###Annotation Tree only ####
                  wellPanel("Annotation Tree",
                            conditionalPanel(condition = "input.Z_A_Tree=='A_Tree'",
