@@ -254,6 +254,7 @@ shinyUI(fluidPage(
                                                "Base pair plot"="pairs", 
                                                "GGally pairs plot"="ggpairs")
                                    ))),
+                   conditionalPanel(condition = "input.typeMultiPlot!='scatter'",
                    fluidRow(
                      column(6, sliderInput(
                        inputId = "width",
@@ -270,7 +271,7 @@ shinyUI(fluidPage(
                        max =2000,
                        step =50,
                        value = 800
-                     ))),
+                     )))),
                    conditionalPanel(condition="input.typeMultiPlot=='scatter'",
                                     fluidRow(plotlyOutput(outputId = "multi_plot"))),
                    conditionalPanel(condition="input.typeMultiPlot=='corr_balls'",

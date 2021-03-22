@@ -220,7 +220,7 @@ shinyServer(function(input, output, session) {
   #around reactive which makes it eager as well
   
   #Objects in this file are defined in each session
-  #These documents are outside the actionbutton "RUN", everything outside of "RUN" canbe updated without doing all calculations again. 
+  #These documents are outside the actionbutton "RUN", everything outside of "RUN" can be updated without doing all calculations again. 
   #When we need to add new distance matrices, another tree or another sampling_location file, then "RUN" is needed.
   source("Multivariate.R", local=T)
   source("AncestralReconstruction.R", local=T)
