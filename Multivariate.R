@@ -3,7 +3,6 @@ log_choices<-function(transition_distances){
   log_validated<-names(which(apply(transition_distances[,1:dim(transition_distances)[2]-1], 2, min)>0))
   return(log_validated)
 }
-
 logs_multi <- reactive({
   req(transition_distances, vals)#require to compute the transitions and the distance matrices first before executing this code
   transition_distances <- transition_distances[ vals$keepZerosMulti, , drop = FALSE]
@@ -78,7 +77,7 @@ data_transform<-reactive({
     as.numeric(scale(x=predictor, scale=TRUE, center=TRUE))
   }))  #scale does return a matrix with attributes which gather drops and gives a warning, that could be ignored, since I do not want a warning, I drop the attributes manually before 
   transition_distances<-transition_distances%>%
-    select(Transitions, input$variable, Key)%>%
+    select(input$response_multi, input$variable, Key)%>%
     mutate(across(.cols=input$Log, .fns= log))
   colnames(transition_distances)<-sapply(colnames(transition_distances), function(colname){
     if(colname %in% input$Log) {
@@ -91,7 +90,7 @@ data_transform<-reactive({
 } )
 
 plotting_muĺti<-reactive({
-  
+  req(transition_distances)
   transition_distances<-data_transform()
   selected_col_response<-grep(input$response_multi, colnames(transition_distances))
   #transform the data into high format and then group by distance matrix
