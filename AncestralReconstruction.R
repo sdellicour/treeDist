@@ -1,5 +1,4 @@
 chooseReconstructionMethod<-function(tip_states, tree_not_annotated){
-
   if(input$Reconstruction_Method=="MP"){
     max_ancestral_positions<-prepare_states_MP(tip_states)%>%
       MaximumParsimonyReconstruction(tip_states_numerical = ., tree_not_annotated)%>%
@@ -61,7 +60,7 @@ treeTime_fun<-function(tip_states, tree_not_annotated){
   system("grep -A5000 -m1 -e 'Actual rates from j->i (Q_ij):' treeTime/GTR.txt | tail -n+2 > Q.txt")
   Q<-read.table("Q.txt")
   treetext<-read_file("treeTime/annotated_tree.nexus")
-  matched_string<-stringr::str_match_all(treetext, pattern="NODE_(\\d+):\\d.\\d+\\[&tip_states=\"(\\w+)\"")
+  matched_string<-stringr::str_match_all(treetext, pattern="NODE_(\\d+):\\d+.\\d+\\[&tip_states=\"(\\w+)\"")
   matched_string<-data.frame(matched_string)[,2:3] #allowing for different data types
   colnames(matched_string)<-c("node_number", "state")
   matched_string<-rbind(c(0, "missing_root_state"), matched_string)
