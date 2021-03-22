@@ -61,8 +61,12 @@ treeTime_fun<-function(tip_states, tree_not_annotated){
   system("grep -A5000 -m1 -e 'Actual rates from j->i (Q_ij):' treeTime/GTR.txt | tail -n+2 > Q.txt")
   Q<-read.table("Q.txt")
   treetext<-read_file("treeTime/annotated_tree.nexus")
-  matched_string<-stringr::str_match_all(treetext, pattern="&tip_states=\"(\\w+)\\\"[]][)]NODE_")
-  ancestral_states<-matched_string[[1]][tree_not_annotated$Nnode:1,2]
+  matched_string<-stringr::str_match_all(treetext, pattern="NODE_(\\d+):\\d.\\d+\\[&tip_states=\"(\\w+)\"")
+  matched_string<-data.frame(matched_string)[,2:3] #allowing for different data types
+  colnames(matched_string)<-c("node_number", "state")
+  matched_string<-rbind(c(0, "missing_root_state"), matched_string)
+  matched_string<-matched_string[order(matched_string$node_number),]
+  ancestral_states<-matched_string$state
   return(list("ancestral_states"=ancestral_states, "Q"=Q))
 }
 

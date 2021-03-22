@@ -169,6 +169,9 @@ GenerateRawTransitionMatrix = function(distances_raw, tree_df) {
   for(node in tree_df$node){
     if(node!=tidytree::rootnode(tree_df)$node){
       parent_loc = get(state(), tidytree::parent(tree_df,node))
+      if(parent_loc=="missing_root_state"){
+        next
+      }
       if(is.list(parent_loc)) parent_loc=parent_loc[[1]][1]
       parent_loc = stringr::str_split(parent_loc,"\\+")[[1]][1]
       parent_loc = stringr::str_split(parent_loc," ")[[1]][1]
