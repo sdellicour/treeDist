@@ -75,14 +75,14 @@ plotting_fun<-function(){
   #data modification part
   keep    <- transition_distances[intersect(which(vals$keepZerosUni), which(vals$keeprows)) , , drop = FALSE]
   if(input$standardize_uni){
-    keep <- dplyr::mutate(keep, across(input$Predictor_uni, scale)) #scale againt to account for possibly removed 0 transitions
+    keep <- dplyr::mutate(keep, across(input$Predictor_uni, scale)) #scale again to account for possibly removed 0 transitions
   }
   exclude <- transition_distances[!vals$keeprows, , drop = FALSE] 
   if(dim(exclude)[1]>0 && input$standardize_uni){#scale the excluded point the same way as the included points, still the scaling is different then when including
     #the points of course. but depending on how many points are excluded, not scaling the excluded points might push them of the plot but not sure
     #what is the best to do here. anyway the excluded points are not regarded for regression and scaling of the included points.
-    exclude[input$Predictor_uni]<-get(input$Predictor_uni, exclude)/attributes(get(input$Predictor_uni, keep))$`scaled:scale`
     exclude[input$Predictor_uni]<-get(input$Predictor_uni, exclude)-attributes(get(input$Predictor_uni, keep))$`scaled:center`
+    exclude[input$Predictor_uni]<-get(input$Predictor_uni, exclude)/attributes(get(input$Predictor_uni, keep))$`scaled:scale`
   }
   keep<-log_uni_data(keep)
   exclude<-log_uni_data(exclude)
