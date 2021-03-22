@@ -333,7 +333,8 @@ shinyUI(fluidPage(
                                       12,
                                       checkboxInput(
                                         inputId = "boost",
-                                        label= "Reduce datapoints for large trees (scattergl) in trade for a considerable performance boost"
+                                        label= "Reduce datapoints for large trees (scattergl) in trade for a considerable performance boost",
+                                        value = TRUE
                                       )))),
                  ###Annotation Tree only ####
                  wellPanel("Annotation Tree",
