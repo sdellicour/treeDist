@@ -21,6 +21,7 @@ chooseReconstructionMethod<-function(tip_states, tree_not_annotated){
   }
   colnames(Q)<-levels(tip_states)
   rownames(Q)<-levels(tip_states)
+  system("mkdir -p treeTime")
   write.csv(file = "treeTime/transition_rates.csv", x = Q)
   return(tree_annotated)
 }
