@@ -14,11 +14,19 @@ chooseReconstructionMethod<-function(tip_states, tree_not_annotated){
   }
   
   if(input$Reconstruction_Method=="TT"){
-    ancestralStates_Q<-treeTime_fun(tip_states, tree_not_annotated)
-    ancestral_states<-ancestralStates_Q$ancestral_states 
-    Q<-ancestralStates_Q$Q
-    tree_annotated<-writeAnnotatedTree(tree_not_annotated=tree_not_annotated, max_ancestral_positions = ancestral_states, tip_states = tip_states )
+    annotated_tree_Q<-treeTime_fun(tip_states, tree_not_annotated)
+    annotated_tree<-annotated_tree_Q$annotated_tree 
+    Q<-annotated_tree_Q$Q
+    tree_annotated<-as_tibble(annotated_tree)
+    old<-data.frame("label"=tree_not_annotated$tip.label, tip_states) #the tips are in a different order in the treeTime generated tree
+    new<-data.frame("label"=tree_annotated$label[1:length(annotated_tree$tip.label)]) #new order
+    tip_states<-left_join(new, old)[,2] #join the two dataframes on the tiplabel and keep only the new order, now with assigned states
+    tree_annotated[which(colnames(tree_annotated)=="label")+1]<-tree_annotated[which(colnames(tree_annotated)=="label")] #make a column called "states to be 
+    #consistent with the other methods ans to be able to pass through the matrix generation functions
+    colnames(tree_annotated)[which(colnames(tree_annotated)=="label")+1]<-"states"
+    tree_annotated[1:length(annotated_tree$tip.label),which(colnames(tree_annotated)=="states")]<-tip_states
   }
+  #applicable for both ML methods
   colnames(Q)<-levels(tip_states)
   rownames(Q)<-levels(tip_states)
   system("mkdir -p treeTime")
@@ -61,13 +69,17 @@ treeTime_fun<-function(tip_states, tree_not_annotated){
   system("grep -A5000 -m1 -e 'Actual rates from j->i (Q_ij):' treeTime/GTR.txt | tail -n+2 > Q.txt")
   Q<-read.table("Q.txt")
   treetext<-read_file("treeTime/annotated_tree.nexus")
+  #find all ancestral node annotations, internal nodes get a label NODE_xxxxxxx, followed by the ancestral state, this can be extracted
+  #the NODExx value and the belonging state are found this way and can be sorted to replace the label that read.nexus finds in the annotated tree (which is
+  #NODE_xxx) with the actual state in the correct order. this can then be returned to the calling function (chooseReconstructionMethod)
   matched_string<-stringr::str_match_all(treetext, pattern="NODE_(\\d+):\\d+.\\d+\\[&tip_states=\"(\\w+)\"")
   matched_string<-data.frame(matched_string)[,2:3] #allowing for different data types
   colnames(matched_string)<-c("node_number", "state")
-  matched_string<-rbind(c(0, "missing_root_state"), matched_string)
-  matched_string<-matched_string[order(matched_string$node_number),]
-  ancestral_states<-matched_string$state
-  return(list("ancestral_states"=ancestral_states, "Q"=Q))
+  matched_string<-rbind(c(0, "missing_root_state"), matched_string)# treeTime does not annotate the root ancestral state
+  matched_string<-matched_string[order(matched_string$node_number),] #sort by NODE_xxx
+  annotated_tree<-read.nexus("treeTime/annotated_tree.nexus") #read the file as tree
+  annotated_tree$node.label<-matched_string$state #replace node numbers with belonging states
+  return(list("annotated_tree"=annotated_tree, "Q"=Q))
 }
 
 ####Maximum Parsimony
@@ -104,13 +116,14 @@ max_ancestral_positions_ML<-function(tree_not_annotated, ancestral_positions){
 #taking the first item at each node
 max_ancestral_positions_MP<-function(tip_states, tree_not_annotated, ancestral_positions){
   colnames(ancestral_positions$ancestral_likelihoods)<-levels(tip_states)
+  browser()
   max_ancestral_positions<-sapply(1:tree_not_annotated$Nnode, function(i) names(which(ancestral_positions$ancestral_likelihoods[i,]==max(ancestral_positions$ancestral_likelihoods[i,]))))
   max_ancestral_positions
 }
 
 
 writeAnnotatedTree<-function(tree_not_annotated, max_ancestral_positions, tip_states){
-  write.nexus(tree_not_annotated, file = "input/ebola_not_annotated.tree")
+  write.nexus(tree_not_annotated, file = "input/not_annotated.tree")
   N <- Nnode2(tree_not_annotated)
   ancestral_states_all<-c(as.vector(tip_states),max_ancestral_positions)
   annotations <- tibble(node = 1:N, states = ancestral_states_all)
