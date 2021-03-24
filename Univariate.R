@@ -1,5 +1,5 @@
 # Univariate ####
-
+observe({
 ##scatter plot output####
 output$plot = renderPlotly({
   req(transition_distances, vals, logs)
@@ -30,7 +30,7 @@ output$lm.summary=renderPrint({
   req(transition_distances, vals, logs)
   summary(linear_regression()$lm)
 }) # output$plot = renderTable({
-
+})
 observeEvent(input$log_transitions, {
   req(transition_distances, vals, logs)
   logs$logtransform[1]=!logs$logtransform[1]
@@ -67,10 +67,10 @@ observeEvent(input$exclude_reset, {
   vals$keeprows <- rep(TRUE, nrow(transition_distances))
 })
 
-plotting_fun<-function(){
+plotting_fun<-reactive({
+  req(vals)
   selected_col<-grep(input$Predictor_uni, colnames(transition_distances))
   selected_col_response<-grep(input$response_uni, colnames(transition_distances))
-  
   
   #data modification part
   keep    <- transition_distances[intersect(which(vals$keepZerosUni), which(vals$keeprows)) , , drop = FALSE]
@@ -99,8 +99,10 @@ plotting_fun<-function(){
     p <- p + geom_smooth(mapping=aes(key=NULL), method = "lm", se=as.logical(input$se), level=input$level) 
    }
   p <- p %>% plotly::ggplotly(tooltip =c("x", "y", "key"), source="plot")
+  
   return(p)
-}
+})
+
 
 log_uni_data<-function(transition_distances){
   #since for the predictor the column number is not fixed and the column name is not fixed we need to select via pattern search

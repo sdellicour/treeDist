@@ -253,7 +253,6 @@ shinyServer(function(input, output, session) {
     shinyjs::show(selector = "div.regression_control", animType = "fade", anim=T)
     shinyjs::disable(selector="div.sidebar")
     shinyjs::enable(id="reset")
-    
     if (input$annotations==FALSE){
       tree<-tryCatch(
         {
@@ -321,9 +320,11 @@ shinyServer(function(input, output, session) {
     
     
     transition_distances <<- transition_distances <- GenerateFinal_Transitions_Distances(transitions_raw=transitions, distances_raw=distances_raw$data)
+    
     #double assignment, to keep variable also locally...
-    vals <-reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)), keepZerosUni=rep(TRUE, nrow(transition_distances)), keepZerosMulti=rep(TRUE, nrow(transition_distances)) )    
+    vals <-reactiveValues(keeprows = rep(TRUE, nrow(transition_distances)), keepZerosUni=rep(TRUE, nrow(transition_distances)), keepZerosMulti=rep(TRUE, nrow(transition_distances)), transitions=transition_distances$Transitions )    
     #do not display 0 transitions by default
+    vals$transitions<-transition_distances$Transitions
     vals$keepZerosUni[which(transition_distances$Transitions==0)]<- FALSE
     vals$keepZerosMulti[which(transition_distances$Transitions==0)]<- FALSE
     vals<<-vals

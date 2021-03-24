@@ -116,7 +116,6 @@ max_ancestral_positions_ML<-function(tree_not_annotated, ancestral_positions){
 #taking the first item at each node
 max_ancestral_positions_MP<-function(tip_states, tree_not_annotated, ancestral_positions){
   colnames(ancestral_positions$ancestral_likelihoods)<-levels(tip_states)
-  browser()
   max_ancestral_positions<-sapply(1:tree_not_annotated$Nnode, function(i) names(which(ancestral_positions$ancestral_likelihoods[i,]==max(ancestral_positions$ancestral_likelihoods[i,]))))
   max_ancestral_positions
 }
