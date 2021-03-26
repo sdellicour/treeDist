@@ -187,7 +187,9 @@ GenerateRawTransitionMatrix = function(distances_raw, tree_df) {
 }
 
 GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) {
-  if(input$Annotation_State=="No"){
+  browser()
+  
+  if(input$annotations==FALSE){
     distances_raw<- lapply(distances_raw, function(matrix){
       rownames(matrix)<-colnames(matrix)
       matrix<-matrix[,colnames(matrix) %in% levels(tip_states$data)] 
