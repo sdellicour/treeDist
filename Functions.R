@@ -187,13 +187,15 @@ GenerateRawTransitionMatrix = function(distances_raw, tree_df) {
 }
 
 GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) {
-  distances_raw<- lapply(distances_raw, function(matrix){
-    rownames(matrix)<-colnames(matrix)
-    matrix<-matrix[,colnames(matrix) %in% levels(tip_states$data)] 
-    matrix<-matrix[rownames(matrix) %in% levels(tip_states$data),]
-  })
+  if(input$Annotation_State=="No"){
+    distances_raw<- lapply(distances_raw, function(matrix){
+      rownames(matrix)<-colnames(matrix)
+      matrix<-matrix[,colnames(matrix) %in% levels(tip_states$data)] 
+      matrix<-matrix[rownames(matrix) %in% levels(tip_states$data),]
+    })
   transitions_raw<-transitions_raw[, colnames(transitions_raw) %in% levels(tip_states$data)]
   transitions_raw<-transitions_raw[rownames(transitions_raw) %in% levels(tip_states$data),]
+  }
   if (input$annotations==FALSE &  (input$Reconstruction_Method=="ML" |  input$Reconstruction_Method=="TT")){
     Q<-importingDist("treeTime/transition_rates.csv")
     distances_raw[[length(distances_raw)+1]]<-Q
