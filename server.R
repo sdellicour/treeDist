@@ -35,7 +35,7 @@ shinyServer(function(input, output, session) {
   column_names<-reactive({
     req(input$distances_file$name)
     column_names<-unlist(lapply(input$distances_file$name, first.word))
-    if(input$Reconstruction_Method!="MP"){
+    if(input$annotations==FALSE & input$Reconstruction_Method!="MP"){
       column_names<-c(column_names, "Transition_Rates")
     }
     if(!is.null(pop_sizes$data)){
@@ -47,7 +47,7 @@ shinyServer(function(input, output, session) {
   distances_raw<-reactiveValues(data=NULL)
   observe({
     req(input$distances_file)
-    if(input$Annotation_State==FALSE) {
+    if(input$annotations==FALSE) {
       req(input$sampling_locations)
     }
     distances_raw$data <- tryCatch(
@@ -328,10 +328,11 @@ shinyServer(function(input, output, session) {
   }) # observeEvent(input$start, {
   
   observeEvent(input$reset, {
-    # tree<-NULL
-    # distances_raw$data<-NULL
-    # tip_states$data<-NULL
-    # reset("sidebar")
+     tree<-NULL
+     distances_raw$data<-NULL
+     tip_states$data<-NULL
+     pop_sizes$data<-NULL
+     shinyjs::reset("sidebar")
     session$reload()
   })
 }) # shinyServer(function(input, output) {

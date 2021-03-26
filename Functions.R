@@ -58,7 +58,6 @@ reshape_Rownames<-function(distances_raw){
 # Import Population Sizes file -------------------------------------------
 importingPopSizes<-function(population_sizes_file){
   pop_table <- utils::read.table(population_sizes_file, blank.lines.skip = F)
-  
   values<-as.numeric(pop_table[,2])
   locations<-pop_table[,1]
   
@@ -196,11 +195,11 @@ GenerateFinal_Transitions_Distances <- function(transitions_raw, distances_raw) 
   transitions_raw<-transitions_raw[, colnames(transitions_raw) %in% levels(tip_states$data)]
   transitions_raw<-transitions_raw[rownames(transitions_raw) %in% levels(tip_states$data),]
   }
-  if (input$annotations==FALSE &  (input$Reconstruction_Method=="ML" |  input$Reconstruction_Method=="TT")){
+  if(input$annotations==FALSE &  (input$Reconstruction_Method=="ML" |  input$Reconstruction_Method=="TT")){
     Q<-importingDist("treeTime/transition_rates.csv")
     distances_raw[[length(distances_raw)+1]]<-Q
   }
-  if (exists("pop_sizes")){
+  if(!is.null(pop_sizes$data)){
     distances_raw[[length(distances_raw)+1]]<-pop_sizes$data$origin
     distances_raw[[length(distances_raw)+1]]<-pop_sizes$data$destination
   }
