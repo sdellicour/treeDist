@@ -38,7 +38,7 @@ shinyServer(function(input, output, session) {
     if(input$Reconstruction_Method!="MP"){
       column_names<-c(column_names, "Transition_Rates")
     }
-    if(!is.null(input$population_sizes_file)){
+    if(!is.null(pop_sizes$data)){
       column_names<-c(column_names, "Ori_Pop_Size", "Dest_Pop_Size")
     }
     column_names
@@ -61,7 +61,7 @@ shinyServer(function(input, output, session) {
           duration=10
         )
         distances_raw$data<-NULL
-        reset("distances_file")
+        shinyjs::reset("distances_file")
         Sys.sleep(5)
         return()
       }
@@ -71,21 +71,18 @@ shinyServer(function(input, output, session) {
   pop_sizes<-reactiveValues(data=NULL)
   observe({
     req(input$population_sizes_file)
-    if(input$Annotation_State==FALSE) {
-      req(input$sampling_locations)
-    }
     pop_sizes$data <- tryCatch(
       {
         importingPopSizes(input$population_sizes_file$datapath)
       },
       error=function(cond) {
         shiny::showNotification(
-          ui="This does not seem to be a 1 column file containing the population sizes of the states at the ancestral nodes.",
+          ui="This does not seem to be a 2 column file containing the population sizes of the states at the ancestral nodes.",
           type="error",
           duration=10
         )
-        distances_raw$data<-NULL
-        reset("population_sizes_file")
+        pop_sizes$data<-NULL
+        shinyjs::reset("population_sizes_file")
         return()
       }
     )  
@@ -101,8 +98,7 @@ shinyServer(function(input, output, session) {
       },
       error=function(cond){
         tip_states$data<-NULL
-        reset("sampling_locations")
-        Sys.sleep(5)
+        shinyjs::reset("sampling_locations")
         return()
       }
     )
@@ -147,8 +143,7 @@ shinyServer(function(input, output, session) {
               type = "error",
               duration=10)
             tree<<-NULL
-            reset("tree_file")
-            Sys.sleep(5)
+            shinyjs::reset("tree_file")
             return()
           }
         )
@@ -168,6 +163,9 @@ shinyServer(function(input, output, session) {
             type="error",
             duration=10
           )
+          tree<<-NULL
+          shinyjs::reset("tree_file")
+          return()
         }
       }else{
         candidate_annotation_columns<-colnames(tree[,unique(which(tree==colnames(distances_raw$data[[1]])[1], arr.ind=TRUE)[,2])])
@@ -265,7 +263,7 @@ shinyServer(function(input, output, session) {
             type = "error",
             duration=10)
           tree<<-NULL
-          reset("tree_file")
+          shinyjs::reset("tree_file")
           Sys.sleep(5)
           return()
         }
@@ -285,11 +283,10 @@ shinyServer(function(input, output, session) {
             type = "error",
             duration=10)
           tip_states<-NULL
-          reset("sampling_locations")
+          shinyjs::reset("sampling_locations")
           tree<<-NULL
-          reset("tree_file")
+          shinyjs::reset("tree_file")
           shinyjs::enable("sidebar")
-          Sys.sleep(5)
           return()
         }
       )
@@ -307,7 +304,7 @@ shinyServer(function(input, output, session) {
             type = "error",
             duration=10)
           tree<<-NULL
-          reset("tree_file")
+          shinyjs::reset("tree_file")
           shinyjs::enable("sidebar")
           return()
         }
