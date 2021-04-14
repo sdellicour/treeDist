@@ -240,15 +240,27 @@ shinyUI(fluidPage(
                    fluidRow(column(3, 
                                    selectInput(
                                      inputId="regressionOutput",
-                                     choices = c("lm.summary", "stepAIC"),
+                                     choices = c("lm.summary", "stepAIC", "regsubset.plot"),
                                      label="Regression Output")
-                                   )),
+                   )),
                    conditionalPanel(condition = "input.regressionOutput=='lm.summary'",
-                    fluidRow(verbatimTextOutput(outputId = "lm.summary_multi")),
+                                    fluidRow(verbatimTextOutput(outputId = "lm.summary_multi")),
                    ),
                    conditionalPanel(condition = "input.regressionOutput=='stepAIC'",
-                     fluidRow(column(3,uiOutput("k"))),
-                     fluidRow(verbatimTextOutput(outputId="stepAIC"))
+                                    fluidRow(column(3,uiOutput("k"))),
+                                    fluidRow(verbatimTextOutput(outputId="stepAIC"))
+                   ),
+                   conditionalPanel(condition = "input.regressionOutput=='regsubset.plot'",
+                                    fluidRow(column(6,selectInput("step_method",
+                                                                  label = "Stepwise selection method:",
+                                                                  choices =  c("exhaustive", "backward", "forward"))),
+                                             column(6,selectInput(
+                                               inputId="crit.plot",
+                                               label="Selection criterium:",
+                                               choices=c("bic", "Cp", "r2", "adjr2"),
+                                               selected="bic"
+                                             ))),
+                                    fluidRow(plotOutput(outputId = "regsubsets"))
                    )
           )),
         wellPanel(

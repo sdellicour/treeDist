@@ -211,6 +211,25 @@ observe({
       k=as.numeric(input$k_crit))
   })
   
+  lm_regsubsets<-reactive({
+    req(lm_multi(), input$step_method)
+    data<-lm_multi()$data
+    lm_regsubsets <- leaps::regsubsets(
+      x=as.formula(lm_multi()$f),
+      data=lm_multi()$data,
+      nvmax = length(colnames(lm_multi()$data)),
+      method=input$step_method)
+    lm_regsubsets[["call"]][[2]]<-as.formula(lm_multi()$f)
+    #lm_regsubsets[["call"]][[3]]<-eval(data()) 
+    lm_regsubsets
+  })
+  
+  output$regsubsets<-renderPlot({
+    req(input$crit.plot, lm_regsubsets())
+    plot(lm_regsubsets(),scale=input$crit.plot)
+  })
+  
+  
   output$typeMultiPlot <- renderText({ 
     switch(
       input$typeMultiPlot,
