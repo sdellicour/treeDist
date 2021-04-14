@@ -79,6 +79,7 @@ data_transform<-reactive({
   transition_distances<-transition_distances%>%
     select(input$response_multi, input$variable, Key)%>%
     mutate(across(.cols=input$Log, .fns= log))
+  
   colnames(transition_distances)<-sapply(colnames(transition_distances), function(colname){
     if(colname %in% input$Log) {
       paste0(colname, "_log")
@@ -125,9 +126,8 @@ plotting_ggpairs<-reactive({
 })
 
 lm_multi<-reactive({
-  req(transition_distances)
-  transition_distances <- transition_distances[ vals$keepZerosMulti, , drop = FALSE]
-  browser
+  req(transition_distances, vals)
+  transition_distances <- transition_distances[vals$keepZerosMulti, , drop = FALSE]
   transition_distances <-mutate(transition_distances, across(all_of(input$standardize), scale))
   
   variable=as.vector(sapply(input$variable, function(variable) {
@@ -136,6 +136,7 @@ lm_multi<-reactive({
     }
     variable
   }))
+  
   
   if(input$response_multi %in% variable){
     variable<-variable[variable != input$response_multi]
@@ -160,11 +161,25 @@ lm_multi<-reactive({
   if(input$response_multi %in% input$Log){
     f<-paste0("log(", input$response_multi, ") ~",paste(variable, collapse="+"))
   }
+  
   lm_multi=lm(as.formula(f), data=transition_distances)
   lm_multi[["call"]][["formula"]]<-eval(lm_multi[["call"]][["formula"]]) #this seemed to be the easiest way to have the evaluated variables printed to the summary output under "call" 
-  lm_multi
+  list("lm_multi"=lm_multi,"f"=f, "data"=transition_distances)
 })
 
+#### k ####
+output$k<-renderUI({
+  output<-selectInput(
+    inputId="k_crit",
+    label="Input criterion",
+    choices=c("AIC (k=2)"=2, "BIC (k=log(n))"=log(sum(vals$keepZerosMulti)))
+  )
+})
+
+observe({
+  req(transition_distances)
+  lm_multi()
+})
 # Multivariate ####
 ## Plot ####
 observe({
@@ -175,14 +190,26 @@ observe({
   
   ## Glance #######
   output$lm_multi=renderTable({
-    req(transition_distances, logs_multi(), input$variable)
-    glance(lm_multi())
+    req(lm_multi())
+    glance(lm_multi()$lm_multi)
   }) # output$plot = renderTable({
   
   output$lm.summary_multi=renderPrint({
-    req(transition_distances, logs_multi(), input$variable)
-    summary(lm_multi())
+    req(lm_multi())
+    summary(lm_multi()$lm_multi)
   }) # output$plot = renderTable({
+  
+  output$stepAIC<-renderPrint({
+    req(input$k_crit, lm_multi())
+    data<-lm_multi()$data
+    f<-lm_multi()$f
+    model<-lm(as.formula(f), data=data)
+    MASS::stepAIC(
+      object = model,
+      direction = "both",
+      trace=3,
+      k=as.numeric(input$k_crit))
+  })
   
   output$typeMultiPlot <- renderText({ 
     switch(

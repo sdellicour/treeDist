@@ -224,10 +224,10 @@ shinyUI(fluidPage(
           ),
           fluidRow(
             tags$div(class="multi_input_control",
-                     column(3, uiOutput( outputId ="response_multi_out", label="Response variable" )),
-                     column(3, checkboxGroupInput(inputId = "variable", label = "Predictors:")),
-                     column(3, uiOutput(outputId ="log", label="Log-transoform:")),
-                     column(3, uiOutput(outputId="standardize", label="Standardize"))))),
+                       column(3, uiOutput( outputId ="response_multi_out", label="Response variable" )),
+                       column(3, checkboxGroupInput(inputId = "variable", label = "Predictors:")),
+                       column(3, uiOutput(outputId ="log", label="Log-transoform:")),
+                       column(3, uiOutput(outputId="standardize", label="Standardize"))))),
         wellPanel(
           fluidRow(
             column(width=4, tags$h4("Multivariate regression analysis:")),
@@ -237,7 +237,19 @@ shinyUI(fluidPage(
                    tags$h4("Basic statistical overview:"),
                    fluidRow(tableOutput(outputId = "lm_multi")),
                    tags$h4("Multivariate regression model:"),
-                   fluidRow(verbatimTextOutput(outputId = "lm.summary_multi"))
+                   fluidRow(column(3, 
+                                   selectInput(
+                                     inputId="regressionOutput",
+                                     choices = c("lm.summary", "stepAIC"),
+                                     label="Regression Output")
+                                   )),
+                   conditionalPanel(condition = "input.regressionOutput=='lm.summary'",
+                    fluidRow(verbatimTextOutput(outputId = "lm.summary_multi")),
+                   ),
+                   conditionalPanel(condition = "input.regressionOutput=='stepAIC'",
+                     fluidRow(column(3,uiOutput("k"))),
+                     fluidRow(verbatimTextOutput(outputId="stepAIC"))
+                   )
           )),
         wellPanel(
           fluidRow(
