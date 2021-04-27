@@ -251,6 +251,7 @@ shinyUI(fluidPage(
                                     fluidRow(verbatimTextOutput(outputId="stepAIC"))
                    ),
                    conditionalPanel(condition = "input.regressionOutput=='regsubset.plot'",
+                                    fluidRow(actionButton(label="Download",inputId = "downloadRegsubsets" )),
                                     fluidRow(column(6,selectInput("step_method",
                                                                   label = "Stepwise selection method:",
                                                                   choices =  c("exhaustive", "backward", "forward"))),
@@ -299,6 +300,7 @@ shinyUI(fluidPage(
                    conditionalPanel(condition="input.typeMultiPlot=='scatter'",
                                     fluidRow(plotlyOutput(outputId = "multi_plot"))),
                    conditionalPanel(condition="input.typeMultiPlot=='corr_balls'",
+                                    fluidRow(actionButton(label="Download",inputId = "downloadCorr" )),
                                     fluidRow(plotOutput(outputId = "corr_balls"))),
                    conditionalPanel(condition="input.typeMultiPlot=='pairs'",
                                     fluidRow(plotOutput(outputId = "pairs"))),

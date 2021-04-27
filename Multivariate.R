@@ -70,8 +70,12 @@ observeEvent(input$multi_plot_output, {
   shinyjs::toggle(selector = "div.multi_plot_output", animType = "fade", anim=T, condition = input$multi_plot_output==TRUE)
 })
 
+  
+  
 data_transform<-reactive({
-  req(input$height, input$width)
+  req(transition_distances)
+  browser()
+  
   transition_distances <- transition_distances[ vals$keepZerosMulti, , drop = FALSE]
   transition_distances <-mutate(transition_distances, across(all_of(input$standardize), function(predictor){
     as.numeric(scale(x=predictor, scale=TRUE, center=TRUE))
@@ -88,10 +92,14 @@ data_transform<-reactive({
     }
   })
   transition_distances
-} )
+})
+
+observe({
+  data_transform()
+})
 
 plotting_muĺti<-reactive({
-  req(transition_distances)
+  req(data_transform())
   transition_distances<-data_transform()
   selected_col_response<-grep(input$response_multi, colnames(transition_distances))
   #transform the data into high format and then group by distance matrix
@@ -102,16 +110,28 @@ plotting_muĺti<-reactive({
     facet_wrap(. ~ Predictor, scale="free", ncol=3 )+
     geom_smooth(method = "lm")+
     geom_point(shape=21, colour="#4D4D4D", fill= "#0e74af80")
-  p2 <- p1 %>% plotly::ggplotly(tooltip = c("Predictor","Distance",  colnames(transition_distances_high)[1], "Key"), source="multi_plot",  width = cdata$output_multi_plot_width*0.95, height =  ceiling(length(unique(transition_distances_high$Predictor))/2)*300)
+  p2<- p1 %>% plotly::ggplotly(tooltip = c("Predictor","Distance",  colnames(transition_distances_high)[1], "Key"), source="multi_plot",  width = cdata$output_multi_plot_width*0.95, height =  ceiling(length(unique(transition_distances_high$Predictor))/2)*300)
   p2
 })
 
 plotting_corr<-reactive({
-  req(transition_distances)
+  req(data_transform())
   transition_distances<-data_transform()
-  corrplot::corrplot(cor(transition_distances[colnames(transition_distances )!="Key"]), type="upper", order="hclust",
+  cor_matrix<-corrplot::corrplot(cor(transition_distances[colnames(transition_distances )!="Key"]), type="upper", order="hclust",
            col=brewer.pal(n=8, name="RdYlBu") )
+  M<-corrplot::corrplot(cor_matrix, type="upper",order="original", tl.cex = 1.5, addCoef.col = "black", diag = FALSE)
+  M
 })
+
+output$downloadCorr <- downloadHandler(
+  filename = function() { paste("output/correlation",  input$tree_file$name,"zeros_",input$includeZerosMulti, "no_coef")},
+  content = function(file) {
+    cor_matrix<-corrplot::corrplot(cor(transition_distances[colnames(transition_distances )!="Key"]), type="upper", order="hclust",
+                                   col=brewer.pal(n=8, name="RdYlBu") )
+    ggplot2::ggsave(file, plot= corrplot::corrplot(cor_matrix, type="upper",order="original", diag = FALSE), device = "png", unit="cm", width=20, height=20, dpi=300)
+
+  }
+)
 
 plotting_pairs<-reactive({
   req(transition_distances)
@@ -122,6 +142,7 @@ plotting_pairs<-reactive({
 plotting_ggpairs<-reactive({
   req(transition_distances)
   transition_distances<-data_transform()
+
   GGally::ggpairs(transition_distances[colnames(transition_distances )!="Key"])
 })
 
@@ -249,7 +270,6 @@ observe({
     height = input$height
     ) # output$plot = renderPlot({
   
-
   
   output$pairs = renderPlot({
     req(transition_distances, logs_multi(),data_transform())
@@ -269,4 +289,6 @@ observe({
     width = input$width, 
     height = input$height
     )
+  
+  
 })
