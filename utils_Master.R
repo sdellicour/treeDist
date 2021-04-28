@@ -18,7 +18,7 @@ addfiglab <- function(lab, xl = par()$mar[2], yl = par()$mar[3]) {
 }
 
 
-standardize_pred<-function(df, response="Trns"){
+standardize_pred<-function(df, response="Transitions"){
   response_df<-data.frame(df[,response])
   colnames(response_df)<-response
   binaries<-apply(df,2, function(variable) is.binary(variable))
@@ -58,8 +58,8 @@ ggregsubsets <- function(x, criterion="bic", label_bool=TRUE, padding=0){
     filter(is_in==TRUE)
 
   p<-df%>%
-    ggplot(aes(variable, factor(round(value)))) +
-    geom_raster(aes(fill=factor(round(value))), hjust =0,
+    ggplot(aes(variable, factor(value))) +
+    geom_raster(aes(fill=factor(value)), hjust =0,
                 vjust =0) +
     scale_fill_manual(values = getPalette(nbColours), guide = FALSE) +
     labs(x = "", y = "") +
@@ -67,13 +67,28 @@ ggregsubsets <- function(x, criterion="bic", label_bool=TRUE, padding=0){
     scale_y_discrete(limits=rev)+
     scale_x_discrete(limits=unique(df$variable))+
     theme(panel.grid.major = element_line(colour = "black"))+
-    theme(axis.text.x = element_text(angle = 90,vjust=-0.5,hjust=1))+
+    theme(axis.text.x = element_text(angle = 90,vjust=-0.35,hjust=1, size=13))+
     theme(
       panel.background = element_rect(fill = NA),
       panel.ontop = TRUE
     )
   
   if(label_bool==FALSE) p<-p+theme( axis.text.x=element_blank())
-  p <- p + theme(axis.title.y = element_text(margin = margin(r = padding)))
+  p <- p + theme(axis.title.y = element_text(margin = margin(r = padding)), axis.text.y = element_blank())
 p
+}
+
+
+fit<-function(x, criterion="bic", response="Transitions", data, distribution=FALSE){
+  require(dplyr)
+  x<-summary(x)
+  df<-data.frame(x$which,
+                 criterion=get(criterion,x))
+  df<-df%>%
+    filter(criterion==min(criterion))
+  df<-df[which(df==TRUE)]
+  predictors<-names(df[,2:dim(df)[2]])
+  f<-as.formula(paste0(response, "~", paste(predictors, collapse = "+")))
+  lm<-lm(f, data=data)
+  lm
 }

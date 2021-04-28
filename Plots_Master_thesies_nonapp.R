@@ -128,7 +128,7 @@ dev.off()
 #colnames(transition_distances_ebola_tt)<-abbreviate(names(transition_distances_ebola_tt), minlength=4)
 
 
-##lm_regsubsets_MCC_nozero#### 
+### lm_regsubsets_MCC_nozero#### 
 transition_distances <- transition_distances_ebola[transition_distances_ebola$Transitions!=0,]
 transition_distances_scaled<-standardize_pred(transition_distances)
 predictors<-transition_distances_scaled[colnames(transition_distances_scaled)!="Transitions"]
@@ -139,7 +139,7 @@ lm_regsubsets_MCC_nozero <- leaps::regsubsets(
   nvmax = 25,
   method="exhaustive")
 
-## lm_regsubsets_MCC_zero##### 
+### lm_regsubsets_MCC_zero ##### 
 transition_distances <- transition_distances_ebola
 transition_distances_scaled<-standardize_pred(transition_distances)
 predictors<-transition_distances_scaled[colnames(transition_distances_scaled)!="Transitions"]
@@ -150,7 +150,7 @@ lm_regsubsets_MCC_zero <- leaps::regsubsets(
   nvmax = 25,
   method="exhaustive")
 
-# lm_regsubsets_MP_nozero #### 
+## lm_regsubsets_MP_nozero #### 
 transition_distances <- transition_distances_ebola_mp[transition_distances_ebola_mp$Transitions!=0,]
 transition_distances_scaled<-standardize_pred(transition_distances)
 predictors<-transition_distances_scaled[colnames(transition_distances_scaled)!="Transitions"]
@@ -161,7 +161,7 @@ lm_regsubsets_MP_nozero <- leaps::regsubsets(
   nvmax = 25,
   method="exhaustive")
 
-# lm_regsubsets_MP_zero #### 
+## lm_regsubsets_MP_zero #### 
 transition_distances <- transition_distances_ebola_mp
 transition_distances_scaled<-standardize_pred(transition_distances)
 predictors<-transition_distances_scaled[colnames(transition_distances_scaled)!="Transitions"]
@@ -172,10 +172,10 @@ lm_regsubsets_MP_zero <- leaps::regsubsets(
   nvmax = 25,
   method="exhaustive")
 
-# lm_regsubsets_ML_nozero #### 
+## lm_regsubsets_ML_nozero #### 
 transition_distances <- transition_distances_ebola_ml[transition_distances_ebola_ml$Transitions!=0,]
 transition_distances_scaled<-standardize_pred(transition_distances)
-predictors<-transition_distances_scaled[!colnames(transition_distances_scaled) %in% c("Transitions", "Transition_Rate")]
+predictors<-transition_distances_scaled[!colnames(transition_distances_scaled) %in% c("Transitions", "Transition_Rates")]
 f<-as.formula(object = paste0("Transitions ~ ", paste(colnames(predictors), collapse = " + ")))
 lm_regsubsets_ML_nozero <- leaps::regsubsets(
   x=f,
@@ -183,10 +183,10 @@ lm_regsubsets_ML_nozero <- leaps::regsubsets(
   nvmax = 25,
   method="exhaustive")
 
-# lm_regsubsets_ML_zero #### 
+## lm_regsubsets_ML_zero #### 
 transition_distances <- transition_distances_ebola_ml
 transition_distances_scaled<-standardize_pred(transition_distances)
-predictors<-transition_distances_scaled[!colnames(transition_distances_scaled) %in% c("Transitions", "Transition_Rate")]
+predictors<-transition_distances_scaled[!colnames(transition_distances_scaled) %in% c("Transitions", "Transition_Rates")]
 f<-as.formula(object = paste0("Transitions ~ ", paste(colnames(predictors), collapse = " + ")))
 lm_regsubsets_ML_zero <- leaps::regsubsets(
   x=f,
@@ -194,10 +194,10 @@ lm_regsubsets_ML_zero <- leaps::regsubsets(
   nvmax = 25,
   method="exhaustive")
 
-# lm_regsubsets_TT_nozero #### 
+## lm_regsubsets_TT_nozero #### 
 transition_distances <- transition_distances_ebola_tt[transition_distances_ebola_tt$Transitions!=0,]
 transition_distances_scaled<-standardize_pred(transition_distances)
-predictors<-transition_distances_scaled[!colnames(transition_distances_scaled) %in% c("Transitions", "Transition_Rate")]
+predictors<-transition_distances_scaled[!colnames(transition_distances_scaled) %in% c("Transitions", "Transition_Rates")]
 f<-as.formula(object = paste0("Transitions ~ ", paste(colnames(predictors), collapse = " + ")))
 lm_regsubsets_TT_nozero <- leaps::regsubsets(
   x=f,
@@ -205,10 +205,10 @@ lm_regsubsets_TT_nozero <- leaps::regsubsets(
   nvmax = 25,
   method="exhaustive")
 
-# lm_regsubsets_TT_zero #### 
+## lm_regsubsets_TT_zero #### 
 transition_distances <- transition_distances_ebola_tt
 transition_distances_scaled<-standardize_pred(transition_distances)
-predictors<-transition_distances_scaled[!colnames(transition_distances_scaled) %in% c("Transitions", "Transition_Rate")]
+predictors<-transition_distances_scaled[!colnames(transition_distances_scaled) %in% c("Transitions", "Transition_Rates")]
 f<-as.formula(object = paste0("Transitions ~ ", paste(colnames(predictors), collapse = " + ")))
 lm_regsubsets_TT_zero <- leaps::regsubsets(
   x=f,
@@ -216,7 +216,7 @@ lm_regsubsets_TT_zero <- leaps::regsubsets(
   nvmax = 25,
   method="exhaustive")
 
-# lm_regsubsets_TT_nozero_rates #### 
+## lm_regsubsets_TT_nozero_rates #### 
 transition_distances <- transition_distances_ebola_tt[transition_distances_ebola_tt$Transitions!=0,]
 transition_distances_scaled<-standardize_pred(transition_distances, response = "Transition_Rates")
 predictors<-transition_distances_scaled[!colnames(transition_distances_scaled) %in% c("Transitions", "Transition_Rates")]
@@ -228,7 +228,7 @@ lm_regsubsets_TT_nozero_rates <- leaps::regsubsets(
   method="exhaustive")
 
 
-# lm_regsubsets_TT_zero_rates #### 
+## lm_regsubsets_TT_zero_rates #### 
 transition_distances <- transition_distances_ebola_tt
 transition_distances_scaled<-standardize_pred(transition_distances, response = "Transition_Rates")
 predictors<-transition_distances_scaled[!colnames(transition_distances_scaled) %in% c("Transitions", "Transition_Rates")]
@@ -240,19 +240,19 @@ lm_regsubsets_TT_zero_rates <- leaps::regsubsets(
   method="exhaustive")
 
 
-lm_regsubsets_MCC_nozero_plot<-ggregsubsets(lm_regsubsets_MCC_nozero, "bic", label_bool = F)
-lm_regsubsets_MCC_zero_plot<-ggregsubsets(lm_regsubsets_MCC_zero, "bic", label_bool = F)
+lm_regsubsets_MCC_nozero_plot<-ggregsubsets(lm_regsubsets_MCC_nozero, "bic", label_bool = F, padding=2.5)
+lm_regsubsets_MCC_zero_plot<-ggregsubsets(lm_regsubsets_MCC_zero, "bic", label_bool = F, padding=2.5)
 lm_regsubsets_MP_nozero_plot<-ggregsubsets(lm_regsubsets_MP_nozero,  "bic", label_bool = F)
 lm_regsubsets_MP_zero_plot<-ggregsubsets(lm_regsubsets_MP_zero,  "bic", label_bool = F)
-lm_regsubsets_ML_nozero_plot<-ggregsubsets(lm_regsubsets_ML_nozero, "bic" ,label_bool = F)
-lm_regsubsets_ML_zero_plot<-ggregsubsets(lm_regsubsets_ML_zero, "bic" ,label_bool = F)
+lm_regsubsets_ML_nozero_plot<-ggregsubsets(lm_regsubsets_ML_nozero, "bic" ,label_bool = F, padding=2.5)
+lm_regsubsets_ML_zero_plot<-ggregsubsets(lm_regsubsets_ML_zero, "bic" ,label_bool = F, padding =2.5)
 lm_regsubsets_TT_nozero_plot<-ggregsubsets(lm_regsubsets_TT_nozero, "bic" ,label_bool =F)
 lm_regsubsets_TT_zero_plot<-ggregsubsets(lm_regsubsets_TT_zero, "bic" ,label_bool =F)
 lm_regsubsets_TT_nozero_rates_plot<-ggregsubsets(lm_regsubsets_TT_nozero_rates, "bic", label_bool =T, padding = 17)
 lm_regsubsets_TT_zero_rates_plot<-ggregsubsets(lm_regsubsets_TT_zero_rates, "bic", label_bool = T, padding = 5)
 
 
-grid_regsubsets<-gridExtra::grid.arrange(ncol=2,widths = c(10,10.5) ,heights = c(5.5,5,5,5, 9.5),
+grid_regsubsets<-gridExtra::grid.arrange(ncol=2,widths = c(10,10.5) ,heights = c(5.5,5,5,5, 12.5),
                                          # layout_matrix=rbind(
                                          #   c(1,2),
                                          #   c(3,4),
@@ -284,3 +284,94 @@ grid_regsubsets<-gridExtra::grid.arrange(ncol=2,widths = c(10,10.5) ,heights = c
                                                                             y = unit(.95, "npc"),  gp = gpar(col = "black", fontsize = 28))))
 ggsave(filename = "output/regsubsets.png", plot =grid_regsubsets, device = "png", width = 21, height = 29.7, units = "cm", dpi = 300) 
 
+
+# df<-data.frame(summ_lm_regsubsets_MCC_nozero$which,
+#                "bic"=summ_lm_regsubsets_MCC_nozero$bic)%>%
+#   filter(bic==min(bic))
+# df<-df[which(df==TRUE)]
+# predictors<-names(df[,2:dim(df)[2]])
+# f<-as.formula(paste0("Transitions", "~", paste(predictors, collapse = "+")))
+# lm<-lm(f, data=transition_distances_ebola[transition_distances_ebola$Transitions!=0,])
+# jtools::plot_summs(lm)
+
+
+##Coefficients ####
+transition_distances <- transition_distances_ebola[transition_distances_ebola_tt$Transitions!=0,]
+transition_distances_scaled<-standardize_pred(transition_distances)
+fit_MCC_nozero<-fit(x=lm_regsubsets_MCC_nozero,data=transition_distances_scaled)
+
+transition_distances <- transition_distances_ebola
+transition_distances_scaled<-standardize_pred(transition_distances)
+fit_MCC_zero<-fit(x=lm_regsubsets_MCC_zero,data=transition_distances_scaled)
+
+transition_distances <- transition_distances_ebola_mp[transition_distances_ebola_mp$Transitions!=0,]
+transition_distances_scaled<-standardize_pred(transition_distances)
+fit_MP_nozero<-fit(x=lm_regsubsets_MP_nozero,data=transition_distances_scaled)
+
+transition_distances <- transition_distances_ebola_mp
+transition_distances_scaled<-standardize_pred(transition_distances)
+fit_MP_zero<-fit(x=lm_regsubsets_MP_zero,data=transition_distances_scaled)
+
+transition_distances <- transition_distances_ebola_ml[transition_distances_ebola_tt$Transitions!=0,]
+transition_distances_scaled<-standardize_pred(transition_distances)
+fit_ML_nozero<-fit(x=lm_regsubsets_ML_zero,data=transition_distances_scaled)
+
+transition_distances <- transition_distances_ebola_ml
+transition_distances_scaled<-standardize_pred(transition_distances)
+fit_ML_zero<-fit(x=lm_regsubsets_ML_zero,data=transition_distances_scaled)
+
+transition_distances <- transition_distances_ebola_tt[transition_distances_ebola_tt$Transitions!=0,]
+transition_distances_scaled<-standardize_pred(transition_distances)
+fit_TT_nozero<-fit(x=lm_regsubsets_TT_nozero,data=transition_distances_scaled)
+
+transition_distances <- transition_distances_ebola_tt
+transition_distances_scaled<-standardize_pred(transition_distances)
+fit_TT_zero<-fit(x=lm_regsubsets_TT_zero,data=transition_distances_scaled)
+
+transition_distances <- transition_distances_ebola_tt[transition_distances_ebola_tt$Transitions!=0,]
+transition_distances_scaled<-standardize_pred(transition_distances)
+fit_TT_nozero_rates<-fit(x=lm_regsubsets_TT_nozero_rates,data=transition_distances_scaled, response = "Transition_Rates")
+
+transition_distances <- transition_distances_ebola_tt
+transition_distances_scaled<-standardize_pred(transition_distances)
+fit_TT_zero_rates<-fit(x=lm_regsubsets_TT_zero_rates,data=transition_distances_scaled, response = "Transition_Rates")
+
+nbColours<- 10
+getPalette = colorRampPalette(brewer.pal(9, "Set1"))
+coefficients<-jtools::plot_summs(
+  fit_MCC_nozero,
+  fit_MCC_zero,
+  fit_MP_nozero,
+  fit_MP_zero,
+  fit_ML_nozero,
+  fit_ML_zero,
+  fit_TT_nozero,
+  fit_TT_zero,
+  fit_TT_nozero_rates,
+  fit_TT_zero_rates,
+  colors = getPalette(nbColours),
+  model.names = c("MCC_nozero",
+                  "MCC_zero",
+                  "MP_nozero",
+                  "MP_zero",
+                  "ML_nozero",
+                  "ML_zero",
+                  "TT_nozero",
+                  "TT_zero",
+                  "TT_nozero_rates",
+                  "TT_zero_rates")
+)
+coefficients<-coefficients + 
+  theme(axis.text.y = element_text(size = 14),
+        legend.text = element_text(size =10))
+ggsave(filename = "output/coefficients.png", plot =coefficients, device = "png", width = 21, height = 10.5, units = "cm", dpi = 300) 
+summary(fit_MCC_nozero)
+summary(fit_MCC_zero)
+summary(fit_MP_nozero)
+summary(fit_MP_zero)
+summary(fit_ML_nozero)
+summary(fit_ML_zero)
+summary(fit_TT_nozero)
+summary(fit_TT_zero)
+summary(fit_TT_nozero_rates)
+summary(fit_TT_zero_rates)

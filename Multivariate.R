@@ -73,9 +73,7 @@ observeEvent(input$multi_plot_output, {
   
   
 data_transform<-reactive({
-  req(transition_distances)
-  browser()
-  
+  req(input$height, input$width)
   transition_distances <- transition_distances[ vals$keepZerosMulti, , drop = FALSE]
   transition_distances <-mutate(transition_distances, across(all_of(input$standardize), function(predictor){
     as.numeric(scale(x=predictor, scale=TRUE, center=TRUE))
@@ -94,9 +92,6 @@ data_transform<-reactive({
   transition_distances
 })
 
-observe({
-  data_transform()
-})
 
 plotting_muĺti<-reactive({
   req(data_transform())
@@ -117,19 +112,23 @@ plotting_muĺti<-reactive({
 plotting_corr<-reactive({
   req(data_transform())
   transition_distances<-data_transform()
-  cor_matrix<-corrplot::corrplot(cor(transition_distances[colnames(transition_distances )!="Key"]), type="upper", order="hclust",
+  data<-transition_distances[colnames(transition_distances )!="Key"]
+  data<-data[,order(colnames(data))]
+  cor_matrix<-corrplot::corrplot(cor(data), type="upper",
            col=brewer.pal(n=8, name="RdYlBu") )
   M<-corrplot::corrplot(cor_matrix, type="upper",order="original", tl.cex = 1.5, addCoef.col = "black", diag = FALSE)
   M
 })
 
-output$downloadCorr <- downloadHandler(
-  filename = function() { paste("output/correlation",  input$tree_file$name,"zeros_",input$includeZerosMulti, "no_coef")},
-  content = function(file) {
-    cor_matrix<-corrplot::corrplot(cor(transition_distances[colnames(transition_distances )!="Key"]), type="upper", order="hclust",
+observeEvent(input$downloadCorr, {
+    transition_distances<-data_transform()
+    png(filename = paste("output/correlation",  input$tree_file$name,"zeros_",input$includeZerosMulti, "_reconstruction_",  input$Reconstruction_Method,"_Annotation_",input$annotations), unit="cm", width=20, height=20, res=300)
+    data<-transition_distances[colnames(transition_distances )!="Key"]
+    data<-data[,order(colnames(data))]
+    cor_matrix<-corrplot::corrplot(cor(data), type="upper", 
                                    col=brewer.pal(n=8, name="RdYlBu") )
-    ggplot2::ggsave(file, plot= corrplot::corrplot(cor_matrix, type="upper",order="original", diag = FALSE), device = "png", unit="cm", width=20, height=20, dpi=300)
-
+    corrplot::corrplot(cor_matrix, type="upper",order="original", diag = FALSE, )
+    dev.off()
   }
 )
 
@@ -245,6 +244,13 @@ observe({
     lm_regsubsets
   })
   
+  observeEvent(input$downloadRegsubsets, {
+    png(filename = paste("output/regsubsets_",  input$tree_file$name,"zeros_",input$includeZerosMulti, "no_coef"), unit="cm", width=20, height=20, res=300)
+    plot(lm_regsubsets())
+    dev.off()
+  }
+  )
+  
   output$regsubsets<-renderPlot({
     req(input$crit.plot, lm_regsubsets())
     plot(lm_regsubsets(),scale=input$crit.plot)
@@ -263,7 +269,7 @@ observe({
   
   output$corr_balls = renderPlot(
     expr={
-    req(transition_distances, logs_multi(), input$variable)
+   # req(transition_distances, logs_multi(), input$variable)
     plotting_corr()
     }, 
     width = input$width, 
@@ -272,7 +278,7 @@ observe({
   
   
   output$pairs = renderPlot({
-    req(transition_distances, logs_multi(),data_transform())
+   # req(transition_distances, logs_multi(),data_transform())
     plotting_pairs()
   }, 
   width = input$width, 
@@ -283,7 +289,7 @@ observe({
   
   output$ggpairs = renderPlot(
     expr={
-    req(transition_distances, logs_multi(), data_transform())
+    #req(transition_distances, logs_multi(), data_transform())
     plotting_ggpairs()
     }, 
     width = input$width, 
